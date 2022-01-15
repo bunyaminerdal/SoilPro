@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leoni\\source\\repos\\SoilPro\\SoilPro.csproj",
+      "projectUniqueName": "C:\\Users\\leoni\\Documents\\GitHub\\SoilPro\\SoilPro.csproj",
       "projectName": "SoilPro",
-      "projectPath": "C:\\Users\\leoni\\source\\repos\\SoilPro\\SoilPro.csproj",
+      "projectPath": "C:\\Users\\leoni\\Documents\\GitHub\\SoilPro\\SoilPro.csproj",
       "packagesPath": "C:\\Users\\leoni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leoni\\source\\repos\\SoilPro\\obj\\",
+      "outputPath": "C:\\Users\\leoni\\Documents\\GitHub\\SoilPro\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\leoni\\AppData\\Roaming\\NuGet\\NuGet.Config",

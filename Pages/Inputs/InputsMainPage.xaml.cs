@@ -21,8 +21,8 @@ namespace SoilPro.Pages.Inputs
     public partial class InputsMainPage : Page
     {
         
-        public Page view3dScreenPage = new Views.View3dPage();
-        public Page sideviewPage = new Views.SideviewPage();
+        public Views.View3dPage view3dScreenPage = new Views.View3dPage();
+        public Views.SideviewPage sideviewPage = new Views.SideviewPage();
         WallTypePage wallTypePage = new WallTypePage();
         MaterialsPage materialsPage = new MaterialsPage();
         public InputsMainPage()

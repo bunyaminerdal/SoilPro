@@ -23,6 +23,8 @@ namespace SoilPro.Pages.Inputs.Views
     /// </summary>
     public partial class View3dPage : Page
     {
+      public  Viewport3D viewport;
+        public Model3DGroup groupScene;
         public View3dPage()
         {
             InitializeComponent();
@@ -64,7 +66,7 @@ namespace SoilPro.Pages.Inputs.Views
         private void StartViewport3d()
         {
             
-                Viewport3D viewport = viewport3d_main;
+                viewport = viewport3d_main;
 
                 WpfCylinder WpfCylinder = new WpfCylinder(
                     new Point3D(0, WpfScene.sceneSize / 4, WpfScene.sceneSize / 5),
@@ -101,7 +103,7 @@ namespace SoilPro.Pages.Inputs.Views
                                 -WpfScene.sceneSize / 2),
                     WpfScene.sceneSize, floorThickness, WpfScene.sceneSize, Colors.Tan);
 
-                Model3DGroup groupScene = new Model3DGroup();
+                groupScene = new Model3DGroup();
 
                 groupScene.Children.Add(floorModel);
 
@@ -122,15 +124,15 @@ namespace SoilPro.Pages.Inputs.Views
 
                 viewport.Children.Add(visual);
 
-                turnModel(WpfCylinder.getCenter(), WpfCylinderModel);
-                turnModel(WpfCylinder2.getCenter(), WpfCylinderModel2);
+                turnModel(WpfCylinder.getCenter(), groupScene);
+                //turnModel(WpfCylinder2.getCenter(), WpfCylinderModel2);
 
-                turnModel(circle.getCenter(), circleModel);
-                turnModel(circle2.getCenter(), circleModel2);
+                //turnModel(circle.getCenter(), circleModel);
+                //turnModel(circle2.getCenter(), circleModel2);
             
 
         }
-        public void turnModel(Point3D center, GeometryModel3D model)
+        public void turnModel(Point3D center, Model3DGroup model)
         {
             Vector3D vector = new Vector3D(0, 1, 0);
 
@@ -141,9 +143,28 @@ namespace SoilPro.Pages.Inputs.Views
             model.Transform = rotateTransform;
 
         }
+        float scaleFactor = 1f;
+        private void viewport3d_main_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            Vector3D vector = new Vector3D(1, 1, 1);
+            scaleFactor += 0.5f*e.Delta/1000;
+            scaleFactor = Math.Clamp(scaleFactor, 0.3f, 3);
+            Vector3D scaleVector = new Vector3D(scaleFactor,scaleFactor,scaleFactor);
+            
+            scroll_3dview.Content = scaleFactor.ToString();
+
+            ScaleTransform3D scaleTransform3D = new ScaleTransform3D(scaleVector, new Point3D(0,0,0));
+            groupScene.Transform = scaleTransform3D;
+        }
 
 
 
-               
+        private void Position_Reset_bttn_Click(object sender, RoutedEventArgs e)
+        {
+            ScaleTransform3D scaleTransform3D = new ScaleTransform3D(new Vector3D(1,1,1), new Point3D(0, 0, 0));
+            groupScene.Transform = scaleTransform3D;
+            scaleFactor = 1f;
+
+        }
     }
 }

@@ -20,15 +20,18 @@ namespace SoilPro.Pages.Inputs
     /// </summary>
     public partial class MaterialsPage : Page
     {
+        Views.View3dPage view3DPage;
         public MaterialsPage()
         {
             InitializeComponent();
             
         }
-        public void SetViewPages(Page view3d,Page sideview)
+        public void SetViewPages(Views.View3dPage view3d,Views.SideviewPage sideview)
         {
             view3d_main.Content = view3d;
+            view3DPage = view3d;
             sideview_main.Content = sideview;
+            
         }
 
     }
