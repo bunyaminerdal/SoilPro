@@ -1,0 +1,33 @@
+﻿<Page x:Class="SoilPro.Pages.Options.OptionsMainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SoilPro.Pages.Options"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OptionsMainPage">
+
+    <Grid>
+        <Grid>
+            <Grid Margin="5,5,5,5">
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Name="MenuRow" Height="50"></RowDefinition>
+                    <RowDefinition Name="MainRow" Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" Background="#FFA9ADAD">
+                    <DockPanel HorizontalAlignment="Left">
+                        <RadioButton x:Name="GeneralOptionsRadioBttn" MinWidth="80" Content="{DynamicResource General}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="General_Clicked" />
+                        <RadioButton x:Name="RegionOptionsRadioBttn" MinWidth="80" Content="{DynamicResource Region}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="Region_Clicked" />
+                    </DockPanel>
+
+
+                </DockPanel >
+                <Frame x:Name="Options_main" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

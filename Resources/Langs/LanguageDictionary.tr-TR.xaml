@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="File" >Dosya</system:String>
+    <system:String x:Key="Inputs" >Girişler</system:String>
+    <system:String x:Key="Report" >Rapor</system:String>
+    <system:String x:Key="Options" >Ayarlar</system:String>
+    <system:String x:Key="Help" >Yardım</system:String>
+    <system:String x:Key="New" >Yeni</system:String>
+    <system:String x:Key="Open" >Aç</system:String>
+    <system:String x:Key="Save" >Kaydet</system:String>
+    <system:String x:Key="Save_As" >Farklı Kaydet</system:String>
+    <system:String x:Key="Exit" >Çıkış</system:String>
+    <system:String x:Key="General" >Genel</system:String>
+    <system:String x:Key="Region" >Bölge</system:String>
+    <system:String x:Key="Dil" >Language</system:String>
+    <system:String x:Key="İngilizce" >English</system:String>
+    <system:String x:Key="Türkçe" >Turkish</system:String>
+</ResourceDictionary>
