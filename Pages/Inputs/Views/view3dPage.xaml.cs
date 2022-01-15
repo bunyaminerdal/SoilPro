@@ -23,17 +23,22 @@ namespace SoilPro.Pages.Inputs.Views
     /// </summary>
     public partial class View3dPage : Page
     {
-      public  Viewport3D viewport;
+        public  Viewport3D viewport;
         public Model3DGroup groupScene;
+        float scaleFactor = 1f;
+        Point3D lookat = new Point3D(0, 0, 0);
+        Point mouseFirstPos;
+        bool isMouseWheelDown;
+        float rotationAngleX;
+        float rotationAngleY;
+        Vector mousePosDiff;
+        Point3D center3d = new Point3D(0, 0, 0);
         public View3dPage()
         {
             InitializeComponent();
             StartViewport3d();
-
         }
-     
-        Point3D lookat = new Point3D(0, 0, 0);
-
+        
         public DirectionalLight positionLight(Point3D position)
         {
             DirectionalLight directionalLight = new DirectionalLight();
@@ -46,7 +51,6 @@ namespace SoilPro.Pages.Inputs.Views
         {
             return positionLight(new Point3D(-WpfScene.sceneSize, WpfScene.sceneSize / 2, 0.0));
         }
-
 
         public PerspectiveCamera camera()
         {
@@ -124,7 +128,7 @@ namespace SoilPro.Pages.Inputs.Views
 
                 viewport.Children.Add(visual);
 
-                turnModel(WpfCylinder.getCenter(), groupScene);
+                //turnModel(WpfCylinder.getCenter(), groupScene);
                 //turnModel(WpfCylinder2.getCenter(), WpfCylinderModel2);
 
                 //turnModel(circle.getCenter(), circleModel);
@@ -132,39 +136,72 @@ namespace SoilPro.Pages.Inputs.Views
             
 
         }
-        public void turnModel(Point3D center, Model3DGroup model)
+        public void ChangeModelTransform()
         {
-            Vector3D vector = new Vector3D(0, 1, 0);
+            AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), rotationAngleX);
 
-            AxisAngleRotation3D rotation = new AxisAngleRotation3D(vector, 0.0);
+            RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, center3d);
 
-            RotateTransform3D rotateTransform = new RotateTransform3D(rotation, center);
+            AxisAngleRotation3D rotationY = new AxisAngleRotation3D(new Vector3D(1, 0, 1), rotationAngleY);
 
-            model.Transform = rotateTransform;
+            RotateTransform3D rotateTransformY = new RotateTransform3D(rotationY, center3d);
 
+            Transform3DGroup myTransform3DGroup = new Transform3DGroup();
+
+            myTransform3DGroup.Children.Add(rotateTransformX);
+            myTransform3DGroup.Children.Add(rotateTransformY);
+
+            Vector3D scaleVector = new Vector3D(scaleFactor, scaleFactor, scaleFactor);
+            ScaleTransform3D scaleTransform3D = new ScaleTransform3D(scaleVector, center3d);
+            myTransform3DGroup.Children.Add(scaleTransform3D);
+
+            groupScene.Transform = myTransform3DGroup;
         }
-        float scaleFactor = 1f;
+            
+        
         private void viewport3d_main_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Vector3D vector = new Vector3D(1, 1, 1);
             scaleFactor += 0.5f*e.Delta/1000;
             scaleFactor = Math.Clamp(scaleFactor, 0.3f, 3);
-            Vector3D scaleVector = new Vector3D(scaleFactor,scaleFactor,scaleFactor);
-            
-            scroll_3dview.Content = scaleFactor.ToString();
-
-            ScaleTransform3D scaleTransform3D = new ScaleTransform3D(scaleVector, new Point3D(0,0,0));
-            groupScene.Transform = scaleTransform3D;
+            ChangeModelTransform();
         }
 
-
-
         private void Position_Reset_bttn_Click(object sender, RoutedEventArgs e)
-        {
-            ScaleTransform3D scaleTransform3D = new ScaleTransform3D(new Vector3D(1,1,1), new Point3D(0, 0, 0));
-            groupScene.Transform = scaleTransform3D;
+        {            
             scaleFactor = 1f;
+            ChangeModelTransform();            
+        }
 
+        private void viewport3d_main_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            mouseFirstPos = e.GetPosition(this);
+            if (e.MiddleButton == MouseButtonState.Pressed) isMouseWheelDown = true;
+        }
+
+        private void viewport3d_main_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            
+            if (e.MiddleButton == MouseButtonState.Released) isMouseWheelDown = false;
+        }
+
+        private void viewport3d_main_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+            if(isMouseWheelDown)
+            {
+                var mousePos = e.GetPosition(this);
+                mousePosDiff = mousePos - mouseFirstPos;
+                rotationAngleX += (float)mousePosDiff.X/5;
+                rotationAngleY += (float)mousePosDiff.Y/5;
+                ChangeModelTransform();
+                mouseFirstPos = mousePos;
+            }
+            
+        }
+
+        private void viewport3d_main_MouseLeave(object sender, MouseEventArgs e)
+        {
+            isMouseWheelDown = false;
         }
     }
 }

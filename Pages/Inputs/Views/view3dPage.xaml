@@ -8,12 +8,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="view3dPage">
 
-    <Grid Background="White" MouseWheel="viewport3d_main_MouseWheel">
-        <Label x:Name="scroll_3dview" Content="adfasdf"></Label>
-        <Button x:Name="Position_Reset_bttn" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Click="Position_Reset_bttn_Click"></Button>
+    <Grid Background="White" MouseWheel="viewport3d_main_MouseWheel" MouseDown="viewport3d_main_MouseDown" MouseUp="viewport3d_main_MouseUp" MouseMove="viewport3d_main_MouseMove" MouseLeave="viewport3d_main_MouseLeave">
         <ContentControl Name="contentControl2">
             <Viewport3D x:Name="viewport3d_main" ClipToBounds="True" Width="Auto" Height="Auto" />
 
         </ContentControl>
+        <Label x:Name="scroll_3dview" Content="adfasdf"></Label>
+        <Button x:Name="Position_Reset_bttn" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Click="Position_Reset_bttn_Click"></Button>
     </Grid>
 </Page>
