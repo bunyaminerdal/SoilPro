@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Media.Imaging;
 
 namespace SoilPro.Scripts
 {
@@ -143,8 +144,15 @@ namespace SoilPro.Scripts
 
             addToMesh(mesh, enclose, combine);
 
+
+            //Image image = new Image();
+            //image.Source = new BitmapImage(new Uri(@"../../../Texture/texturedeneme.png", UriKind.Relative));
+
+            //Material material = new DiffuseMaterial(new ImageBrush(image.Source));
+
             Material material = new DiffuseMaterial(new SolidColorBrush(color));
 
+            
             GeometryModel3D model = new GeometryModel3D(mesh, material);
 
             model.BackMaterial = material;

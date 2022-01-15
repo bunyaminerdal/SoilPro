@@ -96,7 +96,7 @@ namespace SoilPro.Pages.Inputs.Views
 
                 GeometryModel3D WpfCylinderModel2 = WpfCylinder2.CreateModel(Colors.AliceBlue, true, true);
 
-                GeometryModel3D circleModel = circle.createModel(Colors.Aqua, false);
+                GeometryModel3D circleModel = circle.createModel(Colors.Azure, false);
                 GeometryModel3D circleModel2 = circle2.createModelTwoSided(Colors.Aqua, false);
 
 
@@ -105,7 +105,7 @@ namespace SoilPro.Pages.Inputs.Views
                     new Point3D(-WpfScene.sceneSize / 2,
                                 -floorThickness,
                                 -WpfScene.sceneSize / 2),
-                    WpfScene.sceneSize, floorThickness, WpfScene.sceneSize, Colors.Tan);
+                    WpfScene.sceneSize, floorThickness, WpfScene.sceneSize, Colors.Tan,true);
 
                 groupScene = new Model3DGroup();
 
