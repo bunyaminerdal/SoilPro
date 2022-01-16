@@ -36,7 +36,8 @@ namespace SoilPro.Pages.Inputs.Views
         public View3dPage()
         {
             InitializeComponent();
-            StartViewport3d();
+            viewport = viewport3d_main;
+            StartViewport3d(10,120,100);
         }
         
         public DirectionalLight positionLight(Point3D position)
@@ -56,71 +57,68 @@ namespace SoilPro.Pages.Inputs.Views
         {
             PerspectiveCamera perspectiveCamera = new PerspectiveCamera();
 
-            perspectiveCamera.Position = new Point3D(-WpfScene.sceneSize, WpfScene.sceneSize / 2, WpfScene.sceneSize);
+            perspectiveCamera.Position = new Point3D(-WpfScene.sceneSize/2, WpfScene.sceneSize / 2, WpfScene.sceneSize);
 
             perspectiveCamera.LookDirection = new Vector3D(lookat.X - perspectiveCamera.Position.X,
                                                            lookat.Y - perspectiveCamera.Position.Y,
                                                            lookat.Z - perspectiveCamera.Position.Z);
-
+            //perspectiveCamera.Width = WpfScene.sceneSize;
             perspectiveCamera.FieldOfView = 60;
 
             return perspectiveCamera;
         }
 
-        private void StartViewport3d()
+        private void StartViewport3d(double wall_w, double wall_h, double wall_d)
         {
             
-                viewport = viewport3d_main;
+            
+            
+            Point3D wallCenter = new Point3D(center3d.X-wall_w, center3d.Y, center3d.Z-wall_d/2);
+            WpfCube wallCube = new WpfCube(wallCenter, wall_w, wall_h, wall_d);
+            GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray);
+                       
+            double backCube_w = 200;
+            double backCube_h = wall_h;
+            double backCube_d = wall_d;
+            Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y, center3d.Z-backCube_d/2);
+            WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
+            GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200));
 
-                WpfCylinder WpfCylinder = new WpfCylinder(
-                    new Point3D(0, WpfScene.sceneSize / 4, WpfScene.sceneSize / 5),
-                    40, WpfScene.sceneSize / 8,
-                    WpfScene.sceneSize / 8,
-                    WpfScene.sceneSize / 6);
+            double frontCube_w = 200;
+            double frontCube_h = 50;
+            double frontCube_d = wall_d;
+            Point3D frontCubeCenter = new Point3D(center3d.X - wall_w - frontCube_w, center3d.Y-(backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
+            WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
+            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
 
-                WpfCylinder WpfCylinder2 = new WpfCylinder(
-                    new Point3D(-WpfScene.sceneSize / 2, WpfScene.sceneSize / 4, 0),
-                    40, WpfScene.sceneSize / 8,
-                    WpfScene.sceneSize / 8,
-                    WpfScene.sceneSize / 6);
-
-
-                WpfCircle circle = new WpfCircle(55,
-                    new Point3D(-WpfScene.sceneSize / 2, WpfScene.sceneSize / 6, WpfScene.sceneSize / 2), WpfScene.sceneSize / 15);
-
-                WpfCircle circle2 = new WpfCircle(55,
-                    new Point3D(0, WpfScene.sceneSize / 6, WpfScene.sceneSize / 2), WpfScene.sceneSize / 15);
-
-
-                GeometryModel3D WpfCylinderModel = WpfCylinder.CreateModel(Color.FromArgb(55, 255, 0, 0), true, true);
-
-                GeometryModel3D WpfCylinderModel2 = WpfCylinder2.CreateModel(Colors.AliceBlue, true, true);
-
-                GeometryModel3D circleModel = circle.createModel(Colors.Azure, false);
-                GeometryModel3D circleModel2 = circle2.createModelTwoSided(Colors.Aqua, false);
+            double cylinder_h = 200;
+            double cylinder_d = 2;
+            double cylinder_loc = 30;
+            Point3D cylinderCenter = new Point3D(center3d.X-wall_w-5,center3d.Y-cylinder_loc,center3d.Z);
+            WpfCylinder anchor = new WpfCylinder(cylinderCenter,10,cylinder_d,cylinder_d,cylinder_h);
+            GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue,true,true);
 
 
-                double floorThickness = WpfScene.sceneSize / 100;
-                GeometryModel3D floorModel = WpfCube.CreateCubeModel(
-                    new Point3D(-WpfScene.sceneSize / 2,
-                                -floorThickness,
-                                -WpfScene.sceneSize / 2),
-                    WpfScene.sceneSize, floorThickness, WpfScene.sceneSize, Colors.Tan,true);
+            AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
+            RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);
+            AxisAngleRotation3D rotationY = new AxisAngleRotation3D(new Vector3D(0, 0, 1), -30);
+            RotateTransform3D rotateTransformY = new RotateTransform3D(rotationY, cylinderCenter);
+            Transform3DGroup myTransform3DGroup = new Transform3DGroup();
+            myTransform3DGroup.Children.Add(rotateTransformX); 
+            myTransform3DGroup.Children.Add(rotateTransformY); 
+            cylinderModel.Transform = myTransform3DGroup;
 
-                groupScene = new Model3DGroup();
+            groupScene = new Model3DGroup();
+            groupScene.Children.Add(wallModel);
+            groupScene.Children.Add(cylinderModel);
+            groupScene.Children.Add(frontCubeModel);
+            groupScene.Children.Add(backCubeModel);
+                
 
-                groupScene.Children.Add(floorModel);
+            groupScene.Children.Add(leftLight());
+            groupScene.Children.Add(new AmbientLight(Colors.Gray));
 
-                groupScene.Children.Add(WpfCylinderModel);
-                groupScene.Children.Add(WpfCylinderModel2);
-                groupScene.Children.Add(circleModel);
-                groupScene.Children.Add(circleModel2);
-
-
-                groupScene.Children.Add(leftLight());
-                groupScene.Children.Add(new AmbientLight(Colors.Gray));
-
-                viewport.Camera = camera();
+            viewport.Camera = camera();
 
                 ModelVisual3D visual = new ModelVisual3D();
 
@@ -128,13 +126,11 @@ namespace SoilPro.Pages.Inputs.Views
 
                 viewport.Children.Add(visual);
 
-                //turnModel(WpfCylinder.getCenter(), groupScene);
-                //turnModel(WpfCylinder2.getCenter(), WpfCylinderModel2);
-
-                //turnModel(circle.getCenter(), circleModel);
-                //turnModel(circle2.getCenter(), circleModel2);
-            
-
+            //ScreenSortingHelper.AlphaSort(
+            //        camera().Position,
+            //        groupScene.Children,
+            //        groupScene.Transform
+            //    );
         }
         public void ChangeModelTransform()
         {
@@ -156,26 +152,34 @@ namespace SoilPro.Pages.Inputs.Views
             myTransform3DGroup.Children.Add(scaleTransform3D);
 
             groupScene.Transform = myTransform3DGroup;
+            //ScreenSortingHelper.AlphaSort(
+            //        camera().Position,
+            //        groupScene.Children,
+            //        groupScene.Transform
+            //    );
+            scroll_3dview.Content = scaleFactor;
         }
             
         
         private void viewport3d_main_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             scaleFactor += 0.5f*e.Delta/1000;
-            scaleFactor = Math.Clamp(scaleFactor, 0.3f, 3);
+            scaleFactor = Math.Clamp(scaleFactor, 0.2f, 3);
             ChangeModelTransform();
         }
 
         private void Position_Reset_bttn_Click(object sender, RoutedEventArgs e)
         {            
-            scaleFactor = 1f;
-            ChangeModelTransform();            
+            scaleFactor = 0.6f;
+            ChangeModelTransform();
+            
         }
 
         private void viewport3d_main_MouseDown(object sender, MouseButtonEventArgs e)
         {
             mouseFirstPos = e.GetPosition(this);
             if (e.MiddleButton == MouseButtonState.Pressed) isMouseWheelDown = true;
+
         }
 
         private void viewport3d_main_MouseUp(object sender, MouseButtonEventArgs e)
@@ -202,6 +206,12 @@ namespace SoilPro.Pages.Inputs.Views
         private void viewport3d_main_MouseLeave(object sender, MouseEventArgs e)
         {
             isMouseWheelDown = false;
+        }
+        public void ChangeWallHeight(double h)
+        {
+            groupScene.Children.Clear();
+            StartViewport3d(20, h, 100);
+            ChangeModelTransform();
         }
     }
 }

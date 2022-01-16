@@ -7,6 +7,6 @@ namespace SoilPro.Scripts
 {
     internal class WpfScene
     {
-        public static double sceneSize = 20;
+        public static double sceneSize = 500;
     }
 }

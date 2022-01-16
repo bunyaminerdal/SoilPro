@@ -16,6 +16,8 @@
     <system:String x:Key="Language" >Language</system:String>
     <system:String x:Key="English" >English</system:String>
     <system:String x:Key="Turkish" >Turkish</system:String>
+    <system:String x:Key="ConcreteWall" >Concrete Wall</system:String>
+    <system:String x:Key="wallheight" >Wall Height</system:String>
 
 
 

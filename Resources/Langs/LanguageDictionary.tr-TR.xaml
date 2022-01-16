@@ -16,4 +16,8 @@
     <system:String x:Key="Dil" >Language</system:String>
     <system:String x:Key="İngilizce" >English</system:String>
     <system:String x:Key="Türkçe" >Turkish</system:String>
+    <system:String x:Key="ConcreteWall" >Betonarme Duvar</system:String>
+    <system:String x:Key="wallheight" >Duvar yüksekliği</system:String>
+
+
 </ResourceDictionary>

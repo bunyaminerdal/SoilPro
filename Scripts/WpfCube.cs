@@ -172,7 +172,10 @@ namespace SoilPro.Scripts
         {
             return CreateCubeModel(p0, w, h, d, color, false);
         }
-
+        public static GeometryModel3D CreateCubeModel(WpfCube cube, Color color)
+        {
+            return CreateCubeModel(cube.origin, cube.width, cube.height, cube.depth, color, false);
+        }
         public static GeometryModel3D CreateCubeModel(Point3D p0, double w, double h, double d, Color color, bool useTexture)
         {
             MeshGeometry3D mesh = new MeshGeometry3D();
