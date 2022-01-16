@@ -33,7 +33,7 @@
                         <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" >
                             <Label Width="100" Content="{DynamicResource wallheight}"/>
                             <Label Width="30" Content="(h):"/>
-                            <TextBox x:Name="concretewall_height" Width="100" TextChanged="concretewall_height_TextChanged" DataObject.Pasting="TextBoxPasting" PreviewTextInput="concretewall_height_PreviewTextInput"/>
+                            <TextBox x:Name="concretewall_height" Width="100" TextChanged="concretewall_height_TextChanged"  PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown"/>
                             <Label x:Name="concretewall_height_unit" Width="30" Content="m"/>
                         </DockPanel>
                     </GroupBox>

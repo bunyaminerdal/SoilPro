@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -22,9 +23,13 @@ namespace SoilPro.Pages.Inputs
     public partial class MaterialsPage : Page
     {
         Views.View3dPage view3DPage;
+        public char separator = ',';
         public MaterialsPage()
         {
             InitializeComponent();
+            
+
+           
             
         }
         public void SetViewPages(Views.View3dPage view3d,Views.SideviewPage sideview)
@@ -38,49 +43,40 @@ namespace SoilPro.Pages.Inputs
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            //Int32 selectionStart = textBox.SelectionStart;
-            //Int32 selectionLength = textBox.SelectionLength;
-
-            //String newText = String.Empty;
-            //foreach (Char c in textBox.Text.ToCharArray())
-            //{
-            //    if (Char.IsDigit(c) || Char.IsControl(c)) newText += c;
-            //}
-
-            //textBox.Text = newText;
-
-            //textBox.SelectionStart = selectionStart <= textBox.Text.Length ?
-            //    selectionStart : textBox.Text.Length;
-            if(double.TryParse(textBox.Text, out double result))
+            
+            if (double.TryParse(textBox.Text, out double result))
             {
                 view3DPage.ChangeWallHeight(result);
             }
-            
+
         }
-        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-        private static bool IsTextAllowed(string text)
-        {
-            return !_regex.IsMatch(text);
-        }
-        private void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
-        {
-            //if (e.DataObject.GetDataPresent(typeof(double)))
-            //{
-            //    double text = (double)e.DataObject.GetData(typeof(double));
-            //    //if (!IsTextAllowed(double))
-            //    //{
-            //    //    e.CancelCommand();
-            //    //}
-            //}
-            //else
-            //{
-            //    e.CancelCommand();
-            //}
-        }
+        
         private void concretewall_height_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !double.TryParse(e.Text, out double result);
+            
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);           
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
+            }
+                       
+            
+        }
+
+        private void concretewall_height_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Space)
+            {
+                e.Handled=true;
+            }
         }
     }
+   
 
 }
