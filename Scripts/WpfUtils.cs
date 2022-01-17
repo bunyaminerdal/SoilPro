@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace SoilPro.Scripts
 {
@@ -128,5 +119,18 @@ namespace SoilPro.Scripts
             return radians * one_rad_in_degrees;
         }
 
+        
+        public static double GetDimension(double value)
+        {
+            double newValue;
+            newValue =Math.Round( value * StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
+            return newValue;
+        }
+        public static double GetValue(double value)
+        {
+            double newValue;
+            newValue =Math.Round( value / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
+            return newValue;
+        }
     }
 }

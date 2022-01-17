@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SoilPro.Scripts;
 
 namespace SoilPro.Pages.Inputs
 {
@@ -41,6 +42,26 @@ namespace SoilPro.Pages.Inputs
         private void MaterialsBttn_Checked(object sender, RoutedEventArgs e)
         {
             Main_pro.Content = materialsPage;
+        }
+
+        private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (((ComboBox)sender).SelectedIndex)
+            {
+                case 0:
+                    StaticVariables.CurrentUnit = Units.kg_mm;
+                    break;
+                case 1:
+                    StaticVariables.CurrentUnit = Units.kg_cm;
+                    break;
+                case 2:
+                    StaticVariables.CurrentUnit = Units.kg_m;
+                    break;
+                default:
+                    break;
+            }
+            
+            StaticEvents.UnitChangeEvent?.Invoke();
         }
     }
 }

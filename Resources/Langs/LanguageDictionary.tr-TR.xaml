@@ -18,6 +18,8 @@
     <system:String x:Key="Türkçe" >Turkish</system:String>
     <system:String x:Key="ConcreteWall" >Betonarme Duvar</system:String>
     <system:String x:Key="wallheight" >Duvar yüksekliği</system:String>
+    <system:String x:Key="wallthickness" >Duvar Kalınlığı</system:String>
+
 
 
 </ResourceDictionary>

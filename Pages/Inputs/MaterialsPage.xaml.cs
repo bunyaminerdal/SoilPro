@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SoilPro.Scripts;
 
 namespace SoilPro.Pages.Inputs
 {
@@ -22,31 +24,48 @@ namespace SoilPro.Pages.Inputs
     /// </summary>
     public partial class MaterialsPage : Page
     {
-        Views.View3dPage view3DPage;
+        private Views.View3dPage view3DPage;
         public char separator = ',';
+
         public MaterialsPage()
         {
             InitializeComponent();
             
 
-           
-            
         }
+
+        private void UnitChange()
+        {
+            concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];            
+            concretewall_thickness_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+
+            concretewall_height.Text = WpfUtils.GetDimension(view3DPage.GetWallHeight()).ToString();
+            concretewall_thickness.Text = WpfUtils.GetDimension(view3DPage.GetWallThickness()).ToString();
+        }
+        // Create the OnPropertyChanged method to raise the event
+        // The calling member's name will be used as the parameter.
+        
         public void SetViewPages(Views.View3dPage view3d,Views.SideviewPage sideview)
         {
             view3d_main.Content = view3d;
             view3DPage = view3d;
             sideview_main.Content = sideview;
-            
+            GetWallProperties();
+            StaticEvents.UnitChangeEvent += UnitChange;
+        }
+        public void GetWallProperties()
+        {
+            concretewall_height.Text = view3DPage.GetWallHeight().ToString();
+            concretewall_thickness.Text = view3DPage.GetWallThickness().ToString();
         }
 
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            TextBox textBox = (TextBox)sender;
             
             if (double.TryParse(textBox.Text, out double result))
             {
-                view3DPage.ChangeWallHeight(result);
+                view3DPage.ChangeWallHeight(WpfUtils.GetValue(result));
             }
 
         }
@@ -58,12 +77,12 @@ namespace SoilPro.Pages.Inputs
             if (separator == ',')
             {
                 Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
             }
             else
             {
                 Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
             }
                        
             
@@ -74,6 +93,41 @@ namespace SoilPro.Pages.Inputs
             if(e.Key == Key.Space)
             {
                 e.Handled=true;
+            }
+            
+        }
+
+
+        private void concretewall_thickness_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                view3DPage.ChangeWallThickness(WpfUtils.GetValue( result));
+            }
+        }
+
+        private void concretewall_thickness_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void concretewall_thickness_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
             }
         }
     }

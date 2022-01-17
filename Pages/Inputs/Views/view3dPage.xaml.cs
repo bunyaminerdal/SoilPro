@@ -25,19 +25,28 @@ namespace SoilPro.Pages.Inputs.Views
     {
         public  Viewport3D viewport;
         public Model3DGroup groupScene;
-        float scaleFactor = 1f;
+        double scaleFactor = 0.2f;
+        private double minScaleFactor = 0.1f;
+        private double maxScaleFactor = 1f;
         Point3D lookat = new Point3D(0, 0, 0);
         Point mouseFirstPos;
         bool isMouseWheelDown;
-        float rotationAngleX;
-        float rotationAngleY;
+        double rotationAngleX;
+        double rotationAngleY;
         Vector mousePosDiff;
         Point3D center3d = new Point3D(0, 0, 0);
+        double wall_t=50;
+        double wall_h=1200; 
+        double wall_d=700;
+        double frontandbackCubeLength = 1500;
+        double frontandbackCubeElevationdiff = 800;
+
         public View3dPage()
         {
             InitializeComponent();
             viewport = viewport3d_main;
-            StartViewport3d(10,120,100);
+            StartViewport3d();
+            ChangeModelTransform();
         }
         
         public DirectionalLight positionLight(Point3D position)
@@ -68,34 +77,33 @@ namespace SoilPro.Pages.Inputs.Views
             return perspectiveCamera;
         }
 
-        private void StartViewport3d(double wall_w, double wall_h, double wall_d)
+        private void StartViewport3d()
         {
+            //center3d = new Point3D(center3d.X - wall_w,center3d.Y,center3d.Z -wall_d/2);
             
-            
-            
-            Point3D wallCenter = new Point3D(center3d.X-wall_w, center3d.Y, center3d.Z-wall_d/2);
-            WpfCube wallCube = new WpfCube(wallCenter, wall_w, wall_h, wall_d);
+            Point3D wallCenter = new Point3D(center3d.X-wall_t, center3d.Y+wall_h/2, center3d.Z-wall_d/2);
+            WpfCube wallCube = new WpfCube(wallCenter, wall_t, wall_h, wall_d);
             GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray);
                        
-            double backCube_w = 200;
+            double backCube_w = frontandbackCubeLength;
             double backCube_h = wall_h;
             double backCube_d = wall_d;
-            Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y, center3d.Z-backCube_d/2);
+            Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + wall_h / 2, center3d.Z-backCube_d/2);
             WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
             GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200));
 
-            double frontCube_w = 200;
-            double frontCube_h = 50;
+            double frontCube_w = frontandbackCubeLength;
+            double frontCube_h = wall_h- frontandbackCubeElevationdiff;
             double frontCube_d = wall_d;
-            Point3D frontCubeCenter = new Point3D(center3d.X - wall_w - frontCube_w, center3d.Y-(backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
+            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + wall_h / 2 - (backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
             WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
             GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
 
-            double cylinder_h = 200;
-            double cylinder_d = 2;
-            double cylinder_loc = 30;
-            Point3D cylinderCenter = new Point3D(center3d.X-wall_w-5,center3d.Y-cylinder_loc,center3d.Z);
-            WpfCylinder anchor = new WpfCylinder(cylinderCenter,10,cylinder_d,cylinder_d,cylinder_h);
+            double cylinder_h = 700;
+            double cylinder_d = 15;
+            double cylinder_loc = 100;
+            Point3D cylinderCenter = new Point3D(center3d.X-wall_t-20,center3d.Y + wall_h / 2 - cylinder_loc,center3d.Z);
+            WpfCylinder anchor = new WpfCylinder(cylinderCenter,30,cylinder_d,cylinder_d,cylinder_h);
             GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue,true,true);
 
 
@@ -163,16 +171,15 @@ namespace SoilPro.Pages.Inputs.Views
         
         private void viewport3d_main_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            scaleFactor += 0.5f*e.Delta/1000;
-            scaleFactor = Math.Clamp(scaleFactor, 0.2f, 3);
+            scaleFactor += 0.25f*e.Delta/1000;
+            scaleFactor = Math.Clamp(scaleFactor, minScaleFactor, maxScaleFactor);
             ChangeModelTransform();
         }
 
         private void Position_Reset_bttn_Click(object sender, RoutedEventArgs e)
         {            
-            scaleFactor = 0.6f;
-            ChangeModelTransform();
-            
+            scaleFactor = 0.2f;
+            ChangeModelTransform();            
         }
 
         private void viewport3d_main_MouseDown(object sender, MouseButtonEventArgs e)
@@ -195,8 +202,8 @@ namespace SoilPro.Pages.Inputs.Views
             {
                 var mousePos = e.GetPosition(this);
                 mousePosDiff = mousePos - mouseFirstPos;
-                rotationAngleX += (float)mousePosDiff.X/5;
-                rotationAngleY += (float)mousePosDiff.Y/5;
+                rotationAngleX += (double)mousePosDiff.X/5;
+                rotationAngleY += (double)mousePosDiff.Y/5;
                 ChangeModelTransform();
                 mouseFirstPos = mousePos;
             }
@@ -209,9 +216,25 @@ namespace SoilPro.Pages.Inputs.Views
         }
         public void ChangeWallHeight(double h)
         {
+            wall_h = h;
             groupScene.Children.Clear();
-            StartViewport3d(20, h, 100);
+            StartViewport3d();
             ChangeModelTransform();
         }
+        public void ChangeWallThickness(double d)
+        {
+            wall_t = d;
+            groupScene.Children.Clear();
+            StartViewport3d();
+            ChangeModelTransform();
+        }
+
+        public double GetWallHeight()
+        {
+            return wall_h;
+        }
+
+        public double GetWallThickness()
+        { return wall_t; }
     }
 }
