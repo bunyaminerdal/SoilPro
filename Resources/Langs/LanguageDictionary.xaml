@@ -19,8 +19,11 @@
     <system:String x:Key="ConcreteWall" >Concrete Wall</system:String>
     <system:String x:Key="wallheight" >Wall Height</system:String>
     <system:String x:Key="wallthickness" >Wall Thickness</system:String>
-
-
-
-
+    <system:String x:Key="walltype" >Wall Type</system:String>
+    <system:String x:Key="Materials" >Materials</system:String>
+    <system:String x:Key="ExDesign" >Ex-Design</system:String>
+    <system:String x:Key="SolidMethod" >Solid Method</system:String>
+    <system:String x:Key="ExSiteStyle" >Excavation Site Style</system:String>
+    <system:String x:Key="Excavationheight" >Excavation Height</system:String>
+    
 </ResourceDictionary>

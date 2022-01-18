@@ -13,6 +13,9 @@
     <Compile Update="Pages\Inputs\MaterialsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\Inputs\ExDesignPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Inputs\Views\SideviewPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -43,6 +46,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Inputs\MaterialsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\ExDesignPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Inputs\Views\SideviewPage.xaml">

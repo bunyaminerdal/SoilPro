@@ -27,10 +27,10 @@
 
         <DockPanel Grid.Row="0" Background="#FFA9ADAD">
             <DockPanel HorizontalAlignment="Left">
-                <RadioButton x:Name="walltypeBttn" MinWidth="80" Content="Wall Type" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="walltypeBttn_Checked" />
-                <RadioButton x:Name="MaterialsBttn" MinWidth="80" Content="Materials" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="MaterialsBttn_Checked" />
-                <RadioButton x:Name="ExDesignBttn" MinWidth="80" Content="Ex-Design" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" />
-                <RadioButton x:Name="SolidMethodBttn" MinWidth="80" Content="Solid Method" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" />
+                <RadioButton x:Name="walltypeBttn" MinWidth="80" Content="{DynamicResource walltype}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="walltypeBttn_Checked" />
+                <RadioButton x:Name="MaterialsBttn" MinWidth="80" Content="{DynamicResource Materials}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="MaterialsBttn_Checked" />
+                <RadioButton x:Name="ExDesignBttn" MinWidth="80" Content="{DynamicResource ExDesign}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="ExDesignBttn_Checked" />
+                <RadioButton x:Name="SolidMethodBttn" MinWidth="80" Content="{DynamicResource SolidMethod}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" />
             </DockPanel>
         </DockPanel >
 

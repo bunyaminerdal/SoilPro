@@ -24,13 +24,12 @@ namespace SoilPro.Pages.Inputs
     /// </summary>
     public partial class MaterialsPage : Page
     {
-        private Views.View3dPage view3DPage;
+
         public char separator = ',';
 
         public MaterialsPage()
         {
             InitializeComponent();
-            
 
         }
 
@@ -39,24 +38,17 @@ namespace SoilPro.Pages.Inputs
             concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];            
             concretewall_thickness_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
 
-            concretewall_height.Text = WpfUtils.GetDimension(view3DPage.GetWallHeight()).ToString();
-            concretewall_thickness.Text = WpfUtils.GetDimension(view3DPage.GetWallThickness()).ToString();
+            concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
+            concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
         }
         // Create the OnPropertyChanged method to raise the event
         // The calling member's name will be used as the parameter.
         
-        public void SetViewPages(Views.View3dPage view3d,Views.SideviewPage sideview)
-        {
-            view3d_main.Content = view3d;
-            view3DPage = view3d;
-            sideview_main.Content = sideview;
-            GetWallProperties();
-            StaticEvents.UnitChangeEvent += UnitChange;
-        }
+        
         public void GetWallProperties()
         {
-            concretewall_height.Text = view3DPage.GetWallHeight().ToString();
-            concretewall_thickness.Text = view3DPage.GetWallThickness().ToString();
+            concretewall_height.Text = StaticVariables.view3DPage.GetWallHeight().ToString();
+            concretewall_thickness.Text = StaticVariables.view3DPage.GetWallThickness().ToString();
         }
 
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
@@ -65,7 +57,7 @@ namespace SoilPro.Pages.Inputs
             
             if (double.TryParse(textBox.Text, out double result))
             {
-                view3DPage.ChangeWallHeight(WpfUtils.GetValue(result));
+                StaticVariables.view3DPage.ChangeWallHeight(WpfUtils.GetValue(result));
             }
 
         }
@@ -104,7 +96,7 @@ namespace SoilPro.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                view3DPage.ChangeWallThickness(WpfUtils.GetValue( result));
+                StaticVariables.view3DPage.ChangeWallThickness(WpfUtils.GetValue( result));
             }
         }
 
@@ -129,6 +121,21 @@ namespace SoilPro.Pages.Inputs
             {
                 e.Handled = true;
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            view3d_main.Content = StaticVariables.view3DPage;
+            sideview_main.Content = StaticVariables.SideviewPage;
+            GetWallProperties();
+            StaticEvents.UnitChangeEvent += UnitChange;
+            
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            view3d_main.Content = null;
+            sideview_main.Content = null;
         }
     }
    

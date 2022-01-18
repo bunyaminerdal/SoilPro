@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\Users\leoni\Documents\GitHub\SoilPro\App.xaml
-12-436703642
+13-1631096217
 
-26-1104211352
+28-22311514
 193-1891726104
-MainWindow.xaml;Pages\Inputs\InputsMainPage.xaml;Pages\Inputs\MaterialsPage.xaml;Pages\Inputs\Views\SideviewPage.xaml;Pages\Inputs\Views\view3dPage.xaml;Pages\Inputs\wallTypePage.xaml;Pages\Options\GeneralOptions.xaml;Pages\Options\OptionsMainPage.xaml;Pages\Options\RegionOptions.xaml;Pages\Reports\ReportMainPage.xaml;Resources\Langs\LanguageDictionary.tr-TR.xaml;Resources\Langs\LanguageDictionary.xaml;
+MainWindow.xaml;Pages\Inputs\ExDesignPage.xaml;Pages\Inputs\InputsMainPage.xaml;Pages\Inputs\MaterialsPage.xaml;Pages\Inputs\Views\SideviewPage.xaml;Pages\Inputs\Views\view3dPage.xaml;Pages\Inputs\wallTypePage.xaml;Pages\Options\GeneralOptions.xaml;Pages\Options\OptionsMainPage.xaml;Pages\Options\RegionOptions.xaml;Pages\Reports\ReportMainPage.xaml;Resources\Langs\LanguageDictionary.tr-TR.xaml;Resources\Langs\LanguageDictionary.xaml;
 
 True
 

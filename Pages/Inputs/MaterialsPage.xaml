@@ -7,14 +7,14 @@
       xmlns:Views="clr-namespace:SoilPro.Pages.Inputs.Views" x:Class="SoilPro.Pages.Inputs.MaterialsPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MaterialsPage">
+      Title="MaterialsPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="220"/>
+            <RowDefinition Height="240"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -42,19 +42,20 @@
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="100" Content="{DynamicResource wallheight}"/>
                                 <Label Width="30" Content="(h):"/>
-                                <TextBox x:Name="concretewall_height" Height="22" Width="100" TextChanged="concretewall_height_TextChanged"  PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown"/>
+                                <TextBox x:Name="concretewall_height" Height="22" Width="80" TextChanged="concretewall_height_TextChanged"  PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown"/>
                                 <Label x:Name="concretewall_height_unit" Width="30" Content="cm"/>
                             </DockPanel>
                             
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="100" Content="{DynamicResource wallthickness}"/>
                                 <Label Width="30" Content="(t):"/>
-                                <TextBox x:Name="concretewall_thickness" Height="22" Width="100" TextChanged="concretewall_thickness_TextChanged" PreviewTextInput="concretewall_thickness_PreviewTextInput" PreviewKeyDown="concretewall_thickness_PreviewKeyDown"     />
+                                <TextBox x:Name="concretewall_thickness" Height="22" Width="80" TextChanged="concretewall_thickness_TextChanged" PreviewTextInput="concretewall_thickness_PreviewTextInput" PreviewKeyDown="concretewall_thickness_PreviewKeyDown"     />
                                 <Label x:Name="concretewall_thickness_unit" Width="30" Content="cm"/>
                             </DockPanel>
+                            
                         </Grid>
 
-
+                        
                     </GroupBox>
                 </StackPanel>
             </Grid>

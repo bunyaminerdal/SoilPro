@@ -48,7 +48,7 @@ namespace SoilPro.Scripts
 
             origin = P0;
         }
-
+        
         public WpfCube(WpfCube cube)
         {
             width = cube.width;

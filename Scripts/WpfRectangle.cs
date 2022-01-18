@@ -70,6 +70,7 @@ namespace SoilPro.Scripts
             }
         }
 
+
         public void addToMesh(MeshGeometry3D mesh)
         {
             WpfTriangle.addTriangleToMesh(p0, p1, p2, mesh);

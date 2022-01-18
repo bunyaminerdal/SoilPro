@@ -22,16 +22,16 @@ namespace SoilPro.Pages.Inputs
     public partial class InputsMainPage : Page
     {
         
-        public Views.View3dPage view3dScreenPage = new Views.View3dPage();
-        public Views.SideviewPage sideviewPage = new Views.SideviewPage();
         WallTypePage wallTypePage = new WallTypePage();
         MaterialsPage materialsPage = new MaterialsPage();
+        ExDesignPage exDesignPage = new ExDesignPage( );
+        
         public InputsMainPage()
         {
             InitializeComponent();
             walltypeBttn.IsChecked = true;
             Main_pro.Content = wallTypePage;
-            materialsPage.SetViewPages(view3dScreenPage,sideviewPage);
+
         }
 
         private void walltypeBttn_Checked(object sender, RoutedEventArgs e)
@@ -43,7 +43,11 @@ namespace SoilPro.Pages.Inputs
         {
             Main_pro.Content = materialsPage;
         }
+        private void ExDesignBttn_Checked(object sender, RoutedEventArgs e)
+        {
+            Main_pro.Content = exDesignPage;
 
+        }
         private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (((ComboBox)sender).SelectedIndex)
@@ -63,5 +67,7 @@ namespace SoilPro.Pages.Inputs
             
             StaticEvents.UnitChangeEvent?.Invoke();
         }
+
+       
     }
 }
