@@ -25,5 +25,13 @@
     <system:String x:Key="SolidMethod" >Solid Method</system:String>
     <system:String x:Key="ExSiteStyle" >Excavation Site Style</system:String>
     <system:String x:Key="Excavationheight" >Excavation Height</system:String>
+    <system:String x:Key="ExcavationSurfaceheight" >Ex. Surface Height</system:String>
+    <system:String x:Key="ExcavationSurfacedist1" >Ex. Surface Distance 1</system:String>
+    <system:String x:Key="ExcavationSurfacedist2" >Ex. Surface Distance 2</system:String>
+    <system:String x:Key="GroundSurfaceStyle" >Ground Surface Style</system:String>
+    <system:String x:Key="SurfaceSlope" >Ground Surface Slope</system:String>
+    <system:String x:Key="SurfaceHeight" >Ground Surface Height</system:String>
+    <system:String x:Key="SurfaceDistance1" >Ground Surface Distance 1</system:String>
+    <system:String x:Key="SurfaceDistance2" >Ground Surface Distance 2</system:String>
     
 </ResourceDictionary>

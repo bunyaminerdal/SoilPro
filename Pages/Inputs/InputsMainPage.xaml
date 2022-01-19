@@ -17,10 +17,18 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="2">
             <StatusBar>
-                <ComboBox x:Name="UnitCombobox" SelectedIndex="3"  SelectionChanged="UnitCombobox_SelectionChanged" Padding="6,3,5,3" FontSize="14" Height="25" >
+                <ComboBox x:Name="UnitCombobox" SelectedIndex="11"  SelectionChanged="UnitCombobox_SelectionChanged" Padding="6,3,5,3" FontSize="14" Height="25" >
                     <ComboBoxItem>kg-mm</ComboBoxItem>
                     <ComboBoxItem>kg-cm</ComboBoxItem>
                     <ComboBoxItem>kg-m</ComboBoxItem>
+                    <ComboBoxItem>ton-mm</ComboBoxItem>
+                    <ComboBoxItem>ton-cm</ComboBoxItem>
+                    <ComboBoxItem>ton-m</ComboBoxItem>
+                    <ComboBoxItem>N-mm</ComboBoxItem>
+                    <ComboBoxItem>N-cm</ComboBoxItem>
+                    <ComboBoxItem>N-m</ComboBoxItem>
+                    <ComboBoxItem>kN-mm</ComboBoxItem>
+                    <ComboBoxItem>kN-cm</ComboBoxItem>
                     <ComboBoxItem>kN-m</ComboBoxItem>
                 </ComboBox>
             </StatusBar>

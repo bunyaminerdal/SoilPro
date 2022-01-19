@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SoilPro.Pages.Inputs.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1024"
       Title="ExDesignPage" Unloaded="Page_Unloaded" Loaded="Page_Loaded">
 
     <Grid>
@@ -25,23 +25,23 @@
         <StackPanel Grid.Row="1" Background="White">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="1.3765*"/>
+                    <ColumnDefinition  Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource ExSiteStyle}">
+                    <GroupBox Margin="0,5,2.5,5" MaxHeight="320" Header="{DynamicResource ExSiteStyle}">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="150"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-                            <DockPanel Height="150" MaxWidth="450" VerticalAlignment="Top" HorizontalAlignment="Center">
+                            <DockPanel Margin="2"  MaxWidth="450" VerticalAlignment="Top" HorizontalAlignment="Center">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
                                     </Grid.ColumnDefinitions>
                                     <RadioButton Grid.Column="0" x:Name="exsitetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True" Checked="exsitetype1_button_Checked" Margin="0,0,5,0" >
                                         <Image Source="/Textures/exheight.png" />
@@ -49,7 +49,7 @@
                                     <RadioButton Grid.Column="1" x:Name="exsitetype2_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype2_button_Checked" Margin="0,0,5,0"  >
                                         <Image Source="/Textures/exheight2.png" />
                                     </RadioButton>
-                                    <RadioButton Grid.Column="2" x:Name="exsitetype3_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype3_button_Checked" Margin="0,0,5,0"  >
+                                    <RadioButton Grid.Column="2" x:Name="exsitetype3_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype3_button_Checked" Margin="0,0,0,0"  >
                                         <Image Source="../../Textures/exheight3.png" />
                                     </RadioButton>
 
@@ -65,25 +65,25 @@
                                         
                                     </Grid.RowDefinitions>
                                     <DockPanel x:Name="H_dock_panel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="105" Content="{DynamicResource Excavationheight}"/>
+                                        <Label Width="150" Content="{DynamicResource Excavationheight}"/>
                                         <Label Width="30" Content="(h):"/>
                                         <TextBox x:Name="excavationheight" Height="22" Width="80" TextChanged="excavationheight_TextChanged"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" />
                                         <Label x:Name="excavationheight_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="Z_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="105" Content="{DynamicResource wallthickness}"/>
+                                        <Label Width="150" Content="{DynamicResource ExcavationSurfaceheight}"/>
                                         <Label Width="30" Content="(z):"/>
                                         <TextBox x:Name="excavation_Z" Height="22" Width="80" TextChanged="excavation_Z_TextChanged" PreviewTextInput="excavation_Z_PreviewTextInput" PreviewKeyDown="excavation_Z_PreviewKeyDown"    />
                                         <Label x:Name="excavation_Z_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="105" Content="{DynamicResource wallthickness}"/>
+                                        <Label Width="150" Content="{DynamicResource ExcavationSurfacedist1}"/>
                                         <Label Width="30" Content="(x1):"/>
                                         <TextBox x:Name="excavation_X1" Height="22" Width="80"  TextChanged="excavation_X1_TextChanged" PreviewTextInput="excavation_X1_PreviewTextInput" PreviewKeyDown="excavation_X1_PreviewKeyDown"   />
                                         <Label x:Name="excavation_X1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="105" Content="{DynamicResource wallthickness}"/>
+                                        <Label Width="150" Content="{DynamicResource ExcavationSurfacedist2}"/>
                                         <Label Width="30" Content="(x2):"/>
                                         <TextBox x:Name="excavation_X2" Height="22" Width="80"  TextChanged="excavation_X2_TextChanged" PreviewTextInput="excavation_X2_PreviewTextInput" PreviewKeyDown="excavation_X2_PreviewKeyDown"     />
                                         <Label x:Name="excavation_X2_unit" Width="30" Content="cm"/>
@@ -93,14 +93,79 @@
 
                             </DockPanel>
                                 
-                               
-                                
-
-                                
-
-
                         </Grid>
 
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <GroupBox Margin="0,5,2.5,5" MaxHeight="320" Header="{DynamicResource GroundSurfaceStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <DockPanel  MaxWidth="600" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <RadioButton Grid.Column="0" x:Name="surfacetype_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True"  Margin="0,0,5,0" Checked="surfacetype_button_Checked" >
+                                        <Image Source="/Textures/surface1.png" />
+                                    </RadioButton>
+                                    <RadioButton Grid.Column="1" x:Name="surfacetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="surfacetype1_button_Checked"  >
+                                        <Image Source="/Textures/surface2.png" />
+                                    </RadioButton>
+                                    <RadioButton Grid.Column="2" x:Name="surfacetype2_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="surfacetype2_button_Checked"  >
+                                        <Image Source="/Textures/surface3.png" />
+                                    </RadioButton>
+                                    <RadioButton Grid.Column="3" x:Name="surfacetype3_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,0,0" Checked="surfacetype3_button_Checked"  >
+                                        <Image Source="/Textures/surface4.png" />
+                                    </RadioButton>
+
+                                </Grid>
+                            </DockPanel>
+                            <DockPanel Grid.Row="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="27"/>
+                                        <RowDefinition Height="27"/>
+                                        <RowDefinition Height="27"/>
+                                        <RowDefinition Height="27"/>
+
+                                    </Grid.RowDefinitions>
+                                    <DockPanel x:Name="Beta_dock_panel" Visibility="Hidden" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                        <Label Width="180" Content="{DynamicResource SurfaceSlope}"/>
+                                        <Label Width="50" Content="(Beta):"/>
+                                        <TextBox x:Name="surfaceslope" Height="22" Width="80" TextChanged="surfaceslope_TextChanged" PreviewTextInput="surfaceslope_PreviewTextInput" PreviewKeyDown="surfaceslope_PreviewKeyDown"  />
+                                        <Label x:Name="surfaceslope_unit" Width="30" Content="°"/>
+                                    </DockPanel>
+                                    <DockPanel x:Name="B_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                        <Label Width="180" Content="{DynamicResource SurfaceHeight}"/>
+                                        <Label Width="50" Content="(b):"/>
+                                        <TextBox x:Name="surface_B" Height="22" Width="80" TextChanged="surface_B_TextChanged" PreviewTextInput="surface_B_PreviewTextInput" PreviewKeyDown="surface_B_PreviewKeyDown"     />
+                                        <Label x:Name="surface_B_unit" Width="30" Content="cm"/>
+                                    </DockPanel>
+                                    <DockPanel x:Name="A1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                        <Label Width="180" Content="{DynamicResource SurfaceDistance1}"/>
+                                        <Label Width="50" Content="(a1):"/>
+                                        <TextBox x:Name="surface_A1" Height="22" Width="80" TextChanged="surface_A1_TextChanged" PreviewTextInput="surface_A1_PreviewTextInput" PreviewKeyDown="surface_A1_PreviewKeyDown"     />
+                                        <Label x:Name="surface_A1_unit" Width="30" Content="cm"/>
+                                    </DockPanel>
+                                    <DockPanel x:Name="A2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                        <Label Width="180" Content="{DynamicResource SurfaceDistance2}"/>
+                                        <Label Width="50" Content="(a2):"/>
+                                        <TextBox x:Name="surface_A2" Height="22" Width="80" TextChanged="surface_A2_TextChanged" PreviewTextInput="surface_A2_PreviewTextInput" PreviewKeyDown="surface_A2_PreviewKeyDown"       />
+                                        <Label x:Name="surface_A2_unit" Width="30" Content="cm"/>
+                                    </DockPanel>
+
+                                </Grid>
+
+                            </DockPanel>
+
+                        </Grid>
 
                     </GroupBox>
                 </StackPanel>

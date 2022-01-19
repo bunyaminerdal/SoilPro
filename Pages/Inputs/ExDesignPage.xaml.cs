@@ -40,24 +40,22 @@ namespace SoilPro.Pages.Inputs
             excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationZ()).ToString();
             excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX1()).ToString();
             excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX2()).ToString();
-            
+
+            surface_A1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            surface_A2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            surface_B_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            surfaceslope.Text = StaticVariables.view3DPage.GetSurfaceBeta().ToString();
+            surface_B.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceB()).ToString();
+            surface_A1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceA1()).ToString();
+            surface_A2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceA2()).ToString();
+
         }
-        public void GetWallProperties()
-        {
-            excavationheight_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            excavation_Z_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            excavation_X1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            excavation_X2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            excavationheight.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationHeight()).ToString();
-            excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationZ()).ToString();
-            excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX1()).ToString();
-            excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX2()).ToString();
-        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.SideviewPage;
-            GetWallProperties();
+            UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
         }
 
@@ -79,7 +77,7 @@ namespace SoilPro.Pages.Inputs
                 Z_dock_panel.Visibility = Visibility.Hidden;
             }
             StaticVariables.excavationType = ExcavationType.none;
-            StaticVariables.view3DPage.ChangeExcavationType();
+            StaticVariables.view3DPage.Refresh3Dview();
             
         }
 
@@ -92,7 +90,7 @@ namespace SoilPro.Pages.Inputs
                 Z_dock_panel.Visibility = Visibility.Visible;
             }
             StaticVariables.excavationType = ExcavationType.type1;
-            StaticVariables.view3DPage.ChangeExcavationType();
+            StaticVariables.view3DPage.Refresh3Dview();
         }
 
         private void exsitetype3_button_Checked(object sender, RoutedEventArgs e)
@@ -104,7 +102,7 @@ namespace SoilPro.Pages.Inputs
                 Z_dock_panel.Visibility = Visibility.Visible;
             }
             StaticVariables.excavationType = ExcavationType.type2;
-            StaticVariables.view3DPage.ChangeExcavationType();
+            StaticVariables.view3DPage.Refresh3Dview();
         }
 
         private void excavationheight_TextChanged(object sender, TextChangedEventArgs e)
@@ -232,6 +230,190 @@ namespace SoilPro.Pages.Inputs
         }
 
         private void excavation_X2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void surfacetype_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (B_dock_panel != null)
+            {
+                B_dock_panel.Visibility = Visibility.Hidden;
+                Beta_dock_panel.Visibility = Visibility.Hidden;
+                A1_dock_panel.Visibility = Visibility.Hidden;
+                A2_dock_panel.Visibility = Visibility.Hidden;
+            }
+            StaticVariables.groundSurfaceType = GroundSurfaceType.flat;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void surfacetype1_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (B_dock_panel != null)
+            {
+                B_dock_panel.Visibility = Visibility.Hidden;
+                Beta_dock_panel.Visibility = Visibility.Visible;
+                A1_dock_panel.Visibility = Visibility.Visible;
+                A2_dock_panel.Visibility = Visibility.Hidden;
+            }
+            StaticVariables.groundSurfaceType = GroundSurfaceType.type1;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void surfacetype2_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (B_dock_panel != null)
+            {
+                B_dock_panel.Visibility = Visibility.Visible;
+                Beta_dock_panel.Visibility = Visibility.Hidden;
+                A1_dock_panel.Visibility = Visibility.Visible;
+                A2_dock_panel.Visibility = Visibility.Hidden;
+            }
+            StaticVariables.groundSurfaceType = GroundSurfaceType.type2;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void surfacetype3_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (B_dock_panel != null)
+            {
+                B_dock_panel.Visibility = Visibility.Visible;
+                Beta_dock_panel.Visibility = Visibility.Hidden;
+                A1_dock_panel.Visibility = Visibility.Visible;
+                A2_dock_panel.Visibility = Visibility.Visible;
+            }
+            StaticVariables.groundSurfaceType = GroundSurfaceType.type3;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void surfaceslope_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeSurfaceBeta(result);
+            }
+        }
+
+        private void surfaceslope_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void surfaceslope_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void surface_B_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeSurfaceB(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void surface_B_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void surface_B_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void surface_A1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeSurfaceA1(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void surface_A1_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void surface_A1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void surface_A2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeSurfaceA2(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void surface_A2_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void surface_A2_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {

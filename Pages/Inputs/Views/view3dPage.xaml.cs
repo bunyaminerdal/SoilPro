@@ -25,9 +25,9 @@ namespace SoilPro.Pages.Inputs.Views
     {
         public  Viewport3D viewport;
         public Model3DGroup groupScene;
-        double scaleFactor = 0.2f;
-        private double minScaleFactor = 0.1f;
-        private double maxScaleFactor = 1f;
+        double scaleFactor = 15;
+        private double minScaleFactor = 8;
+        private double maxScaleFactor = 30;
         Point3D lookat = new Point3D(0, 0, 0);
         Point mouseFirstPos;
         bool isMouseWheelDown;
@@ -35,14 +35,20 @@ namespace SoilPro.Pages.Inputs.Views
         double rotationAngleY;
         Vector mousePosDiff;
         Point3D center3d = new Point3D(0, 0, 0);
-        double wall_t=50;
-        double wall_h=1200; 
-        double wall_d=700;
-        double frontandbackCubeLength = 1500;
-        double excavationHeight = 800;
-        double frontT_Z = 200;
-        double frontT_X1 = 200;
-        double frontT_X2 = 100;
+        double wall_t=0.5;
+        double wall_h=12; 
+        double wall_d=7;
+        double frontandbackCubeLength = 15;
+        double excavationHeight = 8;
+        double frontT_Z = 2;
+        double frontT_X1 = 2;
+        double frontT_X2 = 1;
+        double backT_Beta = 10;
+        double backT_B = 1;
+        double backT_A1 = 1;
+        double backT_A2 = 2;
+        double bottomT_h =3;
+        
 
         public View3dPage()
         {
@@ -82,8 +88,7 @@ namespace SoilPro.Pages.Inputs.Views
 
         private void StartViewport3d()
         {
-            //center3d = new Point3D(center3d.X - wall_w,center3d.Y,center3d.Z -wall_d/2);
-            
+                        
             Point3D wallCenter = new Point3D(center3d.X-wall_t, center3d.Y+wall_h/2, center3d.Z-wall_d/2);
             WpfCube wallCube = new WpfCube(wallCenter, wall_t, wall_h, wall_d);
             GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray);
@@ -102,10 +107,10 @@ namespace SoilPro.Pages.Inputs.Views
             WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
             GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
 
-            double cylinder_h = 700;
-            double cylinder_d = 15;
-            double cylinder_loc = 100;
-            Point3D cylinderCenter = new Point3D(center3d.X-wall_t-20,center3d.Y + wall_h / 2 - cylinder_loc,center3d.Z);
+            double cylinder_h = 7;
+            double cylinder_d = 0.15;
+            double cylinder_loc = 1;
+            Point3D cylinderCenter = new Point3D(center3d.X-wall_t-0.2,center3d.Y + wall_h / 2 - cylinder_loc,center3d.Z);
             WpfCylinder anchor = new WpfCylinder(cylinderCenter,30,cylinder_d,cylinder_d,cylinder_h);
             GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue,true,true);
             
@@ -149,6 +154,59 @@ namespace SoilPro.Pages.Inputs.Views
             WpfTrapezoid frontT = new WpfTrapezoid(TrapezoidCenter, frontT_w_top, frontT_w_bottom, frontT_h, frontT_d, frontT_w_top_dis, frontT_w_bottom_dis);
             GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color);
 
+            double backT_w_top_dis = 0;
+            double backT_w_bottom_dis = 0;
+            double backT_h = 0;
+            double backT_d = 0;
+            double backT_w_bottom = 0;
+            double backT_w_top = 0;
+
+            
+            Color backT_color = Colors.Transparent;
+            switch (StaticVariables.groundSurfaceType)
+            {
+                case GroundSurfaceType.flat:
+                    break;
+                case GroundSurfaceType.type1:
+                    backT_w_top_dis = backCube_w;
+                    backT_w_bottom_dis = backT_A1;
+                    backT_h = Math.Sin(backT_Beta * Math.PI / 180) * (backCube_w - backT_A1);
+                    backT_d = wall_d;
+                    backT_w_bottom = backCube_w - backT_A1;
+                    backT_w_top = 0;                    
+                    backT_color = Color.FromArgb(100, 200, 200, 200);
+                    break;
+                case GroundSurfaceType.type2:
+                    backT_w_top_dis = backT_A1;
+                    backT_w_bottom_dis = 0;
+                    backT_h = backT_B;
+                    backT_d = wall_d;
+                    backT_w_bottom = backCube_w ;
+                    backT_w_top = backCube_w -backT_A1;
+                    backT_color = Color.FromArgb(100, 200, 200, 200);
+                    break;
+                case GroundSurfaceType.type3:
+                    backT_w_top_dis = backT_A1+backT_A2;
+                    backT_w_bottom_dis = backT_A1;
+                    backT_h = backT_B;
+                    backT_d = wall_d;
+                    backT_w_bottom = backCube_w- backT_A1;
+                    backT_w_top = backCube_w - backT_A1 -backT_A2;
+                    backT_color = Color.FromArgb(100, 200, 200, 200);
+                    break;
+                default:                     
+                    break;
+            }
+            
+            Point3D BackTCenter = new Point3D(backCubeCenter.X, backCubeCenter.Y + backT_h, backCubeCenter.Z);
+            WpfTrapezoid backT = new WpfTrapezoid(BackTCenter, backT_w_top, backT_w_bottom, backT_h, backT_d, backT_w_top_dis, backT_w_bottom_dis);
+            GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color);
+
+            Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - wall_h / 2, center3d.Z - wall_d / 2);
+            WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+frontCube_w+backCube_w, bottomT_h, wall_d);
+            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200));
+
+
 
             AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
             RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);
@@ -164,7 +222,10 @@ namespace SoilPro.Pages.Inputs.Views
             groupScene.Children.Add(cylinderModel);
             groupScene.Children.Add(frontTmodel);
             groupScene.Children.Add(frontCubeModel);
+            groupScene.Children.Add(backTmodel);
             groupScene.Children.Add(backCubeModel);
+            groupScene.Children.Add(bottomTmodel);
+
                 
 
             groupScene.Children.Add(leftLight());
@@ -215,14 +276,14 @@ namespace SoilPro.Pages.Inputs.Views
         
         private void viewport3d_main_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            scaleFactor += 0.25f*e.Delta/1000;
+            scaleFactor += e.Delta/100;
             scaleFactor = Math.Clamp(scaleFactor, minScaleFactor, maxScaleFactor);
             ChangeModelTransform();
         }
 
         private void Position_Reset_bttn_Click(object sender, RoutedEventArgs e)
         {            
-            scaleFactor = 0.2f;
+            scaleFactor = 15;
             rotationAngleX = 0;
             rotationAngleY = 0; 
             ChangeModelTransform();            
@@ -263,41 +324,52 @@ namespace SoilPro.Pages.Inputs.Views
         public void ChangeWallHeight(double h)
         {
             wall_h = h;
-            groupScene.Children.Clear();
-            StartViewport3d();
-            ChangeModelTransform();
+            Refresh3Dview();
         }
         public void ChangeWallThickness(double d)
         {
             wall_t = d;
-            groupScene.Children.Clear();
-            StartViewport3d();
-            ChangeModelTransform();
+            Refresh3Dview();
         }
         public void ChangeexcavationHeight(double exHeight)
         {
             excavationHeight = exHeight;
-            groupScene.Children.Clear();
-            StartViewport3d();
-            ChangeModelTransform();
-        }public void ChangeexcavationZ(double exZ)
+            Refresh3Dview();
+        }
+        public void ChangeexcavationZ(double exZ)
         {
             frontT_Z = exZ;
-            groupScene.Children.Clear();
-            StartViewport3d();
-            ChangeModelTransform();
-        }public void ChangeexcavationX1(double exX1)
+            Refresh3Dview();
+        }
+        public void ChangeexcavationX1(double exX1)
         {
             frontT_X1 = exX1;
-            groupScene.Children.Clear();
-            StartViewport3d();
-            ChangeModelTransform();
-        }public void ChangeexcavationX2(double exX2)
+            Refresh3Dview();
+        }
+        public void ChangeexcavationX2(double exX2)
         {
             frontT_X2 = exX2;
-            groupScene.Children.Clear();
-            StartViewport3d();
-            ChangeModelTransform();
+            Refresh3Dview();
+        }
+        public void ChangeSurfaceBeta(double surfaceBeta)
+        {
+            backT_Beta = surfaceBeta;
+            Refresh3Dview();
+        }
+        public void ChangeSurfaceB(double surfaceB)
+        {
+            backT_B = surfaceB;
+            Refresh3Dview();
+        }
+        public void ChangeSurfaceA1(double surfaceA1)
+        {
+            backT_A1 = surfaceA1;
+            Refresh3Dview();
+        }
+        public void ChangeSurfaceA2(double surfaceA2)
+        {
+            backT_A2 = surfaceA2;
+            Refresh3Dview();
         }
 
         public double GetWallHeight()
@@ -312,12 +384,21 @@ namespace SoilPro.Pages.Inputs.Views
         { return frontT_X1; }
         public double GetexcavationX2()
         { return frontT_X2; }
-
-        public void ChangeExcavationType()
+        public double GetSurfaceBeta()
+        { return backT_Beta; }
+        public double GetSurfaceB()
+        { return backT_B; }
+        public double GetSurfaceA1()
+        { return backT_A1; }
+        public double GetSurfaceA2()
+        { return backT_A2; }
+        public void Refresh3Dview()
         {
             groupScene.Children.Clear();
             StartViewport3d();
             ChangeModelTransform();
         }
+
+        
     }
 }
