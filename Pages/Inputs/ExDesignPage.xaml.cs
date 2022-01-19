@@ -36,18 +36,22 @@ namespace SoilPro.Pages.Inputs
             excavation_Z_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             excavation_X1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             excavation_X2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-
             excavationheight.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationHeight()).ToString();
             excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationZ()).ToString();
             excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX1()).ToString();
             excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX2()).ToString();
+            
         }
         public void GetWallProperties()
         {
-            excavationheight.Text = StaticVariables.view3DPage.GetexcavationHeight().ToString();
-            excavation_Z.Text = StaticVariables.view3DPage.GetexcavationZ().ToString();
-            excavation_X1.Text = StaticVariables.view3DPage.GetexcavationX1().ToString();
-            excavation_X2.Text = StaticVariables.view3DPage.GetexcavationX2().ToString();
+            excavationheight_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            excavation_Z_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            excavation_X1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            excavation_X2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            excavationheight.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationHeight()).ToString();
+            excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationZ()).ToString();
+            excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX1()).ToString();
+            excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX2()).ToString();
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

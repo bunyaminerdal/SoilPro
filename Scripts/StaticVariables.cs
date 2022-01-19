@@ -13,7 +13,7 @@ namespace SoilPro.Scripts
         public static SideviewPage SideviewPage = new SideviewPage();
         public static Units CurrentUnit = Units.kg_cm;
         public static Units LastUnit = Units.kg_cm;
-        public static Dictionary<Units, double> UnitDimensionFactors = new Dictionary<Units, double> { {Units.kg_cm,1 },{ Units.kg_mm, 10 },{ Units.kg_m,0.01} };
+        public static Dictionary<Units, double> UnitDimensionFactors = new Dictionary<Units, double> { {Units.kg_cm,1 },{ Units.kg_mm, 10 },{ Units.kg_m,0.01}, { Units.kN_m, 0.01 } };
 
         public static ExcavationType excavationType = ExcavationType.none;
     }
@@ -21,7 +21,8 @@ namespace SoilPro.Scripts
     {
             kg_mm,
             kg_cm,
-            kg_m
+            kg_m,
+            kN_m
     }
     public enum ExcavationType
     {

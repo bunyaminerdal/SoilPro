@@ -47,8 +47,11 @@ namespace SoilPro.Pages.Inputs
         
         public void GetWallProperties()
         {
-            concretewall_height.Text = StaticVariables.view3DPage.GetWallHeight().ToString();
-            concretewall_thickness.Text = StaticVariables.view3DPage.GetWallThickness().ToString();
+            concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            concretewall_thickness_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+
+            concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
+            concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
         }
 
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
@@ -63,8 +66,7 @@ namespace SoilPro.Pages.Inputs
         }
         
         private void concretewall_height_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            
+        {            
             separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);           
             if (separator == ',')
             {
@@ -76,7 +78,6 @@ namespace SoilPro.Pages.Inputs
                 Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
                 e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
             }
-                       
             
         }
 
@@ -88,7 +89,6 @@ namespace SoilPro.Pages.Inputs
             }
             
         }
-
 
         private void concretewall_thickness_TextChanged(object sender, TextChangedEventArgs e)
         {

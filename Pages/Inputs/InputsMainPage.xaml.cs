@@ -61,6 +61,9 @@ namespace SoilPro.Pages.Inputs
                 case 2:
                     StaticVariables.CurrentUnit = Units.kg_m;
                     break;
+                case 3:
+                    StaticVariables.CurrentUnit = Units.kN_m;
+                    break;
                 default:
                     break;
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoilPro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="800" MinHeight="800" MinWidth="800">
+        Title="MainWindow" Height="868" Width="1024" MinHeight="768" MinWidth="1024">
 
         <Grid>
             <Grid.RowDefinitions>

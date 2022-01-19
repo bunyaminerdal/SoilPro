@@ -11,7 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="240"/>
+            <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -33,23 +33,23 @@
                     <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource ExSiteStyle}">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="150"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <DockPanel Height="100" MaxWidth="300" VerticalAlignment="Top" HorizontalAlignment="Center">
+                            <DockPanel Height="150" MaxWidth="450" VerticalAlignment="Top" HorizontalAlignment="Center">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <RadioButton Grid.Column="0" x:Name="exsitetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True" Checked="exsitetype1_button_Checked" >
+                                    <RadioButton Grid.Column="0" x:Name="exsitetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True" Checked="exsitetype1_button_Checked" Margin="0,0,5,0" >
                                         <Image Source="/Textures/exheight.png" />
                                     </RadioButton>
-                                    <RadioButton Grid.Column="1" x:Name="exsitetype2_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype2_button_Checked"  >
+                                    <RadioButton Grid.Column="1" x:Name="exsitetype2_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype2_button_Checked" Margin="0,0,5,0"  >
                                         <Image Source="/Textures/exheight2.png" />
                                     </RadioButton>
-                                    <RadioButton Grid.Column="2" x:Name="exsitetype3_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype3_button_Checked"  >
+                                    <RadioButton Grid.Column="2" x:Name="exsitetype3_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype3_button_Checked" Margin="0,0,5,0"  >
                                         <Image Source="../../Textures/exheight3.png" />
                                     </RadioButton>
 
@@ -70,19 +70,19 @@
                                         <TextBox x:Name="excavationheight" Height="22" Width="80" TextChanged="excavationheight_TextChanged"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" />
                                         <Label x:Name="excavationheight_unit" Width="30" Content="cm"/>
                                     </DockPanel>
-                                    <DockPanel x:Name="Z_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                    <DockPanel x:Name="Z_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="105" Content="{DynamicResource wallthickness}"/>
                                         <Label Width="30" Content="(z):"/>
                                         <TextBox x:Name="excavation_Z" Height="22" Width="80" TextChanged="excavation_Z_TextChanged" PreviewTextInput="excavation_Z_PreviewTextInput" PreviewKeyDown="excavation_Z_PreviewKeyDown"    />
                                         <Label x:Name="excavation_Z_unit" Width="30" Content="cm"/>
                                     </DockPanel>
-                                    <DockPanel x:Name="X1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                    <DockPanel x:Name="X1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="105" Content="{DynamicResource wallthickness}"/>
                                         <Label Width="30" Content="(x1):"/>
                                         <TextBox x:Name="excavation_X1" Height="22" Width="80"  TextChanged="excavation_X1_TextChanged" PreviewTextInput="excavation_X1_PreviewTextInput" PreviewKeyDown="excavation_X1_PreviewKeyDown"   />
                                         <Label x:Name="excavation_X1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
-                                    <DockPanel x:Name="X2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                    <DockPanel x:Name="X2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="105" Content="{DynamicResource wallthickness}"/>
                                         <Label Width="30" Content="(x2):"/>
                                         <TextBox x:Name="excavation_X2" Height="22" Width="80"  TextChanged="excavation_X2_TextChanged" PreviewTextInput="excavation_X2_PreviewTextInput" PreviewKeyDown="excavation_X2_PreviewKeyDown"     />

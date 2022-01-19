@@ -182,10 +182,10 @@ namespace SoilPro.Scripts
 
             addCubeToMesh(p0, w, h, d, mesh, useTexture);
             //Image image = new Image();
-            //image.Source = new BitmapImage(new Uri(@"../../../Texture/texturedeneme.png", UriKind.Relative));
+            //image.Source = new BitmapImage(new Uri(@"Textures/texturedeneme.png", UriKind.Relative));
+
             //Material material = new DiffuseMaterial(new ImageBrush(image.Source));
             Material material = new DiffuseMaterial(new SolidColorBrush(color));
-
             GeometryModel3D model = new GeometryModel3D(mesh, material);
 
             return model;
