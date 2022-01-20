@@ -20,6 +20,7 @@ namespace SoilPro.Scripts
 
         public static ExcavationType excavationType = ExcavationType.none;
         public static GroundSurfaceType groundSurfaceType = GroundSurfaceType.flat;
+        public static GroundWaterType groundWaterType = GroundWaterType.none;
     }
     public enum Units
     {
@@ -49,5 +50,13 @@ namespace SoilPro.Scripts
         type1,
         type2,
         type3
+    }
+    public enum GroundWaterType
+    {
+        none,
+        type1,
+        type2,
+        type3
+        
     }
 }

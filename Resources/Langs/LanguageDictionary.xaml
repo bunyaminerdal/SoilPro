@@ -33,5 +33,8 @@
     <system:String x:Key="SurfaceHeight" >Ground Surface Height</system:String>
     <system:String x:Key="SurfaceDistance1" >Ground Surface Distance 1</system:String>
     <system:String x:Key="SurfaceDistance2" >Ground Surface Distance 2</system:String>
+    <system:String x:Key="GroundWater" >Ground Water Style</system:String>
+    <system:String x:Key="groundwaterheightfromsurface" >Height from Surface</system:String>
+    <system:String x:Key="groundwaterheightfromExcavation" >Height from Excavation</system:String>
     
 </ResourceDictionary>

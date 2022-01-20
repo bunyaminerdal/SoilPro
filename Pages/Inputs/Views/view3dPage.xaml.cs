@@ -48,6 +48,8 @@ namespace SoilPro.Pages.Inputs.Views
         double backT_A1 = 1;
         double backT_A2 = 2;
         double bottomT_h =3;
+        double groundW_h1 = 5;
+        double groundW_h2 = 2;
         
 
         public View3dPage()
@@ -202,11 +204,39 @@ namespace SoilPro.Pages.Inputs.Views
             WpfTrapezoid backT = new WpfTrapezoid(BackTCenter, backT_w_top, backT_w_bottom, backT_h, backT_d, backT_w_top_dis, backT_w_bottom_dis);
             GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color);
 
-            Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - wall_h / 2, center3d.Z - wall_d / 2);
+            double backW_w = 0;
+            //double backW_h = backCube_h + bottomT_h - groundW_h1;
+            double backW_h =0;
+            double backW_d = 0;
+            double frontW_w = 0;
+            //double frontW_h = frontCube_h + bottomT_h - groundW_h2;
+            double frontW_h = 0;
+            double frontW_d = 0;
+            switch (StaticVariables.groundWaterType)
+            {
+                case GroundWaterType.none:                     
+                    break;                
+                default:
+                     backW_w = frontandbackCubeLength + wall_t - 0.2;
+                     backW_h = 0.1;
+                     backW_d = wall_d - 0.1;
+                     frontW_w = frontandbackCubeLength - 0.1;
+                     frontW_h = 0.1;
+                     frontW_d = wall_d - 0.1;
+                    break;
+            }
+            
+            Point3D backWCenter = new Point3D(center3d.X - wall_t + 0.1, center3d.Y - groundW_h1 + wall_h / 2-0.01, center3d.Z - backW_d / 2);
+            WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
+            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255));                        
+            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + wall_h / 2 - 0.01 - (backCube_h - frontCube_h), center3d.Z - frontW_d / 2);
+            WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
+            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255));
+
+
+            Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - wall_h / 2 , center3d.Z - wall_d / 2);
             WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+frontCube_w+backCube_w, bottomT_h, wall_d);
             GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200));
-
-
 
             AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
             RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);
@@ -220,8 +250,10 @@ namespace SoilPro.Pages.Inputs.Views
             groupScene = new Model3DGroup();
             groupScene.Children.Add(wallModel);
             groupScene.Children.Add(cylinderModel);
+            groupScene.Children.Add(frontWmodel);
             groupScene.Children.Add(frontTmodel);
             groupScene.Children.Add(frontCubeModel);
+            groupScene.Children.Add(backWmodel);
             groupScene.Children.Add(backTmodel);
             groupScene.Children.Add(backCubeModel);
             groupScene.Children.Add(bottomTmodel);
@@ -371,7 +403,16 @@ namespace SoilPro.Pages.Inputs.Views
             backT_A2 = surfaceA2;
             Refresh3Dview();
         }
-
+        public void ChangeGroundWaterH1(double gw_h1)
+        {
+            groundW_h1 = gw_h1;
+            Refresh3Dview();
+        }
+        public void ChangeGroundWaterH2(double gw_h2)
+        {
+            groundW_h2 = gw_h2;
+            Refresh3Dview();
+        }
         public double GetWallHeight()
         { return wall_h; }
         public double GetWallThickness()
@@ -392,6 +433,10 @@ namespace SoilPro.Pages.Inputs.Views
         { return backT_A1; }
         public double GetSurfaceA2()
         { return backT_A2; }
+        public double GetGroundWaterH1()
+        { return groundW_h1; }
+        public double GetGroundWaterH2()
+        { return groundW_h2; }
         public void Refresh3Dview()
         {
             groupScene.Children.Clear();

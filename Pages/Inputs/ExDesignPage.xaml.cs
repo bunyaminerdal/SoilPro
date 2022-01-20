@@ -49,6 +49,11 @@ namespace SoilPro.Pages.Inputs
             surface_A1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceA1()).ToString();
             surface_A2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceA2()).ToString();
 
+            gw_h1_unit.Content = StaticVariables.CurrentUnit.ToString().Split("_")[1];
+            gw_h2_unit.Content = StaticVariables.CurrentUnit.ToString().Split("_")[1];
+            gw_h1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetGroundWaterH1()).ToString();
+            gw_h2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetGroundWaterH2()).ToString();
+
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -414,6 +419,120 @@ namespace SoilPro.Pages.Inputs
         }
 
         private void surface_A2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void groundwatertype_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (gw_h1_dock_panel != null)
+            {
+                gw_h1_dock_panel.Visibility = Visibility.Hidden;
+                gw_h2_dock_panel.Visibility = Visibility.Hidden;
+                
+            }
+            StaticVariables.groundWaterType = GroundWaterType.none;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void groundwatertype1_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (gw_h1_dock_panel != null)
+            {
+                gw_h1_dock_panel.Visibility = Visibility.Visible;
+                gw_h2_dock_panel.Visibility = Visibility.Visible;
+
+            }
+            StaticVariables.groundWaterType = GroundWaterType.type1;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void groundwatertype2_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (gw_h1_dock_panel != null)
+            {
+                gw_h1_dock_panel.Visibility = Visibility.Visible;
+                gw_h2_dock_panel.Visibility = Visibility.Visible;
+
+            }
+            StaticVariables.groundWaterType = GroundWaterType.type2;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void groundwatertype3_button_Checked(object sender, RoutedEventArgs e)
+        {
+            if (gw_h1_dock_panel != null)
+            {
+                gw_h1_dock_panel.Visibility = Visibility.Visible;
+                gw_h2_dock_panel.Visibility = Visibility.Visible;
+
+            }
+            StaticVariables.groundWaterType = GroundWaterType.type3;
+            StaticVariables.view3DPage.Refresh3Dview();
+        }
+
+        private void gw_h1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeGroundWaterH1(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void gw_h1_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void gw_h1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void gw_h2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeGroundWaterH2(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void gw_h2_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void gw_h2_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {

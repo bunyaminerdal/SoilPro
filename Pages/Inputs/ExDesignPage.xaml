@@ -26,8 +26,8 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition  Width="*"/>
-                    <ColumnDefinition  Width="1.3765*"/>
-                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="1.39*"/>
+                    <ColumnDefinition  Width="1.34*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <GroupBox Margin="0,5,2.5,5" MaxHeight="320" Header="{DynamicResource ExSiteStyle}">
@@ -62,39 +62,35 @@
                                         <RowDefinition Height="27"/>
                                         <RowDefinition Height="27"/>
                                         <RowDefinition Height="27"/>
-                                        
+
                                     </Grid.RowDefinitions>
                                     <DockPanel x:Name="H_dock_panel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="150" Content="{DynamicResource Excavationheight}"/>
+                                        <Label Width="125" Content="{DynamicResource Excavationheight}"/>
                                         <Label Width="30" Content="(h):"/>
                                         <TextBox x:Name="excavationheight" Height="22" Width="80" TextChanged="excavationheight_TextChanged"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" />
                                         <Label x:Name="excavationheight_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="Z_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="150" Content="{DynamicResource ExcavationSurfaceheight}"/>
+                                        <Label Width="125" Content="{DynamicResource ExcavationSurfaceheight}"/>
                                         <Label Width="30" Content="(z):"/>
                                         <TextBox x:Name="excavation_Z" Height="22" Width="80" TextChanged="excavation_Z_TextChanged" PreviewTextInput="excavation_Z_PreviewTextInput" PreviewKeyDown="excavation_Z_PreviewKeyDown"    />
                                         <Label x:Name="excavation_Z_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="150" Content="{DynamicResource ExcavationSurfacedist1}"/>
+                                        <Label Width="125" Content="{DynamicResource ExcavationSurfacedist1}"/>
                                         <Label Width="30" Content="(x1):"/>
                                         <TextBox x:Name="excavation_X1" Height="22" Width="80"  TextChanged="excavation_X1_TextChanged" PreviewTextInput="excavation_X1_PreviewTextInput" PreviewKeyDown="excavation_X1_PreviewKeyDown"   />
                                         <Label x:Name="excavation_X1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                        <Label Width="150" Content="{DynamicResource ExcavationSurfacedist2}"/>
+                                        <Label Width="125" Content="{DynamicResource ExcavationSurfacedist2}"/>
                                         <Label Width="30" Content="(x2):"/>
                                         <TextBox x:Name="excavation_X2" Height="22" Width="80"  TextChanged="excavation_X2_TextChanged" PreviewTextInput="excavation_X2_PreviewTextInput" PreviewKeyDown="excavation_X2_PreviewKeyDown"     />
                                         <Label x:Name="excavation_X2_unit" Width="30" Content="cm"/>
-                                    </DockPanel>                                    
-
+                                    </DockPanel>
                                 </Grid>
-
                             </DockPanel>
-                                
                         </Grid>
-
                     </GroupBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
@@ -161,6 +157,66 @@
                                         <Label x:Name="surface_A2_unit" Width="30" Content="cm"/>
                                     </DockPanel>
 
+                                </Grid>
+
+                            </DockPanel>
+
+                        </Grid>
+
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <GroupBox Margin="0,5,2.5,5" MaxHeight="320" Header="{DynamicResource GroundWater}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <DockPanel  MaxWidth="600" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                        <ColumnDefinition Width="*" MinWidth="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <RadioButton Grid.Column="0" x:Name="groundwatertype_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True"  Margin="0,0,5,0" Checked="groundwatertype_button_Checked" >
+                                        <Image Source="/Textures/surface1.png" />
+                                    </RadioButton>
+                                    <RadioButton Grid.Column="1" x:Name="groundwatertype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="groundwatertype1_button_Checked"  >
+                                        <Image Source="/Textures/groundwater1.png" />
+                                    </RadioButton>
+                                    <RadioButton Grid.Column="2" x:Name="groundwatertype2_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="groundwatertype2_button_Checked"  >
+                                        <Image Source="/Textures/groundwater2.png" />
+                                    </RadioButton>
+                                    <RadioButton Grid.Column="3" x:Name="groundwatertype3_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,0,0" Checked="groundwatertype3_button_Checked"  >
+                                        <Image Source="/Textures/groundwater3.png" />
+                                    </RadioButton>
+
+                                </Grid>
+                            </DockPanel>
+                            <DockPanel Grid.Row="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="27"/>
+                                        <RowDefinition Height="27"/>
+                                        <RowDefinition Height="27"/>
+                                        <RowDefinition Height="27"/>
+
+                                    </Grid.RowDefinitions>
+                                    <DockPanel x:Name="gw_h1_dock_panel" Visibility="Hidden" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                        <Label Width="180" Content="{DynamicResource groundwaterheightfromsurface}"/>
+                                        <Label Width="50" Content="(h1):"/>
+                                        <TextBox x:Name="gw_h1" Height="22" Width="80" TextChanged="gw_h1_TextChanged" PreviewTextInput="gw_h1_PreviewTextInput" PreviewKeyDown="gw_h1_PreviewKeyDown"   />
+                                        <Label x:Name="gw_h1_unit" Width="30" Content="cm"/>
+                                    </DockPanel>
+                                    <DockPanel x:Name="gw_h2_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                        <Label Width="180" Content="{DynamicResource groundwaterheightfromExcavation}"/>
+                                        <Label Width="50" Content="(h2):"/>
+                                        <TextBox x:Name="gw_h2" Height="22" Width="80" TextChanged="gw_h2_TextChanged" PreviewTextInput="gw_h2_PreviewTextInput" PreviewKeyDown="gw_h2_PreviewKeyDown"    />
+                                        <Label x:Name="gw_h2_unit" Width="30" Content="cm"/>
+                                    </DockPanel>
+                                    
                                 </Grid>
 
                             </DockPanel>

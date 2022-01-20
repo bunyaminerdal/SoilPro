@@ -11,6 +11,9 @@
     <None Remove="Textures\exheight.png" />
     <None Remove="Textures\exheight2.png" />
     <None Remove="Textures\exheight3.png" />
+    <None Remove="Textures\groundwater1.png" />
+    <None Remove="Textures\groundwater2.png" />
+    <None Remove="Textures\groundwater3.png" />
     <None Remove="Textures\surface1.png" />
     <None Remove="Textures\surface2.png" />
     <None Remove="Textures\surface3.png" />
@@ -25,6 +28,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\exheight3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\groundwater1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\groundwater2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\groundwater3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\surface1.png">
