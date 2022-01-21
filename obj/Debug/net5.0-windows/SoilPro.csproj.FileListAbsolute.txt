@@ -58,7 +58,6 @@ C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\In
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\MaterialsPage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\Views\SideviewPage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\Views\view3dPage.g.cs
-C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\wallTypePage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Options\GeneralOptions.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Options\OptionsMainPage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Options\RegionOptions.g.cs
@@ -72,7 +71,6 @@ C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\In
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\MaterialsPage.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\Views\SideviewPage.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\Views\view3dPage.baml
-C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\wallTypePage.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Options\GeneralOptions.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Options\OptionsMainPage.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Options\RegionOptions.baml
@@ -90,3 +88,11 @@ C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\SoilPro.pdb
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\SoilPro.genruntimeconfig.cache
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\ExDesignPage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\ExDesignPage.baml
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Opening\OpeningMainPage.g.cs
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Opening\OpeningMainPage.baml
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\OpeningWindow.g.cs
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\OpeningWindow.baml
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Opening\NewProjectPage.g.cs
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Opening\newsPage.g.cs
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Opening\NewProjectPage.baml
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Opening\newsPage.baml

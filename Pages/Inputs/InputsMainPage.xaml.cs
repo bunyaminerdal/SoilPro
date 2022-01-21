@@ -22,22 +22,15 @@ namespace SoilPro.Pages.Inputs
     public partial class InputsMainPage : Page
     {
         
-        WallTypePage wallTypePage = new WallTypePage();
         MaterialsPage materialsPage = new MaterialsPage();
         ExDesignPage exDesignPage = new ExDesignPage( );
         
         public InputsMainPage()
         {
             InitializeComponent();
-            walltypeBttn.IsChecked = true;
-            Main_pro.Content = wallTypePage;
-
+            
         }
 
-        private void walltypeBttn_Checked(object sender, RoutedEventArgs e)
-        {
-            Main_pro.Content = wallTypePage;
-        }
 
         private void MaterialsBttn_Checked(object sender, RoutedEventArgs e)
         {
@@ -90,12 +83,17 @@ namespace SoilPro.Pages.Inputs
                     break;
 
                 default:
+                    StaticVariables.CurrentUnit = Units.kN_m;
                     break;
             }
             
             StaticEvents.UnitChangeEvent?.Invoke();
         }
 
-       
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Main_pro.Content = materialsPage;
+            UnitCombobox.SelectedIndex = StaticVariables.UnitIndex;
+        }
     }
 }

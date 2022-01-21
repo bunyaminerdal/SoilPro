@@ -14,6 +14,8 @@
     <None Remove="Textures\groundwater1.png" />
     <None Remove="Textures\groundwater2.png" />
     <None Remove="Textures\groundwater3.png" />
+    <None Remove="Textures\Icons\file-earmark-plus.png" />
+    <None Remove="Textures\Icons\folder2-open.png" />
     <None Remove="Textures\surface1.png" />
     <None Remove="Textures\surface2.png" />
     <None Remove="Textures\surface3.png" />
@@ -38,6 +40,12 @@
     </Resource>
     <Resource Include="Textures\groundwater3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\Icons\file-earmark-plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\Icons\folder2-open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\surface1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,12 +1,15 @@
 ﻿
 FC:\Users\leoni\Documents\GitHub\SoilPro\App.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\MainWindow.xaml;;
+FC:\Users\leoni\Documents\GitHub\SoilPro\OpeningWindow.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Inputs\ExDesignPage.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Inputs\InputsMainPage.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Inputs\MaterialsPage.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Inputs\Views\SideviewPage.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Inputs\Views\view3dPage.xaml;;
-FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Inputs\wallTypePage.xaml;;
+FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Opening\NewProjectPage.xaml;;
+FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Opening\newsPage.xaml;;
+FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Opening\OpeningMainPage.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Options\GeneralOptions.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Options\OptionsMainPage.xaml;;
 FC:\Users\leoni\Documents\GitHub\SoilPro\Pages\Options\RegionOptions.xaml;;

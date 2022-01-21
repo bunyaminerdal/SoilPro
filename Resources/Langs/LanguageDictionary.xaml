@@ -7,7 +7,12 @@
     <system:String x:Key="Options" >Options</system:String>
     <system:String x:Key="Help" >Help</system:String>
     <system:String x:Key="New" >New</system:String>
+    <system:String x:Key="CreateNewProject" >Create New Project</system:String>
+    <system:String x:Key="CreateNewProjectInfo" >Start a new project with wall type selection</system:String>
     <system:String x:Key="Open" >Open</system:String>
+    <system:String x:Key="OpenProject" >Open Project</system:String>
+    <system:String x:Key="OpenProjectInfo" >Open Project from existing file</system:String>
+    <system:String x:Key="RecentlyOpenedProjects" >Recently Opened Projects</system:String>
     <system:String x:Key="Save" >Save</system:String>
     <system:String x:Key="Save_As" >Save As</system:String>
     <system:String x:Key="Exit" >Exit</system:String>
@@ -16,7 +21,12 @@
     <system:String x:Key="Language" >Language</system:String>
     <system:String x:Key="English" >English</system:String>
     <system:String x:Key="Turkish" >Turkish</system:String>
-    <system:String x:Key="ConcreteWall" >Concrete Wall</system:String>
+    <system:String x:Key="ConcreteRectangleWall" >Concrete Rectangle Wall</system:String>
+    <system:String x:Key="ConcretePileWall" >Concrete Pile Wall</system:String>
+    <system:String x:Key="SteelSheetWall" >Steel Sheet Wall</system:String>
+    <system:String x:Key="StartProject" >Start Project</system:String>
+    <system:String x:Key="UseExistingProjectProperties" >Use Existing Project Properties</system:String>
+    <system:String x:Key="ProjectUnits" >Project Units</system:String>
     <system:String x:Key="wallheight" >Wall Height</system:String>
     <system:String x:Key="wallthickness" >Wall Thickness</system:String>
     <system:String x:Key="walltype" >Wall Type</system:String>

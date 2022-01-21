@@ -13,14 +13,23 @@ namespace SoilPro.Scripts
         public static SideviewPage SideviewPage = new SideviewPage();
         public static Units CurrentUnit = Units.kg_cm;
         public static Units LastUnit = Units.kg_cm;
+        public static int UnitIndex = 11;
         public static Dictionary<Units, double> UnitDimensionFactors = new Dictionary<Units, double> {{ Units.kg_mm, 1000 },{Units.kg_cm,100 },{ Units.kg_m,1},
                                                                                                         { Units.ton_mm, 1000 },{ Units.ton_cm, 100 },{ Units.ton_m, 1 },
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 100 },{ Units.N_m, 1 },
                                                                                                         { Units.kN_mm, 1000 },{ Units.kN_cm, 100 },{ Units.kN_m, 1 } };
 
+        public static WallType wallType = WallType.ConcreteRectangleWall;
         public static ExcavationType excavationType = ExcavationType.none;
         public static GroundSurfaceType groundSurfaceType = GroundSurfaceType.flat;
         public static GroundWaterType groundWaterType = GroundWaterType.none;
+    }
+    public enum WallType
+    {
+        ConcreteRectangleWall,
+        ConcretePileWall,
+        SteelSheetWall
+
     }
     public enum Units
     {

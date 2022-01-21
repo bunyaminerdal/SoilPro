@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="OpeningWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Inputs\InputsMainPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -22,7 +25,13 @@
     <Compile Update="Pages\Inputs\Views\view3dPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Inputs\wallTypePage.xaml.cs">
+    <Compile Update="Pages\Opening\NewProjectPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Opening\newsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Opening\OpeningMainPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Options\GeneralOptions.xaml.cs">
@@ -42,6 +51,9 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="OpeningWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\Inputs\InputsMainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -57,7 +69,13 @@
     <Page Update="Pages\Inputs\Views\view3dPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\Inputs\wallTypePage.xaml">
+    <Page Update="Pages\Opening\NewProjectPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Opening\newsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Opening\OpeningMainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Options\GeneralOptions.xaml">

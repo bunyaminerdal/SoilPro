@@ -1,0 +1,75 @@
+﻿<Page x:Class="SoilPro.Pages.Opening.NewProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SoilPro.Pages.Opening"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="500"
+      Title="NewProjectPage" >
+
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <DockPanel  Grid.Row="0" HorizontalAlignment="Center">
+            <RadioButton Width="160" x:Name="concreteRectangleWall_bttn"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True"  Margin="0,0,5,0" Checked="concreteRectangleWall_bttn_Checked" >
+                <TextBlock Margin="10" Text="{DynamicResource ConcreteRectangleWall}" ></TextBlock>
+            </RadioButton>
+            <RadioButton Width="160"  x:Name="concretePileWall_bttn"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="concretePileWall_bttn_Checked"  >
+                <TextBlock Margin="10" Text="{DynamicResource ConcretePileWall}"></TextBlock>
+            </RadioButton>
+            <RadioButton Width="160" x:Name="steelSheetWall_bttn"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,0,0" Checked="steelSheetWall_bttn_Checked"  >
+                <TextBlock Margin="10" Text="{DynamicResource SteelSheetWall}"></TextBlock>
+            </RadioButton>
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+            <Label>bu kısıma resim ve yazısı gelecek duvar çeşitlerinin.</Label>
+        </DockPanel>
+        <DockPanel Grid.Row="2" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="1.3*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+                    <Label Content="{DynamicResource ProjectUnits}"></Label>
+                    <Label Content=":"></Label>
+                    <ComboBox x:Name="UnitCombobox" SelectedIndex="11"  Padding="6,3,5,3" FontSize="14" Height="25" SelectionChanged="UnitCombobox_SelectionChanged" >
+                        <ComboBoxItem>kg-mm</ComboBoxItem>
+                        <ComboBoxItem>kg-cm</ComboBoxItem>
+                        <ComboBoxItem>kg-m</ComboBoxItem>
+                        <ComboBoxItem>ton-mm</ComboBoxItem>
+                        <ComboBoxItem>ton-cm</ComboBoxItem>
+                        <ComboBoxItem>ton-m</ComboBoxItem>
+                        <ComboBoxItem>N-mm</ComboBoxItem>
+                        <ComboBoxItem>N-cm</ComboBoxItem>
+                        <ComboBoxItem>N-m</ComboBoxItem>
+                        <ComboBoxItem>kN-mm</ComboBoxItem>
+                        <ComboBoxItem>kN-cm</ComboBoxItem>
+                        <ComboBoxItem>kN-m</ComboBoxItem>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Grid.Row="1" >
+                    <CheckBox Height="20" Content="{DynamicResource UseExistingProjectProperties}"></CheckBox>
+
+                </DockPanel>
+                <DockPanel Grid.Row="2" Grid.Column="2">
+                    <Button x:Name="StartProjectButton" Content="{DynamicResource StartProject}" Height="30" Width="120" Click="StartProjectButton_Click" ></Button>
+
+                </DockPanel>
+            </Grid>
+
+
+        </DockPanel>
+    </Grid>
+</Page>

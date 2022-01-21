@@ -13,16 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SoilPro.Pages.Inputs
+namespace SoilPro.Pages.Opening
 {
     /// <summary>
-    /// wallTypePage.xaml etkileşim mantığı
+    /// OpeningMainPage.xaml etkileşim mantığı
     /// </summary>
-    public partial class WallTypePage : Page
+    public partial class OpeningMainPage : Page
     {
-        public WallTypePage()
+        Page newsPage = new Pages.Opening.newsPage();
+        Page newProjectPage = new Pages.Opening.NewProjectPage();
+        public OpeningMainPage()
         {
             InitializeComponent();
+            OpeningScreen.Content = newsPage;
+        }
+
+        private void NewProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpeningScreen.Content = newProjectPage;
         }
     }
 }

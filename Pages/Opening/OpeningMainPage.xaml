@@ -1,0 +1,98 @@
+﻿<Page x:Class="SoilPro.Pages.Opening.OpeningMainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SoilPro.Pages.Opening"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OpeningMainPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="10" VerticalAlignment="Center">
+                <Button x:Name="NewProjectButton"  Height="70" Background="WhiteSmoke" BorderBrush="{x:Null}" Click="NewProjectButton_Click"  >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/file-earmark-plus.png" Margin="5" />
+                        <StackPanel Grid.Column="1" Margin="5">
+                            <Label Content="{DynamicResource CreateNewProject}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                            <TextBlock Text="{DynamicResource CreateNewProjectInfo}"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" LineStackingStrategy="MaxHeight"></TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                       
+                    
+
+                </Button>
+                <Button x:Name="OpenProjectButton"  Height="70"  Margin="0,5,0,0" Background="WhiteSmoke" BorderBrush="{x:Null}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/folder2-open.png" Margin="5" />
+                        <StackPanel Grid.Column="1" Margin="5">
+                            <Label Content="{DynamicResource OpenProject}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                            <TextBlock Text="{DynamicResource OpenProjectInfo}"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+
+                </Button>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="1" >
+                <Label Margin="5" Content="{DynamicResource RecentlyOpenedProjects}" FontWeight="Bold" FontSize="16"></Label>
+                <StackPanel Grid.Row="0" Margin="10,0,10,10" VerticalAlignment="Center" >
+                    
+                    <Button  Height="60" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" >
+                        <DockPanel>
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+                                <TextBlock Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                                <TextBlock Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
+                        </DockPanel>   
+
+                    </Button>
+                    <Button  Height="60" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" >
+                        <DockPanel>
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+                                <TextBlock Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                                <TextBlock Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
+                        </DockPanel>
+
+                    </Button>
+                    <Button  Height="60" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" >
+                        <DockPanel>
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+                                <TextBlock Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                                <TextBlock Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
+                        </DockPanel>
+
+                    </Button>
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+        <Frame Grid.Column="1" x:Name="OpeningScreen" NavigationUIVisibility="Hidden"/>
+
+    </Grid>
+</Page>

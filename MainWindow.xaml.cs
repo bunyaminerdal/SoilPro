@@ -20,6 +20,7 @@ namespace SoilPro
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         Page InputsMain_Page = new Pages.Inputs.InputsMainPage();
         Page OptionsMain_Page = new Pages.Options.OptionsMainPage(); 
         Page ReportMain_Page = new Pages.Reports.ReportMainPage();
