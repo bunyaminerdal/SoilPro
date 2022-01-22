@@ -192,3 +192,9 @@ git_stats/*
 StyleCop.Cache
 bin
 obj
+*.exe
+*.cs
+*.editorconfig
+*.cache
+*.dll
+*.exe

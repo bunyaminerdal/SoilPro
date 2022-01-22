@@ -8,19 +8,19 @@
     "net5.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\leoni\\.nuget\\packages\\": {}
+    "C:\\Users\\Alibaba\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leoni\\Documents\\GitHub\\SoilPro\\SoilPro.csproj",
+      "projectUniqueName": "C:\\Users\\Alibaba\\Documents\\GitHub\\SoilPro\\SoilPro.csproj",
       "projectName": "SoilPro",
-      "projectPath": "C:\\Users\\leoni\\Documents\\GitHub\\SoilPro\\SoilPro.csproj",
-      "packagesPath": "C:\\Users\\leoni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leoni\\Documents\\GitHub\\SoilPro\\obj\\",
+      "projectPath": "C:\\Users\\Alibaba\\Documents\\GitHub\\SoilPro\\SoilPro.csproj",
+      "packagesPath": "C:\\Users\\Alibaba\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Alibaba\\Documents\\GitHub\\SoilPro\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\leoni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Alibaba\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -63,7 +63,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
