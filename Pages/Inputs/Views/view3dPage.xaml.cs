@@ -38,6 +38,7 @@ namespace SoilPro.Pages.Inputs.Views
         double wall_t=0.5;
         double wall_h=12; 
         double wall_d=7;
+        double pile_s = 1;
         double frontandbackCubeLength = 15;
         double excavationHeight = 8;
         double frontT_Z = 2;
@@ -51,7 +52,6 @@ namespace SoilPro.Pages.Inputs.Views
         double groundW_h1 = 5;
         double groundW_h2 = 2;
         
-
         public View3dPage()
         {
             InitializeComponent();
@@ -90,10 +90,43 @@ namespace SoilPro.Pages.Inputs.Views
 
         private void StartViewport3d()
         {
-                        
-            Point3D wallCenter = new Point3D(center3d.X-wall_t, center3d.Y+wall_h/2, center3d.Z-wall_d/2);
-            WpfCube wallCube = new WpfCube(wallCenter, wall_t, wall_h, wall_d);
-            GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray);
+            wall_d = StaticVariables.wall_d;
+            groupScene = new Model3DGroup();
+            
+            Point3D wallCenter = new Point3D(center3d.X - wall_t, center3d.Y + wall_h / 2, center3d.Z - wall_d / 2);
+            switch (StaticVariables.wallType)
+            {
+                case WallType.ConcreteRectangleWall:
+                    WpfCube wallCube = new WpfCube(wallCenter, wall_t, wall_h, wall_d);
+                    GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray);
+                    groupScene.Children.Add(wallModel);
+                    break;
+                case WallType.ConcretePileWall:
+                    double spaceCount =Math.Clamp( Math.Round((wall_d - wall_t) / pile_s,MidpointRounding.ToNegativeInfinity),1,StaticVariables.maxPileCount);
+                    //wall_d = spaceCount * pile_s + wall_t;
+                    for (int i = 0; i < spaceCount+1; i++)
+                    {
+                        double pile_h = wall_h;
+                        double pile_d = wall_t/2;
+                        double pile_start = (wall_d-(spaceCount*pile_s))/2;
+                        Point3D pileCenter = new Point3D(center3d.X -wall_t/2, center3d.Y + wall_h / 2, center3d.Z-wall_d/2+pile_start +i*pile_s);
+                        WpfCylinder pile = new WpfCylinder(pileCenter, 30, pile_d, pile_d, pile_h);
+                        GeometryModel3D pileModel = pile.CreateModel(Colors.DarkGray, true, true);
+                        AxisAngleRotation3D pileRotY = new AxisAngleRotation3D(new Vector3D(1, 0, 0), -90);
+                        RotateTransform3D PileTransform3d = new RotateTransform3D(pileRotY, pileCenter);
+                        Transform3DGroup pileTransform3DGroup = new Transform3DGroup();
+                        pileTransform3DGroup.Children.Add(PileTransform3d);
+                        pileModel.Transform = pileTransform3DGroup;
+                        groupScene.Children.Add(pileModel);
+                    }
+                    break;
+                case WallType.SteelSheetWall:
+                    break;
+                default:
+                    break;
+            }
+            
+            
                        
             double backCube_w = frontandbackCubeLength;
             double backCube_h = wall_h;
@@ -247,8 +280,7 @@ namespace SoilPro.Pages.Inputs.Views
             myTransform3DGroup.Children.Add(rotateTransformY); 
             cylinderModel.Transform = myTransform3DGroup;
 
-            groupScene = new Model3DGroup();
-            groupScene.Children.Add(wallModel);
+            
             groupScene.Children.Add(cylinderModel);
             groupScene.Children.Add(frontWmodel);
             groupScene.Children.Add(frontTmodel);
@@ -413,6 +445,11 @@ namespace SoilPro.Pages.Inputs.Views
             groundW_h2 = gw_h2;
             Refresh3Dview();
         }
+        public void ChangePileSpace(double p_s)
+        {
+            pile_s = p_s;
+            Refresh3Dview();
+        }
         public double GetWallHeight()
         { return wall_h; }
         public double GetWallThickness()
@@ -437,6 +474,8 @@ namespace SoilPro.Pages.Inputs.Views
         { return groundW_h1; }
         public double GetGroundWaterH2()
         { return groundW_h2; }
+        public double GetPileSpace()
+        { return pile_s; }
         public void Refresh3Dview()
         {
             groupScene.Children.Clear();

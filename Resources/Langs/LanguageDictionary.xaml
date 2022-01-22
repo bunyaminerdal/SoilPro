@@ -28,7 +28,10 @@
     <system:String x:Key="UseExistingProjectProperties" >Use Existing Project Properties</system:String>
     <system:String x:Key="ProjectUnits" >Project Units</system:String>
     <system:String x:Key="wallheight" >Wall Height</system:String>
+    <system:String x:Key="pilewallHeight" >Pile Wall Height</system:String>
     <system:String x:Key="wallthickness" >Wall Thickness</system:String>
+    <system:String x:Key="pileDiameter" >Pile Diameter</system:String>
+    <system:String x:Key="pilespace" >Pile Space</system:String>
     <system:String x:Key="walltype" >Wall Type</system:String>
     <system:String x:Key="Materials" >Materials</system:String>
     <system:String x:Key="ExDesign" >Ex-Design</system:String>

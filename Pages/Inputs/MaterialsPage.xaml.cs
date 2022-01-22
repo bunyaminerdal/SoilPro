@@ -35,24 +35,23 @@ namespace SoilPro.Pages.Inputs
 
         private void UnitChange()
         {
-            concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];            
+            concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             concretewall_thickness_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            pilewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            pile_diameter_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            pile_space_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
 
             concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
             concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
+            pilewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
+            pile_diameter.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
+            pile_space.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetPileSpace()).ToString();
         }
         // Create the OnPropertyChanged method to raise the event
         // The calling member's name will be used as the parameter.
         
         
-        public void GetWallProperties()
-        {
-            concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            concretewall_thickness_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-
-            concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
-            concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
-        }
+       
 
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -122,14 +121,62 @@ namespace SoilPro.Pages.Inputs
                 e.Handled = true;
             }
         }
+        private void pilewall_height_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
 
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeWallHeight(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void pile_diameter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeWallThickness(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void pile_space_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangePileSpace(WpfUtils.GetValue(result));
+            }
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.SideviewPage;
-            GetWallProperties();
+            switch (StaticVariables.wallType)
+            {
+                case WallType.ConcreteRectangleWall:
+                    rectanglewallgroupbox.Visibility = Visibility.Visible;
+                    pilewallgroupbox.Visibility = Visibility.Hidden;
+                    break;
+                case WallType.ConcretePileWall:
+                    rectanglewallgroupbox.Visibility = Visibility.Hidden;
+                    pilewallgroupbox.Visibility = Visibility.Visible;
+                    break;
+                case WallType.SteelSheetWall:
+                    break;
+                default:
+                    rectanglewallgroupbox.Visibility = Visibility.Visible;
+                    pilewallgroupbox.Visibility = Visibility.Hidden;
+                    break;
+            }
+            PileDiameter.GetPileDiameterDataList(pileDiameterCombobox);
+            pileDiameterCombobox.SelectedIndex = 0;
+            UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
-            
+            pile_diameter_unit.Content = pileDiameterCombobox.SelectedItem.ToString();
+
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -137,6 +184,8 @@ namespace SoilPro.Pages.Inputs
             view3d_main.Content = null;
             sideview_main.Content = null;
         }
+
+       
     }
    
 

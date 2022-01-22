@@ -23,6 +23,9 @@ namespace SoilPro.Scripts
         public static ExcavationType excavationType = ExcavationType.none;
         public static GroundSurfaceType groundSurfaceType = GroundSurfaceType.flat;
         public static GroundWaterType groundWaterType = GroundWaterType.none;
+
+        public static double wall_d = 11;
+        public static int maxPileCount = 20;
     }
     public enum WallType
     {
