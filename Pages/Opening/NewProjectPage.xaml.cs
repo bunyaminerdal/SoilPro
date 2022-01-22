@@ -34,6 +34,7 @@ namespace ExDesign.Pages.Opening
             StaticVariables.wallType = wallType;
             StaticVariables.UnitIndex = unitIndex;
             ProgramWindow mainWindow = new ProgramWindow();
+            mainWindow.FreshStart();
             WpfUtils.OpenWindow(mainWindow);
             
         }

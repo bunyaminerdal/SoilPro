@@ -9,7 +9,7 @@ namespace ExDesign.Scripts
 {
     public static class StaticVariables
     {
-        public static View3dPage view3DPage = new View3dPage();
+        public static View3dPage view3DPage;
         public static SideviewPage SideviewPage = new SideviewPage();
         public static Units CurrentUnit = Units.kg_cm;
         public static Units LastUnit = Units.kg_cm;

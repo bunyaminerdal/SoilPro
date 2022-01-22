@@ -140,7 +140,7 @@ namespace ExDesign.Scripts
             foreach (Window win in App.Current.Windows)
             {
                 if (win != window) win.Close();
-
+                
             }
             App.Current.MainWindow = window;
 

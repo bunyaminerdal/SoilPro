@@ -22,15 +22,15 @@ namespace ExDesign.Pages.Inputs
     public partial class InputsMainPage : Page
     {
         
-        MaterialsPage materialsPage = new MaterialsPage();
-        ExDesignPage exDesignPage = new ExDesignPage( );
+        MaterialsPage materialsPage=new MaterialsPage();
+        ExDesignPage exDesignPage = new ExDesignPage();
         
         public InputsMainPage()
         {
             InitializeComponent();
             
         }
-
+        
 
         private void MaterialsBttn_Checked(object sender, RoutedEventArgs e)
         {

@@ -30,9 +30,8 @@ namespace ExDesign.Pages.Inputs
         public MaterialsPage()
         {
             InitializeComponent();
-
         }
-
+        
         private void UnitChange()
         {
             concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
