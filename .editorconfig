@@ -5,3 +5,9 @@ dotnet_diagnostic.CS8618.severity = none
 
 # CS8769: Parametre türündeki başvuru türlerinin null atanabilirliği uygulanan üyeyle eşleşmiyor (muhtemelen null atanabilirlik öznitelikleri nedeniyle).
 dotnet_diagnostic.CS8769.severity = none
+
+# CS8600: Null sabit değeri veya olası null değeri, boş değer atanamaz türe dönüştürülüyor.
+dotnet_diagnostic.CS8600.severity = none
+
+# CS8601: Olası null başvuru ataması.
+dotnet_diagnostic.CS8601.severity = silent

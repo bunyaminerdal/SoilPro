@@ -40,18 +40,18 @@ namespace ExDesign.Pages.Inputs
             pilewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             pile_diameter_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             pile_space_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            beam_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            beam_width_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
 
             concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
             concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
             pilewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
             pile_diameter.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
             pile_space.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetPileSpace()).ToString();
+            beam_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetCapBeamH()).ToString();
+            beam_width.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetCapBeamB()).ToString();
         }
-        // Create the OnPropertyChanged method to raise the event
-        // The calling member's name will be used as the parameter.
-        
-        
-       
+         
 
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -99,28 +99,7 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void concretewall_thickness_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
-
-        private void concretewall_thickness_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+       
         private void pilewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -150,6 +129,25 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.view3DPage.ChangePileSpace(WpfUtils.GetValue(result));
             }
         }
+        private void beam_height_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeCapBeamH(WpfUtils.GetValue(result));
+            }
+        }
+
+        private void beam_width_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.view3DPage.ChangeCapBeamB(WpfUtils.GetValue(result));
+            }
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             view3d_main.Content = StaticVariables.view3DPage;
@@ -159,20 +157,25 @@ namespace ExDesign.Pages.Inputs
                 case WallType.ConcreteRectangleWall:
                     rectanglewallgroupbox.Visibility = Visibility.Visible;
                     pilewallgroupbox.Visibility = Visibility.Hidden;
+                    capbeamgroupbox.Visibility = Visibility.Hidden;
                     break;
                 case WallType.ConcretePileWall:
                     rectanglewallgroupbox.Visibility = Visibility.Hidden;
                     pilewallgroupbox.Visibility = Visibility.Visible;
+                    capbeamgroupbox.Visibility = Visibility.Visible;
+
                     break;
                 case WallType.SteelSheetWall:
                     break;
                 default:
                     rectanglewallgroupbox.Visibility = Visibility.Visible;
                     pilewallgroupbox.Visibility = Visibility.Hidden;
+                    capbeamgroupbox.Visibility = Visibility.Hidden;
+
                     break;
             }            
-            PileDiameter.GetPileDiameterDataList(pileDiameterCombobox);
-            pileDiameterCombobox.SelectedIndex = 0;            
+            Pile.GetPileDiameterDataList(pileDiameterCombobox);
+            pileDiameterCombobox.SelectedIndex = 1;            
             UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
             
@@ -186,7 +189,7 @@ namespace ExDesign.Pages.Inputs
 
         private void pileDiameterCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PileDiameterData pileDiameterData = pileDiameterCombobox.SelectedItem as PileDiameterData;
+            PileData pileDiameterData = pileDiameterCombobox.SelectedItem as PileData;
             if (pileDiameterData != null) StaticVariables.view3DPage.ChangeWallThickness(pileDiameterData.t);
             UnitChange();
         }
@@ -197,6 +200,8 @@ namespace ExDesign.Pages.Inputs
             pileWin.SelectPile(pileDiameterCombobox);
             pileWin.ShowDialog();
         }
+
+       
     }
    
 

@@ -73,19 +73,19 @@
                                     <DockPanel x:Name="Z_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource ExcavationSurfaceheight}"/>
                                         <Label Width="30" Content="(z):"/>
-                                        <TextBox x:Name="excavation_Z" Height="22" Width="80" TextChanged="excavation_Z_TextChanged" PreviewTextInput="excavation_Z_PreviewTextInput" PreviewKeyDown="excavation_Z_PreviewKeyDown"    />
+                                        <TextBox x:Name="excavation_Z" Height="22" Width="80" TextChanged="excavation_Z_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"  />
                                         <Label x:Name="excavation_Z_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource ExcavationSurfacedist1}"/>
                                         <Label Width="30" Content="(x1):"/>
-                                        <TextBox x:Name="excavation_X1" Height="22" Width="80"  TextChanged="excavation_X1_TextChanged" PreviewTextInput="excavation_X1_PreviewTextInput" PreviewKeyDown="excavation_X1_PreviewKeyDown"   />
+                                        <TextBox x:Name="excavation_X1" Height="22" Width="80"  TextChanged="excavation_X1_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"  />
                                         <Label x:Name="excavation_X1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource ExcavationSurfacedist2}"/>
                                         <Label Width="30" Content="(x2):"/>
-                                        <TextBox x:Name="excavation_X2" Height="22" Width="80"  TextChanged="excavation_X2_TextChanged" PreviewTextInput="excavation_X2_PreviewTextInput" PreviewKeyDown="excavation_X2_PreviewKeyDown"     />
+                                        <TextBox x:Name="excavation_X2" Height="22" Width="80"  TextChanged="excavation_X2_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"    />
                                         <Label x:Name="excavation_X2_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                 </Grid>
@@ -135,25 +135,25 @@
                                     <DockPanel x:Name="Beta_dock_panel" Visibility="Hidden" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource SurfaceSlope}"/>
                                         <Label Width="50" Content="(Beta):"/>
-                                        <TextBox x:Name="surfaceslope" Height="22" Width="80" TextChanged="surfaceslope_TextChanged" PreviewTextInput="surfaceslope_PreviewTextInput" PreviewKeyDown="surfaceslope_PreviewKeyDown"  />
+                                        <TextBox x:Name="surfaceslope" Height="22" Width="80" TextChanged="surfaceslope_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" />
                                         <Label x:Name="surfaceslope_unit" Width="30" Content="°"/>
                                     </DockPanel>
                                     <DockPanel x:Name="B_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource SurfaceHeight}"/>
                                         <Label Width="50" Content="(b):"/>
-                                        <TextBox x:Name="surface_B" Height="22" Width="80" TextChanged="surface_B_TextChanged" PreviewTextInput="surface_B_PreviewTextInput" PreviewKeyDown="surface_B_PreviewKeyDown"     />
+                                        <TextBox x:Name="surface_B" Height="22" Width="80" TextChanged="surface_B_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"    />
                                         <Label x:Name="surface_B_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="A1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource SurfaceDistance1}"/>
                                         <Label Width="50" Content="(a1):"/>
-                                        <TextBox x:Name="surface_A1" Height="22" Width="80" TextChanged="surface_A1_TextChanged" PreviewTextInput="surface_A1_PreviewTextInput" PreviewKeyDown="surface_A1_PreviewKeyDown"     />
+                                        <TextBox x:Name="surface_A1" Height="22" Width="80" TextChanged="surface_A1_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"     />
                                         <Label x:Name="surface_A1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="A2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource SurfaceDistance2}"/>
                                         <Label Width="50" Content="(a2):"/>
-                                        <TextBox x:Name="surface_A2" Height="22" Width="80" TextChanged="surface_A2_TextChanged" PreviewTextInput="surface_A2_PreviewTextInput" PreviewKeyDown="surface_A2_PreviewKeyDown"       />
+                                        <TextBox x:Name="surface_A2" Height="22" Width="80" TextChanged="surface_A2_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"      />
                                         <Label x:Name="surface_A2_unit" Width="30" Content="cm"/>
                                     </DockPanel>
 
@@ -207,13 +207,13 @@
                                     <DockPanel x:Name="gw_h1_dock_panel" Visibility="Hidden" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource groundwaterheightfromsurface}"/>
                                         <Label Width="50" Content="(h1):"/>
-                                        <TextBox x:Name="gw_h1" Height="22" Width="80" TextChanged="gw_h1_TextChanged" PreviewTextInput="gw_h1_PreviewTextInput" PreviewKeyDown="gw_h1_PreviewKeyDown"   />
+                                        <TextBox x:Name="gw_h1" Height="22" Width="80" TextChanged="gw_h1_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"   />
                                         <Label x:Name="gw_h1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="gw_h2_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource groundwaterheightfromExcavation}"/>
                                         <Label Width="50" Content="(h2):"/>
-                                        <TextBox x:Name="gw_h2" Height="22" Width="80" TextChanged="gw_h2_TextChanged" PreviewTextInput="gw_h2_PreviewTextInput" PreviewKeyDown="gw_h2_PreviewKeyDown"    />
+                                        <TextBox x:Name="gw_h2" Height="22" Width="80" TextChanged="gw_h2_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"   />
                                         <Label x:Name="gw_h2_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     

@@ -30,6 +30,10 @@ namespace ExDesign.Pages.Opening
 
         private void NewProjectButton_Click(object sender, RoutedEventArgs e)
         {
+            NewProjectOpening();
+        }
+        public void NewProjectOpening()
+        {
             OpeningScreen.Content = newProjectPage;
         }
     }

@@ -8,18 +8,18 @@
         Title="Pile" Height="270" Width="370" WindowStyle="ToolWindow" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Grid>
         <ListBox x:Name="PileList" Width="100" Height="165" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,35,0,0" SelectionChanged="PileList_SelectionChanged"/>
-        <Button x:Name="deletepile_button" Content="Delete Pile" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" Width="100" Click="deletepile_button_Click"/>
-        <Label Content="Pile Name" HorizontalAlignment="Left" Margin="138,40,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="deletepile_button" Content="{DynamicResource deletePile}" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" Width="100" Click="deletepile_button_Click"/>
+        <Label Content="{DynamicResource pileName}" HorizontalAlignment="Left" Margin="138,40,0,0" VerticalAlignment="Top"/>
         <Label Content=":" HorizontalAlignment="Left" Margin="230,40,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="pilenametextbox" MaxLength="10" HorizontalAlignment="Left" Margin="240,45,0,0"  VerticalAlignment="Top" Width="78" TextChanged="pilenametextbox_TextChanged" />
-        <Label Content="Pile Diameter" HorizontalAlignment="Left" Margin="138,66,0,0" VerticalAlignment="Top"/>
+        <Label Content="{DynamicResource pileDiameter}" HorizontalAlignment="Left" Margin="138,66,0,0" VerticalAlignment="Top"/>
         <Label Content="(t):" HorizontalAlignment="Left" Margin="219,66,0,0" VerticalAlignment="Top" />
         <TextBox x:Name="pilediametertextbox" HorizontalAlignment="Left" Margin="240,71,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="78" TextChanged="pilediametertextbox_TextChanged" PreviewTextInput="pilediametertextbox_PreviewTextInput" PreviewKeyDown="pilediametertextbox_PreviewKeyDown" />
-        <Button x:Name="cancel_button" Content="Cancel" HorizontalAlignment="Left" Margin="293,205,0,0" VerticalAlignment="Top" Width="50" Click="cancel_button_Click"/>
-        <Button x:Name="save_button" Content="Save" HorizontalAlignment="Left" Margin="238,205,0,0" VerticalAlignment="Top" Width="50" Click="save_button_Click"/>
-        <Button x:Name="addnewpile_button" Content="Add New Pile" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="addnewpile_button_Click"/>
+        <Button x:Name="cancel_button" Content="{DynamicResource Cancel}" HorizontalAlignment="Left" Margin="293,205,0,0" VerticalAlignment="Top" Width="50" Click="cancel_button_Click"/>
+        <Button x:Name="save_button" Content="{DynamicResource Save}" HorizontalAlignment="Left" Margin="238,205,0,0" VerticalAlignment="Top" Width="50" Click="save_button_Click"/>
+        <Button x:Name="addnewpile_button" Content="{DynamicResource addnewPile}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="addnewpile_button_Click"/>
         <Label x:Name="pilediameterunit" Content="m" HorizontalAlignment="Left" Margin="323,66,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="save_close_button" Content="Save and Close" HorizontalAlignment="Left" Margin="143,205,0,0" VerticalAlignment="Top" Width="90" Click="save_close_button_Click" />
+        <Button x:Name="save_close_button" Content="{DynamicResource SaveAndClose}" HorizontalAlignment="Left" Margin="143,205,0,0" VerticalAlignment="Top" Width="90" Click="save_close_button_Click" />
 
     </Grid>
 </Window>

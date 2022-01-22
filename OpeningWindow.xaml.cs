@@ -19,7 +19,7 @@ namespace ExDesign
     /// </summary>
     public partial class OpeningWindow : Window
     {
-        Page OpeningPage = new Pages.Opening.OpeningMainPage();
+        Pages.Opening.OpeningMainPage OpeningPage = new Pages.Opening.OpeningMainPage();
         public OpeningWindow()
         {
             InitializeComponent();
@@ -28,10 +28,12 @@ namespace ExDesign
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (App.Current.Windows.Count<2)
-            {
-                App.Current.MainWindow.Close();
-            }
+            
+        }
+
+        public void OpeningNew()
+        {
+            OpeningPage.NewProjectOpening();
         }
     }
 }

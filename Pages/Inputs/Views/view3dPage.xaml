@@ -14,6 +14,8 @@
 
         </ContentControl>
         <Label x:Name="scroll_3dview" Content="adfasdf"></Label>
-        <Button x:Name="Position_Reset_bttn" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Click="Position_Reset_bttn_Click"></Button>
+        <Button x:Name="Position_Reset_bttn" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Click="Position_Reset_bttn_Click">
+            <Image Source="/Textures/Icons/arrows-fullscreen.png" />
+        </Button>
     </Grid>
 </Page>

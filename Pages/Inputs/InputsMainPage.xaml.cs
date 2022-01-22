@@ -94,7 +94,7 @@ namespace ExDesign.Pages.Inputs
         {
             Main_pro.Content = materialsPage;
             UnitCombobox.SelectedIndex = StaticVariables.UnitIndex;
-            PileDiameter.pileDiameterReader();
+            Pile.pileDiameterReader();
         }
     }
 }

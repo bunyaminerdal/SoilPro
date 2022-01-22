@@ -21,7 +21,7 @@ namespace ExDesign.Pages.Opening
     /// </summary>
     public partial class NewProjectPage : Page
     {
-        Window mainWindow = new MainWindow();
+        
         int unitIndex = 11;
         WallType wallType = WallType.ConcreteRectangleWall;
         public NewProjectPage()
@@ -33,9 +33,8 @@ namespace ExDesign.Pages.Opening
         {
             StaticVariables.wallType = wallType;
             StaticVariables.UnitIndex = unitIndex;
-            mainWindow.Show();            
-            App.Current.MainWindow = mainWindow;
-            App.Current.Windows[1].Hide();
+            ProgramWindow mainWindow = new ProgramWindow();
+            WpfUtils.OpenWindow(mainWindow);
             
         }
 

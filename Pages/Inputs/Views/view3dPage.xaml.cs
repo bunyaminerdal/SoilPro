@@ -38,19 +38,21 @@ namespace ExDesign.Pages.Inputs.Views
         double wall_t=0.5;
         double wall_h=12; 
         double wall_d=7;
-        double pile_s = 1;
+        double pile_s = 0.80;
         double frontandbackCubeLength = 15;
         double excavationHeight = 8;
         double frontT_Z = 2;
         double frontT_X1 = 2;
-        double frontT_X2 = 1;
+        double frontT_X2 = 2;
         double backT_Beta = 10;
         double backT_B = 1;
-        double backT_A1 = 1;
+        double backT_A1 = 2;
         double backT_A2 = 2;
         double bottomT_h =3;
         double groundW_h1 = 5;
         double groundW_h2 = 2;
+        double capBeam_h = 0.8;
+        double capBeam_b = 0.8;
         
         public View3dPage()
         {
@@ -90,10 +92,11 @@ namespace ExDesign.Pages.Inputs.Views
 
         private void StartViewport3d()
         {
+            double centerY = wall_h / 2 + bottomT_h / 2;
             wall_d = StaticVariables.wall_d;
             groupScene = new Model3DGroup();
             
-            Point3D wallCenter = new Point3D(center3d.X - wall_t, center3d.Y + wall_h / 2, center3d.Z - wall_d / 2);
+            Point3D wallCenter = new Point3D(center3d.X - wall_t, center3d.Y + centerY, center3d.Z - wall_d / 2);
             switch (StaticVariables.wallType)
             {
                 case WallType.ConcreteRectangleWall:
@@ -109,7 +112,7 @@ namespace ExDesign.Pages.Inputs.Views
                         double pile_h = wall_h;
                         double pile_d = wall_t/2;
                         double pile_start = (wall_d-(spaceCount*pile_s))/2;
-                        Point3D pileCenter = new Point3D(center3d.X -wall_t/2, center3d.Y + wall_h / 2, center3d.Z-wall_d/2+pile_start +i*pile_s);
+                        Point3D pileCenter = new Point3D(center3d.X -wall_t/2, center3d.Y + centerY, center3d.Z-wall_d/2+pile_start +i*pile_s);
                         WpfCylinder pile = new WpfCylinder(pileCenter, 30, pile_d, pile_d, pile_h);
                         GeometryModel3D pileModel = pile.CreateModel(Colors.DarkGray, true, true);
                         AxisAngleRotation3D pileRotY = new AxisAngleRotation3D(new Vector3D(1, 0, 0), -90);
@@ -118,6 +121,11 @@ namespace ExDesign.Pages.Inputs.Views
                         pileTransform3DGroup.Children.Add(PileTransform3d);
                         pileModel.Transform = pileTransform3DGroup;
                         groupScene.Children.Add(pileModel);
+
+                        Point3D capbeamCenter = new Point3D(center3d.X - wall_t/2-capBeam_b/2, center3d.Y + centerY +capBeam_h, center3d.Z - wall_d / 2);
+                        WpfCube capbeam = new WpfCube(capbeamCenter, capBeam_b, capBeam_h, wall_d);
+                        GeometryModel3D capbeamModel = WpfCube.CreateCubeModel(capbeam, Colors.DarkGray);
+                        groupScene.Children.Add(capbeamModel);
                     }
                     break;
                 case WallType.SteelSheetWall:
@@ -131,21 +139,21 @@ namespace ExDesign.Pages.Inputs.Views
             double backCube_w = frontandbackCubeLength;
             double backCube_h = wall_h;
             double backCube_d = wall_d;
-            Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + wall_h / 2, center3d.Z-backCube_d/2);
+            Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + centerY, center3d.Z-backCube_d/2);
             WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
             GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200));
 
             double frontCube_w = frontandbackCubeLength;
             double frontCube_h = wall_h- excavationHeight;
             double frontCube_d = wall_d;
-            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + wall_h / 2 - (backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
+            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
             WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
             GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
 
             double cylinder_h = 7;
             double cylinder_d = 0.15;
             double cylinder_loc = 1;
-            Point3D cylinderCenter = new Point3D(center3d.X-wall_t-0.2,center3d.Y + wall_h / 2 - cylinder_loc,center3d.Z);
+            Point3D cylinderCenter = new Point3D(center3d.X-wall_t-0.2,center3d.Y + centerY - cylinder_loc,center3d.Z);
             WpfCylinder anchor = new WpfCylinder(cylinderCenter,30,cylinder_d,cylinder_d,cylinder_h);
             GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue,true,true);
             
@@ -250,7 +258,7 @@ namespace ExDesign.Pages.Inputs.Views
                 case GroundWaterType.none:                     
                     break;                
                 default:
-                     backW_w = frontandbackCubeLength + wall_t - 0.2;
+                     backW_w = frontandbackCubeLength  - 0.2;
                      backW_h = 0.1;
                      backW_d = wall_d - 0.1;
                      frontW_w = frontandbackCubeLength - 0.1;
@@ -259,15 +267,14 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
             }
             
-            Point3D backWCenter = new Point3D(center3d.X - wall_t + 0.1, center3d.Y - groundW_h1 + wall_h / 2-0.01, center3d.Z - backW_d / 2);
+            Point3D backWCenter = new Point3D(center3d.X  + 0.1, center3d.Y - groundW_h1 + centerY -0.01, center3d.Z - backW_d / 2);
             WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
             GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255));                        
-            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + wall_h / 2 - 0.01 - (backCube_h - frontCube_h), center3d.Z - frontW_d / 2);
+            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + centerY - 0.01 - (backCube_h - frontCube_h), center3d.Z - frontW_d / 2);
             WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
             GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255));
 
-
-            Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - wall_h / 2 , center3d.Z - wall_d / 2);
+            Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
             WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+frontCube_w+backCube_w, bottomT_h, wall_d);
             GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200));
 
@@ -289,8 +296,7 @@ namespace ExDesign.Pages.Inputs.Views
             groupScene.Children.Add(backTmodel);
             groupScene.Children.Add(backCubeModel);
             groupScene.Children.Add(bottomTmodel);
-
-                
+                            
 
             groupScene.Children.Add(leftLight());
             groupScene.Children.Add(new AmbientLight(Colors.Gray));
@@ -392,7 +398,10 @@ namespace ExDesign.Pages.Inputs.Views
         }
         public void ChangeWallThickness(double d)
         {
+            
+            capBeam_b = (capBeam_b - wall_t) + d;
             wall_t = d;
+            
             Refresh3Dview();
         }
         public void ChangeexcavationHeight(double exHeight)
@@ -450,33 +459,32 @@ namespace ExDesign.Pages.Inputs.Views
             pile_s = p_s;
             Refresh3Dview();
         }
-        public double GetWallHeight()
-        { return wall_h; }
-        public double GetWallThickness()
-        { return wall_t; }
-        public double GetexcavationHeight()
-        { return excavationHeight; }
-        public double GetexcavationZ()
-        { return frontT_Z; }
-        public double GetexcavationX1()
-        { return frontT_X1; }
-        public double GetexcavationX2()
-        { return frontT_X2; }
-        public double GetSurfaceBeta()
-        { return backT_Beta; }
-        public double GetSurfaceB()
-        { return backT_B; }
-        public double GetSurfaceA1()
-        { return backT_A1; }
-        public double GetSurfaceA2()
-        { return backT_A2; }
-        public double GetGroundWaterH1()
-        { return groundW_h1; }
-        public double GetGroundWaterH2()
-        { return groundW_h2; }
-        public double GetPileSpace()
-        { return pile_s; }
-        public void Refresh3Dview()
+        public void ChangeCapBeamH(double cb_h)
+        {
+            capBeam_h = cb_h;
+            Refresh3Dview();
+        }
+        public void ChangeCapBeamB(double cb_b)
+        {
+            capBeam_b = cb_b;
+            Refresh3Dview();
+        }
+        public double GetWallHeight()        { return wall_h; }
+        public double GetWallThickness()        { return wall_t; }
+        public double GetexcavationHeight()        { return excavationHeight; }
+        public double GetexcavationZ()        { return frontT_Z; }
+        public double GetexcavationX1()        { return frontT_X1; }
+        public double GetexcavationX2()        { return frontT_X2; }
+        public double GetSurfaceBeta()        { return backT_Beta; }
+        public double GetSurfaceB()        { return backT_B; }
+        public double GetSurfaceA1()        { return backT_A1; }
+        public double GetSurfaceA2()        { return backT_A2; }
+        public double GetGroundWaterH1()        { return groundW_h1; }
+        public double GetGroundWaterH2()        { return groundW_h2; }
+        public double GetPileSpace()        { return pile_s; }
+        public double GetCapBeamH()        { return capBeam_h; }
+        public double GetCapBeamB()        { return capBeam_b; }
+        public void Refresh3Dview()       
         {
             groupScene.Children.Clear();
             StartViewport3d();

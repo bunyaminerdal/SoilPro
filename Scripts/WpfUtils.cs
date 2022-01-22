@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Media.Media3D;
 
 namespace ExDesign.Scripts
@@ -131,6 +132,18 @@ namespace ExDesign.Scripts
             double newValue;
             newValue =Math.Round( value / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
             return newValue;
+        }
+
+        public static void OpenWindow(Window window)
+        {
+            window.Show();
+            foreach (Window win in App.Current.Windows)
+            {
+                if (win != window) win.Close();
+
+            }
+            App.Current.MainWindow = window;
+
         }
     }
 }

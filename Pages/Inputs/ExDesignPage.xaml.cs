@@ -153,29 +153,7 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void excavation_Z_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
-
-        private void excavation_Z_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
-
+       
         private void excavation_X1_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -186,28 +164,9 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void excavation_X1_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
+        
 
-        private void excavation_X1_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+        
 
         private void excavation_X2_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -216,29 +175,6 @@ namespace ExDesign.Pages.Inputs
             if (double.TryParse(textBox.Text, out double result))
             {
                 StaticVariables.view3DPage.ChangeexcavationX2(WpfUtils.GetValue(result));
-            }
-        }
-
-        private void excavation_X2_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
-
-        private void excavation_X2_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
             }
         }
 
@@ -304,29 +240,9 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void surfaceslope_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
+       
 
-        private void surfaceslope_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
-
+        
         private void surface_B_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -337,28 +253,9 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void surface_B_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
+        
 
-        private void surface_B_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+       
 
         private void surface_A1_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -370,28 +267,9 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void surface_A1_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
+        
 
-        private void surface_A1_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+       
 
         private void surface_A2_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -403,28 +281,9 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void surface_A2_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
+        
 
-        private void surface_A2_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+       
 
         private void groundwatertype_button_Checked(object sender, RoutedEventArgs e)
         {
@@ -484,28 +343,7 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void gw_h1_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
-
-        private void gw_h1_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+        
 
         private void gw_h2_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -517,27 +355,6 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        private void gw_h2_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            if (separator == ',')
-            {
-                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-            else
-            {
-                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
-                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-            }
-        }
-
-        private void gw_h2_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
-        }
+        
     }
 }
