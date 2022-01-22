@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SoilPro.Scripts;
+using ExDesign.Scripts;
 
-namespace SoilPro.Pages.Inputs
+namespace ExDesign.Pages.Inputs
 {
     /// <summary>
     /// InputsMainPage.xaml etkileşim mantığı
@@ -94,6 +94,7 @@ namespace SoilPro.Pages.Inputs
         {
             Main_pro.Content = materialsPage;
             UnitCombobox.SelectedIndex = StaticVariables.UnitIndex;
+            PileDiameter.pileDiameterReader();
         }
     }
 }

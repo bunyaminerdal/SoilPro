@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 
-namespace SoilPro.Pages.Options
+namespace ExDesign.Pages.Options
 {
     /// <summary>
     /// RegionOptions.xaml etkileşim mantığı

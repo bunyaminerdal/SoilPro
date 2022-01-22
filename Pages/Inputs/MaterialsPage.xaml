@@ -3,8 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SoilPro.Pages.Inputs"
-      xmlns:Views="clr-namespace:SoilPro.Pages.Inputs.Views" x:Class="SoilPro.Pages.Inputs.MaterialsPage"
+      xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
+      xmlns:Views="clr-namespace:ExDesign.Pages.Inputs.Views" x:Class="ExDesign.Pages.Inputs.MaterialsPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MaterialsPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
@@ -32,7 +32,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="1">
-                    <GroupBox x:Name="rectanglewallgroupbox" Margin="5" Header="{DynamicResource ConcreteRectangleWall}">
+                    <GroupBox Visibility="Hidden" x:Name="rectanglewallgroupbox" Margin="5" Header="{DynamicResource ConcreteRectangleWall}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="27"/>
@@ -70,29 +70,32 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                                <Label Width="100" Content="{DynamicResource pilewallHeight}"/>
-                                <Label Width="30" Content="(h):"/>
+                                <Label Width="160" Content="{DynamicResource pilewallHeight}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right" Content="(h):"/>
                                 <TextBox x:Name="pilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pilewall_height_TextChanged"/>
                                 <Label x:Name="pilewall_height_unit" Width="30" Content="cm"/>
                             </DockPanel>
-
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                                <Label Width="100" Content="{DynamicResource pileDiameter}"/>
-                                <Label Width="30" Content="(t):"/>
-                                <TextBox x:Name="pile_diameter" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pile_diameter_TextChanged"/>
-                                <Label x:Name="pile_diameter_unit" Width="30" Content="cm"/>
+                                <Label Width="160" Content="{DynamicResource pileType}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right"  Content=":"/>
+                                <ComboBox x:Name="pileDiameterCombobox" SelectionChanged="pileDiameterCombobox_SelectionChanged" ></ComboBox>
+                                <Button x:Name="piledesignwindow" Height="27" Width="27" Click="piledesignwindow_Click" Margin="2,0,0,0">
+                                    <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/file-earmark-plus.png" Margin="1" />
+                                </Button>
                             </DockPanel>
                             <DockPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                                <Label Width="100" Content="{DynamicResource pilespace}"/>
-                                <Label Width="30" Content="(s):"/>
+                                <Label Width="160" Content="{DynamicResource pileDiameter}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right" Content="(t):"/>
+                                <TextBox IsEnabled="False" x:Name="pile_diameter" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pile_diameter_TextChanged"/>
+                                <Label x:Name="pile_diameter_unit" Width="30" Content="cm"/>
+                            </DockPanel>
+                            <DockPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="160" Content="{DynamicResource pilespacefrompilecenter}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right" Content="(s):"/>
                                 <TextBox x:Name="pile_space" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pile_space_TextChanged"/>
                                 <Label x:Name="pile_space_unit" Width="30" Content="cm"/>
                             </DockPanel>
-                            <DockPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                                <Label Width="100" Content="{DynamicResource pileDiameter}"/>
-                                <Label Width="30" Content="(t):"/>
-                                <ComboBox x:Name="pileDiameterCombobox"></ComboBox>
-                            </DockPanel>
+                            
                         </Grid>
 
 

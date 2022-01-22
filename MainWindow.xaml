@@ -1,11 +1,11 @@
-﻿<Window x:Class="SoilPro.MainWindow"
+﻿<Window x:Class="ExDesign.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SoilPro"
+        xmlns:local="clr-namespace:ExDesign"
         mc:Ignorable="d"
-        Title="MainWindow" Height="868" Width="1024" MinHeight="768" MinWidth="1024">
+        Title="Ex-Design" Height="768" Width="1024" MinHeight="768" MinWidth="1024" Unloaded="Window_Unloaded">
 
         <Grid>
             <Grid.RowDefinitions>

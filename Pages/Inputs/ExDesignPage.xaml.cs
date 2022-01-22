@@ -1,4 +1,4 @@
-﻿using SoilPro.Scripts;
+﻿using ExDesign.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SoilPro.Pages.Inputs
+namespace ExDesign.Pages.Inputs
 {
     /// <summary>
     /// ExDesignPage.xaml etkileşim mantığı

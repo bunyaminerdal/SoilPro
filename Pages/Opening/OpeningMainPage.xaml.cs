@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SoilPro.Pages.Opening
+namespace ExDesign.Pages.Opening
 {
     /// <summary>
     /// OpeningMainPage.xaml etkileşim mantığı

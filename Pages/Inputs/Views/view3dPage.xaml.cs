@@ -13,10 +13,10 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SoilPro.Scripts;
+using ExDesign.Scripts;
 using System.Windows.Media.Animation;
 
-namespace SoilPro.Pages.Inputs.Views
+namespace ExDesign.Pages.Inputs.Views
 {
     /// <summary>
     /// view3dPage.xaml etkileşim mantığı

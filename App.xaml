@@ -1,7 +1,7 @@
-﻿<Application x:Class="SoilPro.App"
+﻿<Application x:Class="ExDesign.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SoilPro"
+             xmlns:local="clr-namespace:ExDesign"
              StartupUri="OpeningWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>

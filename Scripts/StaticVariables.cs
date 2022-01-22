@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SoilPro.Pages.Inputs.Views;
+using ExDesign.Pages.Inputs.Views;
 
-namespace SoilPro.Scripts
+namespace ExDesign.Scripts
 {
     public static class StaticVariables
     {

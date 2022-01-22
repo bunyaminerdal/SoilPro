@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SoilPro.Scripts
+namespace ExDesign.Scripts
 {
     internal class WpfScene
     {

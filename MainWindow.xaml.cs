@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SoilPro
+namespace ExDesign
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -45,6 +45,14 @@ namespace SoilPro
         private void Report_Click(object sender, RoutedEventArgs e)
         {
             MainScreen.Content = ReportMain_Page;
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            foreach (Window win in App.Current.Windows)
+            {
+                win.Close();
+            }
         }
     }
 }

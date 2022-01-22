@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace SoilPro.Scripts
+namespace ExDesign.Scripts
 {
     internal class WpfCircle
     {

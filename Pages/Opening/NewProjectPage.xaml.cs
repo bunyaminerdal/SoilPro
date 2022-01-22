@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SoilPro.Scripts;
+using ExDesign.Scripts;
 
-namespace SoilPro.Pages.Opening
+namespace ExDesign.Pages.Opening
 {
     /// <summary>
     /// NewProjectPage.xaml etkileşim mantığı
@@ -35,7 +35,7 @@ namespace SoilPro.Pages.Opening
             StaticVariables.UnitIndex = unitIndex;
             mainWindow.Show();            
             App.Current.MainWindow = mainWindow;
-            App.Current.Windows[1].Close();
+            App.Current.Windows[1].Hide();
             
         }
 

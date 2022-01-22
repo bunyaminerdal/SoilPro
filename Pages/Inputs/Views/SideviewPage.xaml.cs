@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SoilPro.Pages.Inputs.Views
+namespace ExDesign.Pages.Inputs.Views
 {
     /// <summary>
     /// SideviewPage.xaml etkileşim mantığı

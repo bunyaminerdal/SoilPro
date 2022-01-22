@@ -31,7 +31,8 @@
     <system:String x:Key="pilewallHeight" >Pile Wall Height</system:String>
     <system:String x:Key="wallthickness" >Wall Thickness</system:String>
     <system:String x:Key="pileDiameter" >Pile Diameter</system:String>
-    <system:String x:Key="pilespace" >Pile Space</system:String>
+    <system:String x:Key="pileType" >Pile Type</system:String>
+    <system:String x:Key="pilespacefrompilecenter" >Pile space from pile center</system:String>
     <system:String x:Key="walltype" >Wall Type</system:String>
     <system:String x:Key="Materials" >Materials</system:String>
     <system:String x:Key="ExDesign" >Ex-Design</system:String>

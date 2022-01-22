@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SoilPro
+namespace ExDesign
 {
     /// <summary>
     /// OpeningWindow.xaml etkileşim mantığı

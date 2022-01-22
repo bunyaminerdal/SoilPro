@@ -15,9 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SoilPro.Scripts;
+using ExDesign.Scripts;
 
-namespace SoilPro.Pages.Inputs
+namespace ExDesign.Pages.Inputs
 {
     /// <summary>
     /// MaterialsPage.xaml etkileşim mantığı
@@ -170,13 +170,12 @@ namespace SoilPro.Pages.Inputs
                     rectanglewallgroupbox.Visibility = Visibility.Visible;
                     pilewallgroupbox.Visibility = Visibility.Hidden;
                     break;
-            }
+            }            
             PileDiameter.GetPileDiameterDataList(pileDiameterCombobox);
-            pileDiameterCombobox.SelectedIndex = 0;
+            pileDiameterCombobox.SelectedIndex = 0;            
             UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
-            pile_diameter_unit.Content = pileDiameterCombobox.SelectedItem.ToString();
-
+            
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -185,7 +184,19 @@ namespace SoilPro.Pages.Inputs
             sideview_main.Content = null;
         }
 
-       
+        private void pileDiameterCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PileDiameterData pileDiameterData = pileDiameterCombobox.SelectedItem as PileDiameterData;
+            if (pileDiameterData != null) StaticVariables.view3DPage.ChangeWallThickness(pileDiameterData.t);
+            UnitChange();
+        }
+
+        private void piledesignwindow_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.PileWindow pileWin = new Windows.PileWindow();
+            pileWin.SelectPile(pileDiameterCombobox);
+            pileWin.ShowDialog();
+        }
     }
    
 

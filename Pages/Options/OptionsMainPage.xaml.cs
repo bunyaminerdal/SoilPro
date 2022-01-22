@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SoilPro.Pages.Options
+namespace ExDesign.Pages.Options
 {
     /// <summary>
     /// OptionsMainPage.xaml etkileşim mantığı

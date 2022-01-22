@@ -9,7 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 
-namespace SoilPro.Scripts
+namespace ExDesign.Scripts
 {
     internal class WpfCube
     {
