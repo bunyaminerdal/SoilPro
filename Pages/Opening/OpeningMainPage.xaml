@@ -54,35 +54,35 @@
             </StackPanel>
             
             <StackPanel Grid.Row="1" >
-                <Label Margin="5" Content="{DynamicResource RecentlyOpenedProjects}" FontWeight="Bold" FontSize="16"></Label>
+                <Label Margin="5" Content="{DynamicResource RecentlyOpenedProjects}" FontWeight="Bold" FontSize="16" Padding="0"></Label>
                 <StackPanel Grid.Row="0" Margin="10,0,10,10" VerticalAlignment="Center" >
                     
-                    <Button  Height="60" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" >
-                        <DockPanel>
+                    <Button x:Name="recentproject1" Height="65" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" Click="recentproject1_Click" Visibility="Hidden" >
+                        <DockPanel Margin="5,0,0,0" >
                             <StackPanel Grid.Column="1" HorizontalAlignment="Left">
-                                <TextBlock Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
-                                <TextBlock Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
-                                <TextBlock Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock x:Name="projectname1" Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                                <TextBlock x:Name="date1" Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" FontSize="10"></TextBlock>
+                                <TextBlock x:Name="path1" Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" FontSize="10"></TextBlock>
                             </StackPanel>
                         </DockPanel>   
 
                     </Button>
-                    <Button  Height="60" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" >
-                        <DockPanel>
+                    <Button x:Name="recentproject2"  Height="65" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" Click="recentproject2_Click" Visibility="Hidden" >
+                        <DockPanel  Margin="5,0,0,0">
                             <StackPanel Grid.Column="1" HorizontalAlignment="Left">
-                                <TextBlock Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
-                                <TextBlock Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
-                                <TextBlock Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock x:Name="projectname2" Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                                <TextBlock x:Name="date2" Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" FontSize="10"></TextBlock>
+                                <TextBlock x:Name="path2" Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" FontSize="10"></TextBlock>
                             </StackPanel>
                         </DockPanel>
 
                     </Button>
-                    <Button  Height="60" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" >
-                        <DockPanel>
+                    <Button x:Name="recentproject3"  Height="65" Background="WhiteSmoke" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" Margin="0,3,0,0" Click="recentproject3_Click" Visibility="Hidden" >
+                        <DockPanel  Margin="5,0,0,0">
                             <StackPanel Grid.Column="1" HorizontalAlignment="Left">
-                                <TextBlock Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
-                                <TextBlock Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
-                                <TextBlock Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock x:Name="projectname3" Text="proje ismi bla bla bla" HorizontalAlignment="left" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                                <TextBlock x:Name="date3" Text="wall type reinforcement concrete wall"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" FontSize="10"></TextBlock>
+                                <TextBlock x:Name="path3" Text="C:/desctop/islerim/iyiproje/sonhali/"  HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal" TextTrimming="WordEllipsis" TextWrapping="Wrap" FontSize="10"></TextBlock>
                             </StackPanel>
                         </DockPanel>
 

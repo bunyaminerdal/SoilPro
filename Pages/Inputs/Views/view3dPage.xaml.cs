@@ -187,7 +187,7 @@ namespace ExDesign.Pages.Inputs.Views
             double frontT_w_top  =0;
             Point3D TrapezoidCenter = new Point3D(frontCubeCenter.X + frontT_w_bottom_dis, frontCubeCenter.Y + frontT_h, frontCubeCenter.Z);
             Color frontT_color = Colors.Transparent;
-            switch (StaticVariables.excavationType)
+            switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
             {
                 case ExcavationType.none:                     
                     break;
@@ -228,7 +228,7 @@ namespace ExDesign.Pages.Inputs.Views
 
             
             Color backT_color = Colors.Transparent;
-            switch (StaticVariables.groundSurfaceType)
+            switch (WpfUtils.GetGroundSurfaceType(StaticVariables.viewModel.GroundSurfaceTypeIndex))
             {
                 case GroundSurfaceType.flat:
                     break;
@@ -275,7 +275,7 @@ namespace ExDesign.Pages.Inputs.Views
             //double frontW_h = frontCube_h + bottomT_h - groundW_h2;
             double frontW_h = 0;
             double frontW_d = 0;
-            switch (StaticVariables.groundWaterType)
+            switch (WpfUtils.GetGroundWaterType(StaticVariables.viewModel.WaterTypeIndex))
             {
                 case GroundWaterType.none:                     
                     break;                

@@ -45,6 +45,7 @@ namespace ExDesign
             OptionsMain_Page = new Pages.Options.OptionsMainPage();
             ReportMain_Page = new Pages.Reports.ReportMainPage();
             MainScreen.Content = InputsMain_Page;
+            this.Title = "Ex-Design | " + StaticVariables.viewModel.ProjectName;
         }
         
 
@@ -85,16 +86,13 @@ namespace ExDesign
 
         private void save_menuitem_Click(object sender, RoutedEventArgs e)
         {
-            if(StaticVariables.Path!=null)
+            if(StaticVariables.viewModel.Path!= "Untitled" && StaticVariables.viewModel.Path != null && StaticVariables.viewModel.Path != "")
             {
                 ViewModel.ModelSave();
             }                
             else
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Ex-Design files (*.exdb)|*.exdb";
-                if (saveFileDialog.ShowDialog() == true) ViewModel.ModelSaveAs(saveFileDialog.FileName);
-                    
+                SaveAs();
             }
                 
         }
@@ -103,16 +101,29 @@ namespace ExDesign
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Ex-Design files (*.exdb)|*.exdb";
-            if (openFileDialog.ShowDialog() == true) ViewModel.OpenModel(openFileDialog.FileName);
-            StandartStart();
-
+            if (openFileDialog.ShowDialog() == true)
+            {
+                ViewModel.OpenModel(openFileDialog.FileName);
+                StandartStart();
+            }
         }
 
         private void saveas_menuitem_Click(object sender, RoutedEventArgs e)
         {
+            SaveAs();
+        }
+
+        private void SaveAs()
+        {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Ex-Design files (*.exdb)|*.exdb";
-            if (saveFileDialog.ShowDialog() == true) ViewModel.ModelSaveAs(saveFileDialog.FileName);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                ViewModel.ModelSaveAs(saveFileDialog.FileName, saveFileDialog.SafeFileName.Split('.')[0]);
+                
+            }
+            this.Title = "Ex-Design | " + StaticVariables.viewModel.ProjectName;
+            
         }
     }
 }

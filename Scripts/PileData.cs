@@ -23,7 +23,7 @@ namespace ExDesign.Scripts
     public static class Pile
     {
         public static ObservableCollection<PileData> PileDiameterDataList = new ObservableCollection<PileData>();
-        public static string Path = System.AppDomain.CurrentDomain.BaseDirectory.ToString()+"Pile.exdb";
+        public static string Path = System.AppDomain.CurrentDomain.BaseDirectory.ToString()+"Pile.gexdb";
         public static void pileDiameterReader()
         {
             if(!File.Exists(Path))

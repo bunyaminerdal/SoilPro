@@ -176,5 +176,98 @@ namespace ExDesign.Scripts
 
         }
 
+        public static ExcavationType GetExcavationType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return ExcavationType.none;
+                case 1:
+                    return ExcavationType.type1;
+                case 2:
+                    return ExcavationType.type2;                
+                default:
+                    return ExcavationType.none;
+            }
+        }
+
+        public static int GetExcavationTypeIndex(ExcavationType excavationType)
+        {
+            switch (excavationType)
+            {
+                case ExcavationType.none:
+                    return 0;
+                case ExcavationType.type1:
+                    return 1;
+                case ExcavationType.type2:
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
+        public static GroundSurfaceType GetGroundSurfaceType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return GroundSurfaceType.flat;
+                case 1:
+                    return GroundSurfaceType.type1;
+                case 2:
+                    return GroundSurfaceType.type2;
+                case 3:
+                    return GroundSurfaceType.type3;
+                default:
+                    return GroundSurfaceType.flat;
+            }
+        }
+        public static int GetGroundSurfaceTypeIndex(GroundSurfaceType groundSurfaceType)
+        {
+            switch (groundSurfaceType)
+            {
+                case GroundSurfaceType.flat:
+                    return 0;
+                case GroundSurfaceType.type1:
+                    return 1;
+                case GroundSurfaceType.type2:
+                    return 2;
+                case GroundSurfaceType.type3:
+                    return 3;
+                default:
+                    return 0;
+            }
+        }
+        public static GroundWaterType GetGroundWaterType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return GroundWaterType.none;
+                case 1:
+                    return GroundWaterType.type1;
+                case 2:
+                    return GroundWaterType.type2;
+                case 3:
+                    return GroundWaterType.type3;
+                default:
+                    return GroundWaterType.none;
+            }
+        }
+        public static int GetGroundWaterTypeIndex(GroundWaterType groundWaterType)
+        {
+            switch (groundWaterType)
+            {
+                case GroundWaterType.none:
+                    return 0;
+                case GroundWaterType.type1:
+                    return 1;
+                case GroundWaterType.type2:
+                    return 2;
+                case GroundWaterType.type3:
+                    return 3;
+                default:
+                    return 0;
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace ExDesign.Scripts
 {
     public  class ViewModelData
     {
-       
+        public string SaveDate { get; set; }
         public Point3D center3d { get; set; }
         public double wall_t { get; set; }
         public double wall_h { get; set; }
@@ -35,6 +35,12 @@ namespace ExDesign.Scripts
         public double capBeam_b { get; set; }        
         public int UnitIndex { get; set; }
         public int WallTypeIndex { get; set; }
+        public string Path { get; set; }
+        public string ProjectName { get; set; }        
+        public int PileIndex { get; set; }
+        public int ExcavationTypeIndex { get; set; }
+        public int GroundSurfaceTypeIndex { get; set; }
+        public int WaterTypeIndex { get; set; } 
 
         public void ChangeWallHeight(double h)
         {
@@ -138,10 +144,10 @@ namespace ExDesign.Scripts
     public static class ViewModel
     {
         public static ViewModelData viewModelData = new ViewModelData();
-        public static string Path = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "Model.exdb";
+        public static string tempPath = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "Model.exdb";
         public static void RestartModel( )
         {
-            if (!File.Exists(Path))
+            if (!File.Exists(tempPath))
             {
                 ViewModelData viewModel = new ViewModelData()
                 {
@@ -166,15 +172,22 @@ namespace ExDesign.Scripts
                     capBeam_b = 0.65,
                     UnitIndex = 11,
                     WallTypeIndex = 1,
+                    PileIndex = 1,
+                    ExcavationTypeIndex = 0,
+                    GroundSurfaceTypeIndex = 0,
+                    WaterTypeIndex = 0,
+                    Path = "Untitled",
+                    ProjectName = "Untitled",
+                    SaveDate = "0",
                 };
                 
                 string json = JsonConvert.SerializeObject(viewModel);
 
                 //write string to file
-                File.WriteAllText(Path, json);
+                File.WriteAllText(tempPath, json);
             }
             // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(Path))
+            using (StreamReader file = File.OpenText(tempPath))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 StaticVariables.viewModel = (ViewModelData)serializer.Deserialize(file, typeof(ViewModelData));
@@ -182,19 +195,25 @@ namespace ExDesign.Scripts
         }
         public static void ModelSave()
         {
+            StaticVariables.viewModel.SaveDate = DateTime.Now.ToString();
             viewModelData = StaticVariables.viewModel;
             string json = JsonConvert.SerializeObject(viewModelData);
 
             //write string to file
-            File.WriteAllText(Path, json);
+            File.WriteAllText(StaticVariables.viewModel.Path, json);
+            if (ProgramModel.CheckPath(StaticVariables.viewModel.Path)) ProgramModel.ModelSave(StaticVariables.viewModel.Path);
         }
-        public static void ModelSaveAs(string path)
+        public static void ModelSaveAs(string path,string projectName)
         {
+            StaticVariables.viewModel.SaveDate = DateTime.Now.ToString();
+            StaticVariables.viewModel.Path = path;
+            StaticVariables.viewModel.ProjectName = projectName;
             viewModelData = StaticVariables.viewModel;
             string json = JsonConvert.SerializeObject(viewModelData);
-            StaticVariables.Path = path;
+            
             //write string to file
             File.WriteAllText(path, json);
+            if (ProgramModel.CheckPath(path)) ProgramModel.ModelSave(path);
         }
         public static void OpenModel(string path)
         {
@@ -202,12 +221,12 @@ namespace ExDesign.Scripts
             if(File.Exists(path))
             using (StreamReader file = File.OpenText(path))
             {
-                StaticVariables.Path = path;
+                
                 JsonSerializer serializer = new JsonSerializer();
-                viewModelData = (ViewModelData)serializer.Deserialize(file, typeof(ViewModelData));
-                    
-                    
-                }
+                StaticVariables.viewModel = (ViewModelData)serializer.Deserialize(file, typeof(ViewModelData));
+                if(StaticVariables.viewModel!=null) StaticVariables.viewModel.Path = path;
+                if (ProgramModel.CheckPath(path)) ProgramModel.ModelSave(path);
+            }
         }
         
     }

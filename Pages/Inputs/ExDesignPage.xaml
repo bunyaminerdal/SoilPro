@@ -43,7 +43,7 @@
                                         <ColumnDefinition Width="*" MinWidth="80"/>
                                         <ColumnDefinition Width="*" MinWidth="80"/>
                                     </Grid.ColumnDefinitions>
-                                    <RadioButton Grid.Column="0" x:Name="exsitetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True" Checked="exsitetype1_button_Checked" Margin="0,0,5,0" >
+                                    <RadioButton Grid.Column="0" x:Name="exsitetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype1_button_Checked" Margin="0,0,5,0" >
                                         <Image Source="/Textures/exheight.png" />
                                     </RadioButton>
                                     <RadioButton Grid.Column="1" x:Name="exsitetype2_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" Checked="exsitetype2_button_Checked" Margin="0,0,5,0"  >
@@ -108,7 +108,7 @@
                                         <ColumnDefinition Width="*" MinWidth="80"/>
                                         <ColumnDefinition Width="*" MinWidth="80"/>
                                     </Grid.ColumnDefinitions>
-                                    <RadioButton Grid.Column="0" x:Name="surfacetype_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True"  Margin="0,0,5,0" Checked="surfacetype_button_Checked" >
+                                    <RadioButton Grid.Column="0" x:Name="surfacetype_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"   Margin="0,0,5,0" Checked="surfacetype_button_Checked" >
                                         <Image Source="/Textures/surface1.png" />
                                     </RadioButton>
                                     <RadioButton Grid.Column="1" x:Name="surfacetype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="surfacetype1_button_Checked"  >
@@ -180,7 +180,7 @@
                                         <ColumnDefinition Width="*" MinWidth="80"/>
                                         <ColumnDefinition Width="*" MinWidth="80"/>
                                     </Grid.ColumnDefinitions>
-                                    <RadioButton Grid.Column="0" x:Name="groundwatertype_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5" IsChecked="True"  Margin="0,0,5,0" Checked="groundwatertype_button_Checked" >
+                                    <RadioButton Grid.Column="0" x:Name="groundwatertype_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"   Margin="0,0,5,0" Checked="groundwatertype_button_Checked" >
                                         <Image Source="/Textures/surface1.png" />
                                     </RadioButton>
                                     <RadioButton Grid.Column="1" x:Name="groundwatertype1_button"  Style="{StaticResource {x:Type ToggleButton}}"   Padding="0,0,0,0" BorderThickness="5,5,5,5"  Margin="0,0,5,0" Checked="groundwatertype1_button_Checked"  >

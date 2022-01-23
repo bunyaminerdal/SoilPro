@@ -176,10 +176,13 @@ namespace ExDesign.Pages.Inputs
                     break;
             }            
             Pile.GetPileDiameterDataList(pileDiameterCombobox);
-            pileDiameterCombobox.SelectedIndex = 1;            
+            if(StaticVariables.viewModel.PileIndex>pileDiameterCombobox.Items.Count-1)
+            {
+                StaticVariables.viewModel.PileIndex = 0;
+            }
+            pileDiameterCombobox.SelectedIndex = StaticVariables.viewModel.PileIndex;            
             UnitChange();
-            StaticEvents.UnitChangeEvent += UnitChange;
-            
+            StaticEvents.UnitChangeEvent += UnitChange;            
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -190,6 +193,7 @@ namespace ExDesign.Pages.Inputs
 
         private void pileDiameterCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            StaticVariables.viewModel.PileIndex = pileDiameterCombobox.SelectedIndex;
             PileData pileDiameterData = pileDiameterCombobox.SelectedItem as PileData;
             if (pileDiameterData != null) StaticVariables.viewModel.ChangeWallThickness(pileDiameterData.t);
             UnitChange();
