@@ -24,11 +24,11 @@ namespace ExDesign.Pages.Inputs
         
         MaterialsPage materialsPage=new MaterialsPage();
         ExDesignPage exDesignPage = new ExDesignPage();
-        
+        Views.View3dPage view3DPage = new Views.View3dPage();        
         public InputsMainPage()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
+            materialsPage.Set3dView(view3DPage);
         }
         
 

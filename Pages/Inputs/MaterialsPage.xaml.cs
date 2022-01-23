@@ -24,14 +24,16 @@ namespace ExDesign.Pages.Inputs
     /// </summary>
     public partial class MaterialsPage : Page
     {
-
         public char separator = ',';
 
         public MaterialsPage()
         {
             InitializeComponent();
         }
-        
+        public void Set3dView( Views.View3dPage view)
+        {
+            view3d_main.Content = StaticVariables.view3DPage;
+        }
         private void UnitChange()
         {
             concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
@@ -42,13 +44,13 @@ namespace ExDesign.Pages.Inputs
             beam_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             beam_width_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
 
-            concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
-            concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
-            pilewall_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallHeight()).ToString();
-            pile_diameter.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetWallThickness()).ToString();
-            pile_space.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetPileSpace()).ToString();
-            beam_height.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetCapBeamH()).ToString();
-            beam_width.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetCapBeamB()).ToString();
+            concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
+            concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()).ToString();
+            pilewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
+            pile_diameter.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()).ToString();
+            pile_space.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetPileSpace()).ToString();
+            beam_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamH()).ToString();
+            beam_width.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamB()).ToString();
         }
          
 
@@ -58,7 +60,7 @@ namespace ExDesign.Pages.Inputs
             
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeWallHeight(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValue(result));
             }
 
         }
@@ -94,7 +96,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeWallThickness(WpfUtils.GetValue( result));
+                StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValue( result));
             }
         }
 
@@ -105,7 +107,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeWallHeight(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValue(result));
             }
         }
 
@@ -115,7 +117,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeWallThickness(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValue(result));
             }
         }
 
@@ -125,7 +127,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangePileSpace(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangePileSpace(WpfUtils.GetValue(result));
             }
         }
         private void beam_height_TextChanged(object sender, TextChangedEventArgs e)
@@ -134,7 +136,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeCapBeamH(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeCapBeamH(WpfUtils.GetValue(result));
             }
         }
 
@@ -144,7 +146,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeCapBeamB(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeCapBeamB(WpfUtils.GetValue(result));
             }
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -189,7 +191,7 @@ namespace ExDesign.Pages.Inputs
         private void pileDiameterCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PileData pileDiameterData = pileDiameterCombobox.SelectedItem as PileData;
-            if (pileDiameterData != null) StaticVariables.view3DPage.ChangeWallThickness(pileDiameterData.t);
+            if (pileDiameterData != null) StaticVariables.viewModel.ChangeWallThickness(pileDiameterData.t);
             UnitChange();
         }
 

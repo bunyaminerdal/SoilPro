@@ -23,7 +23,7 @@ namespace ExDesign.Pages.Inputs.Views
     /// </summary>
     public partial class View3dPage : Page
     {
-        public  Viewport3D viewport;
+        public Viewport3D viewport;
         public Model3DGroup groupScene;
         double scaleFactor = 15;
         private double minScaleFactor = 8;
@@ -35,7 +35,7 @@ namespace ExDesign.Pages.Inputs.Views
         double rotationAngleY;
         Vector mousePosDiff;
         Point3D center3d = new Point3D(0, 0, 0);
-        double wall_t=0.5;
+        double wall_t=0.65;
         double wall_h=12; 
         double wall_d=7;
         double pile_s = 0.80;
@@ -52,7 +52,7 @@ namespace ExDesign.Pages.Inputs.Views
         double groundW_h1 = 5;
         double groundW_h2 = 2;
         double capBeam_h = 0.8;
-        double capBeam_b = 0.8;
+        double capBeam_b = 0.65;
         
         public View3dPage()
         {
@@ -89,9 +89,31 @@ namespace ExDesign.Pages.Inputs.Views
 
             return perspectiveCamera;
         }
-
+        public void SetViewModel()
+        {
+            center3d = StaticVariables.viewModel.center3d;
+            wall_d = StaticVariables.viewModel.wall_d;
+            wall_h = StaticVariables.viewModel.wall_h;
+            wall_t = StaticVariables.viewModel.wall_t;
+            pile_s = StaticVariables.viewModel.pile_s;
+            frontandbackCubeLength = StaticVariables.viewModel.frontandbackCubeLength;
+            excavationHeight = StaticVariables.viewModel.excavationHeight;
+            frontT_Z = StaticVariables.viewModel.frontT_Z;
+            frontT_X1 = StaticVariables.viewModel.frontT_X1;
+            frontT_X2 = StaticVariables.viewModel.frontT_X2;
+            backT_Beta = StaticVariables.viewModel.backT_Beta;
+            backT_B = StaticVariables.viewModel.backT_B;
+            backT_A1 = StaticVariables.viewModel.backT_A1;
+            backT_A2 = StaticVariables.viewModel.backT_A2;
+            bottomT_h = StaticVariables.viewModel.bottomT_h;
+            groundW_h1 = StaticVariables.viewModel.groundW_h1;
+            groundW_h2 = StaticVariables.viewModel.groundW_h2;
+            capBeam_b = StaticVariables.viewModel.capBeam_b;
+            capBeam_h = StaticVariables.viewModel.capBeam_h;
+        }
         private void StartViewport3d()
         {
+            SetViewModel();
             double centerY = wall_h / 2 + bottomT_h / 2;
             wall_d = StaticVariables.wall_d;
             groupScene = new Model3DGroup();
@@ -391,106 +413,13 @@ namespace ExDesign.Pages.Inputs.Views
         {
             isMouseWheelDown = false;
         }
-        public void ChangeWallHeight(double h)
-        {
-            wall_h = h;
-            Refresh3Dview();
-        }
-        public void ChangeWallThickness(double d)
-        {
-            
-            capBeam_b = (capBeam_b - wall_t) + d;
-            wall_t = d;
-            
-            Refresh3Dview();
-        }
-        public void ChangeexcavationHeight(double exHeight)
-        {
-            excavationHeight = exHeight;
-            Refresh3Dview();
-        }
-        public void ChangeexcavationZ(double exZ)
-        {
-            frontT_Z = exZ;
-            Refresh3Dview();
-        }
-        public void ChangeexcavationX1(double exX1)
-        {
-            frontT_X1 = exX1;
-            Refresh3Dview();
-        }
-        public void ChangeexcavationX2(double exX2)
-        {
-            frontT_X2 = exX2;
-            Refresh3Dview();
-        }
-        public void ChangeSurfaceBeta(double surfaceBeta)
-        {
-            backT_Beta = surfaceBeta;
-            Refresh3Dview();
-        }
-        public void ChangeSurfaceB(double surfaceB)
-        {
-            backT_B = surfaceB;
-            Refresh3Dview();
-        }
-        public void ChangeSurfaceA1(double surfaceA1)
-        {
-            backT_A1 = surfaceA1;
-            Refresh3Dview();
-        }
-        public void ChangeSurfaceA2(double surfaceA2)
-        {
-            backT_A2 = surfaceA2;
-            Refresh3Dview();
-        }
-        public void ChangeGroundWaterH1(double gw_h1)
-        {
-            groundW_h1 = gw_h1;
-            Refresh3Dview();
-        }
-        public void ChangeGroundWaterH2(double gw_h2)
-        {
-            groundW_h2 = gw_h2;
-            Refresh3Dview();
-        }
-        public void ChangePileSpace(double p_s)
-        {
-            pile_s = p_s;
-            Refresh3Dview();
-        }
-        public void ChangeCapBeamH(double cb_h)
-        {
-            capBeam_h = cb_h;
-            Refresh3Dview();
-        }
-        public void ChangeCapBeamB(double cb_b)
-        {
-            capBeam_b = cb_b;
-            Refresh3Dview();
-        }
-        public double GetWallHeight()        { return wall_h; }
-        public double GetWallThickness()        { return wall_t; }
-        public double GetexcavationHeight()        { return excavationHeight; }
-        public double GetexcavationZ()        { return frontT_Z; }
-        public double GetexcavationX1()        { return frontT_X1; }
-        public double GetexcavationX2()        { return frontT_X2; }
-        public double GetSurfaceBeta()        { return backT_Beta; }
-        public double GetSurfaceB()        { return backT_B; }
-        public double GetSurfaceA1()        { return backT_A1; }
-        public double GetSurfaceA2()        { return backT_A2; }
-        public double GetGroundWaterH1()        { return groundW_h1; }
-        public double GetGroundWaterH2()        { return groundW_h2; }
-        public double GetPileSpace()        { return pile_s; }
-        public double GetCapBeamH()        { return capBeam_h; }
-        public double GetCapBeamB()        { return capBeam_b; }
+        
         public void Refresh3Dview()       
         {
             groupScene.Children.Clear();
             StartViewport3d();
             ChangeModelTransform();
         }
-
-        
+                
     }
 }

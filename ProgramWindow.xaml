@@ -19,9 +19,9 @@
                 <Menu DockPanel.Dock="Top">
                     <MenuItem Header="{DynamicResource File}">
                     <MenuItem Header="{DynamicResource New}" Click="MenuItem_Click"  />
-                    <MenuItem Header="{DynamicResource Open}" />
-                    <MenuItem Header="{DynamicResource Save}" />
-                    <MenuItem Header="{DynamicResource Save_As}" />
+                    <MenuItem x:Name="open_menuitem" Header="{DynamicResource Open}" Click="open_menuitem_Click"  />
+                    <MenuItem x:Name="save_menuitem" Header="{DynamicResource Save}" Click="save_menuitem_Click" />
+                    <MenuItem x:Name="saveas_menuitem" Header="{DynamicResource Save_As}" Click="saveas_menuitem_Click" />
                     <Separator />
                     <MenuItem Header="{DynamicResource Exit}" />
                     </MenuItem>

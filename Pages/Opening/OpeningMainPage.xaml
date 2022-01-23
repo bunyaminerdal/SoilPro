@@ -36,7 +36,7 @@
                     
 
                 </Button>
-                <Button x:Name="OpenProjectButton"  Height="70"  Margin="0,5,0,0" Background="WhiteSmoke" BorderBrush="{x:Null}" >
+                <Button x:Name="OpenProjectButton"  Height="70"  Margin="0,5,0,0" Background="WhiteSmoke" BorderBrush="{x:Null}" Click="OpenProjectButton_Click" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>

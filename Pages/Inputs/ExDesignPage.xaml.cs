@@ -36,23 +36,23 @@ namespace ExDesign.Pages.Inputs
             excavation_Z_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             excavation_X1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             excavation_X2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            excavationheight.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationHeight()).ToString();
-            excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationZ()).ToString();
-            excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX1()).ToString();
-            excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetexcavationX2()).ToString();
+            excavationheight.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationHeight()).ToString();
+            excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationZ()).ToString();
+            excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX1()).ToString();
+            excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX2()).ToString();
 
             surface_A1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             surface_A2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             surface_B_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            surfaceslope.Text = StaticVariables.view3DPage.GetSurfaceBeta().ToString();
-            surface_B.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceB()).ToString();
-            surface_A1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceA1()).ToString();
-            surface_A2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetSurfaceA2()).ToString();
+            surfaceslope.Text = StaticVariables.viewModel.GetSurfaceBeta().ToString();
+            surface_B.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceB()).ToString();
+            surface_A1.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA1()).ToString();
+            surface_A2.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA2()).ToString();
 
             gw_h1_unit.Content = StaticVariables.CurrentUnit.ToString().Split("_")[1];
             gw_h2_unit.Content = StaticVariables.CurrentUnit.ToString().Split("_")[1];
-            gw_h1.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetGroundWaterH1()).ToString();
-            gw_h2.Text = WpfUtils.GetDimension(StaticVariables.view3DPage.GetGroundWaterH2()).ToString();
+            gw_h1.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetGroundWaterH1()).ToString();
+            gw_h2.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetGroundWaterH2()).ToString();
 
         }
 
@@ -116,7 +116,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeexcavationHeight(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationHeight(WpfUtils.GetValue(result));
             }
         }
 
@@ -149,7 +149,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeexcavationZ(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationZ(WpfUtils.GetValue(result));
             }
         }
 
@@ -160,13 +160,9 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeexcavationX1(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationX1(WpfUtils.GetValue(result));
             }
-        }
-
-        
-
-        
+        }              
 
         private void excavation_X2_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -174,7 +170,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeexcavationX2(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationX2(WpfUtils.GetValue(result));
             }
         }
 
@@ -236,7 +232,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeSurfaceBeta(result);
+                StaticVariables.viewModel.ChangeSurfaceBeta(result);
             }
         }
 
@@ -249,7 +245,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeSurfaceB(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeSurfaceB(WpfUtils.GetValue(result));
             }
         }
 
@@ -263,7 +259,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeSurfaceA1(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeSurfaceA1(WpfUtils.GetValue(result));
             }
         }
 
@@ -277,7 +273,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeSurfaceA2(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeSurfaceA2(WpfUtils.GetValue(result));
             }
         }
 
@@ -339,7 +335,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeGroundWaterH1(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeGroundWaterH1(WpfUtils.GetValue(result));
             }
         }
 
@@ -351,7 +347,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.view3DPage.ChangeGroundWaterH2(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeGroundWaterH2(WpfUtils.GetValue(result));
             }
         }
 

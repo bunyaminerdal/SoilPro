@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExDesign.Scripts;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +37,15 @@ namespace ExDesign.Pages.Opening
         public void NewProjectOpening()
         {
             OpeningScreen.Content = newProjectPage;
+        }
+
+        private void OpenProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Ex-Design files (*.exdb)|*.exdb";
+            if (openFileDialog.ShowDialog() == true) ViewModel.OpenModel(openFileDialog.FileName);
+            ProgramWindow mainWindow = new ProgramWindow();            
+            WpfUtils.OpenWindow(mainWindow);
         }
     }
 }
