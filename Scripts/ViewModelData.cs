@@ -34,6 +34,7 @@ namespace ExDesign.Scripts
         public double capBeam_h { get; set; }
         public double capBeam_b { get; set; }        
         public int UnitIndex { get; set; }
+        public int WallTypeIndex { get; set; }
 
         public void ChangeWallHeight(double h)
         {
@@ -138,7 +139,7 @@ namespace ExDesign.Scripts
     {
         public static ViewModelData viewModelData = new ViewModelData();
         public static string Path = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "Model.exdb";
-        public static void ModelReader( )
+        public static void RestartModel( )
         {
             if (!File.Exists(Path))
             {
@@ -164,6 +165,7 @@ namespace ExDesign.Scripts
                     capBeam_h = 0.8,
                     capBeam_b = 0.65,
                     UnitIndex = 11,
+                    WallTypeIndex = 1,
                 };
                 
                 string json = JsonConvert.SerializeObject(viewModel);
@@ -175,7 +177,7 @@ namespace ExDesign.Scripts
             using (StreamReader file = File.OpenText(Path))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                viewModelData = (ViewModelData)serializer.Deserialize(file, typeof(ViewModelData));
+                StaticVariables.viewModel = (ViewModelData)serializer.Deserialize(file, typeof(ViewModelData));
             }
         }
         public static void ModelSave()
@@ -200,7 +202,7 @@ namespace ExDesign.Scripts
             if(File.Exists(path))
             using (StreamReader file = File.OpenText(path))
             {
-                    StaticVariables.Path = path;
+                StaticVariables.Path = path;
                 JsonSerializer serializer = new JsonSerializer();
                 viewModelData = (ViewModelData)serializer.Deserialize(file, typeof(ViewModelData));
                     

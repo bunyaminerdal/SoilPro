@@ -37,9 +37,8 @@ namespace ExDesign
             
             StandartStart();
         }
-        public void StandartStart()
+        private void StandartStart()
         {
-            StaticVariables.viewModel = ViewModel.viewModelData;
             StaticVariables.view3DPage = new Pages.Inputs.Views.View3dPage();
             StaticVariables.view3DPage.SetViewModel();
             InputsMain_Page = new Pages.Inputs.InputsMainPage();
@@ -47,17 +46,7 @@ namespace ExDesign
             ReportMain_Page = new Pages.Reports.ReportMainPage();
             MainScreen.Content = InputsMain_Page;
         }
-        public void FreshStart()
-        {
-            ViewModel.ModelReader();
-            StaticVariables.viewModel = ViewModel.viewModelData;
-            StaticVariables.view3DPage = new Pages.Inputs.Views.View3dPage();
-            StaticVariables.view3DPage.SetViewModel();
-            InputsMain_Page = new Pages.Inputs.InputsMainPage();
-            OptionsMain_Page = new Pages.Options.OptionsMainPage();
-            ReportMain_Page = new Pages.Reports.ReportMainPage();
-            MainScreen.Content = InputsMain_Page;
-        }
+        
 
         private void Options_Click(object sender, RoutedEventArgs e)
         {

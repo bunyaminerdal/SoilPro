@@ -31,12 +31,12 @@ namespace ExDesign.Pages.Opening
 
         private void StartProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            StaticVariables.wallType = wallType;
-            StaticVariables.UnitIndex = unitIndex;
-            ProgramWindow mainWindow = new ProgramWindow();
-            mainWindow.FreshStart();
-            WpfUtils.OpenWindow(mainWindow);
             
+            ViewModel.RestartModel();
+            StaticVariables.viewModel.UnitIndex= unitIndex;
+            StaticVariables.viewModel.WallTypeIndex = WpfUtils.GetWallTypeIndex(wallType);
+            ProgramWindow mainWindow = new ProgramWindow();            
+            WpfUtils.OpenWindow(mainWindow);
         }
 
         private void concreteRectangleWall_bttn_Checked(object sender, RoutedEventArgs e)

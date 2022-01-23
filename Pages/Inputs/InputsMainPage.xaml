@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="2">
             <StatusBar>
-                <ComboBox x:Name="UnitCombobox" SelectedIndex="11"  SelectionChanged="UnitCombobox_SelectionChanged" Padding="6,3,5,3" FontSize="14" Height="25" >
+                <ComboBox x:Name="UnitCombobox"  SelectionChanged="UnitCombobox_SelectionChanged" Padding="6,3,5,3" FontSize="14" Height="25" >
                     <ComboBoxItem>kg-mm</ComboBoxItem>
                     <ComboBoxItem>kg-cm</ComboBoxItem>
                     <ComboBoxItem>kg-m</ComboBoxItem>

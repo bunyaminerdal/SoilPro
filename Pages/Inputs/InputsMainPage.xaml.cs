@@ -86,14 +86,14 @@ namespace ExDesign.Pages.Inputs
                     StaticVariables.CurrentUnit = Units.kN_m;
                     break;
             }
-            
+            StaticVariables.viewModel.UnitIndex = ((ComboBox)sender).SelectedIndex;
             StaticEvents.UnitChangeEvent?.Invoke();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Main_pro.Content = materialsPage;
-            UnitCombobox.SelectedIndex = StaticVariables.UnitIndex;
+            UnitCombobox.SelectedIndex = StaticVariables.viewModel.UnitIndex;
             Pile.pileDiameterReader();
         }
     }

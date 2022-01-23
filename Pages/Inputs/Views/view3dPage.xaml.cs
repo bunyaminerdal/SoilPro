@@ -119,7 +119,7 @@ namespace ExDesign.Pages.Inputs.Views
             groupScene = new Model3DGroup();
             
             Point3D wallCenter = new Point3D(center3d.X - wall_t, center3d.Y + centerY, center3d.Z - wall_d / 2);
-            switch (StaticVariables.wallType)
+            switch (WpfUtils.GetWallType( StaticVariables.viewModel.WallTypeIndex))
             {
                 case WallType.ConcreteRectangleWall:
                     WpfCube wallCube = new WpfCube(wallCenter, wall_t, wall_h, wall_d);

@@ -153,7 +153,7 @@ namespace ExDesign.Pages.Inputs
         {
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.SideviewPage;
-            switch (StaticVariables.wallType)
+            switch (WpfUtils.GetWallType( StaticVariables.viewModel.WallTypeIndex))
             {
                 case WallType.ConcreteRectangleWall:
                     rectanglewallgroupbox.Visibility = Visibility.Visible;

@@ -145,5 +145,36 @@ namespace ExDesign.Scripts
             App.Current.MainWindow = window;
 
         }
+        public static WallType GetWallType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return WallType.ConcreteRectangleWall;
+                case 1:
+                    return WallType.ConcretePileWall;
+                case 2:
+                    return WallType.SteelSheetWall;
+                default:
+                    return WallType.ConcreteRectangleWall;
+            }
+        }
+        public static int GetWallTypeIndex(WallType wallType)
+        {
+            switch (wallType)
+            {
+                case WallType.ConcreteRectangleWall:
+                    return 0;
+                case WallType.ConcretePileWall:
+                    return 1;
+                case WallType.SteelSheetWall:
+                    return 2;
+                default:
+                    return 0;
+            }
+
+
+        }
+
     }
 }
