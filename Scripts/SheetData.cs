@@ -22,6 +22,7 @@ namespace ExDesign.Scripts
         public double Wely { get; set; }
         public double Wply { get; set; }
         public bool isDefault { get; set; }
+        public int type { get; set; }
 
     }
 
@@ -33,7 +34,7 @@ namespace ExDesign.Scripts
         {
             if (!File.Exists(Path))
             {
-                SheetData sheet1 = new SheetData() { isDefault = true, Name = "AU14", Length=0.75, Height=0.204,Thickness = 0.01,Inertia= 0.0002868 ,Area= 0.0132 ,Wely= 0.001405 ,Wply= 0.001663 };
+                SheetData sheet1 = new SheetData() { isDefault = true,type=0, Name = "AU14", Length=0.75, Height=0.204,Thickness = 0.01,Inertia= 0.0002868 ,Area= 0.0132 ,Wely= 0.001405 ,Wply= 0.001663 };
 
                 List<SheetData> tempList = new List<SheetData>();
                 tempList.Add(sheet1);

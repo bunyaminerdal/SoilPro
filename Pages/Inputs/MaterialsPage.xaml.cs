@@ -159,20 +159,25 @@ namespace ExDesign.Pages.Inputs
                     rectanglewallgroupbox.Visibility = Visibility.Visible;
                     pilewallgroupbox.Visibility = Visibility.Hidden;
                     capbeamgroupbox.Visibility = Visibility.Hidden;
+                    sheetpilewallgroupbox.Visibility = Visibility.Hidden;
                     break;
                 case WallType.ConcretePileWall:
                     rectanglewallgroupbox.Visibility = Visibility.Hidden;
                     pilewallgroupbox.Visibility = Visibility.Visible;
                     capbeamgroupbox.Visibility = Visibility.Visible;
-
+                    sheetpilewallgroupbox.Visibility = Visibility.Hidden;
                     break;
                 case WallType.SteelSheetWall:
+                    rectanglewallgroupbox.Visibility = Visibility.Hidden;
+                    pilewallgroupbox.Visibility = Visibility.Hidden;
+                    capbeamgroupbox.Visibility = Visibility.Hidden;
+                    sheetpilewallgroupbox.Visibility = Visibility.Visible;
                     break;
                 default:
                     rectanglewallgroupbox.Visibility = Visibility.Visible;
                     pilewallgroupbox.Visibility = Visibility.Hidden;
                     capbeamgroupbox.Visibility = Visibility.Hidden;
-
+                    sheetpilewallgroupbox.Visibility = Visibility.Hidden;
                     break;
             }            
             Pile.GetPileDiameterDataList(pileDiameterCombobox);
@@ -180,9 +185,16 @@ namespace ExDesign.Pages.Inputs
             {
                 StaticVariables.viewModel.PileIndex = 0;
             }
-            pileDiameterCombobox.SelectedIndex = StaticVariables.viewModel.PileIndex;            
+            pileDiameterCombobox.SelectedIndex = StaticVariables.viewModel.PileIndex;
+
+            Sheet.GetSheetDataList(sheetpileCombobox);
+            if (StaticVariables.viewModel.SheetIndex > sheetpileCombobox.Items.Count - 1)
+            {
+                StaticVariables.viewModel.SheetIndex = 0;
+            }
+            sheetpileCombobox.SelectedIndex = StaticVariables.viewModel.SheetIndex;
             UnitChange();
-            StaticEvents.UnitChangeEvent += UnitChange;            
+            StaticEvents.UnitChangeEvent += UnitChange;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -206,7 +218,20 @@ namespace ExDesign.Pages.Inputs
             pileWin.ShowDialog();
         }
 
-       
+        private void sheetpileCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StaticVariables.viewModel.SheetIndex = sheetpileCombobox.SelectedIndex;
+            SheetData sheetData = sheetpileCombobox.SelectedItem as SheetData;
+            if (sheetData != null) StaticVariables.viewModel.ChangeWallThickness(sheetData.Height);
+            UnitChange();
+        }
+
+        private void sheetpiledesignwindow_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.SheetPileWindow sheetpileWin = new Windows.SheetPileWindow();
+            sheetpileWin.SelectSheet(sheetpileCombobox);
+            sheetpileWin.ShowDialog();
+        }
     }
    
 

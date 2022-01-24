@@ -54,7 +54,7 @@
                     </GroupBox>                    
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <GroupBox x:Name="pilewallgroupbox" Margin="5" Header="{DynamicResource ConcretePileWall}">
+                    <GroupBox Visibility="Hidden" x:Name="pilewallgroupbox" Margin="5" Header="{DynamicResource ConcretePileWall}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="27"/>
@@ -94,7 +94,7 @@
 
 
                     </GroupBox>
-                    <GroupBox x:Name="capbeamgroupbox" Margin="5" Header="{DynamicResource capbeam}">
+                    <GroupBox Visibility="Hidden" x:Name="capbeamgroupbox" Margin="5" Header="{DynamicResource capbeam}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="27"/>
@@ -118,6 +118,34 @@
                         </Grid>
 
 
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <GroupBox x:Name="sheetpilewallgroupbox" Margin="5" Header="{DynamicResource SheetPileWall}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="160" Content="{DynamicResource pilewallHeight}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right" Content="(h):"/>
+                                <TextBox x:Name="sheetpilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pilewall_height_TextChanged"/>
+                                <Label x:Name="sheetpilewall_height_unit" Width="30" Content="cm"/>
+                            </DockPanel>
+                            <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="160" Content="{DynamicResource sheetpileType}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right"  Content=":"/>
+                                <ComboBox x:Name="sheetpileCombobox"  SelectionChanged="sheetpileCombobox_SelectionChanged"  ></ComboBox>
+                                <Button x:Name="sheetpiledesignwindow" Height="27" Width="27" Margin="2,0,0,0" Click="sheetpiledesignwindow_Click">
+                                    <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/pencil-square.png" Margin="1" />
+                                </Button>
+                            </DockPanel>
+                            
+                        </Grid>
                     </GroupBox>
                 </StackPanel>
             </Grid>

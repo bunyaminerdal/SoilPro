@@ -38,6 +38,7 @@ namespace ExDesign.Scripts
         public string Path { get; set; }
         public string ProjectName { get; set; }        
         public int PileIndex { get; set; }
+        public int SheetIndex { get; set; }
         public int ExcavationTypeIndex { get; set; }
         public int GroundSurfaceTypeIndex { get; set; }
         public int WaterTypeIndex { get; set; } 
@@ -173,6 +174,7 @@ namespace ExDesign.Scripts
                     UnitIndex = 11,
                     WallTypeIndex = 1,
                     PileIndex = 1,
+                    SheetIndex = 0,
                     ExcavationTypeIndex = 0,
                     GroundSurfaceTypeIndex = 0,
                     WaterTypeIndex = 0,

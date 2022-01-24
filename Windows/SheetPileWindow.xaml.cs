@@ -44,13 +44,13 @@ namespace ExDesign.Windows
             sheetList.ItemsSource = tempSheetDataList;
             sheetList.DisplayMemberPath = "Name";
             sheetList.SelectionMode = SelectionMode.Single;
-            sheetarea_unit.Content = StaticVariables.areaUnit;
+            sheetarea_unit.Content = StaticVariables.areaUnit+"/m";
             sheetheight_unit.Content = StaticVariables.dimensionUnit;
-            sheetInertia_unit.Content = StaticVariables.inertiaUnit;
+            sheetInertia_unit.Content = StaticVariables.inertiaUnit + "/m";
             sheetlength_unit.Content = StaticVariables.dimensionUnit;
             sheetThickness_unit.Content = StaticVariables.dimensionUnit;
-            wely_unit.Content = StaticVariables.volumeUnit;
-            wply_unit.Content = StaticVariables.volumeUnit;
+            wely_unit.Content = StaticVariables.volumeUnit + "/m";
+            wply_unit.Content = StaticVariables.volumeUnit + "/m";
 
         }
         private void sheetList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,7 +79,7 @@ namespace ExDesign.Windows
         }
         private void addnewpile_button_Click(object sender, RoutedEventArgs e)
         {
-            tempSheetDataList.Add(new SheetData() { isDefault = true, Name = "AU14", Length = 0.75, Height = 0.204, Thickness = 0.01, Inertia = 0.0002868, Area = 0.0132, Wely = 0.001405, Wply = 0.001663 });
+            tempSheetDataList.Add(new SheetData() { isDefault = false,type =0, Name = "AU14", Length = 0.75, Height = 0.204, Thickness = 0.01, Inertia = 0.0002868, Area = 0.0132, Wely = 0.001405, Wply = 0.001663 });
             sheetList.SelectedIndex = tempSheetDataList.Count - 1;
 
         }
@@ -222,3 +222,4 @@ namespace ExDesign.Windows
         }
     }
 }
+ 
