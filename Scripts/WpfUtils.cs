@@ -127,10 +127,46 @@ namespace ExDesign.Scripts
             newValue =Math.Round( value * StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
             return newValue;
         }
-        public static double GetValue(double value)
+        public static double GetValueDimension(double value)
         {
             double newValue;
             newValue =Math.Round( value / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
+            return newValue;
+        }
+        public static double GetArea(double value)
+        {
+            double newValue;
+            newValue = Math.Round(value * Math.Pow( StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],2), 10);
+            return newValue;
+        }
+        public static double GetValueArea(double value)
+        {
+            double newValue;
+            newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],2), 10);
+            return newValue;
+        }
+        public static double GetVolume(double value)
+        {
+            double newValue;
+            newValue = Math.Round(value * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3), 10);
+            return newValue;
+        }
+        public static double GetValueVolume(double value)
+        {
+            double newValue;
+            newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3), 10);
+            return newValue;
+        }
+        public static double GetInertia(double value)
+        {
+            double newValue;
+            newValue = Math.Round(value * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4), 10);
+            return newValue;
+        }
+        public static double GetValueInertia(double value)
+        {
+            double newValue;
+            newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4), 10);
             return newValue;
         }
 
@@ -269,5 +305,6 @@ namespace ExDesign.Scripts
                     return 0;
             }
         }
+        
     }
 }

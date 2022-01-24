@@ -14,6 +14,10 @@ namespace ExDesign.Scripts
         public static SideviewPage SideviewPage = new SideviewPage();
         public static Units CurrentUnit = Units.kg_cm;
         public static Units LastUnit = Units.kg_cm;
+        public static string dimensionUnit { get { return CurrentUnit.ToString().Split('_')[1]; } }
+        public static string areaUnit { get { return CurrentUnit.ToString().Split('_')[1]+"2"; } }
+        public static string volumeUnit { get { return CurrentUnit.ToString().Split('_')[1] + "3"; } }
+        public static string inertiaUnit { get { return CurrentUnit.ToString().Split('_')[1] + "4"; } }
         public static Dictionary<Units, double> UnitDimensionFactors = new Dictionary<Units, double> {{ Units.kg_mm, 1000 },{Units.kg_cm,100 },{ Units.kg_m,1},
                                                                                                         { Units.ton_mm, 1000 },{ Units.ton_cm, 100 },{ Units.ton_m, 1 },
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 100 },{ Units.N_m, 1 },

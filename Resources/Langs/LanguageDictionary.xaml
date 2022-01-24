@@ -50,13 +50,17 @@
     <system:String x:Key="GroundWater" >Ground Water Style</system:String>
     <system:String x:Key="groundwaterheightfromsurface" >Height from Surface</system:String>
     <system:String x:Key="groundwaterheightfromExcavation" >Height from Excavation</system:String>
-    <system:String x:Key="deletePile" >Delete Pile</system:String>
-    <system:String x:Key="addnewPile" >Add New Pile</system:String>
+    <system:String x:Key="delete" >Delete</system:String>
+    <system:String x:Key="addnew" >Add New</system:String>
     <system:String x:Key="pileName" >Pile Name</system:String>
     <system:String x:Key="Cancel" >Cancel</system:String>
     <system:String x:Key="SaveAndClose" >Save and Close</system:String>
     <system:String x:Key="capbeam" >Capping Beam</system:String>
     <system:String x:Key="capbeamheiht" >Capping Beam Height</system:String>
     <system:String x:Key="capbeamwidth" >Capping Beam width</system:String>
+    <system:String x:Key="name" >Name</system:String>
+    <system:String x:Key="Length" >Length</system:String>
+    <system:String x:Key="Height" >Height</system:String>
+    <system:String x:Key="Thickness" >Thickness</system:String>
     
 </ResourceDictionary>

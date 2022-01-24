@@ -43,7 +43,6 @@ namespace ExDesign.Windows
             {
                 tempPileDiameterDatas.Add(pile);
             }
-            //tempPileDiameterDatas = PileDiameter.PileDiameterDataList;
             PileList.ItemsSource = tempPileDiameterDatas;
             PileList.DisplayMemberPath = "Name";
             PileList.SelectionMode = SelectionMode.Single;
@@ -111,7 +110,7 @@ namespace ExDesign.Windows
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                tempPileDiameterDatas[PileList.SelectedIndex].t = WpfUtils.GetValue(result);
+                tempPileDiameterDatas[PileList.SelectedIndex].t = WpfUtils.GetValueDimension(result);
             }
         }
 

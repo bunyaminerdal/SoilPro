@@ -167,7 +167,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeexcavationHeight(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationHeight(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -200,7 +200,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeexcavationZ(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationZ(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -211,7 +211,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeexcavationX1(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationX1(WpfUtils.GetValueDimension(result));
             }
         }              
 
@@ -221,7 +221,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeexcavationX2(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeexcavationX2(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -296,7 +296,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeSurfaceB(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeSurfaceB(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -310,7 +310,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeSurfaceA1(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeSurfaceA1(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -324,7 +324,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeSurfaceA2(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeSurfaceA2(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -386,7 +386,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeGroundWaterH1(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeGroundWaterH1(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -398,7 +398,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeGroundWaterH2(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeGroundWaterH2(WpfUtils.GetValueDimension(result));
             }
         }
 

@@ -60,7 +60,7 @@ namespace ExDesign.Pages.Inputs
             
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValueDimension(result));
             }
 
         }
@@ -96,7 +96,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValue( result));
+                StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValueDimension( result));
             }
         }
 
@@ -107,7 +107,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -117,7 +117,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -127,7 +127,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangePileSpace(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangePileSpace(WpfUtils.GetValueDimension(result));
             }
         }
         private void beam_height_TextChanged(object sender, TextChangedEventArgs e)
@@ -136,7 +136,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeCapBeamH(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeCapBeamH(WpfUtils.GetValueDimension(result));
             }
         }
 
@@ -146,7 +146,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.ChangeCapBeamB(WpfUtils.GetValue(result));
+                StaticVariables.viewModel.ChangeCapBeamB(WpfUtils.GetValueDimension(result));
             }
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
