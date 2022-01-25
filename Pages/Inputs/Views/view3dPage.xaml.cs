@@ -27,7 +27,7 @@ namespace ExDesign.Pages.Inputs.Views
         public Model3DGroup groupScene;
         double scaleFactor = 15;
         private double minScaleFactor = 8;
-        private double maxScaleFactor = 30;
+        private double maxScaleFactor = 50;
         Point3D lookat = new Point3D(0, 0, 0);
         Point mouseFirstPos;
         bool isMouseWheelDown;
@@ -53,7 +53,9 @@ namespace ExDesign.Pages.Inputs.Views
         double groundW_h2 = 2;
         double capBeam_h = 0.8;
         double capBeam_b = 0.65;
-        
+        int sheetIndex = 0;
+
+
         public View3dPage()
         {
             InitializeComponent();
@@ -110,6 +112,7 @@ namespace ExDesign.Pages.Inputs.Views
             groundW_h2 = StaticVariables.viewModel.groundW_h2;
             capBeam_b = StaticVariables.viewModel.capBeam_b;
             capBeam_h = StaticVariables.viewModel.capBeam_h;
+            sheetIndex = StaticVariables.viewModel.SheetIndex;
         }
         private void StartViewport3d()
         {
@@ -128,12 +131,12 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
                 case WallType.ConcretePileWall:
                     double spaceCount =Math.Clamp( Math.Round((wall_d - wall_t) / pile_s,MidpointRounding.ToNegativeInfinity),1,StaticVariables.maxPileCount);
-                    //wall_d = spaceCount * pile_s + wall_t;
+                    double pile_h = wall_h;
+                    double pile_d = wall_t / 2;
+                    double pile_start = (wall_d - (spaceCount * pile_s)) / 2;
                     for (int i = 0; i < spaceCount+1; i++)
-                    {
-                        double pile_h = wall_h;
-                        double pile_d = wall_t/2;
-                        double pile_start = (wall_d-(spaceCount*pile_s))/2;
+                    {                       
+                        
                         Point3D pileCenter = new Point3D(center3d.X -wall_t/2, center3d.Y + centerY, center3d.Z-wall_d/2+pile_start +i*pile_s);
                         WpfCylinder pile = new WpfCylinder(pileCenter, 30, pile_d, pile_d, pile_h);
                         GeometryModel3D pileModel = pile.CreateModel(Colors.DarkGray, true, true);
@@ -151,6 +154,63 @@ namespace ExDesign.Pages.Inputs.Views
                     }
                     break;
                 case WallType.SteelSheetWall:
+                    if (Sheet.SheetDataList.Count <= 0) break;
+                    double sheetH = Sheet.SheetDataList[sheetIndex].Height;
+                    double sheetL = Sheet.SheetDataList[sheetIndex].Length;
+                    double sheetT = Sheet.SheetDataList[sheetIndex].Thickness;
+                    double sheetL1 = sheetH / 2; //TODO: bu kısmı kafadan attım. değitirilmesi lazım
+                    double sheetspaceCount = Math.Clamp(Math.Round(wall_d / sheetL, MidpointRounding.ToNegativeInfinity), 1, StaticVariables.maxPileCount);
+
+                    double sheetpile_start =(wall_d - (sheetspaceCount * sheetL)) / 2;
+                    for (int i = 0; i < sheetspaceCount ; i++)
+                    {
+                        Math.DivRem(i, 2, out int result);
+                        double thicknesChanger = wall_t * result;
+                        Point3D sheetCoreCenter = new Point3D(center3d.X-wall_t+thicknesChanger, center3d.Y + centerY, center3d.Z + wall_d / 2 - sheetpile_start - i * sheetL);
+                        WpfTrapezoid sheetCore = new WpfTrapezoid(sheetCoreCenter, sheetL-2*sheetL1 , sheetL-2*sheetL1 , sheetT, wall_h, 0, 0);
+                        GeometryModel3D sheetCoreModel = WpfTrapezoid.CreateTrapezoidModel(sheetCore, Colors.DarkGray);
+                        AxisAngleRotation3D pileRotY = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90);
+                        RotateTransform3D PileTransform3d = new RotateTransform3D(pileRotY, sheetCoreCenter); 
+                        AxisAngleRotation3D pileRotX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90);
+                        RotateTransform3D PileTransform3dX = new RotateTransform3D(pileRotX, sheetCoreCenter);
+                        Transform3DGroup pileTransform3DGroup = new Transform3DGroup();
+                        pileTransform3DGroup.Children.Add(PileTransform3d);
+                        pileTransform3DGroup.Children.Add(PileTransform3dX);
+                        sheetCoreModel.Transform = pileTransform3DGroup;
+                        groupScene.Children.Add(sheetCoreModel);
+
+                        double wingLength = Math.Sqrt(Math.Pow(sheetL1, 2) + Math.Pow(sheetH, 2));
+                        double angleLeft = Math.Cos(sheetH / sheetL1)*180/Math.PI;
+                        double thicknesschangerleft = wall_t / 2 * result;
+                        Point3D sheetleftCenter = new Point3D(center3d.X - wall_t + thicknesschangerleft, center3d.Y + centerY, center3d.Z + (wall_d / 2) - sheetpile_start + sheetT / 2 - result*(sheetL-sheetL1) - i * sheetL);
+                        WpfTrapezoid sheetleft = new WpfTrapezoid(sheetleftCenter, wingLength, wingLength, sheetT, wall_h, 0, 0);
+                        GeometryModel3D sheetLeftModel = WpfTrapezoid.CreateTrapezoidModel(sheetleft,Colors.DarkGray);
+                        AxisAngleRotation3D pileRotYLeft = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90);
+                        RotateTransform3D PileTransform3dLeft = new RotateTransform3D(pileRotYLeft, sheetleftCenter);
+                        AxisAngleRotation3D pileRotXLeft = new AxisAngleRotation3D(new Vector3D(0, 1, 0), angleLeft);
+                        RotateTransform3D PileTransform3dXLeft = new RotateTransform3D(pileRotXLeft, sheetleftCenter);
+                        Transform3DGroup pileTransform3DGroupLeft = new Transform3DGroup();
+                        pileTransform3DGroupLeft.Children.Add(PileTransform3dLeft);
+                        pileTransform3DGroupLeft.Children.Add(PileTransform3dXLeft);
+                        sheetLeftModel.Transform = pileTransform3DGroupLeft;
+                        groupScene.Children.Add(sheetLeftModel);
+
+                        double angleRight = Math.Cos(sheetH / sheetL1) * 180 / Math.PI;
+                        double thicknesschangerRight = wall_t / 2 * result;
+                        Point3D sheetRightCenter = new Point3D(center3d.X - wall_t + thicknesschangerRight, center3d.Y + centerY, center3d.Z + wall_d / 2 - sheetpile_start + sheetT / 2 - sheetL + 2 * sheetL1 + result * (sheetL - sheetL1) - i * sheetL);
+                        WpfTrapezoid sheetRight = new WpfTrapezoid(sheetRightCenter, wingLength, wingLength, sheetT, wall_h, 0, 0);
+                        GeometryModel3D sheetRightModel = WpfTrapezoid.CreateTrapezoidModel(sheetRight, Colors.DarkGray);
+                        AxisAngleRotation3D pileRotYRight = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90);
+                        RotateTransform3D PileTransform3dRight = new RotateTransform3D(pileRotYRight, sheetRightCenter);
+                        AxisAngleRotation3D pileRotXRight = new AxisAngleRotation3D(new Vector3D(0, 1, 0), -angleRight);
+                        RotateTransform3D PileTransform3dXRight = new RotateTransform3D(pileRotXRight, sheetRightCenter);
+                        Transform3DGroup pileTransform3DGroupRight = new Transform3DGroup();
+                        pileTransform3DGroupRight.Children.Add(PileTransform3dRight);
+                        pileTransform3DGroupRight.Children.Add(PileTransform3dXRight);
+                        sheetRightModel.Transform = pileTransform3DGroupRight;
+                        groupScene.Children.Add(sheetRightModel);
+                    }
+                   
                     break;
                 default:
                     break;
@@ -362,7 +422,7 @@ namespace ExDesign.Pages.Inputs.Views
             //        groupScene.Children,
             //        groupScene.Transform
             //    );
-            scroll_3dview.Content = scaleFactor;
+            //scroll_3dview.Content = scaleFactor;
         }
             
         

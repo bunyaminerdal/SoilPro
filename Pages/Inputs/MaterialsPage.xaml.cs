@@ -36,13 +36,15 @@ namespace ExDesign.Pages.Inputs
         }
         private void UnitChange()
         {
-            concretewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            concretewall_thickness_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            pilewall_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            pile_diameter_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            pile_space_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            beam_height_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            beam_width_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
+            concretewall_height_unit.Content = StaticVariables.dimensionUnit;
+            concretewall_thickness_unit.Content = StaticVariables.dimensionUnit;
+            pilewall_height_unit.Content = StaticVariables.dimensionUnit;
+            pile_diameter_unit.Content = StaticVariables.dimensionUnit;
+            pile_space_unit.Content = StaticVariables.dimensionUnit;
+            beam_height_unit.Content = StaticVariables.dimensionUnit;
+            beam_width_unit.Content = StaticVariables.dimensionUnit;
+
+            sheetpilewall_height_unit.Content = StaticVariables.dimensionUnit;
 
             concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
             concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()).ToString();
@@ -51,6 +53,8 @@ namespace ExDesign.Pages.Inputs
             pile_space.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetPileSpace()).ToString();
             beam_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamH()).ToString();
             beam_width.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamB()).ToString();
+            sheetpilewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
+
         }
          
 
@@ -99,7 +103,6 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValueDimension( result));
             }
         }
-
        
         private void pilewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -120,7 +123,6 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.viewModel.ChangeWallThickness(WpfUtils.GetValueDimension(result));
             }
         }
-
         private void pile_space_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -201,13 +203,15 @@ namespace ExDesign.Pages.Inputs
         {
             view3d_main.Content = null;
             sideview_main.Content = null;
+            StaticEvents.UnitChangeEvent -= UnitChange;
         }
 
         private void pileDiameterCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StaticVariables.viewModel.PileIndex = pileDiameterCombobox.SelectedIndex;
             PileData pileDiameterData = pileDiameterCombobox.SelectedItem as PileData;
-            if (pileDiameterData != null) StaticVariables.viewModel.ChangeWallThickness(pileDiameterData.t);
+            if (pileDiameterData != null && WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.ConcretePileWall) StaticVariables.viewModel.ChangeWallThickness(pileDiameterData.t);
+
             UnitChange();
         }
 
@@ -222,7 +226,8 @@ namespace ExDesign.Pages.Inputs
         {
             StaticVariables.viewModel.SheetIndex = sheetpileCombobox.SelectedIndex;
             SheetData sheetData = sheetpileCombobox.SelectedItem as SheetData;
-            if (sheetData != null) StaticVariables.viewModel.ChangeWallThickness(sheetData.Height);
+            if (sheetData != null && WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.SteelSheetWall) StaticVariables.viewModel.ChangeWallThickness(sheetData.Height*2);
+
             UnitChange();
         }
 

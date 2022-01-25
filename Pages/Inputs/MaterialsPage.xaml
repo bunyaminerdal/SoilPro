@@ -125,13 +125,11 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="27"/>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="27"/>                               
+                                
                             </Grid.RowDefinitions>
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                                <Label Width="160" Content="{DynamicResource pilewallHeight}"/>
+                                <Label Width="160" Content="{DynamicResource sheetpileWallHeight}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right" Content="(h):"/>
                                 <TextBox x:Name="sheetpilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pilewall_height_TextChanged"/>
                                 <Label x:Name="sheetpilewall_height_unit" Width="30" Content="cm"/>

@@ -43,6 +43,7 @@ namespace ExDesign.Scripts
         public int GroundSurfaceTypeIndex { get; set; }
         public int WaterTypeIndex { get; set; } 
 
+
         public void ChangeWallHeight(double h)
         {
             wall_h = h;
