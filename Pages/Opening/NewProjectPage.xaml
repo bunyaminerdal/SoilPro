@@ -60,7 +60,7 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel Grid.Row="1" >
-                    <CheckBox Height="20" Content="{DynamicResource UseExistingProjectProperties}"></CheckBox>
+                    <CheckBox x:Name="takeexistingProject" Height="20" Content="{DynamicResource UseExistingProjectProperties}" Checked="takeexistingProject_Checked"/>
 
                 </DockPanel>
                 <DockPanel Grid.Row="2" Grid.Column="2">

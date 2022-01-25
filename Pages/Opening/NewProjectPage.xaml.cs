@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExDesign.Scripts;
+using Microsoft.Win32;
 
 namespace ExDesign.Pages.Opening
 {
@@ -21,7 +22,7 @@ namespace ExDesign.Pages.Opening
     /// </summary>
     public partial class NewProjectPage : Page
     {
-        
+        bool isTakeExistingProject;
         int unitIndex = 11;
         WallType wallType = WallType.ConcreteRectangleWall;
         public NewProjectPage()
@@ -31,8 +32,20 @@ namespace ExDesign.Pages.Opening
 
         private void StartProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            
             ViewModel.RestartModel();
+            if (isTakeExistingProject)
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Ex-Design files (*.exdb)|*.exdb";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ViewModel.OpenModel(openFileDialog.FileName);
+                    StaticVariables.viewModel.Path = "Untitled";
+                    StaticVariables.viewModel.ProjectName = "Untitled";
+                    StaticVariables.viewModel.SaveDate = "0";
+                }
+            }
+            
             StaticVariables.viewModel.UnitIndex= unitIndex;
             StaticVariables.viewModel.WallTypeIndex = WpfUtils.GetWallTypeIndex(wallType);
             ProgramWindow mainWindow = new ProgramWindow();            
@@ -58,6 +71,18 @@ namespace ExDesign.Pages.Opening
         {
             unitIndex = UnitCombobox.SelectedIndex;
             
+        }
+
+        private void takeexistingProject_Checked(object sender, RoutedEventArgs e)
+        {
+            if(takeexistingProject.IsChecked==true)
+            {
+                isTakeExistingProject = true;
+            }
+            else
+            {
+                isTakeExistingProject=false;
+            }
         }
     }
 }
