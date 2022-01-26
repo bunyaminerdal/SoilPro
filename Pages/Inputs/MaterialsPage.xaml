@@ -42,35 +42,35 @@
                             
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="90" Content="{DynamicResource ConcreteType}"/>
-                                <Label Width="60" HorizontalContentAlignment="Right"  Content=":"/>
-                                <ComboBox x:Name="concreteCombobox" MinWidth="100"  ></ComboBox>
-                                <Button x:Name="concreteWindow" Height="27" Width="27"  Margin="2,0,0,0">
+                                <Label Width="40" HorizontalContentAlignment="Right"  Content=":"/>
+                                <ComboBox x:Name="concreteCombobox" MinWidth="100" SelectionChanged="concreteCombobox_SelectionChanged"  ></ComboBox>
+                                <Button x:Name="concreteWindow" Height="27" Width="27"  Margin="2,0,0,0" Click="concreteWindow_Click">
                                     <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/pencil-square.png" Margin="1" />
                                 </Button>
                             </DockPanel>
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="90"/>
-                                <Label Width="60" HorizontalContentAlignment="Right" Content="(fck):"/>
-                                <TextBlock  Height="22" MinWidth="100" />
-                                <Label  Width="30" Content="cm"/>
+                                <Label Width="40" HorizontalContentAlignment="Right" Content="(fck):"/>
+                                <TextBox IsEnabled="False" x:Name="fcktext" Height="22" MinWidth="100" />
+                                <Label x:Name="fcktext_unit" Width="70" Content="N/mm2"/>
                             </DockPanel>
                             <DockPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="90"/>
-                                <Label Width="60" HorizontalContentAlignment="Right" Content="(fct):"/>
-                                <TextBlock  Height="22" MinWidth="100" />
-                                <Label  Width="30" Content="cm"/>
+                                <Label Width="40" HorizontalContentAlignment="Right" Content="(fct):"/>
+                                <TextBox IsEnabled="False" x:Name="fcttext" Height="22" MinWidth="100" />
+                                <Label x:Name="fcttext_unit"  Width="70" Content="N/mm2"/>
                             </DockPanel>
                             <DockPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="90"/>
-                                <Label Width="60" HorizontalContentAlignment="Right" Content="(E):"/>
-                                <TextBlock  Height="22" MinWidth="100" />
-                                <Label  Width="30" Content="cm"/>
+                                <Label Width="40" HorizontalContentAlignment="Right" Content="(E):"/>
+                                <TextBox IsEnabled="False" x:Name="Etext"  Height="22" MinWidth="100" />
+                                <Label x:Name="Etext_unit" Width="70" Content="N/mm2"/>
                             </DockPanel>
                             <DockPanel Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="90"/>
-                                <Label Width="60" HorizontalContentAlignment="Right" Content="(G):"/>
-                                <TextBlock  Height="22" MinWidth="100" />
-                                <Label  Width="30" Content="cm"/>
+                                <Label Width="40" HorizontalContentAlignment="Right" Content="(G):"/>
+                                <TextBox IsEnabled="False" x:Name="Gtext" Height="22" MinWidth="100" />
+                                <Label x:Name="Gtext_unit" Width="70" Content="N/mm2"/>
                             </DockPanel>
                         </Grid>
 

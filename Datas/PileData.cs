@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 
 
-namespace ExDesign.Scripts
+namespace ExDesign.Datas
 {
     public class PileData
     {

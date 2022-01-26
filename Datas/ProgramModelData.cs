@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExDesign.Scripts
-{
+namespace ExDesign.Datas
+    {
     public class ProgramModelData
     {
         public List<string> ModelPaths { get; set; }

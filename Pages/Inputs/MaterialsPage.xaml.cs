@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ExDesign.Datas;
 
 namespace ExDesign.Pages.Inputs
 {
@@ -33,24 +34,19 @@ namespace ExDesign.Pages.Inputs
         }
         private void UnitChange()
         {
-            //concretewall_height_unit.Content = StaticVariables.dimensionUnit;
-            //concretewall_thickness_unit.Content = StaticVariables.dimensionUnit;
-            //pilewall_height_unit.Content = StaticVariables.dimensionUnit;
-            //pile_diameter_unit.Content = StaticVariables.dimensionUnit;
-            //pile_space_unit.Content = StaticVariables.dimensionUnit;
-            //beam_height_unit.Content = StaticVariables.dimensionUnit;
-            //beam_width_unit.Content = StaticVariables.dimensionUnit;
+            fcktext_unit.Content = StaticVariables.StressUnit;
+            fcttext_unit.Content = StaticVariables.StressUnit;
+            Etext_unit.Content = StaticVariables.StressUnit;
+            Gtext_unit.Content = StaticVariables.StressUnit;
 
-            //sheetpilewall_height_unit.Content = StaticVariables.dimensionUnit;
 
-            //concretewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
-            //concretewall_thickness.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()).ToString();
-            //pilewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
-            //pile_diameter.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()).ToString();
-            //pile_space.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetPileSpace()).ToString();
-            //beam_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamH()).ToString();
-            //beam_width.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamB()).ToString();
-            //sheetpilewall_height.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()).ToString();
+            if(StaticVariables.viewModel.ConcreteIndex >= 0)
+            {
+                fcktext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fck).ToString();
+                fcttext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fct).ToString();
+                Etext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E).ToString();
+                Gtext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].G).ToString();
+            }
 
         }
 
@@ -58,6 +54,13 @@ namespace ExDesign.Pages.Inputs
         {
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.SideviewPage;
+            Concrete.GetConcreteDataList(concreteCombobox);
+            if (StaticVariables.viewModel.ConcreteIndex > concreteCombobox.Items.Count - 1)
+            {
+                StaticVariables.viewModel.ConcreteIndex = 0;
+            }
+            concreteCombobox.SelectedIndex = StaticVariables.viewModel.ConcreteIndex;
+
             UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
         }
@@ -67,6 +70,19 @@ namespace ExDesign.Pages.Inputs
             view3d_main.Content = null;
             sideview_main.Content = null;
             StaticEvents.UnitChangeEvent -= UnitChange;
+        }
+
+        private void concreteWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ConcreteWindow concreteWindow = new Windows.ConcreteWindow();
+            concreteWindow.SelectConcrete(concreteCombobox);
+            concreteWindow.ShowDialog();
+        }
+
+        private void concreteCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StaticVariables.viewModel.ConcreteIndex =((ComboBox)sender).SelectedIndex;
+            UnitChange();
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExDesign.Scripts;
 using System.Windows.Media.Animation;
+using ExDesign.Datas;
 
 namespace ExDesign.Pages.Inputs.Views
 {

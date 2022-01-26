@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using ExDesign.Pages.Inputs.Views;
+using ExDesign.Scripts;
 using Newtonsoft.Json;
 
-namespace ExDesign.Scripts
+namespace ExDesign.Datas
 {
     public  class ViewModelData
     {
@@ -36,7 +37,8 @@ namespace ExDesign.Scripts
         public int UnitIndex { get; set; }
         public int WallTypeIndex { get; set; }
         public string Path { get; set; }
-        public string ProjectName { get; set; }        
+        public string ProjectName { get; set; }      
+        public int ConcreteIndex { get; set; }
         public int PileIndex { get; set; }
         public int SheetIndex { get; set; }
         public int ExcavationTypeIndex { get; set; }
@@ -175,6 +177,7 @@ namespace ExDesign.Scripts
                     UnitIndex = 11,
                     WallTypeIndex = 1,
                     PileIndex = 1,
+                    ConcreteIndex = 0,
                     SheetIndex = 0,
                     ExcavationTypeIndex = 0,
                     GroundSurfaceTypeIndex = 0,

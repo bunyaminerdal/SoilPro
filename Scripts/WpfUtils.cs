@@ -169,6 +169,36 @@ namespace ExDesign.Scripts
             newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4), 10);
             return newValue;
         }
+        public static double GetStress(double value)
+        {
+            double newValue;
+            newValue = value * StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
+            if (newValue >= 1)
+            {
+                newValue = Math.Round(newValue, 12);
+            }
+            else
+            {
+                newValue = Math.Round(newValue, 12);
+            }
+
+            return newValue;
+        }
+        public static double GetValueStress(double value)
+        {
+            double newValue;
+            newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
+            if (newValue >= 1)
+            {
+                newValue = Math.Round(newValue, 4);
+            }
+            else
+            {
+                newValue = Math.Round(newValue, 12);
+            }
+                
+            return newValue;
+        }
 
         public static void OpenWindow(Window window)
         {

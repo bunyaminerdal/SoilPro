@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ExDesign.Datas;
 using ExDesign.Scripts;
 
 namespace ExDesign.Pages.Inputs
@@ -98,6 +99,7 @@ namespace ExDesign.Pages.Inputs
         {
             Main_pro.Content = materialsPage;
             UnitCombobox.SelectedIndex = StaticVariables.viewModel.UnitIndex;
+            Concrete.ConcreteDataReader();
             Pile.pileDiameterReader();
             Sheet.SheetDataReader();
         }
