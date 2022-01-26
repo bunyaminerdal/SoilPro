@@ -22,11 +22,11 @@ namespace ExDesign.Pages.Inputs
     /// <summary>
     /// MaterialsPage.xaml etkileşim mantığı
     /// </summary>
-    public partial class MaterialsPage : Page
+    public partial class WallProperties : Page
     {
         public char separator = ',';
 
-        public MaterialsPage()
+        public WallProperties()
         {
             InitializeComponent();
         }

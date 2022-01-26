@@ -4,10 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
-      xmlns:Views="clr-namespace:ExDesign.Pages.Inputs.Views" x:Class="ExDesign.Pages.Inputs.MaterialsPage"
+      xmlns:Views="clr-namespace:ExDesign.Pages.Inputs.Views" x:Class="ExDesign.Pages.Inputs.WallProperties"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MaterialsPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+      Title="WallProperties" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
