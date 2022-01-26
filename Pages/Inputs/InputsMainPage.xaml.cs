@@ -21,18 +21,22 @@ namespace ExDesign.Pages.Inputs
     /// </summary>
     public partial class InputsMainPage : Page
     {
-        
+        MaterialsPage materialsPage = new MaterialsPage();
         WallProperties wallProperties   =new WallProperties();
         ExDesignPage exDesignPage = new ExDesignPage();
         Views.View3dPage view3DPage = new Views.View3dPage();        
         public InputsMainPage()
         {
             InitializeComponent();            
-            wallProperties.Set3dView(view3DPage);
+            materialsPage.Set3dView(view3DPage);
         }
         
 
         private void MaterialsBttn_Checked(object sender, RoutedEventArgs e)
+        {
+            Main_pro.Content = materialsPage;
+        }
+        private void WallPropertiesBttn_Checked(object sender, RoutedEventArgs e)
         {
             Main_pro.Content = wallProperties;
         }
@@ -92,10 +96,12 @@ namespace ExDesign.Pages.Inputs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Main_pro.Content = wallProperties;
+            Main_pro.Content = materialsPage;
             UnitCombobox.SelectedIndex = StaticVariables.viewModel.UnitIndex;
             Pile.pileDiameterReader();
             Sheet.SheetDataReader();
         }
+
+        
     }
 }

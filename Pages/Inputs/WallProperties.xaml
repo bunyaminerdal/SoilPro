@@ -72,7 +72,7 @@
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="160" Content="{DynamicResource pileType}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right"  Content=":"/>
-                                <ComboBox x:Name="pileDiameterCombobox" Width="80" SelectionChanged="pileDiameterCombobox_SelectionChanged" ></ComboBox>
+                                <ComboBox x:Name="pileDiameterCombobox" MinWidth="80" SelectionChanged="pileDiameterCombobox_SelectionChanged" ></ComboBox>
                                 <Button x:Name="piledesignwindow" Height="27" Width="27" Click="piledesignwindow_Click" Margin="2,0,0,0">
                                     <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/pencil-square.png" Margin="1" />
                                 </Button>
@@ -137,7 +137,7 @@
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="160" Content="{DynamicResource sheetpileType}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right"  Content=":"/>
-                                <ComboBox x:Name="sheetpileCombobox"  SelectionChanged="sheetpileCombobox_SelectionChanged"  ></ComboBox>
+                                <ComboBox x:Name="sheetpileCombobox" MinWidth="80" SelectionChanged="sheetpileCombobox_SelectionChanged"  ></ComboBox>
                                 <Button x:Name="sheetpiledesignwindow" Height="27" Width="27" Margin="2,0,0,0" Click="sheetpiledesignwindow_Click">
                                     <Image Grid.Column="0" Stretch="Uniform" Source="/Textures/Icons/pencil-square.png" Margin="1" />
                                 </Button>

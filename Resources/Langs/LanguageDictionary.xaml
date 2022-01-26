@@ -65,5 +65,8 @@
     <system:String x:Key="SheetPileWall" >Sheet Pile Wall</system:String>
     <system:String x:Key="sheetpileType" >Sheet Pile Type</system:String>
     <system:String x:Key="sheetpileWallHeight" >Sheet Pile Wall Height</system:String>
+    <system:String x:Key="ConcreteMaterial" >Concrete Material</system:String>
+    <system:String x:Key="ConcreteType" >Concrete Type</system:String>
+    <system:String x:Key="WallProperties" >Wall Properties</system:String>
     
 </ResourceDictionary>
