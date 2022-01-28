@@ -6,9 +6,10 @@
       xmlns:local="clr-namespace:ExDesign.Pages.Inputs.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SideviewPage">
+      Title="SideviewPage" Width="auto" Height="auto">
 
-    <Grid Background="LightGreen">
-        
+    <Grid >
+        <Image x:Name="sideview_main"></Image>
+
     </Grid>
 </Page>

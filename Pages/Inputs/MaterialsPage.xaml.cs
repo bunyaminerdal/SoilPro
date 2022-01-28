@@ -28,9 +28,10 @@ namespace ExDesign.Pages.Inputs
             InitializeComponent();
         }
 
-        public void Set3dView(Views.View3dPage view)
+        public void SetViews()
         {
             view3d_main.Content = StaticVariables.view3DPage;
+            sideview_main.Content = StaticVariables.SideviewPage;
         }
         private void UnitChange()
         {
@@ -38,14 +39,28 @@ namespace ExDesign.Pages.Inputs
             fcttext_unit.Content = StaticVariables.StressUnit;
             Etext_unit.Content = StaticVariables.StressUnit;
             Gtext_unit.Content = StaticVariables.StressUnit;
+            fyktext_unit.Content = StaticVariables.StressUnit;
+            rebarEtext_unit.Content = StaticVariables.StressUnit;
+            fytext_unit.Content = StaticVariables.StressUnit;
+            steelEtext_unit.Content = StaticVariables.StressUnit;
 
 
             if(StaticVariables.viewModel.ConcreteIndex >= 0)
             {
-                fcktext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fck).ToString();
-                fcttext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fct).ToString();
-                Etext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E).ToString();
-                Gtext.Text = WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].G).ToString();
+                fcktext.Text =WpfUtils.ChangeDecimalOptions( WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fck));
+                fcttext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fct));
+                Etext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E));
+                Gtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].G));
+            }
+            if(StaticVariables.viewModel.RebarIndex >= 0)
+            {
+                fyktext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Rebar.RebarDataList[StaticVariables.viewModel.RebarIndex].fyk));
+                rebarEtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Rebar.RebarDataList[StaticVariables.viewModel.RebarIndex].E));
+            }
+            if (StaticVariables.viewModel.SteelIndex >= 0)
+            {
+                fytext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].fy));
+                steelEtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].E));
             }
 
         }
@@ -60,6 +75,20 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.viewModel.ConcreteIndex = 0;
             }
             concreteCombobox.SelectedIndex = StaticVariables.viewModel.ConcreteIndex;
+
+            Rebar.GetRebarDataList(rebarCombobox);
+            if (StaticVariables.viewModel.RebarIndex > rebarCombobox.Items.Count - 1)
+            {
+                StaticVariables.viewModel.RebarIndex = 0;
+            }
+            rebarCombobox.SelectedIndex = StaticVariables.viewModel.RebarIndex;
+
+            Steel.GetSteelDataList(steelCombobox);
+            if (StaticVariables.viewModel.SteelIndex > steelCombobox.Items.Count - 1)
+            {
+                StaticVariables.viewModel.SteelIndex = 0;
+            }
+            steelCombobox.SelectedIndex = StaticVariables.viewModel.SteelIndex;
 
             UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
@@ -83,6 +112,32 @@ namespace ExDesign.Pages.Inputs
         {
             StaticVariables.viewModel.ConcreteIndex =((ComboBox)sender).SelectedIndex;
             UnitChange();
+        }
+
+        private void rebarCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StaticVariables.viewModel.RebarIndex =((ComboBox)sender).SelectedIndex;
+            UnitChange();
+        }
+
+        private void rebarWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.RebarWindow rebarWindow = new Windows.RebarWindow();
+            rebarWindow.SelectRebar(rebarCombobox);
+            rebarWindow.ShowDialog();
+        }
+
+        private void steelCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StaticVariables.viewModel.SteelIndex = ((ComboBox)sender).SelectedIndex;
+            UnitChange();
+        }
+
+        private void steelWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.SteelWindow steelWindow = new Windows.SteelWindow();
+            steelWindow.SelectSteel(steelCombobox);
+            steelWindow.ShowDialog();
         }
     }
 }

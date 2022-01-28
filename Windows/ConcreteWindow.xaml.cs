@@ -65,10 +65,10 @@ namespace ExDesign.Windows
                 GTextbox.IsEnabled = !((ConcreteData)concreteList.SelectedItem).isDefault;
 
                 ConcreteName.Text = ((ConcreteData)concreteList.SelectedItem).Name;
-                fckTextbox.Text = WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).fck).ToString();
-                fctTextbox.Text = WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).fct).ToString();
-                ETextbox.Text = WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).E).ToString();
-                GTextbox.Text = WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).G).ToString();
+                fckTextbox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).fck));
+                fctTextbox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).fct));
+                ETextbox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).E));
+                GTextbox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((ConcreteData)concreteList.SelectedItem).G));
                 
             }
         }

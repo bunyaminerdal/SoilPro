@@ -68,5 +68,13 @@
     <system:String x:Key="ConcreteMaterial" >Concrete Material</system:String>
     <system:String x:Key="ConcreteType" >Concrete Type</system:String>
     <system:String x:Key="WallProperties" >Wall Properties</system:String>
+    <system:String x:Key="RebarMaterial" >Rebar Material</system:String>
+    <system:String x:Key="RebarType" >Rebar Type</system:String>
+    <system:String x:Key="SteelType" >Steel Type</system:String>
+    <system:String x:Key="SteelMaterial" >Steel Material</system:String>
+    <system:String x:Key="areapermeter" >Area/m</system:String>
+    <system:String x:Key="inertiapermeter" >I/m</system:String>
+    <system:String x:Key="EIpermeter" >EI/m</system:String>
+    <system:String x:Key="EApermeter" >EA/m</system:String>
     
 </ResourceDictionary>

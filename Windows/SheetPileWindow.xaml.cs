@@ -69,13 +69,13 @@ namespace ExDesign.Windows
                 wply.IsEnabled = !((SheetData)sheetList.SelectedItem).isDefault;
 
                 sheetname.Text = ((SheetData)sheetList.SelectedItem).Name;
-                sheetheight.Text = WpfUtils.GetDimension(((SheetData)sheetList.SelectedItem).Height).ToString();
-                sheetlength.Text = WpfUtils.GetDimension(((SheetData)sheetList.SelectedItem).Length).ToString();
-                sheetThickness.Text = WpfUtils.GetDimension(((SheetData)sheetList.SelectedItem).Thickness).ToString();
-                sheetarea.Text = WpfUtils.GetArea(((SheetData)sheetList.SelectedItem).Area).ToString();
-                sheetInertia.Text = WpfUtils.GetInertia(((SheetData)sheetList.SelectedItem).Inertia).ToString();
-                wely.Text = WpfUtils.GetVolume(((SheetData)sheetList.SelectedItem).Wely).ToString();
-                wply.Text = WpfUtils.GetVolume(((SheetData)sheetList.SelectedItem).Wply).ToString();
+                sheetheight.Text =WpfUtils.ChangeDecimalOptions( WpfUtils.GetDimension(((SheetData)sheetList.SelectedItem).Height));
+                sheetlength.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(((SheetData)sheetList.SelectedItem).Length));
+                sheetThickness.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(((SheetData)sheetList.SelectedItem).Thickness));
+                sheetarea.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetArea(((SheetData)sheetList.SelectedItem).Area));
+                sheetInertia.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetInertia(((SheetData)sheetList.SelectedItem).Inertia));
+                wely.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetVolume(((SheetData)sheetList.SelectedItem).Wely));
+                wply.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetVolume(((SheetData)sheetList.SelectedItem).Wply));
             }
         }
         private void addnewpile_button_Click(object sender, RoutedEventArgs e)

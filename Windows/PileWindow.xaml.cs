@@ -59,7 +59,7 @@ namespace ExDesign.Windows
                     pilediametertextbox.IsEnabled= !((PileData)PileList.SelectedItem).isDefault;
                 
                 pilenametextbox.Text = ((PileData)PileList.SelectedItem).Name;
-                pilediametertextbox.Text = WpfUtils.GetDimension(((PileData)PileList.SelectedItem).t).ToString();
+                pilediametertextbox.Text =WpfUtils.ChangeDecimalOptions( WpfUtils.GetDimension(((PileData)PileList.SelectedItem).t));
             }
 
         }

@@ -28,7 +28,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="0">
                     <GroupBox Visibility="Hidden" x:Name="rectanglewallgroupbox" Margin="5" Header="{DynamicResource ConcreteRectangleWall}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -53,7 +53,7 @@
                         </Grid>                        
                     </GroupBox>                    
                 </StackPanel>
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="0">
                     <GroupBox Visibility="Hidden" x:Name="pilewallgroupbox" Margin="5" Header="{DynamicResource ConcretePileWall}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -80,7 +80,7 @@
                             <DockPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="160" Content="{DynamicResource pileDiameter}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right" Content="(t):"/>
-                                <TextBox IsEnabled="False" x:Name="pile_diameter" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pile_diameter_TextChanged"/>
+                                <TextBox IsEnabled="False" x:Name="pile_diameter" Height="22" Width="80" />
                                 <Label x:Name="pile_diameter_unit" Width="30" Content="cm"/>
                             </DockPanel>
                             <DockPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -120,7 +120,7 @@
 
                     </GroupBox>
                 </StackPanel>
-                <StackPanel Grid.Column="1">
+                <StackPanel Grid.Column="0">
                     <GroupBox x:Name="sheetpilewallgroupbox" Margin="5" Header="{DynamicResource SheetPileWall}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -146,6 +146,45 @@
                         </Grid>
                     </GroupBox>
                 </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <GroupBox Visibility="Visible" x:Name="WallProperties1" Margin="5" Header="{DynamicResource WallProperties}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="100" Content="{DynamicResource areapermeter}"/>
+                                <Label Width="30" Content=":"/>
+                                <TextBox IsEnabled="False" x:Name="areaText" Height="22" Width="120" />
+                                <Label x:Name="areaText_unit" Width="80" Content="cm"/>
+                            </DockPanel>
+                            <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="100" Content="{DynamicResource inertiapermeter}"/>
+                                <Label Width="30" Content=":"/>
+                                <TextBox IsEnabled="False" x:Name="inertiaText" Height="22" Width="120" />
+                                <Label x:Name="inertiaText_unit" Width="80" Content="cm"/>
+                            </DockPanel>
+                            <DockPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="100" Content="{DynamicResource EIpermeter}"/>
+                                <Label Width="30" Content=":"/>
+                                <TextBox IsEnabled="False" x:Name="EIText" Height="22" Width="120" />
+                                <Label x:Name="EIText_unit" Width="80" Content="cm"/>
+                            </DockPanel>
+                            <DockPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="100" Content="{DynamicResource EApermeter}"/>
+                                <Label Width="30" Content=":"/>
+                                <TextBox IsEnabled="False" x:Name="EAText" Height="22" Width="120" />
+                                <Label x:Name="EAText_unit" Width="80" Content="cm"/>
+                            </DockPanel>
+
+                        </Grid>
+                    </GroupBox>
+                </StackPanel>
+
             </Grid>
         </StackPanel>
     </Grid>

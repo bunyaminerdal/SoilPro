@@ -27,7 +27,7 @@ namespace ExDesign.Datas
         {
             if (!File.Exists(Path))
             {
-                SteelData steel1 = new SteelData() { isDefault = true, Name = "S235", E=1,fy = 1};
+                SteelData steel1 = new SteelData() { isDefault = true, Name = "S235", fy=235000,E = 200000000};
                 List<SteelData> tempList = new List<SteelData>();
                 tempList.Add(steel1);
 

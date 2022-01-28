@@ -1,0 +1,52 @@
+﻿<Window x:Class="ExDesign.Windows.RebarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExDesign.Windows"
+        mc:Ignorable="d"
+        Title="RebarWindow"  Height="300" Width="480" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <ListBox x:Name="RebarList" Width="120" Height="160" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,35,0,0" SelectionChanged="RebarList_SelectionChanged" />
+            <Button Grid.Row="1" x:Name="deletepile_button" Content="{DynamicResource delete}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="120" Click="deletepile_button_Click" />
+            <Button Grid.Row="1" Grid.Column="1" x:Name="cancel_button" Content="{DynamicResource Cancel}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50"  Margin="242,10,0,0" Click="cancel_button_Click"/>
+            <Button Grid.Row="1" Grid.Column="1" x:Name="save_button" Content="{DynamicResource Save}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50"  Margin="187,10,0,0" Click="save_button_Click"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="addnewpile_button" Content="{DynamicResource addnew}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="120" Click="addnewpile_button_Click" />
+            <Button Grid.Row="1" Grid.Column="1" x:Name="save_close_button" Content="{DynamicResource SaveAndClose}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="90"  Margin="92,10,0,0" Click="save_close_button_Click" />
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,35,10,0" >
+                <DockPanel  HorizontalAlignment="Left" >
+                    <Label  Content="{DynamicResource name}" Width="80"/>
+                    <Label  Content=":" Width="30" HorizontalContentAlignment="Right"/>
+                    <TextBox x:Name="RebarName" MaxLength="15" Width="120" Margin="2" TextChanged="RebarName_TextChanged"  />
+                </DockPanel>
+                <DockPanel  HorizontalAlignment="Left" >
+                    <Label   Width="60"/>
+                    <Label  Content="(fyk):" Width="50" HorizontalContentAlignment="Right"/>
+                    <TextBox x:Name="fykTextbox" Width="120" Margin="2" PreviewKeyDown="fykTextbox_PreviewKeyDown" PreviewTextInput="fykTextbox_PreviewTextInput" TextChanged="fykTextbox_TextChanged"   />
+                    <Label x:Name="fykTextbox_unit" Content="m" Width="70" HorizontalContentAlignment="Left"/>
+                </DockPanel>
+               
+                <DockPanel  HorizontalAlignment="Left" >
+                    <Label   Width="60"/>
+                    <Label  Content="(E):" Width="50" HorizontalContentAlignment="Right"/>
+                    <TextBox x:Name="ETextbox" Width="120" Margin="2" PreviewKeyDown="fykTextbox_PreviewKeyDown" PreviewTextInput="fykTextbox_PreviewTextInput" TextChanged="ETextbox_TextChanged"  />
+                    <Label x:Name="ETextbox_unit" Content="m" Width="70" HorizontalContentAlignment="Left"/>
+                </DockPanel>
+               
+
+            </StackPanel>
+
+
+
+        </Grid>
+    </Grid>
+</Window>

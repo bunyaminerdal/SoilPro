@@ -26,7 +26,7 @@ namespace ExDesign.Datas
         {
             if (!File.Exists(Path))
             {
-                RebarData rebar1 = new RebarData() { isDefault = true, Name = "C20", E=1,fyk = 1};
+                RebarData rebar1 = new RebarData() { isDefault = true, Name = "B420C", fyk = 420000, E = 200000000 };
                 List<RebarData> tempList = new List<RebarData>();
                 tempList.Add(rebar1);
 

@@ -159,6 +159,7 @@ namespace ExDesign.Pages.Inputs.Views
                     double sheetH = Sheet.SheetDataList[sheetIndex].Height;
                     double sheetL = Sheet.SheetDataList[sheetIndex].Length;
                     double sheetT = Sheet.SheetDataList[sheetIndex].Thickness;
+                    wall_t = 2 * sheetH;
                     double sheetL1 = sheetH / 2; //TODO: bu kısmı kafadan attım. değitirilmesi lazım
                     double sheetspaceCount = Math.Clamp(Math.Round(wall_d / sheetL, MidpointRounding.ToNegativeInfinity), 1, StaticVariables.maxPileCount);
 
@@ -227,7 +228,7 @@ namespace ExDesign.Pages.Inputs.Views
             GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200));
 
             double frontCube_w = frontandbackCubeLength;
-            double frontCube_h = wall_h- excavationHeight;
+            double frontCube_h =Math.Clamp( wall_h- excavationHeight,0,double.MaxValue);
             double frontCube_d = wall_d;
             Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
             WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);

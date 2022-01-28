@@ -36,24 +36,23 @@ namespace ExDesign.Pages.Inputs
             excavation_Z_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             excavation_X1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             excavation_X2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
-            excavationheight.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationHeight()).ToString();
-            excavation_Z.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationZ()).ToString();
-            excavation_X1.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX1()).ToString();
-            excavation_X2.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX2()).ToString();
+            excavationheight.Text =WpfUtils.ChangeDecimalOptions( WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationHeight()));
+            excavation_Z.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationZ()));
+            excavation_X1.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX1()));
+            excavation_X2.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX2()));
 
             surface_A1_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             surface_A2_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             surface_B_unit.Content = StaticVariables.CurrentUnit.ToString().Split('_')[1];
             surfaceslope.Text = StaticVariables.viewModel.GetSurfaceBeta().ToString();
-            surface_B.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceB()).ToString();
-            surface_A1.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA1()).ToString();
-            surface_A2.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA2()).ToString();
+            surface_B.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceB()));
+            surface_A1.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA1()));
+            surface_A2.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA2()));
 
             gw_h1_unit.Content = StaticVariables.CurrentUnit.ToString().Split("_")[1];
             gw_h2_unit.Content = StaticVariables.CurrentUnit.ToString().Split("_")[1];
-            gw_h1.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetGroundWaterH1()).ToString();
-            gw_h2.Text = WpfUtils.GetDimension(StaticVariables.viewModel.GetGroundWaterH2()).ToString();
-
+            gw_h1.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetGroundWaterH1()));
+            gw_h2.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetGroundWaterH2()));
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -134,6 +133,7 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.ExcavationTypeIndex =WpfUtils.GetExcavationTypeIndex( ExcavationType.none);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
             
         }
 
@@ -147,6 +147,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.ExcavationTypeIndex = WpfUtils.GetExcavationTypeIndex(ExcavationType.type1);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void exsitetype3_button_Checked(object sender, RoutedEventArgs e)
@@ -159,6 +161,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.ExcavationTypeIndex = WpfUtils.GetExcavationTypeIndex(ExcavationType.type2);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void excavationheight_TextChanged(object sender, TextChangedEventArgs e)
@@ -236,6 +240,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex =WpfUtils.GetGroundSurfaceTypeIndex( GroundSurfaceType.flat);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void surfacetype1_button_Checked(object sender, RoutedEventArgs e)
@@ -249,6 +255,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex = WpfUtils.GetGroundSurfaceTypeIndex(GroundSurfaceType.type1);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void surfacetype2_button_Checked(object sender, RoutedEventArgs e)
@@ -262,6 +270,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex = WpfUtils.GetGroundSurfaceTypeIndex(GroundSurfaceType.type2);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void surfacetype3_button_Checked(object sender, RoutedEventArgs e)
@@ -275,6 +285,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex = WpfUtils.GetGroundSurfaceTypeIndex(GroundSurfaceType.type3);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void surfaceslope_TextChanged(object sender, TextChangedEventArgs e)
@@ -342,6 +354,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.WaterTypeIndex =WpfUtils.GetGroundWaterTypeIndex( GroundWaterType.none);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void groundwatertype1_button_Checked(object sender, RoutedEventArgs e)
@@ -354,6 +368,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.WaterTypeIndex = WpfUtils.GetGroundWaterTypeIndex(GroundWaterType.type1);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void groundwatertype2_button_Checked(object sender, RoutedEventArgs e)
@@ -366,6 +382,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.WaterTypeIndex = WpfUtils.GetGroundWaterTypeIndex(GroundWaterType.type2);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void groundwatertype3_button_Checked(object sender, RoutedEventArgs e)
@@ -378,6 +396,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.viewModel.WaterTypeIndex = WpfUtils.GetGroundWaterTypeIndex(GroundWaterType.type3);
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
+
         }
 
         private void gw_h1_TextChanged(object sender, TextChangedEventArgs e)

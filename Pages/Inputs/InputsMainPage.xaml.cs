@@ -25,11 +25,11 @@ namespace ExDesign.Pages.Inputs
         MaterialsPage materialsPage = new MaterialsPage();
         WallProperties wallProperties   =new WallProperties();
         ExDesignPage exDesignPage = new ExDesignPage();
-        Views.View3dPage view3DPage = new Views.View3dPage();        
         public InputsMainPage()
         {
             InitializeComponent();            
-            materialsPage.Set3dView(view3DPage);
+            materialsPage.SetViews();
+            MaterialsBttn.IsChecked = true;
         }
         
 
@@ -100,10 +100,12 @@ namespace ExDesign.Pages.Inputs
             Main_pro.Content = materialsPage;
             UnitCombobox.SelectedIndex = StaticVariables.viewModel.UnitIndex;
             Concrete.ConcreteDataReader();
+            Rebar.RebarDataReader();
+            Steel.SteelDataReader();
             Pile.pileDiameterReader();
-            Sheet.SheetDataReader();
+            Sheet.SheetDataReader();            
+            StaticVariables.view3DPage.Refresh3Dview();
         }
-
-        
+                
     }
 }

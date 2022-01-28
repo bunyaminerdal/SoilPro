@@ -7,7 +7,22 @@ namespace ExDesign.Scripts
     internal class WpfUtils
     {
         static double one_rad_in_degrees = (double)57.0 + ((double)17.0 / (double)60.0) + ((double)44.6 / ((double)3600.0));
-
+        public static string ChangeDecimalOptions(double value)
+        {
+            string textValue = "";
+            
+            if (value > 1)
+            {
+                textValue = Math.Round(value, 4).ToString();
+                
+            }
+            else
+            {
+                textValue = Math.Round(value, 10).ToString();
+            }
+                
+            return textValue;
+        }
         public static Point3D RotatePointXY(Point3D p, Point3D rotation_point, double radians)
         {
             Point3D new_point = new Point3D(rotation_point.X, rotation_point.Y, rotation_point.Z);
@@ -124,79 +139,97 @@ namespace ExDesign.Scripts
         public static double GetDimension(double value)
         {
             double newValue;
-            newValue =Math.Round( value * StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
+            newValue =value * StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit];
             return newValue;
         }
         public static double GetValueDimension(double value)
         {
             double newValue;
-            newValue =Math.Round( value / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],10);
+            newValue = value / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit];
             return newValue;
         }
         public static double GetArea(double value)
         {
             double newValue;
-            newValue = Math.Round(value * Math.Pow( StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],2), 10);
+            newValue = value * Math.Pow( StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],2);
             return newValue;
         }
         public static double GetValueArea(double value)
         {
             double newValue;
-            newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],2), 10);
+            newValue = value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit],2);
             return newValue;
         }
         public static double GetVolume(double value)
         {
             double newValue;
-            newValue = Math.Round(value * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3), 10);
+            newValue = value * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3);
             return newValue;
         }
         public static double GetValueVolume(double value)
         {
             double newValue;
-            newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3), 10);
+            newValue = value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3);
             return newValue;
         }
         public static double GetInertia(double value)
         {
             double newValue;
-            newValue = Math.Round(value * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4), 10);
+            newValue = value * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4);
             return newValue;
         }
         public static double GetValueInertia(double value)
         {
             double newValue;
-            newValue = Math.Round(value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4), 10);
+            newValue = value / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 4);
+            return newValue;
+        }
+        public static double GetForce(double value)
+        {
+            double newValue;
+            newValue = value * StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit];
+            return newValue;
+        }
+        public static double GetValueForce(double value)
+        {
+            double newValue;
+            newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit];
+            return newValue;
+        }
+        public static double GetMomentScaleDimension(double value)
+        {
+            double newValue;
+            newValue = value *StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
+            return newValue;
+        }
+        public static double GetValueMomentScaleDimension(double value)
+        {
+            double newValue;
+            newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
+            return newValue;
+        }
+        public static double GetMoment(double value)
+        {
+            double newValue;
+            newValue = value * StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit];
+            return newValue;
+        }
+        public static double GetValueMoment(double value)
+        {
+            double newValue;
+            newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit];
             return newValue;
         }
         public static double GetStress(double value)
         {
             double newValue;
             newValue = value * StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
-            if (newValue >= 1)
-            {
-                newValue = Math.Round(newValue, 12);
-            }
-            else
-            {
-                newValue = Math.Round(newValue, 12);
-            }
-
             return newValue;
         }
         public static double GetValueStress(double value)
         {
             double newValue;
             newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
-            if (newValue >= 1)
-            {
-                newValue = Math.Round(newValue, 4);
-            }
-            else
-            {
-                newValue = Math.Round(newValue, 12);
-            }
-                
             return newValue;
         }
 

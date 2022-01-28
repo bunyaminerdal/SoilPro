@@ -39,17 +39,25 @@ namespace ExDesign.Datas
         public string Path { get; set; }
         public string ProjectName { get; set; }      
         public int ConcreteIndex { get; set; }
+        public int RebarIndex { get; set; }
+        public int SteelIndex { get; set; }
         public int PileIndex { get; set; }
         public int SheetIndex { get; set; }
         public int ExcavationTypeIndex { get; set; }
         public int GroundSurfaceTypeIndex { get; set; }
         public int WaterTypeIndex { get; set; } 
+        public double WallArea { get; set; } 
+        public double WallInertia { get; set; } 
+        public double WallE { get; set; } 
+        public double WallEI { get; set; } 
+        public double WallEA { get; set; } 
 
 
         public void ChangeWallHeight(double h)
         {
             wall_h = h;
            StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeWallThickness(double d)
         {
@@ -58,76 +66,186 @@ namespace ExDesign.Datas
             wall_t = d;
 
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeexcavationHeight(double exHeight)
         {
             excavationHeight = exHeight;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeexcavationZ(double exZ)
         {
             frontT_Z = exZ;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeexcavationX1(double exX1)
         {
             frontT_X1 = exX1;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeexcavationX2(double exX2)
         {
             frontT_X2 = exX2;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeSurfaceBeta(double surfaceBeta)
         {
             backT_Beta = surfaceBeta;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeSurfaceB(double surfaceB)
         {
             backT_B = surfaceB;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeSurfaceA1(double surfaceA1)
         {
             backT_A1 = surfaceA1;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeSurfaceA2(double surfaceA2)
         {
             backT_A2 = surfaceA2;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeGroundWaterH1(double gw_h1)
         {
             groundW_h1 = gw_h1;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeGroundWaterH2(double gw_h2)
         {
             groundW_h2 = gw_h2;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangePileSpace(double p_s)
         {
             pile_s = p_s;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeCapBeamH(double cb_h)
         {
             capBeam_h = cb_h;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeCapBeamB(double cb_b)
         {
             capBeam_b = cb_b;
             StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeUnitIndex(int unitIndex)
         {
             UnitIndex = unitIndex;
         }
+        public void ChangeWallProperties()
+        {
+            double Area = 0;
+            switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
+            {
+                case WallType.ConcreteRectangleWall:
+                    Area = wall_t;
+                    break;
+                case WallType.ConcretePileWall:
+                    if (Pile.PileDiameterDataList.Count > 0) Area = Math.Pow(Pile.PileDiameterDataList[StaticVariables.viewModel.PileIndex].t, 2) * Math.PI / (4 * pile_s);
+                    break;
+                case WallType.SteelSheetWall:
+                    if (Sheet.SheetDataList.Count > 0) Area = Sheet.SheetDataList[StaticVariables.viewModel.SheetIndex].Area;
+                    break;
+                default:
+                    Area = wall_t;
+                    break;
+            }
+            WallArea = Area;
+
+            double Inertia = 0;
+            switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
+            {
+                case WallType.ConcreteRectangleWall:
+                    Inertia = Math.Pow(wall_t, 3) / 12;
+                    break;
+                case WallType.ConcretePileWall:
+                    if (Pile.PileDiameterDataList.Count > 0) Inertia = Math.Pow(Pile.PileDiameterDataList[StaticVariables.viewModel.PileIndex].t, 4) * Math.PI / (64 * pile_s);
+                    break;
+                case WallType.SteelSheetWall:
+                    if (Sheet.SheetDataList.Count > 0) Inertia = Sheet.SheetDataList[StaticVariables.viewModel.SheetIndex].Inertia;
+                    break;
+                default:
+                    Inertia = Math.Pow(wall_t, 3) / 12;
+                    break;
+            }
+            WallInertia = Inertia;
+            double E = 0;
+            switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
+            {
+                case WallType.ConcreteRectangleWall:
+                    if (Concrete.ConcreteDataList.Count > 0) E = Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E ;
+                    break;
+                case WallType.ConcretePileWall:
+                    if (Concrete.ConcreteDataList.Count > 0) E = Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E ;
+                    break;
+                case WallType.SteelSheetWall:
+                    if (Steel.SteelDataList.Count > 0) E = Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].E;
+                    break;
+                default:
+                    if (Concrete.ConcreteDataList.Count > 0) E = Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E;
+                    break;
+            }
+            WallE = E;
+
+            double EI = 0;
+            switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
+            {
+                case WallType.ConcreteRectangleWall:
+                    if (Concrete.ConcreteDataList.Count > 0)  EI = WallE*WallInertia;
+                    break;
+                case WallType.ConcretePileWall:
+                    if (Concrete.ConcreteDataList.Count > 0) EI = WallE * WallInertia;
+                    break;
+                case WallType.SteelSheetWall:
+                    if (Sheet.SheetDataList.Count > 0) EI = WallE * WallInertia;
+                    break;
+                default:
+                    if (Concrete.ConcreteDataList.Count > 0) EI = WallE * WallInertia;
+                    break;
+            }
+            WallEI = EI;
+
+            double EA = 0;
+            switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
+            {
+                case WallType.ConcreteRectangleWall:
+                    if (Concrete.ConcreteDataList.Count > 0) EA = WallE * WallArea;
+                    break;
+                case WallType.ConcretePileWall:
+                    if (Concrete.ConcreteDataList.Count > 0) EA = WallE * WallArea;
+                    break;
+                case WallType.SteelSheetWall:
+                    if (Sheet.SheetDataList.Count > 0) EA = WallE * WallArea;
+                    break;
+                default:
+                    if (Concrete.ConcreteDataList.Count > 0) EA = WallE * WallArea;
+                    break;
+            }
+            WallEA = EA;
+        }
+        public double GetWallArea() { return WallArea; }
+        public double GetWallInertia() { return WallInertia; }
+        public double GetWallE() { return WallE; }
+        public double GetWallEI() { return WallEI; }
+        public double GetWallEA() { return WallEA; }
         public double GetWallHeight() { return wall_h; }
         public double GetWallThickness() { return wall_t; }
         public double GetexcavationHeight() { return excavationHeight; }
@@ -178,10 +296,17 @@ namespace ExDesign.Datas
                     WallTypeIndex = 1,
                     PileIndex = 1,
                     ConcreteIndex = 0,
+                    RebarIndex = 0,
+                    SteelIndex = 0,
                     SheetIndex = 0,
                     ExcavationTypeIndex = 0,
                     GroundSurfaceTypeIndex = 0,
                     WaterTypeIndex = 0,
+                    WallArea = 1,
+                    WallInertia = 1,
+                    WallE = 1,
+                    WallEA = 2,
+                    WallEI = 3,
                     Path = "Untitled",
                     ProjectName = "Untitled",
                     SaveDate = "0",

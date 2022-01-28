@@ -42,6 +42,8 @@ namespace ExDesign
         {
             StaticVariables.view3DPage = new Pages.Inputs.Views.View3dPage();
             StaticVariables.view3DPage.SetViewModel();
+            StaticVariables.SideviewPage = new Pages.Inputs.Views.SideviewPage();
+            StaticVariables.SideviewPage.SetViewModel();
             InputsMain_Page = new Pages.Inputs.InputsMainPage();
             OptionsMain_Page = new Pages.Options.OptionsMainPage();
             ReportMain_Page = new Pages.Reports.ReportMainPage();
