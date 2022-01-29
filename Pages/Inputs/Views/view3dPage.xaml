@@ -10,7 +10,10 @@
 
     <Grid Background="White" MouseWheel="viewport3d_main_MouseWheel" MouseDown="viewport3d_main_MouseDown" MouseUp="viewport3d_main_MouseUp" MouseMove="viewport3d_main_MouseMove" MouseLeave="viewport3d_main_MouseLeave">
         <ContentControl Name="contentControl2">
-            <Viewport3D x:Name="viewport3d_main" ClipToBounds="True" Width="Auto" Height="Auto" />
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Viewport3D x:Name="viewport3d_main" ClipToBounds="True" Width="Auto" Height="Auto" />
+
+            </Border>
 
         </ContentControl>
         <Label x:Name="scroll_3dview" Content="adfasdf"></Label>

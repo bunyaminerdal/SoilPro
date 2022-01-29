@@ -217,8 +217,7 @@ namespace ExDesign.Pages.Inputs.Views
                 default:
                     break;
             }
-            
-            
+                        
                        
             double backCube_w = frontandbackCubeLength;
             double backCube_h = wall_h;
@@ -227,20 +226,19 @@ namespace ExDesign.Pages.Inputs.Views
             WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
             GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200));
 
-            double frontCube_w = frontandbackCubeLength;
-            double frontCube_h =Math.Clamp( wall_h- excavationHeight,0,double.MaxValue);
-            double frontCube_d = wall_d;
-            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h-frontCube_h), center3d.Z-frontCube_d/2);
-            WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
-            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
-
+            
             double cylinder_h = 7;
             double cylinder_d = 0.15;
             double cylinder_loc = 1;
             Point3D cylinderCenter = new Point3D(center3d.X-wall_t-0.2,center3d.Y + centerY - cylinder_loc,center3d.Z);
             WpfCylinder anchor = new WpfCylinder(cylinderCenter,30,cylinder_d,cylinder_d,cylinder_h);
             GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue,true,true);
-            
+
+            double frontCube_w = frontandbackCubeLength;
+            double frontCube_h = Math.Clamp(wall_h - excavationHeight, 0, double.MaxValue);
+            double frontCube_d = wall_d;
+            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h - frontCube_h), center3d.Z - frontCube_d / 2);
+
             double frontT_w_top_dis =0;
             double frontT_w_bottom_dis =0;
             double frontT_h =0;
@@ -264,7 +262,9 @@ namespace ExDesign.Pages.Inputs.Views
                     frontT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
                 case ExcavationType.type2:
-                     frontT_w_top_dis = 0;
+                    frontCube_h = Math.Clamp(wall_h - excavationHeight-frontT_Z, 0, double.MaxValue);
+                    frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h - frontCube_h), center3d.Z - frontCube_d / 2);
+                    frontT_w_top_dis = 0;
                      frontT_w_bottom_dis = 0;
                      frontT_h = frontT_Z;
                      frontT_d = wall_d;
@@ -277,7 +277,10 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
             }
             
-            
+            WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
+            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
+
+
             WpfTrapezoid frontT = new WpfTrapezoid(TrapezoidCenter, frontT_w_top, frontT_w_bottom, frontT_h, frontT_d, frontT_w_top_dis, frontT_w_bottom_dis);
             GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color);
 

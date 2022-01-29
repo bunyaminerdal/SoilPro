@@ -77,17 +77,7 @@ namespace ExDesign.Pages.Inputs.Views
         private void StartViewModel2D()
         {
             SetViewModel();
-            DrawingGroup mainDrawingGroup = new DrawingGroup();
-            //blank shapes
-
-
-
-            //GeometryDrawing top 
-
-
-
-
-            //blank shape ekle
+            DrawingGroup mainDrawingGroup = new DrawingGroup();            
             Uri soilUri = new Uri(@"Textures/Soil/soil2.png", UriKind.Relative);
             GeometryDrawing wallGeometryDrawing = Wpf2Dutils.WallGeometryDrawing(center,wall_h,wall_t,Colors.DarkGray);
             Point bottomSoilCenter = new Point(center.X-frontandbackCubeLength,center.Y+wall_h);
@@ -134,8 +124,8 @@ namespace ExDesign.Pages.Inputs.Views
                     frontT_h = frontT_Z;
                     frontT_w_bottom = frontandbackCubeLength - frontT_w_bottom_dis - frontT_X2;
                     frontT_w_top = frontandbackCubeLength - frontT_X1 - frontT_X2;
-                    frontSoilCenter = new Point(center.X - frontandbackCubeLength, center.Y + excavationHeight - frontT_h);
-                    frontSoilGeometry = Wpf2Dutils.SoilGeometryDrawing(frontSoilCenter, wall_h - excavationHeight, frontandbackCubeLength, frontT_h, frontT_w_top, frontT_w_bottom, frontT_w_top_dis, frontT_w_bottom_dis, Colors.Gray, soilUri, true);
+                    frontSoilCenter = new Point(center.X - frontandbackCubeLength, center.Y + excavationHeight );
+                    frontSoilGeometry = Wpf2Dutils.SoilGeometryDrawing(frontSoilCenter, wall_h - excavationHeight-frontT_h, frontandbackCubeLength, frontT_h, frontT_w_top, frontT_w_bottom, frontT_w_top_dis, frontT_w_bottom_dis, Colors.Gray, soilUri, true);
                     break;
                 default:
                     break;
@@ -184,6 +174,7 @@ namespace ExDesign.Pages.Inputs.Views
                 default:
                     break;
             }            
+            
             mainDrawingGroup.Children.Add(wallGeometryDrawing);
             mainDrawingGroup.Children.Add(backSoilGeometry);
             mainDrawingGroup.Children.Add(frontSoilGeometry);

@@ -9,7 +9,10 @@
       Title="SideviewPage" Width="auto" Height="auto">
 
     <Grid >
-        <Image x:Name="sideview_main"></Image>
+        <Border BorderThickness="1" BorderBrush="Black">
+            <Image x:Name="sideview_main" Margin="20"></Image>
+        </Border>
+        
 
     </Grid>
 </Page>
