@@ -76,5 +76,16 @@
     <system:String x:Key="inertiapermeter" >I/m</system:String>
     <system:String x:Key="EIpermeter" >EI/m</system:String>
     <system:String x:Key="EApermeter" >EA/m</system:String>
+    <system:String x:Key="SoilModel" >Soil Model</system:String>
+    <system:String x:Key="SoilLayers" >Soil Layers</system:String>
+    <system:String x:Key="SchmittInfo" >Schmitt model information...</system:String>
+    <system:String x:Key="ChadeissonInfo" >Chadeisson model information...</system:String>
+    <system:String x:Key="VesicInfo" >Vesic model information...</system:String>
+    <system:String x:Key="SoilLayerName" >Soil Layer Name</system:String>
+    <system:String x:Key="AssignedSoilType" >Assigned Soil Type</system:String>
+    <system:String x:Key="AddSoilLayer" >Add Soil Layer</system:String>
+    <system:String x:Key="DeleteSoilLayer" >Delete Soil Layer</system:String>
+    <system:String x:Key="SoilTypeLibrary" >Soil Type Library</system:String>
+    <system:String x:Key="SoilLayer" >Soil Layer</system:String>
     
 </ResourceDictionary>

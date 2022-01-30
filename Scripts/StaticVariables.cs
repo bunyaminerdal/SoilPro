@@ -79,4 +79,12 @@ namespace ExDesign.Scripts
         type3
         
     }
+
+    public enum SoilModelType
+    {
+        Schmitt_Model,
+        Chadeisson_Model,
+        Vesic_Model
+
+    }
 }

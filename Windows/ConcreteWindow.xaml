@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExDesign.Windows"
         mc:Ignorable="d"
-        Title="ConcreteWindow" Height="300" Width="480" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="{DynamicResource ConcreteType}" Height="300" Width="480" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>

@@ -25,6 +25,7 @@ namespace ExDesign.Pages.Inputs
         MaterialsPage materialsPage = new MaterialsPage();
         WallProperties wallProperties   =new WallProperties();
         ExDesignPage exDesignPage = new ExDesignPage();
+        SoilMethodPage soilMethodPage = new SoilMethodPage();
         public InputsMainPage()
         {
             InitializeComponent();            
@@ -45,6 +46,10 @@ namespace ExDesign.Pages.Inputs
         {
             Main_pro.Content = exDesignPage;
 
+        }
+        private void SolidMethodBttn_Checked(object sender, RoutedEventArgs e)
+        {
+            Main_pro.Content= soilMethodPage;
         }
         private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -106,6 +111,7 @@ namespace ExDesign.Pages.Inputs
             Sheet.SheetDataReader();            
             StaticVariables.view3DPage.Refresh3Dview();
         }
-                
+
+        
     }
 }

@@ -368,6 +368,33 @@ namespace ExDesign.Scripts
                     return 0;
             }
         }
-        
+        public static SoilModelType GetSoilModelType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return SoilModelType.Schmitt_Model;
+                case 1:
+                    return SoilModelType.Chadeisson_Model;
+                case 2:
+                    return SoilModelType.Vesic_Model;                
+                default:
+                    return SoilModelType.Schmitt_Model;
+            }
+        }
+        public static int GetSoilModelIndex(SoilModelType soilModel)
+        {
+            switch (soilModel)
+            {
+                case SoilModelType.Schmitt_Model:
+                    return 0;
+                case SoilModelType.Chadeisson_Model:
+                    return 1;
+                case SoilModelType.Vesic_Model:
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
     }
 }

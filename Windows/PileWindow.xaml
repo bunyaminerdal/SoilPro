@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExDesign.Windows"
         mc:Ignorable="d"
-        Title="Pile" Height="270" Width="370" WindowStyle="ToolWindow" Loaded="Window_Loaded" ResizeMode="NoResize">
+        Title="{DynamicResource pileDiameter}" Height="270" Width="370" WindowStyle="ToolWindow" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Grid>
         <ListBox x:Name="PileList" Width="100" Height="165" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,35,0,0" SelectionChanged="PileList_SelectionChanged"/>
         <Button x:Name="deletepile_button" Content="{DynamicResource delete}" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" Width="100" Click="deletepile_button_Click"/>

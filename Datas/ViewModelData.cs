@@ -51,6 +51,7 @@ namespace ExDesign.Datas
         public double WallE { get; set; } 
         public double WallEI { get; set; } 
         public double WallEA { get; set; } 
+        public int SoilModelIndex { get; set; }
 
 
         public void ChangeWallHeight(double h)
@@ -307,6 +308,7 @@ namespace ExDesign.Datas
                     WallE = 1,
                     WallEA = 2,
                     WallEI = 3,
+                    SoilModelIndex = 0,
                     Path = "Untitled",
                     ProjectName = "Untitled",
                     SaveDate = "0",

@@ -5,6 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Exdesign.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +19,7 @@
     <None Remove="Textures\Icons\file-earmark-plus.png" />
     <None Remove="Textures\Icons\folder2-open.png" />
     <None Remove="Textures\Icons\pencil-square.png" />
+    <None Remove="Textures\Icons\trash.png" />
     <None Remove="Textures\SheetPile.png" />
     <None Remove="Textures\Soil\soil.png" />
     <None Remove="Textures\Soil\soil1.png" />
@@ -26,6 +28,10 @@
     <None Remove="Textures\surface2.png" />
     <None Remove="Textures\surface3.png" />
     <None Remove="Textures\surface4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Exdesign.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +67,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\Icons\pencil-square.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\Icons\trash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\SheetPile.png">
