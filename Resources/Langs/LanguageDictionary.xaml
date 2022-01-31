@@ -78,9 +78,12 @@
     <system:String x:Key="EApermeter" >EA/m</system:String>
     <system:String x:Key="SoilModel" >Soil Model</system:String>
     <system:String x:Key="SoilLayers" >Soil Layers</system:String>
-    <system:String x:Key="SchmittInfo" >Schmitt model information...</system:String>
-    <system:String x:Key="ChadeissonInfo" >Chadeisson model information...</system:String>
-    <system:String x:Key="VesicInfo" >Vesic model information...</system:String>
+    <system:String x:Key="SchmittInfo" >Schmitt model defines soils reaction according to soil and interactive elements elasticity and rigidity. It can be used in every soil model. It can be represent soil under prestress forces from anchors.
+    </system:String>
+    <system:String x:Key="ChadeissonInfo" >Chadeisson model defines soil reaction according to soils mohr-coloumb parameters. It can be used in every soil model. It can be resepent soil under prestress forces from anchors.
+    </system:String>
+    <system:String x:Key="VesicInfo" >Vesic model used widely thru all world. Model find soil subgrade modulus according to soils Young Modulus	 and Poisson ratio. Also this model includes the beam elements rigidity. Can be used in all cases.
+    </system:String>
     <system:String x:Key="SoilLayerName" >Soil Layer Name</system:String>
     <system:String x:Key="AssignedSoilType" >Assigned Soil Type</system:String>
     <system:String x:Key="AddSoilLayer" >Add Soil Layer</system:String>
