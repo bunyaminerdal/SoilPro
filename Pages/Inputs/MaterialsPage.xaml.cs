@@ -75,7 +75,6 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.viewModel.ConcreteIndex = 0;
             }
             concreteCombobox.SelectedIndex = StaticVariables.viewModel.ConcreteIndex;
-
             Rebar.GetRebarDataList(rebarCombobox);
             if (StaticVariables.viewModel.RebarIndex > rebarCombobox.Items.Count - 1)
             {
@@ -110,13 +109,13 @@ namespace ExDesign.Pages.Inputs
 
         private void concreteCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StaticVariables.viewModel.ConcreteIndex =((ComboBox)sender).SelectedIndex;
+            StaticVariables.viewModel.ConcreteIndex = ((ComboBox)sender).SelectedIndex>=0? ((ComboBox)sender).SelectedIndex:StaticVariables.viewModel.ConcreteIndex;
             UnitChange();
         }
 
         private void rebarCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StaticVariables.viewModel.RebarIndex =((ComboBox)sender).SelectedIndex;
+            StaticVariables.viewModel.RebarIndex =((ComboBox)sender).SelectedIndex>=0? ((ComboBox)sender).SelectedIndex:StaticVariables.viewModel.RebarIndex;
             UnitChange();
         }
 
@@ -129,7 +128,7 @@ namespace ExDesign.Pages.Inputs
 
         private void steelCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StaticVariables.viewModel.SteelIndex = ((ComboBox)sender).SelectedIndex;
+            StaticVariables.viewModel.SteelIndex = ((ComboBox)sender).SelectedIndex>=0? ((ComboBox)sender).SelectedIndex:StaticVariables.viewModel.SteelIndex;
             UnitChange();
         }
 

@@ -27,8 +27,8 @@
             <StackPanel Grid.Row="1" Background="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.8*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
                     <StackPanel Grid.Column="0" >
@@ -66,7 +66,7 @@
                             <StackPanel>
                                 <DockPanel HorizontalAlignment="Left">
                                     <Button x:Name="addsoillayer_bttn" Content="{DynamicResource AddSoilLayer}" Width="150" Margin="10" Click="addsoillayer_bttn_Click"></Button>
-                                    <Button x:Name="soilTypeLibrary" Content="{DynamicResource SoilTypeLibrary}" Width="150" Margin="10"></Button>
+                                    <Button x:Name="soilTypeLibrary" Content="{DynamicResource SoilTypeLibrary}" Width="150" Margin="10" Click="soilTypeLibrary_Click"></Button>
                                 </DockPanel>
                                 <ScrollViewer x:Name="headerScrollBar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
                                     <DockPanel HorizontalAlignment="Left" Margin="2" Height="27">
@@ -84,7 +84,7 @@
                                     </DockPanel>
                                 </ScrollViewer>
                                 
-                                <ScrollViewer x:Name="LayerGridScrollBar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="210" ScrollChanged="LayerGridScrollBar_ScrollChanged" >
+                                <ScrollViewer x:Name="LayerGridScrollBar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="200" ScrollChanged="LayerGridScrollBar_ScrollChanged" >
                                     <StackPanel x:Name="soilLayerGroupbox"  ></StackPanel>
 
                                 </ScrollViewer>

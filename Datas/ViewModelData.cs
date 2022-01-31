@@ -52,12 +52,14 @@ namespace ExDesign.Datas
         public double WallEI { get; set; } 
         public double WallEA { get; set; } 
         public int SoilModelIndex { get; set; }
+        public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
+        public ObservableCollection<SoilData> soilDatas { get; set; }
 
 
         public void ChangeWallHeight(double h)
         {
             wall_h = h;
-           StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refresh3Dview();
             StaticVariables.SideviewPage.Refresh3Dview();
         }
         public void ChangeWallThickness(double d)
@@ -312,6 +314,9 @@ namespace ExDesign.Datas
                     Path = "Untitled",
                     ProjectName = "Untitled",
                     SaveDate = "0",
+                    soilDatas = new ObservableCollection<SoilData>(),
+                    soilLayerDatas = new ObservableCollection<SoilLayerData> (),
+                    
                 };
                 
                 string json = JsonConvert.SerializeObject(viewModel);

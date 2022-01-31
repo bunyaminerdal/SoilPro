@@ -27,8 +27,6 @@ namespace ExDesign.Pages.Inputs
     {
         public char separator = ',';
 
-        public ObservableCollection<SoilLayerData> LayerDataList;
-        public ObservableCollection<SoilData> SoilDataList;
         public SoilMethodPage()
         {
             InitializeComponent();
@@ -69,37 +67,22 @@ namespace ExDesign.Pages.Inputs
             soilModelCombobox.SelectedIndex = StaticVariables.viewModel.SoilModelIndex;
             
             StaticEvents.UnitChangeEvent += UnitChange;
-            Deneme();
-            
-        }
-
-        private void Deneme()
-        {
-
-            SoilDataList = new ObservableCollection<SoilData>();
-
             SoilData soilData1 = new SoilData { Name = "siltli kumlu balçık", Gama = 13 };
             SoilData soilData2 = new SoilData { Name = "çakıllı makıllı sağlam gibi", Gama = 11 };
-            SoilDataList.Add(soilData1);
-            SoilDataList.Add(soilData2);
-
-            LayerDataList = new ObservableCollection<SoilLayerData>();
-            SoilLayerData soilLayerData1 = new SoilLayerData { LayerHeight = 3, Name = "ali", SoilType = soilData2 };
-            SoilLayerData soilLayerData2 = new SoilLayerData { LayerHeight = 2, Name = "veli", SoilType = soilData1 };
-            LayerDataList.Add(soilLayerData1);
-            LayerDataList.Add(soilLayerData2);
+            StaticVariables.viewModel.soilDatas.Add(soilData1);
+            StaticVariables.viewModel.soilDatas.Add(soilData2);
             LayerGridInitialize();
 
         }
-
+               
         private void LayerGridInitialize()
         {
-            if(LayerDataList==null) return;
+            if(StaticVariables.viewModel.soilLayerDatas==null) return;
             soilLayerGroupbox.Children.Clear();
             
-            foreach (var item in LayerDataList)
+            foreach (var item in StaticVariables.viewModel.soilLayerDatas)
             {
-                string layerIndex = LayerDataList.IndexOf(item).ToString();
+                string layerIndex = StaticVariables.viewModel.soilLayerDatas.IndexOf(item).ToString();
                 DockPanel dockPanel = new DockPanel();
                 dockPanel.Margin = new Thickness(2);
                 dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
@@ -134,9 +117,9 @@ namespace ExDesign.Pages.Inputs
                 textbox_layername.TextChanged += Textbox_layername_TextChanged;
                 ComboBox comboBox = new ComboBox();
                 comboBox.Width = 200;
-                comboBox.ItemsSource = SoilDataList;
+                comboBox.ItemsSource = StaticVariables.viewModel.soilDatas;
                 comboBox.DisplayMemberPath = "Name";
-                comboBox.SelectedItem = item.SoilType;
+                comboBox.SelectedItem =WpfUtils.GetSoilData( item.soilIndex);
                 comboBox.Name ="combo_"+ layerIndex;
                 comboBox.SelectionChanged += ComboBox_SelectionChanged;
                 comboBox.VerticalContentAlignment = VerticalAlignment.Center;
@@ -189,7 +172,7 @@ namespace ExDesign.Pages.Inputs
         private void Textbox_layername_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            LayerDataList[int.Parse(textBox.Name.Split('_')[1])].Name = textBox.Text;
+            StaticVariables.viewModel.soilLayerDatas[int.Parse(textBox.Name.Split('_')[1])].Name = textBox.Text;
         }
         private void Textbox_height_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -220,21 +203,21 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                LayerDataList[int.Parse(textBox.Name.Split('_')[1])].LayerHeight = WpfUtils.GetValueDimension(result); 
+                StaticVariables.viewModel.soilLayerDatas[int.Parse(textBox.Name.Split('_')[1])].LayerHeight = WpfUtils.GetValueDimension(result); 
             }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             string buttonName = ((Button)sender).Name;
-            LayerDataList.RemoveAt(int.Parse( buttonName.Split('_')[1]));
+            StaticVariables.viewModel.soilLayerDatas.RemoveAt(int.Parse( buttonName.Split('_')[1]));
             LayerGridInitialize();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string comboname = ((ComboBox)sender).Name.Split('_')[1];
-            LayerDataList[int.Parse(comboname)].SoilType = ((SoilData)((ComboBox)sender).SelectedItem);
+            StaticVariables.viewModel.soilLayerDatas[int.Parse(comboname)].soilIndex =WpfUtils.GetSoilDataIndex( ((SoilData)((ComboBox)sender).SelectedItem));
             LayerGridInitialize();
         }
 
@@ -273,14 +256,21 @@ namespace ExDesign.Pages.Inputs
 
         private void addsoillayer_bttn_Click(object sender, RoutedEventArgs e)
         {
-            SoilLayerData soilLayerData1 = new SoilLayerData { LayerHeight=3,Name=FindResource("SoilLayer").ToString(),SoilType=SoilDataList!=null&&SoilDataList.Count>0?SoilDataList[0]:null };
-            LayerDataList.Add(soilLayerData1);
+            SoilLayerData soilLayerData1 = new SoilLayerData { LayerHeight=3,Name=FindResource("SoilLayer").ToString(),soilIndex=0 };
+            StaticVariables.viewModel.soilLayerDatas.Add(soilLayerData1);
             LayerGridInitialize();
         }
 
         private void LayerGridScrollBar_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             headerScrollBar?.ScrollToHorizontalOffset(LayerGridScrollBar.HorizontalOffset );
+        }
+
+        private void soilTypeLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.SoilTypeLibrary soilLibraryPage = new Windows.SoilTypeLibrary();
+            //soilLibraryPage.SelectPile(pileDiameterCombobox);
+            soilLibraryPage.ShowDialog();
         }
     }
 }

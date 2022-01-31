@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExDesign.Datas;
+using System;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
@@ -395,6 +396,26 @@ namespace ExDesign.Scripts
                 default:
                     return 0;
             }
+        }
+
+        public static SoilData GetSoilData(int index)
+        {
+            foreach (var soil in StaticVariables.viewModel.soilDatas)
+            {
+                if(index == StaticVariables.viewModel.soilDatas.IndexOf(soil))
+                {
+                    return soil;
+                }
+            }
+            return null;
+        }
+        public static int GetSoilDataIndex(SoilData soil)
+        {
+            foreach (var soil1 in StaticVariables.viewModel.soilDatas)
+            {
+                if (soil == soil1) return StaticVariables.viewModel.soilDatas.IndexOf(soil);
+            }
+            return 0;
         }
     }
 }

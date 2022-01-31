@@ -213,7 +213,7 @@ namespace ExDesign.Pages.Inputs
 
         private void pileDiameterCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StaticVariables.viewModel.PileIndex = pileDiameterCombobox.SelectedIndex;
+          if(  pileDiameterCombobox.SelectedIndex>=0) StaticVariables.viewModel.PileIndex = pileDiameterCombobox.SelectedIndex;
             PileData pileDiameterData = pileDiameterCombobox.SelectedItem as PileData;
             if (pileDiameterData != null && WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.ConcretePileWall) StaticVariables.viewModel.ChangeWallThickness(pileDiameterData.t);
 
@@ -229,7 +229,7 @@ namespace ExDesign.Pages.Inputs
 
         private void sheetpileCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StaticVariables.viewModel.SheetIndex = sheetpileCombobox.SelectedIndex;
+           if(sheetpileCombobox.SelectedIndex>=0) StaticVariables.viewModel.SheetIndex = sheetpileCombobox.SelectedIndex;
             SheetData sheetData = sheetpileCombobox.SelectedItem as SheetData;
             if (sheetData != null && WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.SteelSheetWall) StaticVariables.viewModel.ChangeWallThickness(sheetData.Height*2);
 
