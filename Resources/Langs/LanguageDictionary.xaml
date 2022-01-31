@@ -88,5 +88,27 @@
     <system:String x:Key="SoilTypeLibrary" >Soil Type Library</system:String>
     <system:String x:Key="SoilLayer" >Soil Layer</system:String>
     <system:String x:Key="AddCopyFromLibrary" >Add Copy From Library</system:String>
-    
+    <system:String x:Key="NaturalUnitWeight" >Natural Unit Weight</system:String>
+    <system:String x:Key="SaturatedUnitWeight" >Saturated Unit Weight</system:String>
+    <system:String x:Key="SoilStressState" >Soil Stress State</system:String>
+    <system:String x:Key="Drained" >Drained</system:String>
+    <system:String x:Key="UnDrained" >UnDrained</system:String>
+    <system:String x:Key="SoilFrictionAngle" >Soil Friction Angle</system:String>
+    <system:String x:Key="EffectiveCohesion" >Effective Cohesion</system:String>
+    <system:String x:Key="Wall-SoilFrictionAngle" >Wall-Soil Friction Angle</system:String>
+    <system:String x:Key="SoilState(KOAnalysis)" >Soil State (KO Analysis)</system:String>
+    <system:String x:Key="Cohesive" >Cohesive</system:String>
+    <system:String x:Key="Cohesionless" >Cohesionless</system:String>
+    <system:String x:Key="OCR" >OCR</system:String>
+    <system:String x:Key="KO" >KO</system:String>
+    <system:String x:Key="UserDefined" >User Defined</system:String>
+    <system:String x:Key="PoissonRatio" >Poisson Ratio</system:String>
+    <system:String x:Key="SoilParameters" >Soil Parameters</system:String>
+    <system:String x:Key="SoilModelProperties" >Soil Model Properties</system:String>
+    <system:String x:Key="UndrainedShearStrength" >Undrained Shear Strength</system:String>
+    <system:String x:Key="WallSoilAdhesion" >Wall Soil Adhesion</system:String>
+    <system:String x:Key="SchmittModel" >Schmitt Model</system:String>
+    <system:String x:Key="ChadeissonModel" >Chadeisson Model</system:String>
+    <system:String x:Key="VesicModel" >Vesic Model</system:String>
+
 </ResourceDictionary>
