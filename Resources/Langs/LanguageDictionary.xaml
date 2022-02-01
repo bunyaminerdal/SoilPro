@@ -99,11 +99,11 @@
     <system:String x:Key="SoilFrictionAngle" >Soil Friction Angle</system:String>
     <system:String x:Key="EffectiveCohesion" >Effective Cohesion</system:String>
     <system:String x:Key="Wall-SoilFrictionAngle" >Wall-Soil Friction Angle</system:String>
-    <system:String x:Key="SoilState(KOAnalysis)" >Soil State (KO Analysis)</system:String>
+    <system:String x:Key="SoilState(K0Analysis)" >Soil State (K0 Analysis)</system:String>
     <system:String x:Key="Cohesive" >Cohesive</system:String>
     <system:String x:Key="Cohesionless" >Cohesionless</system:String>
     <system:String x:Key="OCR" >OCR</system:String>
-    <system:String x:Key="KO" >KO</system:String>
+    <system:String x:Key="K0" >K0</system:String>
     <system:String x:Key="UserDefined" >User Defined</system:String>
     <system:String x:Key="PoissonRatio" >Poisson Ratio</system:String>
     <system:String x:Key="SoilParameters" >Soil Parameters</system:String>
@@ -113,5 +113,8 @@
     <system:String x:Key="SchmittModel" >Schmitt Model</system:String>
     <system:String x:Key="ChadeissonModel" >Chadeisson Model</system:String>
     <system:String x:Key="VesicModel" >Vesic Model</system:String>
+    <system:String x:Key="YoungModulus" >Young Modulus</system:String>
+    <system:String x:Key="OedometricModulus" >Oedometric Modulus</system:String>
+    <system:String x:Key="CohesionFactor" >Cohesion Factor</system:String>
 
 </ResourceDictionary>

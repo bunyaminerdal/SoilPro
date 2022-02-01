@@ -67,8 +67,8 @@ namespace ExDesign.Pages.Inputs
             soilModelCombobox.SelectedIndex = StaticVariables.viewModel.SoilModelIndex;
             
             StaticEvents.UnitChangeEvent += UnitChange;
-            SoilData soilData1 = new SoilData { Name = "siltli kumlu balçık", Gama = 13 };
-            SoilData soilData2 = new SoilData { Name = "çakıllı makıllı sağlam gibi", Gama = 11 };
+            SoilData soilData1 = new SoilData { Name = "siltli kumlu balçık", NaturalUnitWeight = 13 };
+            SoilData soilData2 = new SoilData { Name = "çakıllı makıllı sağlam gibi", NaturalUnitWeight = 11 };
             StaticVariables.viewModel.soilDatas.Add(soilData1);
             StaticVariables.viewModel.soilDatas.Add(soilData2);
             LayerGridInitialize();
@@ -125,32 +125,32 @@ namespace ExDesign.Pages.Inputs
                 comboBox.VerticalContentAlignment = VerticalAlignment.Center;
                 TextBox textbox_gama = new TextBox();
                 textbox_gama.Width = 80;
-                textbox_gama.Text = comboBox.SelectedIndex >=0 ? ((SoilData)comboBox.SelectedItem).Gama.ToString():"" ;
+                textbox_gama.Text = comboBox.SelectedIndex >=0 ? ((SoilData)comboBox.SelectedItem).NaturalUnitWeight.ToString():"" ;
                 textbox_gama.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_gama.IsEnabled = false;
                 TextBox textbox_gamasat = new TextBox();
                 textbox_gamasat.Width = 80;
-                textbox_gamasat.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).GamaSat.ToString():"";
+                textbox_gamasat.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).SaturatedUnitWeight.ToString():"";
                 textbox_gamasat.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_gamasat.IsEnabled = false;
                 TextBox textbox_fi = new TextBox();
                 textbox_fi.Width = 80;
-                textbox_fi.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).Fi.ToString():"";
+                textbox_fi.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).SoilFrictionAngle.ToString():"";
                 textbox_fi.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_fi.IsEnabled = false;
                 TextBox textbox_Cprime = new TextBox();
                 textbox_Cprime.Width = 80;
-                textbox_Cprime.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).Cprime.ToString():"";
+                textbox_Cprime.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).EffectiveCohesion.ToString():"";
                 textbox_Cprime.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_Cprime.IsEnabled = false;
                 TextBox textbox_Cu = new TextBox();
                 textbox_Cu.Width = 80;
-                textbox_Cu.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).Cu.ToString():"";
+                textbox_Cu.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).UndrainedShearStrength.ToString():"";
                 textbox_Cu.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_Cu.IsEnabled = false;
                 TextBox textbox_Poisson = new TextBox();
                 textbox_Poisson.Width = 80;
-                textbox_Poisson.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).Poisson.ToString():"";
+                textbox_Poisson.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).PoissonRatio.ToString():"";
                 textbox_Poisson.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_Poisson.IsEnabled = false;
                 dockPanel.Children.Add(deleteButton);
@@ -269,7 +269,6 @@ namespace ExDesign.Pages.Inputs
         private void soilTypeLibrary_Click(object sender, RoutedEventArgs e)
         {
             Windows.SoilTypeLibrary soilLibraryPage = new Windows.SoilTypeLibrary();
-            //soilLibraryPage.SelectPile(pileDiameterCombobox);
             soilLibraryPage.ShowDialog();
         }
     }

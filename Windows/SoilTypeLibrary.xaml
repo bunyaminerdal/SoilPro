@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExDesign.Windows"
         mc:Ignorable="d"
-        Title="{DynamicResource SoilTypeLibrary}" Height="500" Width="1150" WindowStyle="ToolWindow" ResizeMode="NoResize">
+        Title="{DynamicResource SoilTypeLibrary}" Height="500" Width="1150" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,7 +17,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="UserSoilList" Width="230" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,35,0,0" />
+            <ListBox x:Name="UserSoilList" Width="230" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,35,0,0" SelectionChanged="UserSoilList_SelectionChanged" />
             <ListBox x:Name="LibrarySoilList" Width="230" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,245,0,0" />
             <Button Grid.Row="0" Grid.Column="0" x:Name="addnew_button" Content="{DynamicResource addnew}"  Margin="10,10,10,0" VerticalAlignment="Top"  />
             <Button Grid.Row="0" x:Name="delete_button" Content="{DynamicResource delete}"  Margin="10,220,10,0" VerticalAlignment="Top"  />
@@ -32,7 +32,7 @@
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource name}" Width="80"/>
                         <Label  Content=":" Width="30" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="soilname" MaxLength="30" Width="210" Margin="2"  />
+                        <TextBox x:Name="soilname" MaxLength="30" Width="210" Margin="2" TextChanged="soilname_TextChanged"  />
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource NaturalUnitWeight}" Width="160"/>
@@ -42,52 +42,52 @@
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource SaturatedUnitWeight}" Width="160"/>
-                        <Label  Content="(γsat):" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(γd):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="saturatedUnitWeight" Width="120" Margin="2"  />
                         <Label x:Name="saturatedUnitWeight_unit" Content="kN/m3" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource SoilStressState}" Width="160"/>
                         <Label  Content="" Width="40" HorizontalContentAlignment="Right"/>
-                        <ComboBox x:Name="soilstressstate_combobox" Width="120" Margin="2"  SelectedIndex="0">
+                        <ComboBox x:Name="soilstressstate_combobox" Width="120" Margin="2"  SelectedIndex="0" SelectionChanged="soilstressstate_combobox_SelectionChanged" >
                             <ComboBoxItem Content="{DynamicResource Drained}" ></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource UnDrained}" ></ComboBoxItem>
                         </ComboBox>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
+                    <DockPanel  HorizontalAlignment="Left" x:Name="soilfrictionanglePanel">
                         <Label  Content="{DynamicResource SoilFrictionAngle}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(Φ):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="soilFrictionAngle" Width="120" Margin="2"  />
                         <Label x:Name="soilFrictionAngle_unit" Content="°" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
+                    <DockPanel  HorizontalAlignment="Left" x:Name="effectivecohesionPanel">
                         <Label  Content="{DynamicResource EffectiveCohesion}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(c'):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="effectiveCohesion" Width="120" Margin="2"  />
                         <Label x:Name="effectiveCohesion_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
+                    <DockPanel  HorizontalAlignment="Left" x:Name="wallsoilfrictionanglePanel">
                         <Label  Content="{DynamicResource Wall-SoilFrictionAngle}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(δd):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="wallsoilfrictionangle" Width="120" Margin="2"  />
                         <Label x:Name="wallsoilfrictionangle_unit" Content="°" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
+                    <DockPanel  HorizontalAlignment="Left" x:Name="undrainedshearstrengthPanel">
                         <Label  Content="{DynamicResource UndrainedShearStrength}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(Cu):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="undrainedShearStrength" Width="120" Margin="2"  />
                         <Label x:Name="undrainedShearStrength_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
+                    <DockPanel  HorizontalAlignment="Left" x:Name="wallsoiladhesionPanel">
                         <Label  Content="{DynamicResource WallSoilAdhesion}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(αa):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="wallSoilAdhesion" Width="120" Margin="2"  />
                         <Label x:Name="wallSoilAdhesion_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
-                        <Label  Content="{DynamicResource SoilState(KOAnalysis)}" Width="160"/>
+                        <Label  Content="{DynamicResource SoilState(K0Analysis)}" Width="160"/>
                         <Label  Content="" Width="40" HorizontalContentAlignment="Right"/>
-                        <ComboBox x:Name="soilstate" Width="120" Margin="2" SelectedIndex="0" >
+                        <ComboBox x:Name="soilstate" Width="120" Margin="2" SelectedIndex="0" SelectionChanged="soilstate_SelectionChanged" >
                             <ComboBoxItem Content="{DynamicResource Cohesive}"></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource Cohesionless}"></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource OCR}"></ComboBoxItem>
@@ -96,17 +96,17 @@
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource PoissonRatio}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <Label  Content="(ν):" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="poissonRatio" Width="120" Margin="2"  />
                         <Label x:Name="poissonRatio_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
-                        <Label  Content="{DynamicResource KO}" Width="160"/>
+                    <DockPanel  HorizontalAlignment="Left" x:Name="koPanel">
+                        <Label  Content="{DynamicResource K0}" Width="160"/>
                         <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="ko" Width="120" Margin="2"  />
                         <Label x:Name="ko_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" >
+                    <DockPanel  HorizontalAlignment="Left" x:Name="ocrPanel">
                         <Label  Content="{DynamicResource OCR}" Width="160"/>
                         <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="ocr" Width="120" Margin="2"  />
@@ -118,24 +118,24 @@
                 <StackPanel>
                     <GroupBox Header="{DynamicResource SchmittModel}" Margin="10,10,10,0">
                         <DockPanel  HorizontalAlignment="Left" >
-                            <Label  Content="Eoed" Width="160"/>
-                            <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                            <Label  Content="{DynamicResource OedometricModulus}" Width="160"/>
+                            <Label  Content="(Eoed):" Width="45" HorizontalContentAlignment="Right"/>
                             <TextBox x:Name="eoed" Width="120" Margin="2"  />
                             <Label x:Name="eoed_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                         </DockPanel>
                     </GroupBox>
                     <GroupBox Header="{DynamicResource ChadeissonModel}" Margin="10,10,10,0">
                         <DockPanel  HorizontalAlignment="Left" >
-                            <Label  Content="Ap" Width="160"/>
-                            <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                            <Label  Content="{DynamicResource CohesionFactor}" Width="160"/>
+                            <Label  Content="(Ap):" Width="45" HorizontalContentAlignment="Right"/>
                             <TextBox x:Name="ap" Width="120" Margin="2"  />
                             <Label x:Name="ap_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                         </DockPanel>
                     </GroupBox>
                     <GroupBox Header="{DynamicResource VesicModel}" Margin="10,10,10,0">
                         <DockPanel  HorizontalAlignment="Left" >
-                            <Label  Content="Es'" Width="160"/>
-                            <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                            <Label  Content="{DynamicResource YoungModulus}" Width="160"/>
+                            <Label  Content="(Es'):" Width="45" HorizontalContentAlignment="Right"/>
                             <TextBox x:Name="esprime" Width="120" Margin="2"  />
                             <Label x:Name="esprime_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                         </DockPanel>
