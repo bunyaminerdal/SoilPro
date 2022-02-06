@@ -54,6 +54,7 @@ namespace ExDesign.Datas
         public int SoilModelIndex { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
+        public ObservableCollection<SoilTextureData> soilTextures { get; set; }
 
 
         public void ChangeWallHeight(double h)
@@ -316,6 +317,7 @@ namespace ExDesign.Datas
                     SaveDate = "0",
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData> (),
+                    soilTextures = new ObservableCollection<SoilTextureData> (),
                     
                 };
                 

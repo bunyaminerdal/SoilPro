@@ -108,7 +108,9 @@ namespace ExDesign.Pages.Inputs
             Rebar.RebarDataReader();
             Steel.SteelDataReader();
             Pile.pileDiameterReader();
-            Sheet.SheetDataReader();            
+            Sheet.SheetDataReader();  
+            SoilTexture.SetSoilTextures();
+            SoilLibrary.SoilLibraryDataReader();
             StaticVariables.view3DPage.Refresh3Dview();
         }
 

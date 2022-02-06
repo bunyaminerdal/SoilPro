@@ -116,5 +116,9 @@
     <system:String x:Key="YoungModulus" >Young Modulus</system:String>
     <system:String x:Key="OedometricModulus" >Oedometric Modulus</system:String>
     <system:String x:Key="CohesionFactor" >Cohesion Factor</system:String>
+    <system:String x:Key="SoilTexture" >Soil Texture</system:String>
+    <system:String x:Key="UseTexture" >Use Texture</system:String>
+    <system:String x:Key="UseColor" >Use Color</system:String>
+    <system:String x:Key="Pick" >Pick</system:String>
 
 </ResourceDictionary>

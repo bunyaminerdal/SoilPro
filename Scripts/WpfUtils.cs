@@ -233,6 +233,18 @@ namespace ExDesign.Scripts
             newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
             return newValue;
         }
+        public static double GetDensity(double value)
+        {
+            double newValue;
+            newValue = value * StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] / Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3);
+            return newValue;
+        }
+        public static double GetValueDensity(double value)
+        {
+            double newValue;
+            newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 3);
+            return newValue;
+        }
 
         public static void OpenWindow(Window window)
         {

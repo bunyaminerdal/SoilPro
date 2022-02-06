@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExDesign.Windows"
         mc:Ignorable="d"
-        Title="{DynamicResource SoilTypeLibrary}" Height="500" Width="1150" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="{DynamicResource SoilTypeLibrary}" Height="500" Width="1150" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -18,14 +18,14 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <ListBox x:Name="UserSoilList" Width="230" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,35,0,0" SelectionChanged="UserSoilList_SelectionChanged" />
-            <ListBox x:Name="LibrarySoilList" Width="230" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,245,0,0" />
-            <Button Grid.Row="0" Grid.Column="0" x:Name="addnew_button" Content="{DynamicResource addnew}"  Margin="10,10,10,0" VerticalAlignment="Top"  />
-            <Button Grid.Row="0" x:Name="delete_button" Content="{DynamicResource delete}"  Margin="10,220,10,0" VerticalAlignment="Top"  />
-            <Button Grid.Row="0" x:Name="AddCopyFromLibrary_button" Content="{DynamicResource AddCopyFromLibrary}"  Margin="10,430,10,0" VerticalAlignment="Top" Grid.RowSpan="2"   />
+            <ListBox x:Name="LibrarySoilList" Width="230" Height="180" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,245,0,0" SelectionChanged="LibrarySoilList_SelectionChanged" />
+            <Button Grid.Row="0" Grid.Column="0" x:Name="addnew_button" Content="{DynamicResource addnew}"  Margin="10,10,10,0" VerticalAlignment="Top" Click="addnew_button_Click"  />
+            <Button Grid.Row="0" x:Name="delete_button" Content="{DynamicResource delete}"  Margin="10,220,10,0" VerticalAlignment="Top" Click="delete_button_Click"  />
+            <Button Grid.Row="0" x:Name="AddCopyFromLibrary_button" Content="{DynamicResource AddCopyFromLibrary}"  Margin="10,430,10,0" VerticalAlignment="Top" Grid.RowSpan="2" Click="AddCopyFromLibrary_button_Click"   />
             <DockPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right">
-                <Button x:Name="save_close_button" Content="{DynamicResource SaveAndClose}"  Width="90"   Margin="5" />
-                <Button x:Name="save_button" Content="{DynamicResource Save}"  Width="50" Margin="5"  />
-                <Button x:Name="cancel_button" Content="{DynamicResource Cancel}"  Width="50" Margin="5"  />
+                <Button x:Name="save_close_button" Content="{DynamicResource SaveAndClose}"  Width="90"   Margin="5" Click="save_close_button_Click" />
+                <Button x:Name="save_button" Content="{DynamicResource Save}"  Width="50" Margin="5" Click="save_button_Click"  />
+                <Button x:Name="cancel_button" Content="{DynamicResource Cancel}"  Width="50" Margin="5" Click="cancel_button_Click"  />
             </DockPanel>
             <GroupBox Header="{DynamicResource SoilParameters}" Grid.Row="0" Grid.Column="1" Margin="10,10,10,0">
                 <StackPanel  >
@@ -37,13 +37,13 @@
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource NaturalUnitWeight}" Width="160"/>
                         <Label  Content="(γ):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="naturalUnitWeight" Width="120" Margin="2"  />
+                        <TextBox x:Name="naturalUnitWeight" Width="120" Margin="2" TextChanged="naturalUnitWeight_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown"  />
                         <Label x:Name="naturalUnitWeight_unit" Content="kN/m3" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource SaturatedUnitWeight}" Width="160"/>
                         <Label  Content="(γd):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="saturatedUnitWeight" Width="120" Margin="2"  />
+                        <TextBox x:Name="saturatedUnitWeight" Width="120" Margin="2" TextChanged="saturatedUnitWeight_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="saturatedUnitWeight_unit" Content="kN/m3" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
@@ -57,37 +57,37 @@
                     <DockPanel  HorizontalAlignment="Left" x:Name="soilfrictionanglePanel">
                         <Label  Content="{DynamicResource SoilFrictionAngle}" Width="160"/>
                         <Label  Content="(Φ):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="soilFrictionAngle" Width="120" Margin="2"  />
+                        <TextBox x:Name="soilFrictionAngle" Width="120" Margin="2" TextChanged="soilFrictionAngle_TextChanged"  PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown"/>
                         <Label x:Name="soilFrictionAngle_unit" Content="°" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" x:Name="effectivecohesionPanel">
                         <Label  Content="{DynamicResource EffectiveCohesion}" Width="160"/>
                         <Label  Content="(c'):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="effectiveCohesion" Width="120" Margin="2"  />
+                        <TextBox x:Name="effectiveCohesion" Width="120" Margin="2" TextChanged="effectiveCohesion_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="effectiveCohesion_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" x:Name="wallsoilfrictionanglePanel">
                         <Label  Content="{DynamicResource Wall-SoilFrictionAngle}" Width="160"/>
                         <Label  Content="(δd):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="wallsoilfrictionangle" Width="120" Margin="2"  />
+                        <TextBox x:Name="wallsoilfrictionangle" Width="120" Margin="2" TextChanged="wallsoilfrictionangle_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="wallsoilfrictionangle_unit" Content="°" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" x:Name="undrainedshearstrengthPanel">
                         <Label  Content="{DynamicResource UndrainedShearStrength}" Width="160"/>
                         <Label  Content="(Cu):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="undrainedShearStrength" Width="120" Margin="2"  />
+                        <TextBox x:Name="undrainedShearStrength" Width="120" Margin="2" TextChanged="undrainedShearStrength_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="undrainedShearStrength_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" x:Name="wallsoiladhesionPanel">
                         <Label  Content="{DynamicResource WallSoilAdhesion}" Width="160"/>
                         <Label  Content="(αa):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="wallSoilAdhesion" Width="120" Margin="2"  />
+                        <TextBox x:Name="wallSoilAdhesion" Width="120" Margin="2" TextChanged="wallSoilAdhesion_TextChanged"  PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown"/>
                         <Label x:Name="wallSoilAdhesion_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource SoilState(K0Analysis)}" Width="160"/>
                         <Label  Content="" Width="40" HorizontalContentAlignment="Right"/>
-                        <ComboBox x:Name="soilstate" Width="120" Margin="2" SelectedIndex="0" SelectionChanged="soilstate_SelectionChanged" >
+                        <ComboBox x:Name="soilstate_combobox" Width="120" Margin="2" SelectedIndex="0" SelectionChanged="soilstate_SelectionChanged" >
                             <ComboBoxItem Content="{DynamicResource Cohesive}"></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource Cohesionless}"></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource OCR}"></ComboBoxItem>
@@ -97,20 +97,38 @@
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource PoissonRatio}" Width="160"/>
                         <Label  Content="(ν):" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="poissonRatio" Width="120" Margin="2"  />
+                        <TextBox x:Name="poissonRatio" Width="120" Margin="2" TextChanged="poissonRatio_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="poissonRatio_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" x:Name="koPanel">
                         <Label  Content="{DynamicResource K0}" Width="160"/>
                         <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="ko" Width="120" Margin="2"  />
+                        <TextBox x:Name="K0" Width="120" Margin="2" TextChanged="K0_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="ko_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" x:Name="ocrPanel">
                         <Label  Content="{DynamicResource OCR}" Width="160"/>
                         <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="ocr" Width="120" Margin="2"  />
+                        <TextBox x:Name="ocr" Width="120" Margin="2" TextChanged="ocr_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="ocr_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
+                    </DockPanel>
+                    
+                    <DockPanel HorizontalAlignment="Left">
+                        <StackPanel>
+                            <Label  Content="{DynamicResource SoilTexture}" Width="160"/>
+                            <DockPanel>
+                                <StackPanel >
+                                    <RadioButton IsChecked="True" Margin="3" x:Name="useTexture" Content="{DynamicResource UseTexture}" Checked="useTexture_Checked"></RadioButton>
+                                    <RadioButton Margin="3" x:Name="useColor" Content="{DynamicResource UseColor}" Checked="useColor_Checked"></RadioButton>
+                                </StackPanel>
+                                <StackPanel>
+                                    <Image x:Name="TextureImage" Height="50" Width="50" ></Image>
+                                    <Button x:Name="Pickbttn" Content="{DynamicResource Pick}" Click="Pickbttn_Click" />
+                                </StackPanel>
+                            </DockPanel>
+                            
+                        </StackPanel>
+                        
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
@@ -120,7 +138,7 @@
                         <DockPanel  HorizontalAlignment="Left" >
                             <Label  Content="{DynamicResource OedometricModulus}" Width="160"/>
                             <Label  Content="(Eoed):" Width="45" HorizontalContentAlignment="Right"/>
-                            <TextBox x:Name="eoed" Width="120" Margin="2"  />
+                            <TextBox x:Name="OedometricModulus" Width="120" Margin="2" TextChanged="OedometricModulus_TextChanged"  PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown"/>
                             <Label x:Name="eoed_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                         </DockPanel>
                     </GroupBox>
@@ -128,7 +146,7 @@
                         <DockPanel  HorizontalAlignment="Left" >
                             <Label  Content="{DynamicResource CohesionFactor}" Width="160"/>
                             <Label  Content="(Ap):" Width="45" HorizontalContentAlignment="Right"/>
-                            <TextBox x:Name="ap" Width="120" Margin="2"  />
+                            <TextBox x:Name="CohesionFactor" Width="120" Margin="2" TextChanged="CohesionFactor_TextChanged"  PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown"/>
                             <Label x:Name="ap_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                         </DockPanel>
                     </GroupBox>
@@ -136,7 +154,7 @@
                         <DockPanel  HorizontalAlignment="Left" >
                             <Label  Content="{DynamicResource YoungModulus}" Width="160"/>
                             <Label  Content="(Es'):" Width="45" HorizontalContentAlignment="Right"/>
-                            <TextBox x:Name="esprime" Width="120" Margin="2"  />
+                            <TextBox x:Name="YoungModulus" Width="120" Margin="2" TextChanged="YoungModulus_TextChanged"  PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown"/>
                             <Label x:Name="esprime_unit" Content="kN/m2" Width="80" HorizontalContentAlignment="Left"/>
                         </DockPanel>
                     </GroupBox>

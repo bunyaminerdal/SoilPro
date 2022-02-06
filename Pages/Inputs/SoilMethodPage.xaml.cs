@@ -67,15 +67,12 @@ namespace ExDesign.Pages.Inputs
             soilModelCombobox.SelectedIndex = StaticVariables.viewModel.SoilModelIndex;
             
             StaticEvents.UnitChangeEvent += UnitChange;
-            SoilData soilData1 = new SoilData { Name = "siltli kumlu balçık", NaturalUnitWeight = 13 };
-            SoilData soilData2 = new SoilData { Name = "çakıllı makıllı sağlam gibi", NaturalUnitWeight = 11 };
-            StaticVariables.viewModel.soilDatas.Add(soilData1);
-            StaticVariables.viewModel.soilDatas.Add(soilData2);
+
             LayerGridInitialize();
 
         }
                
-        private void LayerGridInitialize()
+        public void LayerGridInitialize()
         {
             if(StaticVariables.viewModel.soilLayerDatas==null) return;
             soilLayerGroupbox.Children.Clear();
@@ -269,6 +266,7 @@ namespace ExDesign.Pages.Inputs
         private void soilTypeLibrary_Click(object sender, RoutedEventArgs e)
         {
             Windows.SoilTypeLibrary soilLibraryPage = new Windows.SoilTypeLibrary();
+            soilLibraryPage.SetMethodPage(this);
             soilLibraryPage.ShowDialog();
         }
     }

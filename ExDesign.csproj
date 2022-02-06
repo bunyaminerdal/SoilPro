@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Exdesign.ico</ApplicationIcon>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,8 @@
     <None Remove="Textures\Icons\pencil-square.png" />
     <None Remove="Textures\Icons\trash.png" />
     <None Remove="Textures\SheetPile.png" />
+    <None Remove="Textures\Soil\Kil.png" />
+    <None Remove="Textures\Soil\killikum.png" />
     <None Remove="Textures\Soil\soil.png" />
     <None Remove="Textures\Soil\soil1.png" />
     <None Remove="Textures\Soil\soil2.png" />
@@ -73,6 +76,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\SheetPile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\Soil\Kil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Textures\Soil\killikum.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Textures\Soil\soil.png">
