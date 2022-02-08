@@ -44,20 +44,19 @@ namespace ExDesign.Pages.Inputs
             fytext_unit.Content = StaticVariables.StressUnit;
             steelEtext_unit.Content = StaticVariables.StressUnit;
 
-
-            if(StaticVariables.viewModel.ConcreteIndex >= 0)
+            if(StaticVariables.viewModel.ConcreteIndex >= 0 && Concrete.ConcreteDataList.Count>0)
             {
                 fcktext.Text =WpfUtils.ChangeDecimalOptions( WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fck));
                 fcttext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].fct));
                 Etext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].E));
                 Gtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Concrete.ConcreteDataList[StaticVariables.viewModel.ConcreteIndex].G));
             }
-            if(StaticVariables.viewModel.RebarIndex >= 0)
+            if(StaticVariables.viewModel.RebarIndex >= 0 && Rebar.RebarDataList.Count>0)
             {
                 fyktext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Rebar.RebarDataList[StaticVariables.viewModel.RebarIndex].fyk));
                 rebarEtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Rebar.RebarDataList[StaticVariables.viewModel.RebarIndex].E));
             }
-            if (StaticVariables.viewModel.SteelIndex >= 0)
+            if (StaticVariables.viewModel.SteelIndex >= 0 && Steel.SteelDataList.Count>0)
             {
                 fytext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].fy));
                 steelEtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].E));

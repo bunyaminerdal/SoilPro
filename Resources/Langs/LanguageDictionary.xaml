@@ -120,5 +120,6 @@
     <system:String x:Key="UseTexture" >Use Texture</system:String>
     <system:String x:Key="UseColor" >Use Color</system:String>
     <system:String x:Key="Pick" >Pick</system:String>
+    <system:String x:Key="Select" >Select</system:String>
 
 </ResourceDictionary>

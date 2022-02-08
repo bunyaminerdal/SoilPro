@@ -50,7 +50,7 @@ namespace ExDesign.Windows
             fckTextbox_unit.Content = StaticVariables.StressUnit;
             fctTextbox_unit.Content = StaticVariables.StressUnit;
             ETextbox_unit.Content = StaticVariables.StressUnit;
-            GTextbox_unit.Content = StaticVariables.StressUnit;
+            GTextbox_unit.Content = StaticVariables.StressUnit;            
         }
 
         private void concreteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -108,9 +108,9 @@ namespace ExDesign.Windows
             Concrete.ConcreteDataList.Clear();
             foreach (var concrete in tempConcreteDataList)
             {
-
                 Concrete.ConcreteDataList.Add(concrete);
             }
+            
             Concrete.ConcreteSave();
         }
         private void ConcreteName_TextChanged(object sender, TextChangedEventArgs e)

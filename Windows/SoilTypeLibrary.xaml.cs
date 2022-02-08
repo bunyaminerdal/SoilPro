@@ -28,12 +28,17 @@ namespace ExDesign.Windows
         private ObservableCollection<SoilData> tempSoilDataList = new ObservableCollection<SoilData>();
         public char separator = ',';
         SoilMethodPage methodPage;
-        
+        public SoilData selectedSoilData = new SoilData();
+
+        public void SetTexture(SoilTextureData soilTextureData)
+        {
+            selectedSoilData.SoilTexture = soilTextureData;
+            SelectionChanged();
+        }
         public SoilTypeLibrary()
         {
             InitializeComponent();
         }
-        private SoilData selectedSoilData = new SoilData();
               
         public void SetMethodPage( SoilMethodPage soilMethodPage)
         {
@@ -105,10 +110,15 @@ namespace ExDesign.Windows
             OedometricModulus.IsEnabled = !(selectedSoilData).isDefault;
             CohesionFactor.IsEnabled = !(selectedSoilData).isDefault;
             YoungModulus.IsEnabled = !(selectedSoilData).isDefault;
+            soilstate_combobox.IsEnabled = !(selectedSoilData).isDefault;
+            soilstressstate_combobox.IsEnabled= !(selectedSoilData).isDefault;
+            useColor.IsEnabled = !(selectedSoilData).isDefault;
+            useTexture.IsEnabled = !(selectedSoilData).isDefault;
+            Pickbttn.IsEnabled = !(selectedSoilData).isDefault;
 
             soilstressstate_combobox.SelectedIndex = (selectedSoilData).SoilStressStateIndex;
             soilstate_combobox.SelectedIndex = (selectedSoilData).SoilStateKoIndex;
-            TextureDefination();
+            TextureDefinition();
             soilname.Text = (selectedSoilData).Name;
             naturalUnitWeight.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDensity((selectedSoilData).NaturalUnitWeight));
             saturatedUnitWeight.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDensity((selectedSoilData).SaturatedUnitWeight));
@@ -126,7 +136,7 @@ namespace ExDesign.Windows
 
         }
 
-        private void TextureDefination()
+        private void TextureDefinition()
         {
             if(UserSoilList.SelectedItem==null) return;
             if ((selectedSoilData).isSoilTexture)
@@ -209,14 +219,14 @@ namespace ExDesign.Windows
         {
             if(selectedSoilData.isDefault) return;
             if (useTexture.IsChecked == true) selectedSoilData.isSoilTexture = true;
-            TextureDefination();
+            TextureDefinition();
         }
 
         private void useColor_Checked(object sender, RoutedEventArgs e)
         {
             if (selectedSoilData.isDefault) return;
             if (useColor.IsChecked == true) selectedSoilData.isSoilTexture = false;
-            TextureDefination();
+            TextureDefinition();
         }
 
         private void Pickbttn_Click(object sender, RoutedEventArgs e)
@@ -224,7 +234,10 @@ namespace ExDesign.Windows
             if(selectedSoilData.isDefault) return;
             if(selectedSoilData.isSoilTexture)
             {
-                MessageBox.Show("not implemented yet!");
+                TextureWindow textureWindow = new TextureWindow();
+                textureWindow.SetLibrary(this);
+                textureWindow.ShowDialog();
+
             }
             else
             {
@@ -234,7 +247,7 @@ namespace ExDesign.Windows
                     selectedSoilData.SoilColor = Color.FromArgb(50, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
                 }
             }
-            TextureDefination();
+            TextureDefinition();
             
         }
         private void soilname_TextChanged(object sender, TextChangedEventArgs e)
