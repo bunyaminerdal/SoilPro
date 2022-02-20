@@ -121,13 +121,14 @@ namespace ExDesign.Pages.Inputs.Views
             double centerY = wall_h / 2 + bottomT_h / 2;
             wall_d = StaticVariables.wall_d;
             groupScene = new Model3DGroup();
-            
+            Uri soilUri = new Uri(@"Textures/Soil/soil2.png", UriKind.Relative);
+
             Point3D wallCenter = new Point3D(center3d.X - wall_t, center3d.Y + centerY, center3d.Z - wall_d / 2);
             switch (WpfUtils.GetWallType( StaticVariables.viewModel.WallTypeIndex))
             {
                 case WallType.ConcreteRectangleWall:
                     WpfCube wallCube = new WpfCube(wallCenter, wall_t, wall_h, wall_d);
-                    GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray);
+                    GeometryModel3D wallModel = WpfCube.CreateCubeModel(wallCube, Colors.DarkGray,false,null);
                     groupScene.Children.Add(wallModel);
                     break;
                 case WallType.ConcretePileWall:
@@ -136,7 +137,7 @@ namespace ExDesign.Pages.Inputs.Views
                     double pile_d = wall_t / 2;
                     double pile_start = (wall_d - (spaceCount * pile_s)) / 2;
                     for (int i = 0; i < spaceCount+1; i++)
-                    {                       
+                    {
                         
                         Point3D pileCenter = new Point3D(center3d.X -wall_t/2, center3d.Y + centerY, center3d.Z-wall_d/2+pile_start +i*pile_s);
                         WpfCylinder pile = new WpfCylinder(pileCenter, 30, pile_d, pile_d, pile_h);
@@ -150,7 +151,7 @@ namespace ExDesign.Pages.Inputs.Views
 
                         Point3D capbeamCenter = new Point3D(center3d.X - wall_t/2-capBeam_b/2, center3d.Y + centerY +capBeam_h, center3d.Z - wall_d / 2);
                         WpfCube capbeam = new WpfCube(capbeamCenter, capBeam_b, capBeam_h, wall_d);
-                        GeometryModel3D capbeamModel = WpfCube.CreateCubeModel(capbeam, Colors.DarkGray);
+                        GeometryModel3D capbeamModel = WpfCube.CreateCubeModel(capbeam, Colors.DarkGray,false,null);
                         groupScene.Children.Add(capbeamModel);
                     }
                     break;
@@ -170,7 +171,7 @@ namespace ExDesign.Pages.Inputs.Views
                         double thicknesChanger = wall_t * result;
                         Point3D sheetCoreCenter = new Point3D(center3d.X-wall_t+thicknesChanger, center3d.Y + centerY, center3d.Z + wall_d / 2 - sheetpile_start - i * sheetL);
                         WpfTrapezoid sheetCore = new WpfTrapezoid(sheetCoreCenter, sheetL-2*sheetL1 , sheetL-2*sheetL1 , sheetT, wall_h, 0, 0);
-                        GeometryModel3D sheetCoreModel = WpfTrapezoid.CreateTrapezoidModel(sheetCore, Colors.DarkGray);
+                        GeometryModel3D sheetCoreModel = WpfTrapezoid.CreateTrapezoidModel(sheetCore, Colors.DarkGray,true,soilUri);
                         AxisAngleRotation3D pileRotY = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90);
                         RotateTransform3D PileTransform3d = new RotateTransform3D(pileRotY, sheetCoreCenter); 
                         AxisAngleRotation3D pileRotX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90);
@@ -186,7 +187,7 @@ namespace ExDesign.Pages.Inputs.Views
                         double thicknesschangerleft = wall_t / 2 * result;
                         Point3D sheetleftCenter = new Point3D(center3d.X - wall_t + thicknesschangerleft, center3d.Y + centerY, center3d.Z + (wall_d / 2) - sheetpile_start + sheetT / 2 - result*(sheetL-sheetL1) - i * sheetL);
                         WpfTrapezoid sheetleft = new WpfTrapezoid(sheetleftCenter, wingLength, wingLength, sheetT, wall_h, 0, 0);
-                        GeometryModel3D sheetLeftModel = WpfTrapezoid.CreateTrapezoidModel(sheetleft,Colors.DarkGray);
+                        GeometryModel3D sheetLeftModel = WpfTrapezoid.CreateTrapezoidModel(sheetleft,Colors.DarkGray, true, soilUri);
                         AxisAngleRotation3D pileRotYLeft = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90);
                         RotateTransform3D PileTransform3dLeft = new RotateTransform3D(pileRotYLeft, sheetleftCenter);
                         AxisAngleRotation3D pileRotXLeft = new AxisAngleRotation3D(new Vector3D(0, 1, 0), angleLeft);
@@ -201,7 +202,7 @@ namespace ExDesign.Pages.Inputs.Views
                         double thicknesschangerRight = wall_t / 2 * result;
                         Point3D sheetRightCenter = new Point3D(center3d.X - wall_t + thicknesschangerRight, center3d.Y + centerY, center3d.Z + wall_d / 2 - sheetpile_start + sheetT / 2 - sheetL + 2 * sheetL1 + result * (sheetL - sheetL1) - i * sheetL);
                         WpfTrapezoid sheetRight = new WpfTrapezoid(sheetRightCenter, wingLength, wingLength, sheetT, wall_h, 0, 0);
-                        GeometryModel3D sheetRightModel = WpfTrapezoid.CreateTrapezoidModel(sheetRight, Colors.DarkGray);
+                        GeometryModel3D sheetRightModel = WpfTrapezoid.CreateTrapezoidModel(sheetRight, Colors.DarkGray, true, soilUri);
                         AxisAngleRotation3D pileRotYRight = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90);
                         RotateTransform3D PileTransform3dRight = new RotateTransform3D(pileRotYRight, sheetRightCenter);
                         AxisAngleRotation3D pileRotXRight = new AxisAngleRotation3D(new Vector3D(0, 1, 0), -angleRight);
@@ -217,14 +218,13 @@ namespace ExDesign.Pages.Inputs.Views
                 default:
                     break;
             }
-                        
                        
             double backCube_w = frontandbackCubeLength;
             double backCube_h = wall_h;
             double backCube_d = wall_d;
             Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + centerY, center3d.Z-backCube_d/2);
             WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
-            GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200));
+            GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200),true,soilUri);
 
             
             double cylinder_h = 7;
@@ -278,11 +278,11 @@ namespace ExDesign.Pages.Inputs.Views
             }
             
             WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
-            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200));
+            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200), true, soilUri);
 
 
             WpfTrapezoid frontT = new WpfTrapezoid(TrapezoidCenter, frontT_w_top, frontT_w_bottom, frontT_h, frontT_d, frontT_w_top_dis, frontT_w_bottom_dis);
-            GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color);
+            GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color,true,soilUri);
 
             double backT_w_top_dis = 0;
             double backT_w_bottom_dis = 0;
@@ -330,7 +330,7 @@ namespace ExDesign.Pages.Inputs.Views
             
             Point3D BackTCenter = new Point3D(backCubeCenter.X, backCubeCenter.Y + backT_h, backCubeCenter.Z);
             WpfTrapezoid backT = new WpfTrapezoid(BackTCenter, backT_w_top, backT_w_bottom, backT_h, backT_d, backT_w_top_dis, backT_w_bottom_dis);
-            GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color);
+            GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color,true,soilUri);
 
             double backW_w = 0;
             //double backW_h = backCube_h + bottomT_h - groundW_h1;
@@ -356,14 +356,14 @@ namespace ExDesign.Pages.Inputs.Views
             
             Point3D backWCenter = new Point3D(center3d.X  + 0.1, center3d.Y - groundW_h1 + centerY -0.01, center3d.Z - backW_d / 2);
             WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
-            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255));                        
+            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255), true, soilUri);                        
             Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + centerY - 0.01 - (backCube_h - frontCube_h), center3d.Z - frontW_d / 2);
             WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
-            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255));
+            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255), true, soilUri);
 
             Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
             WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+frontCube_w+backCube_w, bottomT_h, wall_d);
-            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200));
+            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), true, soilUri);
 
             AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
             RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);

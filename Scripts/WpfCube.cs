@@ -168,24 +168,28 @@ namespace ExDesign.Scripts
             textureCoordinatesCollection.Add(new System.Windows.Point(0, 0));
         }
 
-        public static GeometryModel3D CreateCubeModel(Point3D p0, double w, double h, double d, Color color)
+        
+        public static GeometryModel3D CreateCubeModel(WpfCube cube, Color color,bool useTexture,Uri uri)
         {
-            return CreateCubeModel(p0, w, h, d, color, false);
+            return CreateCubeModel(cube.origin, cube.width, cube.height, cube.depth, color, useTexture,uri);
         }
-        public static GeometryModel3D CreateCubeModel(WpfCube cube, Color color)
-        {
-            return CreateCubeModel(cube.origin, cube.width, cube.height, cube.depth, color, false);
-        }
-        public static GeometryModel3D CreateCubeModel(Point3D p0, double w, double h, double d, Color color, bool useTexture)
+        public static GeometryModel3D CreateCubeModel(Point3D p0, double w, double h, double d, Color color, bool useTexture,Uri uri)
         {
             MeshGeometry3D mesh = new MeshGeometry3D();
 
             addCubeToMesh(p0, w, h, d, mesh, useTexture);
-            //Image image = new Image();
-            //image.Source = new BitmapImage(new Uri(@"Textures/texturedeneme.png", UriKind.Relative));
-
-            //Material material = new DiffuseMaterial(new ImageBrush(image.Source));
-            Material material = new DiffuseMaterial(new SolidColorBrush(color));
+            
+            Material material;
+            Brush brush = new SolidColorBrush(color);
+            if (useTexture)
+            {
+                var imageBrush = new ImageBrush();
+                imageBrush.ImageSource = new BitmapImage(uri);
+                //imageBrush.Stretch = Stretch.None;
+                brush = imageBrush;
+            }
+            
+            material = new DiffuseMaterial(brush);
             GeometryModel3D model = new GeometryModel3D(mesh, material);
 
             return model;

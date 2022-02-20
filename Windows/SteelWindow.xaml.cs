@@ -40,7 +40,7 @@ namespace ExDesign.Windows
         {
             foreach (var steel in Steel.SteelDataList)
             {
-                tempSteelDataList.Add(steel);
+                tempSteelDataList.Add((SteelData)steel.Clone());
             }
             SteelList.ItemsSource = tempSteelDataList;
             SteelList.DisplayMemberPath = "Name";

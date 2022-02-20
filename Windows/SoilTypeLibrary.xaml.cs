@@ -56,7 +56,7 @@ namespace ExDesign.Windows
 
             foreach (var soil in StaticVariables.viewModel.soilDatas)
             {
-                tempSoilDataList.Add(soil);
+                tempSoilDataList.Add((SoilData)soil.Clone());
             }
             UserSoilList.ItemsSource = tempSoilDataList;
             UserSoilList.DisplayMemberPath = "Name";
@@ -413,7 +413,7 @@ namespace ExDesign.Windows
 
         private void addnew_button_Click(object sender, RoutedEventArgs e)
         {
-            tempSoilDataList.Add(new SoilData() { isDefault = false, Name = "new soil",  isSoilTexture = true, SoilColor = Colors.AliceBlue ,SoilTexture=SoilTexture.tempSoilTextureDataList[0]}); ;
+            tempSoilDataList.Add(new SoilData() {ID=Guid.NewGuid(), isDefault = false, Name = "new soil",  isSoilTexture = true, SoilColor = Colors.AliceBlue ,SoilTexture=SoilTexture.tempSoilTextureDataList[0]}); ;
             UserSoilList.SelectedIndex = tempSoilDataList.Count - 1;
             selectedSoilData = tempSoilDataList[tempSoilDataList.Count-1];
 
@@ -433,6 +433,7 @@ namespace ExDesign.Windows
             if (!selectedSoilData.isDefault) return;
             SoilData soil1 = new SoilData()
             {
+                ID = Guid.NewGuid(),
                 isDefault = false,
                 Name = selectedSoilData.Name,
                 NaturalUnitWeight = selectedSoilData.NaturalUnitWeight,
@@ -481,6 +482,19 @@ namespace ExDesign.Windows
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
             if (methodPage != null) methodPage.LayerGridInitialize();
+        }
+
+        private void UserSoilList_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(UserSoilList.SelectedItem != null) selectedSoilData = (SoilData)UserSoilList.SelectedItem;
+            SelectionChanged();
+        }
+
+        private void LibrarySoilList_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (LibrarySoilList.SelectedItem != null) selectedSoilData = (SoilData)LibrarySoilList.SelectedItem;
+
+            SelectionChanged();
         }
     }
 }

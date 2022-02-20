@@ -410,24 +410,17 @@ namespace ExDesign.Scripts
             }
         }
 
-        public static SoilData GetSoilData(int index)
+        public static SoilData GetSoilData(Guid guid)
         {
             foreach (var soil in StaticVariables.viewModel.soilDatas)
             {
-                if(index == StaticVariables.viewModel.soilDatas.IndexOf(soil))
+                if(guid == soil.ID)
                 {
                     return soil;
                 }
             }
             return null;
         }
-        public static int GetSoilDataIndex(SoilData soil)
-        {
-            foreach (var soil1 in StaticVariables.viewModel.soilDatas)
-            {
-                if (soil == soil1) return StaticVariables.viewModel.soilDatas.IndexOf(soil);
-            }
-            return 0;
-        }
+        
     }
 }

@@ -86,9 +86,9 @@ namespace ExDesign.Scripts
                 mesh.Normals.Add(normal);
                 mesh.Normals.Add(normal);
                 mesh.Normals.Add(normal);
-                //mesh.TextureCoordinates.Add(new System.Windows.Point(0, 0));
-                //mesh.TextureCoordinates.Add(new System.Windows.Point(0, 1));
-                //mesh.TextureCoordinates.Add(new System.Windows.Point(1, 0));
+                mesh.TextureCoordinates.Add(new System.Windows.Point(0, 0));
+                mesh.TextureCoordinates.Add(new System.Windows.Point(0, 1));
+                mesh.TextureCoordinates.Add(new System.Windows.Point(1, 0));
             }
         }
 
@@ -104,7 +104,7 @@ namespace ExDesign.Scripts
 
             addTriangleToMesh(P0, P1, P2, mesh);
 
-            Material material = new DiffuseMaterial(new SolidColorBrush(color));
+            Material material = new DiffuseMaterial(new SolidColorBrush(Colors.Red));
 
             GeometryModel3D model = new GeometryModel3D(mesh, material);
 

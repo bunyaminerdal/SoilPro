@@ -42,7 +42,7 @@ namespace ExDesign.Windows
         {
             foreach (var pile in Pile.PileDiameterDataList)
             {
-                tempPileDiameterDatas.Add(pile);
+                tempPileDiameterDatas.Add((PileData)pile.Clone());
             }
             PileList.ItemsSource = tempPileDiameterDatas;
             PileList.DisplayMemberPath = "Name";

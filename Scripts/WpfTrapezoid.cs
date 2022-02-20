@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 
 namespace ExDesign.Scripts
@@ -147,23 +149,31 @@ namespace ExDesign.Scripts
             textureCoordinatesCollection.Add(new System.Windows.Point(0, 0));
         }
 
-        public static GeometryModel3D CreateTrapezoidModel(Point3D p0, double w_top, double w_bottom, double h, double d, double w_top_dis, double w_bottom_dis, Color color)
+        public static GeometryModel3D CreateTrapezoidModel(Point3D p0, double w_top, double w_bottom, double h, double d, double w_top_dis, double w_bottom_dis, Color color,Uri uri,bool useTexture)
         {
-            return CreateTrapezoidModel(p0, w_top,w_bottom, h, d,w_top_dis,w_bottom_dis, color, false);
+            return CreateTrapezoidModel(p0, w_top,w_bottom, h, d,w_top_dis,w_bottom_dis, color, useTexture,uri);
         }
-        public static GeometryModel3D CreateTrapezoidModel(WpfTrapezoid trapezoid, Color color)
+        public static GeometryModel3D CreateTrapezoidModel(WpfTrapezoid trapezoid, Color color,bool useTexture,Uri uri)
         {
-            return CreateTrapezoidModel(trapezoid.origin, trapezoid.width_top,trapezoid.width_bottom, trapezoid.height, trapezoid.depth,trapezoid.width_top_distance,trapezoid.width_bottom_distance, color, false);
+            return CreateTrapezoidModel(trapezoid.origin, trapezoid.width_top,trapezoid.width_bottom, trapezoid.height, trapezoid.depth,trapezoid.width_top_distance,trapezoid.width_bottom_distance, color, useTexture,uri);
         }
-        public static GeometryModel3D CreateTrapezoidModel(Point3D p0, double w_top, double w_bottom, double h, double d, double w_top_dis , double w_bottom_dis , Color color, bool useTexture)
+        public static GeometryModel3D CreateTrapezoidModel(Point3D p0, double w_top, double w_bottom, double h, double d, double w_top_dis , double w_bottom_dis , Color color, bool useTexture,Uri uri)
         {
             MeshGeometry3D mesh = new MeshGeometry3D();
 
             addTrapezoidtoMesh(p0, w_top,w_bottom, h, d,w_top_dis,w_bottom_dis, mesh, useTexture);
-            //Image image = new Image();
-            //image.Source = new BitmapImage(new Uri(@"../../../Texture/texturedeneme.png", UriKind.Relative));
-            //Material material = new DiffuseMaterial(new ImageBrush(image.Source));
-            Material material = new DiffuseMaterial(new SolidColorBrush(color));
+            Material material;
+            Brush brush = new SolidColorBrush(color);
+            if (useTexture)
+            {
+                var imageBrush = new ImageBrush();
+                imageBrush.ImageSource = new BitmapImage(uri);
+                //imageBrush.Stretch = Stretch.None;
+                brush = imageBrush;
+            }
+            
+
+            material = new DiffuseMaterial(brush);
 
             GeometryModel3D model = new GeometryModel3D(mesh, material);
 

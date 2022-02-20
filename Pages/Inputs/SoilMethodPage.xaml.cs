@@ -115,10 +115,10 @@ namespace ExDesign.Pages.Inputs
                 ComboBox comboBox = new ComboBox();
                 comboBox.Width = 200;
                 comboBox.ItemsSource = StaticVariables.viewModel.soilDatas;
-                comboBox.DisplayMemberPath = "Name";
-                comboBox.SelectedItem =WpfUtils.GetSoilData( item.soilIndex);
+                comboBox.DisplayMemberPath = "Name";                
                 comboBox.Name ="combo_"+ layerIndex;
-                comboBox.SelectionChanged += ComboBox_SelectionChanged;
+               if(item.Soil!=null) comboBox.SelectedItem = WpfUtils.GetSoilData(item.Soil.ID);
+                comboBox.SelectionChanged += ComboBox_SelectionChanged;                
                 comboBox.VerticalContentAlignment = VerticalAlignment.Center;
                 TextBox textbox_gama = new TextBox();
                 textbox_gama.Width = 80;
@@ -214,7 +214,8 @@ namespace ExDesign.Pages.Inputs
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string comboname = ((ComboBox)sender).Name.Split('_')[1];
-            StaticVariables.viewModel.soilLayerDatas[int.Parse(comboname)].soilIndex =WpfUtils.GetSoilDataIndex( ((SoilData)((ComboBox)sender).SelectedItem));
+            StaticVariables.viewModel.soilLayerDatas[int.Parse(comboname)].Soil = ((SoilData)((ComboBox)sender).SelectedItem);
+            
             LayerGridInitialize();
         }
 
@@ -253,7 +254,7 @@ namespace ExDesign.Pages.Inputs
 
         private void addsoillayer_bttn_Click(object sender, RoutedEventArgs e)
         {
-            SoilLayerData soilLayerData1 = new SoilLayerData { LayerHeight=3,Name=FindResource("SoilLayer").ToString(),soilIndex=0 };
+            SoilLayerData soilLayerData1 = new SoilLayerData { LayerHeight=3,Name=FindResource("SoilLayer").ToString() };
             StaticVariables.viewModel.soilLayerDatas.Add(soilLayerData1);
             LayerGridInitialize();
         }

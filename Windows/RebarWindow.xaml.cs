@@ -40,7 +40,7 @@ namespace ExDesign.Windows
         {
             foreach (var rebar in Rebar.RebarDataList)
             {
-                tempRebarDataList.Add(rebar);
+                tempRebarDataList.Add((RebarData)rebar.Clone());
             }
             RebarList.ItemsSource = tempRebarDataList;
             RebarList.DisplayMemberPath = "Name";

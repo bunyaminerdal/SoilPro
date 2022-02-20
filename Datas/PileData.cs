@@ -11,13 +11,17 @@ using System.Windows.Controls;
 
 namespace ExDesign.Datas
 {
-    public class PileData
+    public class PileData:ICloneable
     {
         
         public string Name { get; set; }
         public double t { get; set; }
         public bool isDefault { get; set; }
-
+        public object Clone()
+        {
+            var clone = (PileData)this.MemberwiseClone();
+            return clone;
+        }
     }
 
     public static class Pile

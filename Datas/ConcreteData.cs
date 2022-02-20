@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace ExDesign.Datas
 {
-    public class ConcreteData
+    public class ConcreteData : ICloneable
     {
         public string Name { get; set; }
         public double fck { get; set; }
@@ -18,6 +18,13 @@ namespace ExDesign.Datas
         public double E { get; set; }
         public double G { get; set; }
         public bool isDefault { get; set; }
+        
+
+        public object Clone()
+        {
+            var clone = (ConcreteData)this.MemberwiseClone();
+            return clone;
+        }
     }
     
     public static class Concrete

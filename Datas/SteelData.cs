@@ -16,6 +16,11 @@ namespace ExDesign.Datas
         public double fy { get; set; }
         public double E { get; set; }
         public bool isDefault { get; set; }
+        public object Clone()
+        {
+            var clone = (SteelData)this.MemberwiseClone();
+            return clone;
+        }
     }
     
     public static class Steel

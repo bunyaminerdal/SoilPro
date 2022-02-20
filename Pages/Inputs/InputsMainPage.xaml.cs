@@ -109,7 +109,7 @@ namespace ExDesign.Pages.Inputs
             Steel.SteelDataReader();
             Pile.pileDiameterReader();
             Sheet.SheetDataReader();  
-            SoilTexture.SetSoilTextures();
+            SoilTexture.SoilTextureLibraryDataReader();
             SoilLibrary.SoilLibraryDataReader();
             StaticVariables.view3DPage.Refresh3Dview();
         }

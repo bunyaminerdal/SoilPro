@@ -11,7 +11,7 @@ namespace ExDesign.Datas
     {
         public double LayerHeight { get; set; }
         public string Name { get; set; }        
-        public int soilIndex { get; set; }
+        public SoilData Soil { get; set; }
         
     }
 }

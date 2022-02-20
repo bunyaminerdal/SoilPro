@@ -16,6 +16,11 @@ namespace ExDesign.Datas
         public double fyk { get; set; }
         public double E { get; set; }
         public bool isDefault { get; set; }
+        public object Clone()
+        {
+            var clone = (RebarData)this.MemberwiseClone();
+            return clone;
+        }
     }
     
     public static class Rebar   

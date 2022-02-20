@@ -40,7 +40,7 @@ namespace ExDesign.Windows
         {
             foreach (var sheet in Sheet.SheetDataList)
             {
-                tempSheetDataList.Add(sheet);
+                tempSheetDataList.Add((SheetData)sheet.Clone());
             }
             sheetList.ItemsSource = tempSheetDataList;
             sheetList.DisplayMemberPath = "Name";

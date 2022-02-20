@@ -23,6 +23,11 @@ namespace ExDesign.Datas
         public double Wply { get; set; }
         public bool isDefault { get; set; }
         public int type { get; set; }
+        public object Clone()
+        {
+            var clone = (SheetData)this.MemberwiseClone();
+            return clone;
+        }
 
     }
 

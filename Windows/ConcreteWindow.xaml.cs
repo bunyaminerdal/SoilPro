@@ -42,8 +42,9 @@ namespace ExDesign.Windows
         {
             foreach (var concrete in Concrete.ConcreteDataList)
             {
-                tempConcreteDataList.Add(concrete);
+                tempConcreteDataList.Add((ConcreteData)concrete.Clone());
             }
+
             concreteList.ItemsSource = tempConcreteDataList;
             concreteList.DisplayMemberPath = "Name";
             concreteList.SelectionMode = SelectionMode.Single;

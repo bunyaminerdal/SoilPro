@@ -32,12 +32,13 @@ namespace ExDesign.Windows
         public void SetLibrary( SoilTypeLibrary _soilLibrary)
         {
             soilLibrary = _soilLibrary;
+
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             foreach (var texture in SoilTexture.tempSoilTextureDataList)
             {
-                tempTextureDatas.Add(texture);
+                tempTextureDatas.Add((SoilTextureData)texture.Clone());
             }
             InitializeTextureList();
         }
@@ -73,6 +74,7 @@ namespace ExDesign.Windows
                 stackPanel.Children.Add(label);
                 button.Content = stackPanel;
                 button.Name = "button_"+tempTextureDatas.IndexOf(texture);
+                if(soilLibrary.selectedSoilData.SoilTexture.ID == texture.ID) button.IsChecked = true;
                 button.Click += SetCurrentTexture;
                 
                 button.Margin = new Thickness(5);
