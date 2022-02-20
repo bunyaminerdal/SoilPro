@@ -58,9 +58,10 @@ namespace ExDesign.Scripts
             }
             else if (w != 0.0 && d != 0.0) // top / bottom
             {
-                p1 = new Point3D(p0.X, p0.Y, p0.Z + d);
-                p2 = new Point3D(p0.X + w, p0.Y, p0.Z + d);
-                p3 = new Point3D(p0.X + w, p0.Y, p0.Z);
+                p1 = P0;
+                p2 = new Point3D(p0.X, p0.Y, p0.Z + d);
+                p3 = new Point3D(p0.X + w, p0.Y, p0.Z + d);
+                p0 = new Point3D(p0.X + w, p0.Y, p0.Z);
             }
             else if (h != 0.0 && d != 0.0) // side / side
             {

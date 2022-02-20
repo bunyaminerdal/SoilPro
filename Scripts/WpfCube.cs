@@ -121,25 +121,26 @@ namespace ExDesign.Scripts
 
             if (useTexture)
             {
-                Point3D extents = front.getDimensions();
+                Point3D extents;
+                //= front.getDimensions();
 
-                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                                         extents.Y / maxDimension);
-                extents = back.getDimensions();
-                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                                         extents.Y / maxDimension);
+                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                //                         extents.Y / maxDimension);
+                //extents = back.getDimensions();
+                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                //                         extents.Y / maxDimension);
                 extents = right.getDimensions();
                 addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
                                          extents.Y / maxDimension);
                 extents = left.getDimensions();
                 addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
                                          extents.Y / maxDimension);
-                extents = top.getDimensions();
-                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                                         extents.Y / maxDimension);
-                extents = bottom.getDimensions();
-                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                                         extents.Y / maxDimension);
+                //extents = top.getDimensions();
+                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                //                         extents.Y / maxDimension);
+                //extents = bottom.getDimensions();
+                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                //                         extents.Y / maxDimension);
             }
 
             front.addToMesh(mesh);
@@ -185,12 +186,15 @@ namespace ExDesign.Scripts
             {
                 var imageBrush = new ImageBrush();
                 imageBrush.ImageSource = new BitmapImage(uri);
+                imageBrush.TileMode = TileMode.Tile;
+                imageBrush.Viewport = new System.Windows.Rect(0, 0, imageBrush.ImageSource.Width/6/w, imageBrush.ImageSource.Width /6/w);
+                imageBrush.ViewportUnits = BrushMappingMode.Absolute;
                 //imageBrush.Stretch = Stretch.None;
                 brush = imageBrush;
             }
             
             material = new DiffuseMaterial(brush);
-            GeometryModel3D model = new GeometryModel3D(mesh, material);
+            GeometryModel3D model = new GeometryModel3D(mesh,material);
 
             return model;
         }

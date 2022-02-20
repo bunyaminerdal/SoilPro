@@ -10,7 +10,7 @@ using System.Windows.Media.Media3D;
 
 namespace ExDesign.Scripts
 {
-    internal class WpfTrapezoid
+    internal class Wpf3dSection
     {
         private Point3D origin;
         private double width_top;
@@ -19,7 +19,7 @@ namespace ExDesign.Scripts
         private double depth;
         private double width_top_distance;
         private double width_bottom_distance;
-        public WpfTrapezoid(Point3D P0, double w_top, double w_bottom, double h, double d ,double w_top_dis,double w_bottom_dis)
+        public Wpf3dSection(Point3D P0,double soilHeight, double w_top, double w_bottom, double h, double d ,double w_top_dis,double w_bottom_dis)
         {
             width_top = w_top;
             width_bottom = w_bottom;
@@ -102,26 +102,25 @@ namespace ExDesign.Scripts
 
             if (useTexture)
             {
-                Point3D extents;
-                //= front.getDimensions();
+                Point3D extents = front.getDimensions();
 
-                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                //                         extents.Y / maxDimension);
-                //extents = back.getDimensions();
-                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                //                         extents.Y / maxDimension);
+                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                                         extents.Y / maxDimension);
+                extents = back.getDimensions();
+                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                                         extents.Y / maxDimension);
                 extents = right.getDimensions();
                 addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
                                          extents.Y / maxDimension);
                 extents = left.getDimensions();
                 addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
                                          extents.Y / maxDimension);
-                //extents = top.getDimensions();
-                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                //                         extents.Y / maxDimension);
-                //extents = bottom.getDimensions();
-                //addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
-                //                         extents.Y / maxDimension);
+                extents = top.getDimensions();
+                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                                         extents.Y / maxDimension);
+                extents = bottom.getDimensions();
+                addTextureCoordinates(textureCoordinatesCollection, extents.X / maxDimension,
+                                         extents.Y / maxDimension);
             }
 
             front.addToMesh(mesh);
@@ -154,9 +153,9 @@ namespace ExDesign.Scripts
         {
             return CreateTrapezoidModel(p0, w_top,w_bottom, h, d,w_top_dis,w_bottom_dis, color, useTexture,uri);
         }
-        public static GeometryModel3D CreateTrapezoidModel(WpfTrapezoid trapezoid, Color color,bool useTexture,Uri uri)
+        public static GeometryModel3D CreateTrapezoidModel(Wpf3dSection section, Color color,bool useTexture,Uri uri)
         {
-            return CreateTrapezoidModel(trapezoid.origin, trapezoid.width_top,trapezoid.width_bottom, trapezoid.height, trapezoid.depth,trapezoid.width_top_distance,trapezoid.width_bottom_distance, color, useTexture,uri);
+            return CreateTrapezoidModel(section.origin, section.width_top,section.width_bottom, section.height, section.depth,section.width_top_distance,section.width_bottom_distance, color, useTexture,uri);
         }
         public static GeometryModel3D CreateTrapezoidModel(Point3D p0, double w_top, double w_bottom, double h, double d, double w_top_dis , double w_bottom_dis , Color color, bool useTexture,Uri uri)
         {
@@ -169,10 +168,6 @@ namespace ExDesign.Scripts
             {
                 var imageBrush = new ImageBrush();
                 imageBrush.ImageSource = new BitmapImage(uri);
-                imageBrush.TileMode = TileMode.Tile;
-                imageBrush.Viewport = new System.Windows.Rect(0, 0, imageBrush.ImageSource.Width / 6 / w_bottom, imageBrush.ImageSource.Width / 6 / w_bottom);
-                imageBrush.ViewportUnits = BrushMappingMode.Absolute;
-
                 //imageBrush.Stretch = Stretch.None;
                 brush = imageBrush;
             }

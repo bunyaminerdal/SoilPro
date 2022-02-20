@@ -78,7 +78,7 @@ namespace ExDesign.Pages.Inputs.Views
         {
             SetViewModel();
             DrawingGroup mainDrawingGroup = new DrawingGroup();            
-            Uri soilUri = new Uri(@"Textures/Soil/soil2.png", UriKind.Relative);
+            Uri soilUri = new Uri(@"Textures/Soil/Kil.png", UriKind.Relative);
             GeometryDrawing wallGeometryDrawing = Wpf2Dutils.WallGeometryDrawing(center,wall_h,wall_t,Colors.DarkGray);
             Point bottomSoilCenter = new Point(center.X-frontandbackCubeLength,center.Y+wall_h);
             GeometryDrawing bottomSoilGeometry = Wpf2Dutils.SoilGeometryDrawing(bottomSoilCenter, bottomT_h, wall_t + frontandbackCubeLength * 2, Colors.Gray, soilUri, true);
