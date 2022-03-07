@@ -117,13 +117,31 @@ namespace ExDesign.Pages.Inputs.Views
         }
         private void StartViewport3d()
         {
+            //başta anchorage ve duvar olmalı döngünün içinde yapınca işler karıştı
             SetViewModel();
             double centerY = wall_h / 2 + bottomT_h / 2;
             wall_d = StaticVariables.wall_d;
             groupScene = new Model3DGroup();
             Uri soilUri = new Uri(@"Textures/Soil/Kil.png", UriKind.Relative); 
             Uri soilUri1 = new Uri(@"Textures/Soil/killikum.png", UriKind.Relative);
+            //anchorage
+            double cylinder_h = 7;
+            double cylinder_d = 0.15;
+            double cylinder_loc = 1;
+            Point3D cylinderCenter = new Point3D(center3d.X - wall_t - 0.2, center3d.Y + centerY - cylinder_loc, center3d.Z);
+            WpfCylinder anchor = new WpfCylinder(cylinderCenter, 30, cylinder_d, cylinder_d, cylinder_h);
+            GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue, true, true);
+            AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
+            RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);
+            AxisAngleRotation3D rotationY = new AxisAngleRotation3D(new Vector3D(0, 0, 1), -30);
+            RotateTransform3D rotateTransformY = new RotateTransform3D(rotationY, cylinderCenter);
+            Transform3DGroup myTransform3DGroup = new Transform3DGroup();
+            myTransform3DGroup.Children.Add(rotateTransformX);
+            myTransform3DGroup.Children.Add(rotateTransformY);
+            cylinderModel.Transform = myTransform3DGroup;
 
+
+            groupScene.Children.Add(cylinderModel);
             Point3D wallCenter = new Point3D(center3d.X - wall_t, center3d.Y + centerY, center3d.Z - wall_d / 2);
             switch (WpfUtils.GetWallType( StaticVariables.viewModel.WallTypeIndex))
             {
@@ -219,26 +237,40 @@ namespace ExDesign.Pages.Inputs.Views
                 default:
                     break;
             }
-                       
-            double backCube_w = frontandbackCubeLength;
-            double backCube_h = wall_h;
-            double backCube_d = wall_d;
-            Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + centerY, center3d.Z-backCube_d/2);
-            WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
-            GeometryModel3D backCubeModel=WpfCube.CreateCubeModel(backCube, Color.FromArgb(100,200, 200, 200),true,soilUri);
+            double soiltotalHeight = 0;
+            foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+            {
+                soiltotalHeight += soilLayer.LayerHeight;
+                if (soiltotalHeight<wall_h)
+                {
+                    double soilbackCube_w = frontandbackCubeLength;
+                    double soilbackCube_h = soilLayer.LayerHeight;
+                    double soilbackCube_d = wall_d;
+                    Point3D soilbackCubeCenter = new Point3D(center3d.X, center3d.Y + centerY-soiltotalHeight+soilLayer.LayerHeight, center3d.Z - soilbackCube_d / 2);
+                    WpfCube soilbackCube = new WpfCube(soilbackCubeCenter, soilbackCube_w, soilbackCube_h, soilbackCube_d);
+                    GeometryModel3D soilbackCubeModel = WpfCube.CreateCubeModel(soilbackCube, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                    groupScene.Children.Add(soilbackCubeModel);
 
-            
-            double cylinder_h = 7;
-            double cylinder_d = 0.15;
-            double cylinder_loc = 1;
-            Point3D cylinderCenter = new Point3D(center3d.X-wall_t-0.2,center3d.Y + centerY - cylinder_loc,center3d.Z);
-            WpfCylinder anchor = new WpfCylinder(cylinderCenter,30,cylinder_d,cylinder_d,cylinder_h);
-            GeometryModel3D cylinderModel = anchor.CreateModel(Colors.Blue,true,true);
+                }
+            }
+            if (soiltotalHeight< wall_h)
+            {
+                double backCube_w = frontandbackCubeLength;
+                double backCube_h = wall_h-soiltotalHeight;
+                double backCube_d = wall_d;
+                Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + centerY-soiltotalHeight, center3d.Z - backCube_d / 2);
+                WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
+                GeometryModel3D backCubeModel = WpfCube.CreateCubeModel(backCube, Color.FromArgb(100, 200, 200, 200), true, soilUri);
+                groupScene.Children.Add(backCubeModel);
+
+            }
+
+
 
             double frontCube_w = frontandbackCubeLength;
             double frontCube_h = Math.Clamp(wall_h - excavationHeight, 0, double.MaxValue);
             double frontCube_d = wall_d;
-            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h - frontCube_h), center3d.Z - frontCube_d / 2);
+            Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (wall_h - frontCube_h), center3d.Z - frontCube_d / 2);
 
             double frontT_w_top_dis =0;
             double frontT_w_bottom_dis =0;
@@ -264,7 +296,7 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
                 case ExcavationType.type2:
                     frontCube_h = Math.Clamp(wall_h - excavationHeight-frontT_Z, 0, double.MaxValue);
-                    frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (backCube_h - frontCube_h), center3d.Z - frontCube_d / 2);
+                    frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (wall_h - frontCube_h), center3d.Z - frontCube_d / 2);
                     frontT_w_top_dis = 0;
                      frontT_w_bottom_dis = 0;
                      frontT_h = frontT_Z;
@@ -299,11 +331,11 @@ namespace ExDesign.Pages.Inputs.Views
                 case GroundSurfaceType.flat:
                     break;
                 case GroundSurfaceType.type1:
-                    backT_w_top_dis = backCube_w;
+                    backT_w_top_dis = frontandbackCubeLength;
                     backT_w_bottom_dis = backT_A1;
-                    backT_h = Math.Sin(backT_Beta * Math.PI / 180) * (backCube_w - backT_A1);
+                    backT_h = Math.Sin(backT_Beta * Math.PI / 180) * (frontandbackCubeLength - backT_A1);
                     backT_d = wall_d;
-                    backT_w_bottom = backCube_w - backT_A1;
+                    backT_w_bottom = frontandbackCubeLength - backT_A1;
                     backT_w_top = 0;                    
                     backT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
@@ -312,8 +344,8 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_w_bottom_dis = 0;
                     backT_h = backT_B;
                     backT_d = wall_d;
-                    backT_w_bottom = backCube_w ;
-                    backT_w_top = backCube_w -backT_A1;
+                    backT_w_bottom = frontandbackCubeLength;
+                    backT_w_top = frontandbackCubeLength - backT_A1;
                     backT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
                 case GroundSurfaceType.type3:
@@ -321,15 +353,15 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_w_bottom_dis = backT_A1;
                     backT_h = backT_B;
                     backT_d = wall_d;
-                    backT_w_bottom = backCube_w- backT_A1;
-                    backT_w_top = backCube_w - backT_A1 -backT_A2;
+                    backT_w_bottom = frontandbackCubeLength - backT_A1;
+                    backT_w_top = frontandbackCubeLength - backT_A1 -backT_A2;
                     backT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
                 default:                     
                     break;
             }
-            
-            Point3D BackTCenter = new Point3D(backCubeCenter.X, backCubeCenter.Y + backT_h, backCubeCenter.Z);
+
+            Point3D BackTCenter = new Point3D(center3d.X, center3d.Y + centerY + backT_h, center3d.Z - wall_d / 2);
             WpfTrapezoid backT = new WpfTrapezoid(BackTCenter, backT_w_top, backT_w_bottom, backT_h, backT_d, backT_w_top_dis, backT_w_bottom_dis);
             GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color,true,soilUri);
 
@@ -357,32 +389,23 @@ namespace ExDesign.Pages.Inputs.Views
             
             Point3D backWCenter = new Point3D(center3d.X  + 0.1, center3d.Y - groundW_h1 + centerY -0.01, center3d.Z - backW_d / 2);
             WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
-            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255), true, soilUri);                        
-            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + centerY - 0.01 - (backCube_h - frontCube_h), center3d.Z - frontW_d / 2);
+            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255), true, soilUri1);                        
+            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + centerY - 0.01 - (wall_h - frontCube_h), center3d.Z - frontW_d / 2);
             WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
             GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255), true, soilUri);
 
             Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
-            WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+frontCube_w+backCube_w, bottomT_h, wall_d);
+            WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(2*frontandbackCubeLength), bottomT_h, wall_d);
             GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), true, soilUri);
 
-            AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
-            RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);
-            AxisAngleRotation3D rotationY = new AxisAngleRotation3D(new Vector3D(0, 0, 1), -30);
-            RotateTransform3D rotateTransformY = new RotateTransform3D(rotationY, cylinderCenter);
-            Transform3DGroup myTransform3DGroup = new Transform3DGroup();
-            myTransform3DGroup.Children.Add(rotateTransformX); 
-            myTransform3DGroup.Children.Add(rotateTransformY); 
-            cylinderModel.Transform = myTransform3DGroup;
 
             
-            groupScene.Children.Add(cylinderModel);
             groupScene.Children.Add(frontWmodel);
             groupScene.Children.Add(frontTmodel);
             groupScene.Children.Add(frontCubeModel);
             groupScene.Children.Add(backWmodel);
             groupScene.Children.Add(backTmodel);
-            groupScene.Children.Add(backCubeModel);
+            //groupScene.Children.Add(backCubeModel);
             groupScene.Children.Add(bottomTmodel);
                             
 
