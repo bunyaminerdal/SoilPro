@@ -9,5 +9,7 @@ namespace ExDesign.Scripts
     public static class StaticEvents
     {
         public static Action UnitChangeEvent;
+        public static Action<Stage> StageChangeEvent;
+        public static Action<Stage> SetStageEvent;
     }
 }

@@ -75,7 +75,7 @@ namespace ExDesign.Windows
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList;
             LibrarySoilList.DisplayMemberPath = "Name";
             LibrarySoilList.SelectionMode = SelectionMode.Single;
-            if(tempSoilDataList.Count<=0) tempSoilDataList.Add(new SoilData() { isDefault = false, Name = "new soil", isSoilTexture = true, SoilColor = Colors.AliceBlue, SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
+            if(tempSoilDataList.Count<=0) tempSoilDataList.Add(new SoilData() { isDefault = false, Name = "new soil", isSoilTexture = true, SoilColor = Color.FromArgb(100, 200, 200, 200), SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
             UserSoilList.SelectedIndex = 0;
         }
 

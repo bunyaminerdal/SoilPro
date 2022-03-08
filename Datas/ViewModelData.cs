@@ -56,12 +56,13 @@ namespace ExDesign.Datas
         public ObservableCollection<SoilData> soilDatas { get; set; }
         public ObservableCollection<SoilTextureData> soilTextures { get; set; }
 
+        public Stage stage { get; set; }
 
         public void ChangeWallHeight(double h)
         {
             wall_h = h;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeWallThickness(double d)
         {
@@ -69,86 +70,86 @@ namespace ExDesign.Datas
             capBeam_b = (capBeam_b - wall_t) + d;
             wall_t = d;
 
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeexcavationHeight(double exHeight)
         {
             excavationHeight = exHeight;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeexcavationZ(double exZ)
         {
             frontT_Z = exZ;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeexcavationX1(double exX1)
         {
             frontT_X1 = exX1;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeexcavationX2(double exX2)
         {
             frontT_X2 = exX2;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeSurfaceBeta(double surfaceBeta)
         {
             backT_Beta = surfaceBeta;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeSurfaceB(double surfaceB)
         {
             backT_B = surfaceB;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeSurfaceA1(double surfaceA1)
         {
             backT_A1 = surfaceA1;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeSurfaceA2(double surfaceA2)
         {
             backT_A2 = surfaceA2;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeGroundWaterH1(double gw_h1)
         {
             groundW_h1 = gw_h1;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeGroundWaterH2(double gw_h2)
         {
             groundW_h2 = gw_h2;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangePileSpace(double p_s)
         {
             pile_s = p_s;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeCapBeamH(double cb_h)
         {
             capBeam_h = cb_h;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeCapBeamB(double cb_b)
         {
             capBeam_b = cb_b;
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         public void ChangeUnitIndex(int unitIndex)
         {
@@ -316,8 +317,10 @@ namespace ExDesign.Datas
                     ProjectName = "Untitled",
                     SaveDate = "0",
                     soilDatas = new ObservableCollection<SoilData>(),
-                    soilLayerDatas = new ObservableCollection<SoilLayerData> (),
-                    soilTextures = new ObservableCollection<SoilTextureData> (),
+                    soilLayerDatas = new ObservableCollection<SoilLayerData>(),
+                    soilTextures = new ObservableCollection<SoilTextureData>(),
+
+                    stage = Stage.Materials,
                     
                 };
                 

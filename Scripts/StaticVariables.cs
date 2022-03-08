@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using ExDesign.Datas;
 using ExDesign.Pages.Inputs.Views;
 
@@ -35,6 +37,11 @@ namespace ExDesign.Scripts
                                                                                                         { Units.kN_mm, 1 },{ Units.kN_cm, 1 },{ Units.kN_m, 1 } };
         public static double wall_d = 11;
         public static int maxPileCount = 20;
+        public static double penThickness = 0.05;
+        public static double dimensionExtension = 0.3;
+        public static double dimensionDiff = 0.3;
+        public static Typeface typeface = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#Quicksand Light"), FontStyles.Normal, FontWeights.Thin, FontStretches.Normal);
+
     }
     public enum WallType
     {
@@ -87,5 +94,13 @@ namespace ExDesign.Scripts
         Chadeisson_Model,
         Vesic_Model
 
+    }
+
+    public enum Stage
+    {
+        Materials,
+        WallProperties,
+        ExDesign,
+        SoilMethod
     }
 }

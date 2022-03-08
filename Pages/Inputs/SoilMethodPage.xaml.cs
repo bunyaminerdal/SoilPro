@@ -76,9 +76,9 @@ namespace ExDesign.Pages.Inputs
         {
             if(StaticVariables.viewModel.soilLayerDatas==null) return;
             soilLayerGroupbox.Children.Clear();
-            
             foreach (var item in StaticVariables.viewModel.soilLayerDatas)
             {
+                StaticVariables.viewModel.soilLayerDatas[StaticVariables.viewModel.soilLayerDatas.IndexOf(item)].Soil = item.Soil!=null? WpfUtils.GetSoilData(item.Soil.ID):null;
                 string layerIndex = StaticVariables.viewModel.soilLayerDatas.IndexOf(item).ToString();
                 DockPanel dockPanel = new DockPanel();
                 dockPanel.Margin = new Thickness(2);
@@ -112,13 +112,13 @@ namespace ExDesign.Pages.Inputs
                 textbox_layername.Name ="textboxlayername_"+layerIndex;
                 textbox_layername.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_layername.TextChanged += Textbox_layername_TextChanged;
-                ComboBox comboBox = new ComboBox();
+                ComboBox comboBox = new ComboBox();                
                 comboBox.Width = 200;
                 comboBox.ItemsSource = StaticVariables.viewModel.soilDatas;
                 comboBox.DisplayMemberPath = "Name";                
                 comboBox.Name ="combo_"+ layerIndex;
                if(item.Soil!=null) comboBox.SelectedItem = WpfUtils.GetSoilData(item.Soil.ID);
-                comboBox.SelectionChanged += ComboBox_SelectionChanged;                
+                comboBox.SelectionChanged += ComboBox_SelectionChanged;
                 comboBox.VerticalContentAlignment = VerticalAlignment.Center;
                 TextBox textbox_gama = new TextBox();
                 textbox_gama.Width = 80;
@@ -162,7 +162,10 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_Cu);
                 dockPanel.Children.Add(textbox_Poisson);
                 soilLayerGroupbox.Children.Add(dockPanel);
-                
+
+                //refresh windows
+                StaticVariables.view3DPage.Refreshview();
+                StaticVariables.SideviewPage.Refreshview();
             }
         }
 
@@ -201,6 +204,7 @@ namespace ExDesign.Pages.Inputs
             if (double.TryParse(textBox.Text, out double result))
             {
                 StaticVariables.viewModel.soilLayerDatas[int.Parse(textBox.Name.Split('_')[1])].LayerHeight = WpfUtils.GetValueDimension(result); 
+                LayerGridInitialize();
             }
         }
 

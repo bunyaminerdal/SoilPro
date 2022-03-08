@@ -28,28 +28,73 @@ namespace ExDesign.Pages.Inputs
         SoilMethodPage soilMethodPage = new SoilMethodPage();
         public InputsMainPage()
         {
-            InitializeComponent();            
-            materialsPage.SetViews();
-            MaterialsBttn.IsChecked = true;
+            InitializeComponent();
+            StaticEvents.StageChangeEvent += StageChange;
+            StaticEvents.SetStageEvent += SetStage;
         }
         
-
+        private void StageChange(Stage stage)
+        {
+            
+            StaticVariables.viewModel.stage = stage;
+            switch (StaticVariables.viewModel.stage)
+            {
+                case Stage.Materials:
+                    Main_pro.Content = materialsPage;
+                    break;
+                case Stage.WallProperties:
+                    Main_pro.Content = wallProperties;
+                    break;
+                case Stage.ExDesign:
+                    Main_pro.Content= exDesignPage;
+                    break;
+                case Stage.SoilMethod:
+                    Main_pro.Content = soilMethodPage;
+                    break;
+                default:
+                    Main_pro.Content = materialsPage;
+                    break;
+            }
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
+        }
+        private void SetStage(Stage stage)
+        {
+            StaticEvents.StageChangeEvent?.Invoke(stage);
+            switch (StaticVariables.viewModel.stage)
+            {
+                case Stage.Materials:
+                    MaterialsBttn.IsChecked = true;
+                    break;
+                case Stage.WallProperties:
+                    WallPropertiesBttn.IsChecked = true;
+                    break;
+                case Stage.ExDesign:
+                    ExDesignBttn.IsChecked = true;
+                    break;
+                case Stage.SoilMethod:
+                    SolidMethodBttn.IsChecked= true;
+                    break;
+                default:
+                    MaterialsBttn.IsChecked = true;
+                    break;
+            }
+        }
         private void MaterialsBttn_Checked(object sender, RoutedEventArgs e)
         {
-            Main_pro.Content = materialsPage;
+            StaticEvents.StageChangeEvent?.Invoke(Stage.Materials);
         }
         private void WallPropertiesBttn_Checked(object sender, RoutedEventArgs e)
         {
-            Main_pro.Content = wallProperties;
+            StaticEvents.StageChangeEvent?.Invoke(Stage.WallProperties);
         }
         private void ExDesignBttn_Checked(object sender, RoutedEventArgs e)
         {
-            Main_pro.Content = exDesignPage;
-
+            StaticEvents.StageChangeEvent?.Invoke(Stage.ExDesign);
         }
         private void SolidMethodBttn_Checked(object sender, RoutedEventArgs e)
         {
-            Main_pro.Content= soilMethodPage;
+            StaticEvents.StageChangeEvent?.Invoke(Stage.SoilMethod);
         }
         private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -102,7 +147,6 @@ namespace ExDesign.Pages.Inputs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Main_pro.Content = materialsPage;
             UnitCombobox.SelectedIndex = StaticVariables.viewModel.UnitIndex;
             Concrete.ConcreteDataReader();
             Rebar.RebarDataReader();
@@ -111,7 +155,8 @@ namespace ExDesign.Pages.Inputs
             Sheet.SheetDataReader();  
             SoilTexture.SoilTextureLibraryDataReader();
             SoilLibrary.SoilLibraryDataReader();
-            StaticVariables.view3DPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticEvents.SetStageEvent?.Invoke(StaticVariables.viewModel.stage);
         }
 
         

@@ -132,8 +132,8 @@ namespace ExDesign.Pages.Inputs
                 Z_dock_panel.Visibility = Visibility.Hidden;
             }
             StaticVariables.viewModel.ExcavationTypeIndex =WpfUtils.GetExcavationTypeIndex( ExcavationType.none);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
             
         }
 
@@ -146,8 +146,8 @@ namespace ExDesign.Pages.Inputs
                 Z_dock_panel.Visibility = Visibility.Visible;
             }
             StaticVariables.viewModel.ExcavationTypeIndex = WpfUtils.GetExcavationTypeIndex(ExcavationType.type1);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -160,8 +160,8 @@ namespace ExDesign.Pages.Inputs
                 Z_dock_panel.Visibility = Visibility.Visible;
             }
             StaticVariables.viewModel.ExcavationTypeIndex = WpfUtils.GetExcavationTypeIndex(ExcavationType.type2);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -239,8 +239,8 @@ namespace ExDesign.Pages.Inputs
                 A2_dock_panel.Visibility = Visibility.Hidden;
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex =WpfUtils.GetGroundSurfaceTypeIndex( GroundSurfaceType.flat);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -254,8 +254,8 @@ namespace ExDesign.Pages.Inputs
                 A2_dock_panel.Visibility = Visibility.Hidden;
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex = WpfUtils.GetGroundSurfaceTypeIndex(GroundSurfaceType.type1);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -269,8 +269,8 @@ namespace ExDesign.Pages.Inputs
                 A2_dock_panel.Visibility = Visibility.Hidden;
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex = WpfUtils.GetGroundSurfaceTypeIndex(GroundSurfaceType.type2);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -284,8 +284,8 @@ namespace ExDesign.Pages.Inputs
                 A2_dock_panel.Visibility = Visibility.Visible;
             }
             StaticVariables.viewModel.GroundSurfaceTypeIndex = WpfUtils.GetGroundSurfaceTypeIndex(GroundSurfaceType.type3);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -353,8 +353,8 @@ namespace ExDesign.Pages.Inputs
                 
             }
             StaticVariables.viewModel.WaterTypeIndex =WpfUtils.GetGroundWaterTypeIndex( GroundWaterType.none);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -367,8 +367,8 @@ namespace ExDesign.Pages.Inputs
 
             }
             StaticVariables.viewModel.WaterTypeIndex = WpfUtils.GetGroundWaterTypeIndex(GroundWaterType.type1);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -381,8 +381,8 @@ namespace ExDesign.Pages.Inputs
 
             }
             StaticVariables.viewModel.WaterTypeIndex = WpfUtils.GetGroundWaterTypeIndex(GroundWaterType.type2);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
@@ -395,8 +395,8 @@ namespace ExDesign.Pages.Inputs
 
             }
             StaticVariables.viewModel.WaterTypeIndex = WpfUtils.GetGroundWaterTypeIndex(GroundWaterType.type3);
-            StaticVariables.view3DPage.Refresh3Dview();
-            StaticVariables.SideviewPage.Refresh3Dview();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
 
         }
 
