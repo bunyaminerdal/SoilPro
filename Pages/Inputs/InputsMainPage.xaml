@@ -39,7 +39,7 @@
                 <RadioButton x:Name="MaterialsBttn" MinWidth="80" Content="{DynamicResource Materials}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="MaterialsBttn_Checked" />
                 <RadioButton x:Name="WallPropertiesBttn" MinWidth="80" Content="{DynamicResource WallProperties}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="WallPropertiesBttn_Checked" />
                 <RadioButton x:Name="ExDesignBttn" MinWidth="80" Content="{DynamicResource ExDesign}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="ExDesignBttn_Checked" />
-                <RadioButton x:Name="SolidMethodBttn" MinWidth="80" Content="{DynamicResource SolidMethod}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SolidMethodBttn_Checked" />
+                <RadioButton x:Name="SoilMethodBttn" MinWidth="80" Content="{DynamicResource SoilMethod}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SolidMethodBttn_Checked" />
             </DockPanel>
         </DockPanel >
 

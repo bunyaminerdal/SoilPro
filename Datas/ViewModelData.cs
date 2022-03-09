@@ -55,8 +55,8 @@ namespace ExDesign.Datas
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
         public ObservableCollection<SoilTextureData> soilTextures { get; set; }
-
         public Stage stage { get; set; }
+        public bool isCapBeamBottom { get; set; }
 
         public void ChangeWallHeight(double h)
         {
@@ -321,6 +321,7 @@ namespace ExDesign.Datas
                     soilTextures = new ObservableCollection<SoilTextureData>(),
 
                     stage = Stage.Materials,
+                    isCapBeamBottom = true,
                     
                 };
                 

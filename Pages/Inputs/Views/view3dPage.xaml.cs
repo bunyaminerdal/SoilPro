@@ -55,7 +55,7 @@ namespace ExDesign.Pages.Inputs.Views
         double capBeam_h = 0.8;
         double capBeam_b = 0.65;
         int sheetIndex = 0;
-
+        bool isCapBeamBottom = true;
 
         public View3dPage()
         {
@@ -114,6 +114,7 @@ namespace ExDesign.Pages.Inputs.Views
             capBeam_b = StaticVariables.viewModel.capBeam_b;
             capBeam_h = StaticVariables.viewModel.capBeam_h;
             sheetIndex = StaticVariables.viewModel.SheetIndex;
+            isCapBeamBottom = StaticVariables.viewModel.isCapBeamBottom;
         }
         private void StartViewport3d()
         {
@@ -167,8 +168,16 @@ namespace ExDesign.Pages.Inputs.Views
                         pileTransform3DGroup.Children.Add(PileTransform3d);
                         pileModel.Transform = pileTransform3DGroup;
                         groupScene.Children.Add(pileModel);
+                        Point3D capbeamCenter;
+                        if (isCapBeamBottom)
+                        {
+                            capbeamCenter = new Point3D(center3d.X - wall_t / 2 - capBeam_b / 2, center3d.Y + centerY + capBeam_h, center3d.Z - wall_d / 2);
 
-                        Point3D capbeamCenter = new Point3D(center3d.X - wall_t/2-capBeam_b/2, center3d.Y + centerY +capBeam_h, center3d.Z - wall_d / 2);
+                        }else
+                        {
+                            capbeamCenter = new Point3D(center3d.X - wall_t / 2 - capBeam_b / 2, center3d.Y + centerY , center3d.Z - wall_d / 2);
+
+                        }
                         WpfCube capbeam = new WpfCube(capbeamCenter, capBeam_b, capBeam_h, wall_d);
                         GeometryModel3D capbeamModel = WpfCube.CreateCubeModel(capbeam, Colors.DarkGray,false,soilUri);
                         groupScene.Children.Add(capbeamModel);

@@ -242,6 +242,19 @@ namespace ExDesign.Pages.Inputs
             sheetpileWin.SelectSheet(sheetpileCombobox);
             sheetpileWin.ShowDialog();
         }
+        private void beambottom_Checked(object sender, RoutedEventArgs e)
+        {
+            StaticVariables.viewModel.isCapBeamBottom = true;
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
+        }
+
+        private void beamtop_Checked(object sender, RoutedEventArgs e)
+        {
+            StaticVariables.viewModel.isCapBeamBottom = false;
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
+        }
     }
    
 

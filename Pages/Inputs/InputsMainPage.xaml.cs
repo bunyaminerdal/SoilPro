@@ -73,7 +73,7 @@ namespace ExDesign.Pages.Inputs
                     ExDesignBttn.IsChecked = true;
                     break;
                 case Stage.SoilMethod:
-                    SolidMethodBttn.IsChecked= true;
+                    SoilMethodBttn.IsChecked= true;
                     break;
                 default:
                     MaterialsBttn.IsChecked = true;

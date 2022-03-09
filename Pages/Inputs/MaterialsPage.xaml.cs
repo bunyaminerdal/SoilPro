@@ -22,7 +22,6 @@ namespace ExDesign.Pages.Inputs
     /// </summary>
     public partial class MaterialsPage : Page
     {
-        public char separator = ',';
         public MaterialsPage()
         {
             InitializeComponent();
