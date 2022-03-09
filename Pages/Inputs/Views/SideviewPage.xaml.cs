@@ -46,6 +46,7 @@ namespace ExDesign.Pages.Inputs.Views
         double capBeam_h = 0.8;
         double capBeam_b = 0.65;
         int sheetIndex = 0;
+        bool isCapBeamBottom = true;
 
 
         double soilLayerBoxW = 5;
@@ -75,6 +76,7 @@ namespace ExDesign.Pages.Inputs.Views
             capBeam_b = StaticVariables.viewModel.capBeam_b;
             capBeam_h = StaticVariables.viewModel.capBeam_h;
             sheetIndex = StaticVariables.viewModel.SheetIndex;
+            isCapBeamBottom = StaticVariables.viewModel.isCapBeamBottom;
         }
 
         private void StartViewModel2D()
@@ -113,7 +115,15 @@ namespace ExDesign.Pages.Inputs.Views
                 case WallType.ConcreteRectangleWall:
                     break;
                 case WallType.ConcretePileWall:
-                    Point capBeamCenter = new Point(center.X+wall_t/2-capBeam_b/2 , center.Y-capBeam_h );
+                    Point capBeamCenter = new Point(center.X + wall_t / 2 - capBeam_b / 2, center.Y - capBeam_h);
+                    if (isCapBeamBottom)
+                    {
+                        capBeamCenter = new Point(center.X + wall_t / 2 - capBeam_b / 2, center.Y - capBeam_h);
+                    }
+                    else
+                    {
+                        capBeamCenter = new Point(center.X + wall_t / 2 - capBeam_b / 2, center.Y );
+                    }                    
                     GeometryDrawing capBeamGeometryDrawing = Wpf2Dutils.WallGeometryDrawing(capBeamCenter, capBeam_h, capBeam_b, Colors.Transparent);
                     mainDrawingGroup.Children.Add(capBeamGeometryDrawing);
                     break;
