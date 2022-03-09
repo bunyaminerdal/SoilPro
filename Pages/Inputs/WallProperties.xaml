@@ -99,6 +99,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="27"/>
                                 <RowDefinition Height="27"/>
+                                <RowDefinition Height="54"/>
                                 
                             </Grid.RowDefinitions>
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -113,8 +114,13 @@
                                 <Label Width="30" HorizontalContentAlignment="Right" Content="(b):"/>
                                 <TextBox x:Name="beam_width" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="beam_width_TextChanged"/>
                                 <Label x:Name="beam_width_unit" Width="30" Content="cm"/>
-                            </DockPanel>                            
-
+                            </DockPanel>
+                            <DockPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <StackPanel>
+                                    <RadioButton IsChecked="True" Margin="3" Content="{DynamicResource FitBeamBottomToGroundLevel}" Checked="beambottom_Checked"></RadioButton>
+                                    <RadioButton  Margin="3" Content="{DynamicResource FitBeamTopToGroundLevel}" Checked="beamtop_Checked"></RadioButton>
+                                </StackPanel>
+                            </DockPanel>
                         </Grid>
 
 

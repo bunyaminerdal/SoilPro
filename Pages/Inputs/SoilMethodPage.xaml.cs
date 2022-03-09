@@ -203,8 +203,9 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.soilLayerDatas[int.Parse(textBox.Name.Split('_')[1])].LayerHeight = WpfUtils.GetValueDimension(result); 
-                LayerGridInitialize();
+                StaticVariables.viewModel.soilLayerDatas[int.Parse(textBox.Name.Split('_')[1])].LayerHeight = WpfUtils.GetValueDimension(result);
+                StaticVariables.view3DPage.Refreshview();
+                StaticVariables.SideviewPage.Refreshview();
             }
         }
 

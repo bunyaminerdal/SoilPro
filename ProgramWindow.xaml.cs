@@ -40,6 +40,11 @@ namespace ExDesign
         }
         private void StandartStart()
         {
+            EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnGotKeyboardFocus));
+            EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.PreviewDragOverEvent, new DragEventHandler(PreviewDragOver1));
+            EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.PreviewDropEvent, new DragEventHandler(PreviewDragEnter1));
+            CommandManager.RegisterClassCommandBinding(typeof(System.Windows.Controls.TextBox), new CommandBinding(ApplicationCommands.Paste, new ExecutedRoutedEventHandler(textBox_PreviewExecuted)));
+
             StaticVariables.view3DPage = new Pages.Inputs.Views.View3dPage();
             StaticVariables.view3DPage.SetViewModel();
             StaticVariables.SideviewPage = new Pages.Inputs.Views.SideviewPage();
@@ -50,7 +55,28 @@ namespace ExDesign
             MainScreen.Content = InputsMain_Page;
             this.Title = "Ex-Design | " + StaticVariables.viewModel.ProjectName;
         }
-        
+
+        private void textBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            var textBox = sender as System.Windows.Controls.TextBox;
+
+            if (textBox != null && !textBox.IsReadOnly && e.KeyboardDevice.IsKeyDown(Key.Tab))
+                textBox.SelectAll();
+        }
+        private void PreviewDragEnter1(object sender, DragEventArgs e)
+        {
+            e.Handled = true;            
+        }
+        private void PreviewDragOver1(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.All;
+            e.Handled = true;
+        }
 
         private void Options_Click(object sender, RoutedEventArgs e)
         {
