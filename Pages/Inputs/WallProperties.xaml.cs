@@ -242,6 +242,7 @@ namespace ExDesign.Pages.Inputs
             sheetpileWin.SelectSheet(sheetpileCombobox);
             sheetpileWin.ShowDialog();
         }
+
         private void beambottom_Checked(object sender, RoutedEventArgs e)
         {
             StaticVariables.viewModel.isCapBeamBottom = true;
