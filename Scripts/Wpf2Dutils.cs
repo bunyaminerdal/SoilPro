@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
@@ -8,10 +9,10 @@ namespace ExDesign.Scripts
 {
     public static class Wpf2Dutils
     {
-        
-        public static GeometryDrawing LineGeometryDrawing(Point start,Point end,Color color)
+
+        public static GeometryDrawing LineGeometryDrawing(Point start, Point end, Color color)
         {
-            LineGeometry lineGeometry = new LineGeometry(start,end);
+            LineGeometry lineGeometry = new LineGeometry(start, end);
 
             GeometryGroup geometryGroup = new GeometryGroup();
             geometryGroup.Children.Add(lineGeometry);
@@ -24,11 +25,11 @@ namespace ExDesign.Scripts
                     );
             return lineDrawing;
         }
-        
-        public static GeometryDrawing LineGeometryDrawing(Point start,Point point1, Point end, Color color)
+
+        public static GeometryDrawing LineGeometryDrawing(Point start, Point point1, Point end, Color color)
         {
             LineGeometry lineGeometry = new LineGeometry(start, point1);
-            LineGeometry lineGeometry1 = new LineGeometry(point1,end);
+            LineGeometry lineGeometry1 = new LineGeometry(point1, end);
 
             GeometryGroup geometryGroup = new GeometryGroup();
             geometryGroup.Children.Add(lineGeometry);
@@ -146,58 +147,60 @@ namespace ExDesign.Scripts
             GeometryDrawing geometryDrawing = new GeometryDrawing(brush, new Pen(brush, StaticVariables.penThickness), myPathGeometry);
             return geometryDrawing;
         }
-        public static GeometryDrawing TextGeometryDrawing(Point center, string testString, Color color)
-        {
-
-            // Create the initial formatted text string.
-            FormattedText formattedText = new FormattedText(
-                testString,
-                CultureInfo.GetCultureInfo("en-us"),
-                FlowDirection.LeftToRight,
-                new Typeface("Verdana"),
-                1,
-                Brushes.Black, VisualTreeHelper.GetDpi(Application.Current.MainWindow).PixelsPerDip);
-
-            // Set a maximum width and height. If the text overflows these values, an ellipsis "..." appears.
-            formattedText.MaxTextWidth = 300;
-            formattedText.MaxTextHeight = 240;
-
-
-            GeometryGroup geometryGroup = new GeometryGroup();
-            geometryGroup.Children.Add(formattedText.BuildGeometry(center));
-
-            GeometryDrawing wallDrawing =
-            new GeometryDrawing(
-                    new SolidColorBrush(color),
-                    new Pen(Brushes.Black, 0.001),
-                    geometryGroup
-                    );
-            return wallDrawing;
-        }
-        public static GeometryDrawing DimensionUp(Point start, double length, string text, Color color)
+        
+        /// <summary>
+        /// 4 yöne ölçü atmak için. eğer ölçü texti belliyse son parametre olarak girilebilir, yoksa kendi hesaplayacak.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="color"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static GeometryDrawing Dimension(Point start, Point end, Color color, string text = "")
         {
             double ex = StaticVariables.dimensionExtension;
+            double ex_text = 2.2 * ex;
             double diff = StaticVariables.dimensionDiff;
-            LineGeometry lineGeometry = new LineGeometry(new Point(start.X - ex, start.Y - ex - diff), new Point(start.X + length + ex, start.Y - ex - diff));
+            double xDiff = start.X - end.X;
+            double yDiff = start.Y - end.Y;
+            double angle =  (Math.Atan2(yDiff, xDiff) * 180 / Math.PI) - 180;
+            double _length = Point.Subtract(end, start).Length;
+            LineGeometry lineGeometry = new LineGeometry(new Point(start.X - ex, start.Y - ex - diff), new Point(start.X + _length + ex, start.Y - ex - diff));
             LineGeometry lineGeometryleft = new LineGeometry(new Point(start.X, start.Y - diff), new Point(start.X, start.Y - 2 * ex - diff));
-            LineGeometry lineGeometryright = new LineGeometry(new Point(start.X + length, start.Y - diff), new Point(start.X + length, start.Y - 2 * ex - diff));
-
-
+            LineGeometry lineGeometryright = new LineGeometry(new Point(start.X + _length, start.Y - diff), new Point(start.X + _length, start.Y - 2 * ex - diff));
+            if(text =="") text =string.Join( Math.Round(_length,2).ToString()," ",StaticVariables.dimensionUnit);
             // Create the initial formatted text string.
             FormattedText formattedText = new FormattedText(
                 text,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 StaticVariables.typeface,
-                0.75,
+                StaticVariables.dimensionFontHeight,
                 Brushes.Black, VisualTreeHelper.GetDpi(Application.Current.MainWindow).PixelsPerDip);
 
             // Set a maximum width and height. If the text overflows these values, an ellipsis "..." appears.
-            formattedText.MaxTextWidth = 300;
+            formattedText.MaxTextWidth = 1000;
             formattedText.MaxTextHeight = 240;
-
             GeometryGroup geometryGroup = new GeometryGroup();
-            geometryGroup.Children.Add(formattedText.BuildGeometry(new Point(start.X + (length / 2) - formattedText.Width / 2, start.Y - 3 * ex - diff - formattedText.Height)));
+            var textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y - ex_text - diff - formattedText.Height));
+
+            RotateTransform rotateLine = new RotateTransform(angle , start.X, start.Y);
+            Debug.WriteLine(angle.ToString());
+            if (angle < -90 && angle > -270)
+            {
+                angle  += 180;
+                textgeometry = formattedText.BuildGeometry(new Point(start.X - (_length / 2) - formattedText.Width / 2, start.Y + ex_text + diff ));
+            }
+            else
+            {
+                textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y - ex_text - diff - formattedText.Height));
+            }
+            RotateTransform rotateText = new RotateTransform(angle , start.X, start.Y);
+            textgeometry.Transform = rotateText;
+            lineGeometry.Transform = rotateLine;
+            lineGeometryleft.Transform = rotateLine;
+            lineGeometryright.Transform = rotateLine;
+            geometryGroup.Children.Add(textgeometry);
             geometryGroup.Children.Add(lineGeometry);
             geometryGroup.Children.Add(lineGeometryleft);
             geometryGroup.Children.Add(lineGeometryright);
@@ -205,7 +208,7 @@ namespace ExDesign.Scripts
             GeometryDrawing lineDrawing =
             new GeometryDrawing(
                     new SolidColorBrush(color),
-                    new Pen(new SolidColorBrush(color), StaticVariables.penThickness),
+                    new Pen(new SolidColorBrush(color), StaticVariables.dimensionPenThickness),
                     geometryGroup
                     );
             return lineDrawing;

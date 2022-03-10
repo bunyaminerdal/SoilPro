@@ -38,10 +38,11 @@ namespace ExDesign.Scripts
         public static double wall_d = 11;
         public static int maxPileCount = 20;
         public static double penThickness = 0.05;
+        public static double dimensionPenThickness = 0.07;
         public static double dimensionExtension = 0.3;
         public static double dimensionDiff = 0.3;
         public static Typeface typeface = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#Quicksand Light"), FontStyles.Normal, FontWeights.Thin, FontStretches.Normal);
-
+        public static double dimensionFontHeight = 0.75;
     }
     public enum WallType
     {

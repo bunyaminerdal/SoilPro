@@ -106,16 +106,16 @@ namespace ExDesign.Pages.Inputs.Views
                     }
                 }
             }
-           
+
             //Point bottomSoilCenter = new Point(center.X-frontandbackCubeLength,center.Y+wall_h);
             //GeometryDrawing bottomSoilGeometry = Wpf2Dutils.SoilGeometryDrawing(bottomSoilCenter, bottomT_h, wall_t + frontandbackCubeLength * 2, Colors.Gray, soilUri, true);
-
+            Point capBeamCenter = new Point(center.X + wall_t / 2 - capBeam_b / 2, center.Y - capBeam_h);
             switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
             {
                 case WallType.ConcreteRectangleWall:
                     break;
                 case WallType.ConcretePileWall:
-                    Point capBeamCenter = new Point(center.X + wall_t / 2 - capBeam_b / 2, center.Y - capBeam_h);
+                    
                     if (isCapBeamBottom)
                     {
                         capBeamCenter = new Point(center.X + wall_t / 2 - capBeam_b / 2, center.Y - capBeam_h);
@@ -228,20 +228,88 @@ namespace ExDesign.Pages.Inputs.Views
             mainDrawingGroup.Children.Add(frontSoilGeometry);
             //mainDrawingGroup.Children.Add(bottomSoilGeometry);
 
-            //yazı kısmı sadece deneme için
-            GeometryDrawing textdeneme = Wpf2Dutils.TextGeometryDrawing(center,"ali",Colors.Red);
-            mainDrawingGroup.Children.Add(textdeneme);
+            ////yazı kısmı sadece deneme için
+            //GeometryDrawing textdeneme = Wpf2Dutils.TextGeometryDrawing(center,"ali",Colors.Red);
+            //mainDrawingGroup.Children.Add(textdeneme);
 
             //dimensions
             switch (StaticVariables.viewModel.stage)
             {
                 case Stage.Materials:
                     break;
-                case Stage.WallProperties:                    
-                    GeometryDrawing wallDimension = Wpf2Dutils.DimensionUp(center,wall_t,WpfUtils.GetDimension(wall_t).ToString()+" "+ StaticVariables.dimensionUnit, Colors.DarkBlue);
-                    mainDrawingGroup.Children.Add(wallDimension);
+                case Stage.WallProperties:
+                    switch (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex))
+                    {
+                        case WallType.ConcreteRectangleWall:
+                            break;
+                        case WallType.ConcretePileWall:                            
+                            GeometryDrawing capBeamDimension = Wpf2Dutils.Dimension(capBeamCenter, new Point(capBeamCenter.X+capBeam_b,capBeamCenter.Y), Colors.DarkBlue, WpfUtils.GetDimension(capBeam_b).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(capBeamDimension);
+                            GeometryDrawing capBeamDimension1 = Wpf2Dutils.Dimension(new Point(capBeamCenter.X + capBeam_b, capBeamCenter.Y), new Point(capBeamCenter.X + capBeam_b, capBeamCenter.Y+capBeam_h), Colors.DarkBlue, WpfUtils.GetDimension(capBeam_h).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(capBeamDimension1);
+                            break;
+                        case WallType.SteelSheetWall:
+                            break;
+                        default:
+                            break;
+                    }                    
+                    GeometryDrawing wallDimensionDown = Wpf2Dutils.Dimension(new Point(center.X + wall_t, center.Y + wall_h), new Point(center.X, center.Y + wall_h), Colors.DarkBlue, WpfUtils.GetDimension(wall_t).ToString() + " " + StaticVariables.dimensionUnit);
+                    mainDrawingGroup.Children.Add(wallDimensionDown);                                       
+                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X, center.Y+wall_h),new Point(center.X, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() + " " + StaticVariables.dimensionUnit);
+                    mainDrawingGroup.Children.Add(wallHeightLeft);
+                    
                     break;
                 case Stage.ExDesign:
+                    GeometryDrawing exHeightLeft = Wpf2Dutils.Dimension(new Point(center.X-frontT_X1-frontT_X2, center.Y + excavationHeight), new Point(center.X - frontT_X1 - frontT_X2, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(excavationHeight).ToString() + " " + StaticVariables.dimensionUnit);
+                    mainDrawingGroup.Children.Add(exHeightLeft);
+                    switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
+                    {
+                        case ExcavationType.none:
+                            break;
+                        case ExcavationType.type1:
+                            GeometryDrawing _exZ = Wpf2Dutils.Dimension( new Point(center.X + wall_t, center.Y + excavationHeight-frontT_Z), new Point(center.X + wall_t, center.Y + excavationHeight), Colors.DarkBlue, WpfUtils.GetDimension(frontT_Z).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_exZ);
+                            GeometryDrawing _exX1 = Wpf2Dutils.Dimension(new Point(center.X - frontT_X2, center.Y + excavationHeight ), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight ), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X1).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_exX1);
+                            GeometryDrawing _exX2 = Wpf2Dutils.Dimension(new Point(center.X, center.Y + excavationHeight ), new Point(center.X - frontT_X2, center.Y + excavationHeight ), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X2).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_exX2);
+                            break;
+                        case ExcavationType.type2:
+                            GeometryDrawing exZ = Wpf2Dutils.Dimension(new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight + frontT_Z), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight), Colors.DarkBlue, WpfUtils.GetDimension(frontT_Z).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(exZ);
+                            GeometryDrawing exX1 = Wpf2Dutils.Dimension(new Point(center.X -  frontT_X2, center.Y + excavationHeight+frontT_Z), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X1).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(exX1);
+                            GeometryDrawing exX2 = Wpf2Dutils.Dimension(new Point(center.X , center.Y + excavationHeight + frontT_Z), new Point(center.X - frontT_X2, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X2).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(exX2);
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (WpfUtils.GetGroundSurfaceType(StaticVariables.viewModel.GroundSurfaceTypeIndex))
+                    {
+                        case GroundSurfaceType.flat:
+                            break;
+                        case GroundSurfaceType.type1:
+                            GeometryDrawing grA1 = Wpf2Dutils.Dimension(new Point(center.X +wall_t + backT_A1, center.Y ), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(grA1);
+                            break;
+                        case GroundSurfaceType.type2:
+                            GeometryDrawing _grA1 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1, center.Y), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_grA1);
+                            GeometryDrawing grB = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 , center.Y - backT_B), new Point(center.X + wall_t + backT_A1 , center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A2).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(grB);
+                            break;
+                        case GroundSurfaceType.type3:
+                            GeometryDrawing _1grA1 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1, center.Y), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_1grA1);
+                            GeometryDrawing _grA2 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 +backT_A2, center.Y), new Point(center.X + wall_t+backT_A1, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A2).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_grA2);
+                            GeometryDrawing _grB = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y -backT_B), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y ), Colors.DarkBlue, WpfUtils.GetDimension(backT_A2).ToString() + " " + StaticVariables.dimensionUnit);
+                            mainDrawingGroup.Children.Add(_grB);
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case Stage.SoilMethod:
                     break;

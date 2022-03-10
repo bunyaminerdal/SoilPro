@@ -315,7 +315,7 @@ namespace ExDesign.Pages.Inputs.Views
             //create backWater model
             Point3D backWCenter = new Point3D(center3d.X + 0.1, center3d.Y - groundW_h1 + centerY - 0.01, center3d.Z - backW_d / 2);
             WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
-            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255), true, soilUri1);
+            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255), false, soilUri1);
 
             groupScene.Children.Add(backWmodel);
             groupScene.Children.Add(backTmodel);
@@ -408,18 +408,11 @@ namespace ExDesign.Pages.Inputs.Views
 
             WpfTrapezoid frontT = new WpfTrapezoid(TrapezoidCenter, frontT_w_top, frontT_w_bottom, frontT_h, frontT_d, frontT_w_top_dis, frontT_w_bottom_dis);
             GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color,true,soilUri);
-
-            
-
-            
-            
-
-            
-            
+                        
                                  
-            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y - groundW_h2 + centerY - 0.01 - (wall_h - frontCube_h), center3d.Z - frontW_d / 2);
+            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y +centerY- groundW_h2 - 0.01 - excavationHeight, center3d.Z - frontW_d / 2);
             WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
-            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255), true, soilUri);
+            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255), false, soilUri);
 
             Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
             WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(2*frontandbackCubeLength), bottomT_h, wall_d);
