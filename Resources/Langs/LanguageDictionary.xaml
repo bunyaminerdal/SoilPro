@@ -68,6 +68,8 @@
     <system:String x:Key="ConcreteMaterial" >Concrete Material</system:String>
     <system:String x:Key="ConcreteType" >Concrete Type</system:String>
     <system:String x:Key="WallProperties" >Wall Properties</system:String>
+    <system:String x:Key="WallLevel" >Wall Level</system:String>
+    <system:String x:Key="TopOfWallLevel" >Top of Wall Level</system:String>
     <system:String x:Key="RebarMaterial" >Rebar Material</system:String>
     <system:String x:Key="RebarType" >Rebar Type</system:String>
     <system:String x:Key="SteelType" >Steel Type</system:String>

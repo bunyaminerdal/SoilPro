@@ -185,7 +185,6 @@ namespace ExDesign.Scripts
             var textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y - ex_text - diff - formattedText.Height));
 
             RotateTransform rotateLine = new RotateTransform(angle , start.X, start.Y);
-            Debug.WriteLine(angle.ToString());
             if (angle < -90 && angle > -270)
             {
                 angle  += 180;
@@ -196,7 +195,9 @@ namespace ExDesign.Scripts
                 textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y - ex_text - diff - formattedText.Height));
             }
             RotateTransform rotateText = new RotateTransform(angle , start.X, start.Y);
+            
             textgeometry.Transform = rotateText;
+            
             lineGeometry.Transform = rotateLine;
             lineGeometryleft.Transform = rotateLine;
             lineGeometryright.Transform = rotateLine;
@@ -205,6 +206,67 @@ namespace ExDesign.Scripts
             geometryGroup.Children.Add(lineGeometryleft);
             geometryGroup.Children.Add(lineGeometryright);
 
+            GeometryDrawing lineDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(new SolidColorBrush(color), StaticVariables.dimensionPenThickness),
+                    geometryGroup
+                    );
+            return lineDrawing;
+        }
+        public static GeometryDrawing Level(Point start, LevelDirection direction , Color color)
+        {
+            double ex = StaticVariables.dimensionExtension;
+            double ex_text = 0.5 * ex;
+            double diff = StaticVariables.dimensionDiff;
+            double levelIconH = StaticVariables.levelIconHeight;
+            double levelLineL = 3 * levelIconH;
+            double level = StaticVariables.viewModel.TopOfWallLevel-start.Y;
+            
+            GeometryGroup geometryGroup = new GeometryGroup();
+            Point levelIconCenter = start;
+            switch (direction)
+            {
+                case LevelDirection.Left:
+                    LineGeometry lineGeometry = new LineGeometry(new Point(start.X-diff, start.Y), new Point(start.X-diff-levelLineL, start.Y));
+                    geometryGroup.Children.Add(lineGeometry);
+                    levelIconCenter = new Point(start.X-diff-2*levelIconH,start.Y);
+                    break;
+                case LevelDirection.Right:
+                    LineGeometry lineGeometry1 = new LineGeometry(new Point(start.X + diff, start.Y), new Point(start.X + diff + levelLineL, start.Y));
+                    geometryGroup.Children.Add(lineGeometry1);
+                    levelIconCenter = new Point(start.X + diff + 2 * levelIconH, start.Y);
+                    break;
+                case LevelDirection.Point:
+                    levelIconCenter = new Point(start.X , start.Y);
+                    break;
+                default:                    
+                    break;
+            }
+            LineGeometry IconTop = new LineGeometry(new Point(levelIconCenter.X-levelIconH, levelIconCenter.Y-levelIconH), new Point(levelIconCenter.X+levelIconH, levelIconCenter.Y-levelIconH));
+            LineGeometry IconLeft = new LineGeometry(new Point(levelIconCenter.X-levelIconH, levelIconCenter.Y-levelIconH), new Point(levelIconCenter.X, levelIconCenter.Y));
+            LineGeometry IconRight = new LineGeometry(new Point(levelIconCenter.X+levelIconH, levelIconCenter.Y-levelIconH), new Point(levelIconCenter.X, levelIconCenter.Y));
+            
+            geometryGroup.Children.Add(IconTop);
+            geometryGroup.Children.Add(IconLeft);
+            geometryGroup.Children.Add(IconRight);
+            string text = WpfUtils.LevelText(level);
+            
+            // Create the initial formatted text string.
+            FormattedText formattedText = new FormattedText(
+                text,
+                CultureInfo.GetCultureInfo("en-us"),
+                FlowDirection.LeftToRight,
+                StaticVariables.typeface,
+                StaticVariables.levelFontHeight,
+                Brushes.Black, VisualTreeHelper.GetDpi(Application.Current.MainWindow).PixelsPerDip);
+
+            // Set a maximum width and height. If the text overflows these values, an ellipsis "..." appears.
+            formattedText.MaxTextWidth = 1000;
+            formattedText.MaxTextHeight = 240;
+            var textgeometry = formattedText.BuildGeometry(new Point(levelIconCenter.X-formattedText.Width/2,levelIconCenter.Y-levelIconH-ex_text-formattedText.Height));
+            
+            geometryGroup.Children.Add(textgeometry);
             GeometryDrawing lineDrawing =
             new GeometryDrawing(
                     new SolidColorBrush(color),

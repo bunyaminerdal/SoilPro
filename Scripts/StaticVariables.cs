@@ -37,19 +37,21 @@ namespace ExDesign.Scripts
                                                                                                         { Units.kN_mm, 1 },{ Units.kN_cm, 1 },{ Units.kN_m, 1 } };
         public static double wall_d = 11;
         public static int maxPileCount = 20;
-        public static double penThickness = 0.05;
-        public static double dimensionPenThickness = 0.07;
+        public static double penThickness = 0.06;
+        public static double dimensionPenThickness = 0.03;
         public static double dimensionExtension = 0.3;
         public static double dimensionDiff = 0.3;
         public static Typeface typeface = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#Quicksand Light"), FontStyles.Normal, FontWeights.Thin, FontStretches.Normal);
-        public static double dimensionFontHeight = 0.75;
+        public static double dimensionFontHeight = 0.4;
+        public static double levelFontHeight = 0.4;
+        public static double soilLayerBoxWidth = 3;
+        public static double levelIconHeight = 0.3;
     }
     public enum WallType
     {
         ConcreteRectangleWall,
         ConcretePileWall,
         SteelSheetWall
-
     }
     public enum Units
     {
@@ -103,5 +105,11 @@ namespace ExDesign.Scripts
         WallProperties,
         ExDesign,
         SoilMethod
+    }
+    public enum LevelDirection
+    {
+        Left,
+        Right,
+        Point
     }
 }

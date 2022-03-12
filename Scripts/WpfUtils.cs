@@ -1,5 +1,6 @@
 ﻿using ExDesign.Datas;
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
@@ -422,5 +423,40 @@ namespace ExDesign.Scripts
             return null;
         }
         
+        public static String LevelText(double level)
+        {
+            char separator = ',';
+            char tempSeparator = ',';
+            string text = "";
+            if(level >= 0)
+            {             
+                text += "+";
+            }
+            level = Math.Round(level, 2);
+            text+=level.ToString();
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                tempSeparator = ',';
+            }
+            else
+            {
+                tempSeparator = '.';
+            }
+            string[] splittedText = text.Split(tempSeparator);
+            if(splittedText.Length>1)
+            {
+                if(splittedText[1].Length == 1 )
+                {
+                    text += "0";
+                }
+            }
+            else
+            {
+                text += separator.ToString() + "00";
+            }
+
+            return text;
+        }
     }
 }

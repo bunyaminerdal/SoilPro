@@ -20,7 +20,10 @@ namespace ExDesign.Datas
         public double wall_h { get; set; }
         public double wall_d { get; set; }
         public double pile_s { get; set; }
-        public double frontandbackCubeLength { get; set; }
+        public double frontCubeLength { get; set; }
+        public double backCubeLength { get; set; }
+        public double CubeLength { get; set; }
+        public double TopOfWallLevel { get; set; }
         public double excavationHeight { get; set; }
         public double frontT_Z { get; set; }
         public double frontT_X1 { get; set; }
@@ -151,6 +154,12 @@ namespace ExDesign.Datas
             StaticVariables.view3DPage.Refreshview();
             StaticVariables.SideviewPage.Refreshview();
         }
+        public void ChangeTopOfWallLevel(double towLevel)
+        {
+            TopOfWallLevel = towLevel;
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
+        }
         public void ChangeUnitIndex(int unitIndex)
         {
             UnitIndex = unitIndex;
@@ -267,6 +276,7 @@ namespace ExDesign.Datas
         public double GetCapBeamH() { return capBeam_h; }
         public double GetCapBeamB() { return capBeam_b; }
         public int GetUnitIndex() { return UnitIndex; }
+        public double GetTopOfWallLevel() { return TopOfWallLevel; }
     }
     public static class ViewModel
     {
@@ -285,7 +295,10 @@ namespace ExDesign.Datas
                     wall_h = 12,
                     wall_d = 7,
                     pile_s = 0.80,
-                    frontandbackCubeLength = 15,
+                    frontCubeLength = 8,
+                    backCubeLength = 12,
+                    CubeLength = 15,
+                    TopOfWallLevel = 1,
                     excavationHeight = 8,
                     frontT_Z = 2,
                     frontT_X1 = 2,

@@ -59,6 +59,8 @@ namespace ExDesign.Pages.Inputs
             inertiaText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetInertia(StaticVariables.viewModel.GetWallInertia()));
             EIText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetMomentScaleDimension(StaticVariables.viewModel.GetWallEI()));            
             EAText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(StaticVariables.viewModel.GetWallEA()));
+
+            topOfWallLevel.Text = StaticVariables.viewModel.GetTopOfWallLevel().ToString();
         }
          private void WallPropertiesChange()
         {
@@ -255,6 +257,32 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.isCapBeamBottom = false;
             StaticVariables.view3DPage.Refreshview();
             StaticVariables.SideviewPage.Refreshview();
+        }
+
+        private void topOfWallLevel_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //allow negatif numbers
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[-][,][0-9]+$|^[-][0-9]*[,]{0,1}[0-9]*$|^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[-][.][0-9]+$|^[-][0-9]*[.]{0,1}[0-9]*$|^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void topOfWallLevel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.ChangeTopOfWallLevel(result);
+            }
         }
     }
    

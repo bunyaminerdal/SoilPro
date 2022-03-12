@@ -189,7 +189,22 @@
 
                         </Grid>
                     </GroupBox>
-                </StackPanel>
+                    <GroupBox Visibility="Visible" x:Name="WallLevel" Margin="5" Header="{DynamicResource WallLevel}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="27"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                <Label Width="160" Content="{DynamicResource TopOfWallLevel}"/>
+                                <Label Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                <TextBox x:Name="topOfWallLevel" Height="22" Width="80"  PreviewKeyDown="concretewall_height_PreviewKeyDown" PreviewTextInput="topOfWallLevel_PreviewTextInput" TextChanged="topOfWallLevel_TextChanged" />
+                                <Label x:Name="topOfWallLevel_unit" Width="30" Content="m"/>
+                            </DockPanel>
+
+                        </Grid>
+                    </GroupBox>
+
+                </StackPanel>               
 
             </Grid>
         </StackPanel>

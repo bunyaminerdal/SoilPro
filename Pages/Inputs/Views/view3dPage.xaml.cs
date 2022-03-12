@@ -40,7 +40,8 @@ namespace ExDesign.Pages.Inputs.Views
         double wall_h=12; 
         double wall_d=7;
         double pile_s = 0.80;
-        double frontandbackCubeLength = 15;
+        double frontCubeLength = 8;
+        double backCubeLength = 12;
         double excavationHeight = 8;
         double frontT_Z = 2;
         double frontT_X1 = 2;
@@ -99,7 +100,8 @@ namespace ExDesign.Pages.Inputs.Views
             wall_h = StaticVariables.viewModel.wall_h;
             wall_t = StaticVariables.viewModel.wall_t;
             pile_s = StaticVariables.viewModel.pile_s;
-            frontandbackCubeLength = StaticVariables.viewModel.frontandbackCubeLength;
+            frontCubeLength = StaticVariables.viewModel.CubeLength;
+            backCubeLength = StaticVariables.viewModel.CubeLength;
             excavationHeight = StaticVariables.viewModel.excavationHeight;
             frontT_Z = StaticVariables.viewModel.frontT_Z;
             frontT_X1 = StaticVariables.viewModel.frontT_X1;
@@ -259,10 +261,10 @@ namespace ExDesign.Pages.Inputs.Views
                 case GroundWaterType.none:
                     break;
                 default:
-                    backW_w = frontandbackCubeLength - 0.2;
+                    backW_w = backCubeLength - 0.2;
                     backW_h = 0.1;
                     backW_d = wall_d - 0.1;
-                    frontW_w = frontandbackCubeLength - 0.1;
+                    frontW_w = frontCubeLength - 0.1;
                     frontW_h = 0.1;
                     frontW_d = wall_d - 0.1;
                     break;
@@ -279,11 +281,11 @@ namespace ExDesign.Pages.Inputs.Views
                 case GroundSurfaceType.flat:
                     break;
                 case GroundSurfaceType.type1:
-                    backT_w_top_dis = frontandbackCubeLength;
+                    backT_w_top_dis = backCubeLength;
                     backT_w_bottom_dis = backT_A1;
-                    backT_h = Math.Sin(backT_Beta * Math.PI / 180) * (frontandbackCubeLength - backT_A1);
+                    backT_h = Math.Sin(backT_Beta * Math.PI / 180) * (backCubeLength - backT_A1);
                     backT_d = wall_d;
-                    backT_w_bottom = frontandbackCubeLength - backT_A1;
+                    backT_w_bottom = backCubeLength - backT_A1;
                     backT_w_top = 0;
                     backT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
@@ -292,8 +294,8 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_w_bottom_dis = 0;
                     backT_h = backT_B;
                     backT_d = wall_d;
-                    backT_w_bottom = frontandbackCubeLength;
-                    backT_w_top = frontandbackCubeLength - backT_A1;
+                    backT_w_bottom = backCubeLength;
+                    backT_w_top = backCubeLength - backT_A1;
                     backT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
                 case GroundSurfaceType.type3:
@@ -301,8 +303,8 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_w_bottom_dis = backT_A1;
                     backT_h = backT_B;
                     backT_d = wall_d;
-                    backT_w_bottom = frontandbackCubeLength - backT_A1;
-                    backT_w_top = frontandbackCubeLength - backT_A1 - backT_A2;
+                    backT_w_bottom = backCubeLength - backT_A1;
+                    backT_w_top = backCubeLength - backT_A1 - backT_A2;
                     backT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
                 default:
@@ -315,7 +317,7 @@ namespace ExDesign.Pages.Inputs.Views
             //create backWater model
             Point3D backWCenter = new Point3D(center3d.X + 0.1, center3d.Y - groundW_h1 + centerY - 0.01, center3d.Z - backW_d / 2);
             WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
-            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(100, 0, 0, 255), false, soilUri1);
+            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(150, 0, 0, 255), false, soilUri1);
 
             groupScene.Children.Add(backWmodel);
             groupScene.Children.Add(backTmodel);
@@ -329,7 +331,7 @@ namespace ExDesign.Pages.Inputs.Views
                     soiltotalHeight += soilLayer.LayerHeight;
                     if (soiltotalHeight < wall_h)
                     {
-                        double soilbackCube_w = frontandbackCubeLength;
+                        double soilbackCube_w = backCubeLength;
                         double soilbackCube_h = soilLayer.LayerHeight;
                         double soilbackCube_d = wall_d;
                         Point3D soilbackCubeCenter = new Point3D(center3d.X, center3d.Y + centerY - soiltotalHeight + soilLayer.LayerHeight, center3d.Z - soilbackCube_d / 2);
@@ -347,7 +349,7 @@ namespace ExDesign.Pages.Inputs.Views
             }
             if (soiltotalHeight< wall_h)
             {
-                double backCube_w = frontandbackCubeLength;
+                double backCube_w = backCubeLength;
                 double backCube_h = wall_h-soiltotalHeight;
                 double backCube_d = wall_d;
                 Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + centerY-soiltotalHeight, center3d.Z - backCube_d / 2);
@@ -359,7 +361,7 @@ namespace ExDesign.Pages.Inputs.Views
 
 
 
-            double frontCube_w = frontandbackCubeLength;
+            double frontCube_w = frontCubeLength;
             double frontCube_h = Math.Clamp(wall_h - excavationHeight, 0, double.MaxValue);
             double frontCube_d = wall_d;
             Point3D frontCubeCenter = new Point3D(center3d.X - wall_t - frontCube_w, center3d.Y + centerY - (wall_h - frontCube_h), center3d.Z - frontCube_d / 2);
@@ -412,10 +414,10 @@ namespace ExDesign.Pages.Inputs.Views
                                  
             Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y +centerY- groundW_h2 - 0.01 - excavationHeight, center3d.Z - frontW_d / 2);
             WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
-            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(100, 0, 0, 255), false, soilUri);
+            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(150, 0, 0, 255), false, soilUri);
 
             Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
-            WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(2*frontandbackCubeLength), bottomT_h, wall_d);
+            WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(frontCubeLength+backCubeLength), bottomT_h, wall_d);
             GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), true, soilUri);
 
 
