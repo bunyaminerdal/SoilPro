@@ -21,8 +21,8 @@
             <DockPanel Grid.Row="0" Grid.Column="1">
                 <StackPanel>
                     <StackPanel>
-                        <GroupBox Header="Defined Soil-Rock Metarials" >
-                            <ListBox x:Name="UserSoilList"  Height="285" VerticalAlignment="Top" HorizontalAlignment="Stretch"   SelectionChanged="UserSoilList_SelectionChanged" GotFocus="UserSoilList_GotFocus" />
+                        <GroupBox Header="{DynamicResource DefinedSoilRockMetarials}" >
+                            <ListBox x:Name="UserSoilList"  Height="275" VerticalAlignment="Top" HorizontalAlignment="Stretch"   SelectionChanged="UserSoilList_SelectionChanged" GotFocus="UserSoilList_GotFocus" />
 
                         </GroupBox>
                         <DockPanel>
@@ -34,14 +34,14 @@
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="0" x:Name="addnew_button" Content="{DynamicResource addnew}"  Margin="5"  Click="addnew_button_Click"  />
                                 <Button Grid.Column="1" x:Name="delete_button" Content="{DynamicResource delete}"  Margin="5" Click="delete_button_Click"  />
-                                <Button Grid.Column="2" x:Name="saveto_button" Content="{DynamicResource Save}"  Margin="5"   />
+                                <Button Grid.Column="2" x:Name="saveto_button" Content="{DynamicResource Save}"  Margin="5" Click="saveto_button_Click"   />
                             </Grid>
                         </DockPanel>
 
                     </StackPanel>
                     <StackPanel>
-                        <GroupBox Header="Saved Soil-Rock Materials">
-                            <ListBox x:Name="SavedSoilList"  Height="285" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    />
+                        <GroupBox Header="{DynamicResource SavedSoilRockMaterials}">
+                            <ListBox x:Name="SavedSoilList"  Height="275" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="SavedSoilList_SelectionChanged" GotFocus="SavedSoilList_GotFocus"    />
 
                         </GroupBox>
                         <DockPanel>
@@ -50,8 +50,8 @@
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" x:Name="AddCopyFromSaved" Content="Add Copy From Saved"  Margin="5"  Click="addnew_button_Click"  />
-                                <Button Grid.Column="1" x:Name="deletesaved_button" Content="{DynamicResource delete}"  Margin="5" Click="delete_button_Click"  />
+                                <Button Grid.Column="0" x:Name="AddCopyFromSaved" Content="{DynamicResource AddCopyFromSaved}"  Margin="5"  Click="AddCopyFromSaved_Click"  />
+                                <Button Grid.Column="1" x:Name="deletesaved_button" Content="{DynamicResource delete}"  Margin="5" Click="deletesaved_button_Click"  />
                             </Grid>
                         </DockPanel>
                     </StackPanel>
@@ -59,11 +59,10 @@
                 
             </DockPanel>
             <DockPanel Grid.Row="0" Grid.Column="0">
-                <StackPanel>                   
-                        <GroupBox Header="Soil-Rock Library" >
+                <StackPanel>
+                    <GroupBox Header="{DynamicResource SoilRockLibrary}" >
                             <StackPanel VerticalAlignment="Stretch">
-                            
-                               
+                                                           
                                 <ListBox  x:Name="LibrarySoilList"  Height="490"  SelectionChanged="LibrarySoilList_SelectionChanged" GotFocus="LibrarySoilList_GotFocus" />
                                 <Button  x:Name="AddCopyFromLibrary_button" Content="{DynamicResource AddCopyFromLibrary}"  Margin="5" VerticalAlignment="Top" Grid.RowSpan="2" Click="AddCopyFromLibrary_button_Click"   />
                                 <GroupBox Header="filters" >
@@ -236,8 +235,8 @@
                         <Label  Content="{DynamicResource SoilState(K0Analysis)}" Width="160"/>
                         <Label  Content="" Width="40" HorizontalContentAlignment="Right"/>
                         <ComboBox x:Name="soilstate_combobox" Width="120" Margin="2" SelectedIndex="0" SelectionChanged="soilstate_SelectionChanged" >
-                            <ComboBoxItem Content="{DynamicResource Cohesive}"></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource Cohesionless}"></ComboBoxItem>
+                            <ComboBoxItem Content="{DynamicResource Cohesive}"></ComboBoxItem>                            
                             <ComboBoxItem Content="{DynamicResource OCR}"></ComboBoxItem>
                             <ComboBoxItem Content="{DynamicResource UserDefined}"></ComboBoxItem>
                         </ComboBox>

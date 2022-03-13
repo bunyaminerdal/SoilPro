@@ -26,6 +26,7 @@ namespace ExDesign.Windows
     public partial class SoilTypeLibrary : Window
     {
         private ObservableCollection<SoilData> tempSoilDataList = new ObservableCollection<SoilData>();
+        private ObservableCollection<SoilData> tempSavedSoilDataList = new ObservableCollection<SoilData>();
         public char separator = ',';
         SoilMethodPage methodPage;
         public SoilData selectedSoilData = new SoilData();
@@ -86,7 +87,15 @@ namespace ExDesign.Windows
             if (tempSoilDataList.Count <= 0)  tempSoilDataList.Add(new SoilData() { ID = Guid.NewGuid(), isDefault = false, Name = "new soil", isSoilTexture = false, SoilColor = Colors.AliceBlue, SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
                         
             UserSoilList.SelectedIndex = 0;
-            
+
+            foreach (var soil in SoilLibrary.SavedSoilDataList)
+            {
+                tempSavedSoilDataList.Add((SoilData)soil.Clone());
+            }
+            SavedSoilList.ItemsSource = tempSavedSoilDataList;
+            SavedSoilList.DisplayMemberPath = "Name";
+            SavedSoilList.SelectionMode = SelectionMode.Single;
+            ListFocused(2);
         }
 
         private void UserSoilList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -148,7 +157,7 @@ namespace ExDesign.Windows
 
         private void TextureDefinition()
         {
-            if(UserSoilList.SelectedItem==null) return;
+            if(selectedSoilData.SoilTexture==null) return;
             if ((selectedSoilData).isSoilTexture)
             {
                 useTexture.IsChecked = true;
@@ -170,6 +179,7 @@ namespace ExDesign.Windows
                             )
                         )
                     );
+                TextureImage.Stretch = Stretch.Fill;
             }
         }
 
@@ -227,14 +237,14 @@ namespace ExDesign.Windows
 
         private void useTexture_Checked(object sender, RoutedEventArgs e)
         {
-            if(selectedSoilData.isDefault) return;
+            if(selectedSoilData==null) return;
             if (useTexture.IsChecked == true) selectedSoilData.isSoilTexture = true;
             TextureDefinition();
         }
 
         private void useColor_Checked(object sender, RoutedEventArgs e)
         {
-            if (selectedSoilData.isDefault) return;
+            if (selectedSoilData==null) return;
             if (useColor.IsChecked == true) selectedSoilData.isSoilTexture = false;
             TextureDefinition();
         }
@@ -445,7 +455,15 @@ namespace ExDesign.Windows
             {
                 ID = Guid.NewGuid(),
                 isDefault = false,
+                isUserDefined = true,
                 Name = selectedSoilData.Name,
+                SoilRockType = selectedSoilData.SoilRockType,
+                SoilType = selectedSoilData.SoilType,
+                SoilDenseType = selectedSoilData.SoilDenseType,
+                SoilStiffType = selectedSoilData.SoilStiffType,
+                SiltType = selectedSoilData.SiltType,
+                RockSubType = selectedSoilData.RockSubType,
+                RockType = selectedSoilData.RockType,
                 NaturalUnitWeight = selectedSoilData.NaturalUnitWeight,
                 SaturatedUnitWeight = selectedSoilData.SaturatedUnitWeight,
                 SoilStressStateIndex = selectedSoilData.SoilStressStateIndex,
@@ -467,6 +485,7 @@ namespace ExDesign.Windows
             };
             tempSoilDataList.Add(soil1);
             UserSoilList.SelectedItem = soil1;
+            ListFocused(2);
         }
 
         private void save_close_button_Click(object sender, RoutedEventArgs e)
@@ -487,6 +506,13 @@ namespace ExDesign.Windows
         private void SaveChanges()
         {            
            StaticVariables.viewModel.soilDatas = tempSoilDataList;
+            SoilLibrary.SavedSoilDataList.Clear();
+            foreach (var soil in tempSavedSoilDataList)
+            {
+
+                SoilLibrary.SavedSoilDataList.Add(soil);
+            }
+            SoilLibrary.SoilSave();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -497,13 +523,14 @@ namespace ExDesign.Windows
         private void UserSoilList_GotFocus(object sender, RoutedEventArgs e)
         {
             if(UserSoilList.SelectedItem != null) selectedSoilData = (SoilData)UserSoilList.SelectedItem;
+            ListFocused(2);
             SelectionChanged();
         }
 
         private void LibrarySoilList_GotFocus(object sender, RoutedEventArgs e)
         {
             if (LibrarySoilList.SelectedItem != null) selectedSoilData = (SoilData)LibrarySoilList.SelectedItem;
-
+            ListFocused(0);
             SelectionChanged();
         }
 
@@ -790,10 +817,10 @@ namespace ExDesign.Windows
             soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
             DeSelectAll(gravel_radiobutton);
             SoilType = SoilTypes.Gravel;
+            SiltType = SiltTypes.None;
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
             soil.SoilRockType == SoilRockType && soil.SoilType == SoilType);
             
-
         }
         private void sandTrue()
         {
@@ -802,6 +829,7 @@ namespace ExDesign.Windows
             soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
             DeSelectAll(sand_radiobutton);
             SoilType = SoilTypes.Sand;
+            SiltType = SiltTypes.None;
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
             soil.SoilRockType == SoilRockType && soil.SoilType == SoilType);
         }
@@ -1021,5 +1049,136 @@ namespace ExDesign.Windows
             if (radioButton != excellent_radiobutton) excellent_radiobutton.IsChecked = false;
         }
 
+        private void saveto_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedSoilData.isDefault) return;
+            SoilData soil1 = new SoilData()
+            {
+                ID = Guid.NewGuid(),
+                isDefault = true,
+                isUserDefined = true,
+                Name = selectedSoilData.Name,
+                SoilRockType = selectedSoilData.SoilRockType,
+                SoilType = selectedSoilData.SoilType,
+                SoilDenseType = selectedSoilData.SoilDenseType,
+                SoilStiffType = selectedSoilData.SoilStiffType,
+                SiltType = selectedSoilData.SiltType,
+                RockSubType = selectedSoilData.RockSubType,
+                RockType = selectedSoilData.RockType,
+                NaturalUnitWeight = selectedSoilData.NaturalUnitWeight,
+                SaturatedUnitWeight = selectedSoilData.SaturatedUnitWeight,
+                SoilStressStateIndex = selectedSoilData.SoilStressStateIndex,
+                SoilStateKoIndex = selectedSoilData.SoilStateKoIndex,
+                SoilFrictionAngle = selectedSoilData.SoilFrictionAngle,
+                EffectiveCohesion = selectedSoilData.EffectiveCohesion,
+                UndrainedShearStrength = selectedSoilData.UndrainedShearStrength,
+                WallSoilFrictionAngle = selectedSoilData.WallSoilFrictionAngle,
+                WallSoilAdhesion = selectedSoilData.WallSoilAdhesion,
+                PoissonRatio = selectedSoilData.PoissonRatio,
+                K0 = selectedSoilData.K0,
+                Ocr = selectedSoilData.Ocr,
+                OedometricModulus = selectedSoilData.OedometricModulus,
+                CohesionFactor = selectedSoilData.CohesionFactor,
+                YoungModulus = selectedSoilData.YoungModulus,
+                isSoilTexture = selectedSoilData.isSoilTexture,
+                SoilColor = selectedSoilData.SoilColor,
+                SoilTexture = selectedSoilData.SoilTexture,
+            };
+            tempSavedSoilDataList.Add(soil1);
+            SavedSoilList.SelectedItem = soil1;
+            ListFocused(1);
+        }
+
+        private void SavedSoilList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SavedSoilList.SelectedIndex < 0) return;
+            selectedSoilData = ((SoilData)SavedSoilList.SelectedItem);
+            SelectionChanged();
+        }
+
+        private void SavedSoilList_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SavedSoilList.SelectedItem != null) selectedSoilData = (SoilData)SavedSoilList.SelectedItem;
+            ListFocused(1);
+            SelectionChanged();
+        }
+
+        private void AddCopyFromSaved_Click(object sender, RoutedEventArgs e)
+        {
+            if (!selectedSoilData.isDefault) return;
+            SoilData soil1 = new SoilData()
+            {
+                ID = Guid.NewGuid(),
+                isDefault = false,
+                isUserDefined = true,
+                Name = selectedSoilData.Name,
+                SoilRockType = selectedSoilData.SoilRockType,
+                SoilType = selectedSoilData.SoilType,
+                SoilDenseType = selectedSoilData.SoilDenseType,
+                SoilStiffType = selectedSoilData.SoilStiffType,
+                SiltType = selectedSoilData.SiltType,
+                RockSubType = selectedSoilData.RockSubType,
+                RockType = selectedSoilData.RockType,
+                NaturalUnitWeight = selectedSoilData.NaturalUnitWeight,
+                SaturatedUnitWeight = selectedSoilData.SaturatedUnitWeight,
+                SoilStressStateIndex = selectedSoilData.SoilStressStateIndex,
+                SoilStateKoIndex = selectedSoilData.SoilStateKoIndex,
+                SoilFrictionAngle = selectedSoilData.SoilFrictionAngle,
+                EffectiveCohesion = selectedSoilData.EffectiveCohesion,
+                UndrainedShearStrength = selectedSoilData.UndrainedShearStrength,
+                WallSoilFrictionAngle = selectedSoilData.WallSoilFrictionAngle,
+                WallSoilAdhesion = selectedSoilData.WallSoilAdhesion,
+                PoissonRatio = selectedSoilData.PoissonRatio,
+                K0 = selectedSoilData.K0,
+                Ocr = selectedSoilData.Ocr,
+                OedometricModulus = selectedSoilData.OedometricModulus,
+                CohesionFactor = selectedSoilData.CohesionFactor,
+                YoungModulus = selectedSoilData.YoungModulus,
+                isSoilTexture = selectedSoilData.isSoilTexture,
+                SoilColor = selectedSoilData.SoilColor,
+                SoilTexture = selectedSoilData.SoilTexture,
+            };
+            tempSoilDataList.Add(soil1);
+            UserSoilList.SelectedItem = soil1;
+            ListFocused(2);
+        }
+        private void ListFocused(int list)
+        {
+            AddCopyFromLibrary_button.IsEnabled = false;
+            AddCopyFromSaved.IsEnabled = false;
+            addnew_button.IsEnabled = false;
+            delete_button.IsEnabled = false;
+            saveto_button.IsEnabled = false;
+            deletesaved_button.IsEnabled = false;
+            if (list == 0)
+            {
+                AddCopyFromLibrary_button.IsEnabled = true;
+                UserSoilList.SelectedIndex = -1;
+                SavedSoilList.SelectedIndex = -1;
+            }else if(list == 1)
+            {
+                AddCopyFromSaved.IsEnabled = true;
+                deletesaved_button.IsEnabled = true;
+                UserSoilList.SelectedIndex = -1;
+                LibrarySoilList.SelectedIndex = -1;
+            }
+            else if(list == 2)
+            {
+                addnew_button.IsEnabled = true;
+                delete_button.IsEnabled = true;
+                saveto_button.IsEnabled = true;
+                LibrarySoilList.SelectedIndex = -1;
+                SavedSoilList.SelectedIndex = -1;
+            }
+        }
+
+        private void deletesaved_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedSoilData.isDefault && selectedSoilData.isUserDefined)
+            {
+                tempSavedSoilDataList.Remove(selectedSoilData);
+                SavedSoilList.SelectedIndex = 0;
+            }
+        }
     }
 }

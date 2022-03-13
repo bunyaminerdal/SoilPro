@@ -90,7 +90,6 @@
     <system:String x:Key="AssignedSoilType" >Assigned Soil Type</system:String>
     <system:String x:Key="AddSoilLayer" >Add Soil Layer</system:String>
     <system:String x:Key="DeleteSoilLayer" >Delete Soil Layer</system:String>
-    <system:String x:Key="SoilRockLibrary" >Soil Rock Library</system:String>
     <system:String x:Key="SoilLayer" >Soil Layer</system:String>
     <system:String x:Key="AddCopyFromLibrary" >Add Copy From Library</system:String>
     <system:String x:Key="NaturalUnitWeight" >Natural Unit Weight</system:String>
@@ -125,5 +124,9 @@
     <system:String x:Key="Select" >Select</system:String>
     <system:String x:Key="FitBeamBottomToGroundLevel" >Fit Beam Bottom To Ground Level</system:String>
     <system:String x:Key="FitBeamTopToGroundLevel" >Fit Beam Top To Ground Level</system:String>
+    <system:String x:Key="AddCopyFromSaved" >Add Copy From Saved</system:String>
+    <system:String x:Key="SoilRockLibrary" >Soil-Rock Library</system:String>
+    <system:String x:Key="DefinedSoilRockMetarials" >Defined Soil-Rock Metarials</system:String>
+    <system:String x:Key="SavedSoilRockMaterials" >Saved Soil-Rock Materials</system:String>    
 
 </ResourceDictionary>
