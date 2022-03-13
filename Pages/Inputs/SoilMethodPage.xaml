@@ -66,7 +66,7 @@
                             <StackPanel>
                                 <DockPanel HorizontalAlignment="Left">
                                     <Button x:Name="addsoillayer_bttn" Content="{DynamicResource AddSoilLayer}" Width="150" Margin="10" Click="addsoillayer_bttn_Click"></Button>
-                                    <Button x:Name="soilTypeLibrary" Content="{DynamicResource SoilTypeLibrary}" Width="150" Margin="10" Click="soilTypeLibrary_Click"></Button>
+                                    <Button x:Name="soilTypeLibrary" Content="{DynamicResource SoilRockLibrary}" Width="150" Margin="10" Click="soilTypeLibrary_Click"></Button>
                                 </DockPanel>
                                 <ScrollViewer x:Name="headerScrollBar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
                                     <DockPanel HorizontalAlignment="Left" Margin="2" Height="27">

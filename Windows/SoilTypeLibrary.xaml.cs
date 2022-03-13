@@ -29,7 +29,15 @@ namespace ExDesign.Windows
         public char separator = ',';
         SoilMethodPage methodPage;
         public SoilData selectedSoilData = new SoilData();
+        SoilRockTypes SoilRockType = SoilRockTypes.None;
+        SoilTypes SoilType = SoilTypes.None;
+        SiltTypes SiltType = SiltTypes.None;
+        SoilDenseTypes SoilDenseType = SoilDenseTypes.None;
+        SoilStiffTypes SoilStiffType = SoilStiffTypes.None;
+        RockTypes RockType = RockTypes.None;
+        RockSubTypes RockSubType = RockSubTypes.None;
 
+        
         public void SetTexture(SoilTextureData soilTextureData)
         {
             selectedSoilData.SoilTexture = soilTextureData;
@@ -75,8 +83,10 @@ namespace ExDesign.Windows
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList;
             LibrarySoilList.DisplayMemberPath = "Name";
             LibrarySoilList.SelectionMode = SelectionMode.Single;
-            if(tempSoilDataList.Count<=0) tempSoilDataList.Add(new SoilData() { isDefault = false, Name = "new soil", isSoilTexture = true, SoilColor = Color.FromArgb(100, 200, 200, 200), SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
+            if (tempSoilDataList.Count <= 0)  tempSoilDataList.Add(new SoilData() { ID = Guid.NewGuid(), isDefault = false, Name = "new soil", isSoilTexture = false, SoilColor = Colors.AliceBlue, SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
+                        
             UserSoilList.SelectedIndex = 0;
+            
         }
 
         private void UserSoilList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -244,7 +254,7 @@ namespace ExDesign.Windows
                 System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
                 if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    selectedSoilData.SoilColor = Color.FromArgb(50, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+                    selectedSoilData.SoilColor = Color.FromArgb(100, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
                 }
             }
             TextureDefinition();
@@ -413,7 +423,7 @@ namespace ExDesign.Windows
 
         private void addnew_button_Click(object sender, RoutedEventArgs e)
         {
-            tempSoilDataList.Add(new SoilData() {ID=Guid.NewGuid(), isDefault = false, Name = "new soil",  isSoilTexture = true, SoilColor = Colors.AliceBlue ,SoilTexture=SoilTexture.tempSoilTextureDataList[0]}); ;
+            tempSoilDataList.Add(new SoilData() {ID=Guid.NewGuid(), isDefault = false, Name = "new soil",  isSoilTexture = false, SoilColor = Colors.AliceBlue ,SoilTexture=SoilTexture.tempSoilTextureDataList[0]}); ;
             UserSoilList.SelectedIndex = tempSoilDataList.Count - 1;
             selectedSoilData = tempSoilDataList[tempSoilDataList.Count-1];
 
@@ -496,5 +506,520 @@ namespace ExDesign.Windows
 
             SelectionChanged();
         }
+
+        private void soil_radiobutton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            if (radioButton != null)
+            {
+                
+                if ( radioButton.IsChecked == true)
+                {
+                    radioButton.IsChecked = false;
+                    FilterSystem(null, radioButton.Name);
+                    e.Handled = true;
+                }
+               
+            }
+        }
+        
+
+        private void FilterSystem(bool? isChecked, string buttonname)
+        {
+            switch (buttonname)
+            {
+                case "soil_radiobutton":
+                    if(isChecked == null)
+                    {
+                        soilRockNull();
+                    }else if(isChecked==true)
+                    {
+                        soilTrue();
+                    }                    
+                    break;
+                case "rock_radiobutton":
+                    if (isChecked == null)
+                    {
+                        soilRockNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        rockTrue();
+                    }
+                    break;
+                case "gravel_radiobutton":
+                    if (isChecked == null)
+                    {
+                        gravelsandclaysiltNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        gravelTrue();
+                    }
+                    break;
+                case "sand_radiobutton":
+                    if (isChecked == null)
+                    {
+                        gravelsandclaysiltNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        sandTrue();
+                    }
+                    break;
+                case "silt_radiobutton":
+                    if (isChecked == null)
+                    {
+                        gravelsandclaysiltNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        siltTrue();
+                    }
+                    break;
+                case "clay_radiobutton":
+                    if (isChecked == null)
+                    {
+                        gravelsandclaysiltNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        clayTrue();
+                    }
+                    break;
+                case "nonplastic_radiobutton":
+                    if (isChecked == null)
+                    {
+                        plasticNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        nonplasticTrue();
+                    }
+                    break;
+                case "plastic_radiobutton":
+                    if (isChecked == null)
+                    {
+                        plasticNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        plasticTrue();
+                    }
+                    break;
+                case "volcanic_radiobutton":
+                    if (isChecked == null)
+                    {
+                        volcanicNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        volcanicTrue();
+                    }
+                    break;
+                case "metamorphic_radiobutton":
+                    if (isChecked == null)
+                    {
+                        volcanicNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        metamorphicTrue();
+                    }
+                    break;
+                case "sedimantory_radiobutton":
+                    if (isChecked == null)
+                    {
+                        volcanicNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        sedimantoryTrue();
+                    }
+                    break;
+                case "loose_radiobutton":
+                    if (isChecked == null)
+                    {
+                        denseNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        looseTrue();
+                    }
+                    break;
+                case "dense_radiobutton":
+                    if (isChecked == null)
+                    {
+                        denseNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        denseTrue();
+                    }
+                    break;
+                case "mediumdense_radiobutton":
+                    if (isChecked == null)
+                    {
+                        denseNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        mdenseTrue();
+                    }
+                    break;
+                case "soft_radiobutton":
+                    if (isChecked == null)
+                    {
+                        denseNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        softTrue();
+                    }
+                    break;
+                case "mediumstiff_radiobutton":
+                    if (isChecked == null)
+                    {
+                        denseNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        mstiffTrue();
+                    }
+                    break;
+                case "stiff_radiobutton":
+                    if (isChecked == null)
+                    {
+                        denseNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        stiffTrue();
+                    }
+                    break;
+                case "poor_radiobutton":
+                    if (isChecked == null)
+                    {
+                        poorNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        poorTrue();
+                    }
+                    break;
+                case "fair_radiobutton":
+                    if (isChecked == null)
+                    {
+                        poorNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        fairTrue();
+                    }
+                    break;
+                case "excellent_radiobutton":
+                    if (isChecked == null)
+                    {
+                        poorNull();
+                    }
+                    else if (isChecked == true)
+                    {
+                        excellentTrue();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+
+        private void soil_radiobutton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            if (radioButton != null)
+            {
+                FilterSystem(radioButton.IsChecked, radioButton.Name);
+
+            }
+            
+        }
+        private void soilTrue()
+        {
+            soiltype_radiobutton_panel.Visibility = Visibility.Visible;
+            rocktype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soildense_radiobutton_panel.Visibility=Visibility.Collapsed;
+            silttype_radiobutton_panel.Visibility =Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll();
+            SoilRockType = SoilRockTypes.Soil;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType 
+            );
+        }
+        private void rockTrue()
+        {
+            rocktype_radiobutton_panel.Visibility = Visibility.Visible;
+            soiltype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soildense_radiobutton_panel.Visibility = Visibility.Collapsed;
+            silttype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll();
+            SoilRockType = SoilRockTypes.Rock;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType
+            );
+        }
+        private void soilRockNull()
+        {
+            rocktype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soiltype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soildense_radiobutton_panel.Visibility = Visibility.Collapsed;
+            silttype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll();
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList;
+            
+        }
+        private void gravelTrue()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Visible;
+            silttype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll(gravel_radiobutton);
+            SoilType = SoilTypes.Gravel;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType);
+            
+
+        }
+        private void sandTrue()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Visible;
+            silttype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll(sand_radiobutton);
+            SoilType = SoilTypes.Sand;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType);
+        }
+        private void siltTrue()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Collapsed;
+            silttype_radiobutton_panel.Visibility = Visibility.Visible;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll(silt_radiobutton);
+            SoilType = SoilTypes.Silt;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType);
+        }
+
+        private void clayTrue()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Visible;
+            silttype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll(clay_radiobutton);
+            SoilType = SoilTypes.Clay;
+            SiltType = SiltTypes.None;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType);
+
+        }
+        private void gravelsandclaysiltNull()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            silttype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll();
+            SoilType = SoilTypes.None;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType );
+        }
+        
+       
+        private void plasticTrue()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Visible;
+            DeSelectAll(plastic_radiobutton);
+            SiltType = SiltTypes.Plastic;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType);
+        }
+        private void nonplasticTrue()
+        {
+            soildense_radiobutton_panel.Visibility = Visibility.Visible;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll(nonplastic_radiobutton);
+            SiltType = SiltTypes.NonPlastic;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType);
+        }
+        private void plasticNull()
+        {
+            soildense_radiobutton_panel.Visibility= Visibility.Collapsed;
+            soilstifftype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll();
+            silt_radiobutton.IsChecked = true;
+            SiltType = SiltTypes.None;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType );
+        }
+        private void volcanicTrue()
+        {
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Visible;
+            DeSelectAll(volcanic_radiobutton);
+            RockType = RockTypes.Volcanic;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType);
+        }
+        private void metamorphicTrue()
+        {
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Visible;
+            DeSelectAll(metamorphic_radiobutton);
+            RockType = RockTypes.Metamorphic;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType);
+        }
+        private void sedimantoryTrue()
+        {
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Visible;
+            DeSelectAll(sedimantory_radiobutton);
+            RockType = RockTypes.Sedimantory;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType);
+        }
+        private void volcanicNull()
+        {
+            rocksubtype_radiobutton_panel.Visibility = Visibility.Collapsed;
+            DeSelectAll();
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType);
+        }
+        private void denseTrue()
+        {
+            DeselectDense(dense_radiobutton);
+            SoilDenseType = SoilDenseTypes.Dense;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType && soil.SoilDenseType == SoilDenseType);
+
+        }
+        private void mdenseTrue()
+        {
+            DeselectDense(mediumdense_radiobutton);
+            SoilDenseType = SoilDenseTypes.MediumDense;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType && soil.SoilDenseType == SoilDenseType);
+
+        }
+        private void looseTrue()
+        {
+            DeselectDense(loose_radiobutton);
+            SoilDenseType = SoilDenseTypes.Loose;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType && soil.SoilDenseType == SoilDenseType);
+
+        }
+        private void softTrue()
+        {
+            DeselectDense(soft_radiobutton);
+            SoilStiffType = SoilStiffTypes.Soft;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType && soil.SoilStiffType==SoilStiffType);
+        }
+        private void mstiffTrue()
+        {
+            DeselectDense(mediumstiff_radiobutton);
+            SoilStiffType = SoilStiffTypes.MediumStiff;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType && soil.SoilStiffType == SoilStiffType);
+
+        }
+        private void stiffTrue()
+        {
+            DeselectDense(stiff_radiobutton);
+            SoilStiffType = SoilStiffTypes.Stiff;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType && soil.SoilStiffType == SoilStiffType);
+
+        }
+        private void denseNull()
+        {
+            DeselectDense();
+            SoilStiffType = SoilStiffTypes.None;
+            SoilDenseType = SoilDenseTypes.None;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.SoilRockType == SoilRockType && soil.SoilType == SoilType && soil.SiltType == SiltType );
+        }
+        private void poorTrue()
+        {
+            DeselectPoor(poor_radiobutton);
+            RockSubType = RockSubTypes.Poor;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType && soil.RockSubType==RockSubType);
+        }
+        private void fairTrue()
+        {
+            DeselectPoor(fair_radiobutton);
+            RockSubType = RockSubTypes.Fair;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType && soil.RockSubType == RockSubType);
+        }
+        private void excellentTrue()
+        {
+            DeselectPoor(excellent_radiobutton);
+            RockSubType = RockSubTypes.Excellent;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType && soil.RockSubType == RockSubType);
+        }
+        private void poorNull()
+        {
+            DeselectPoor();
+            RockSubType = RockSubTypes.None;
+            LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
+            soil.RockType == RockType);
+        }
+
+        private void DeSelectAll(RadioButton radioButton=null)
+        {
+            if (radioButton != volcanic_radiobutton) volcanic_radiobutton.IsChecked = false;
+            if (radioButton != metamorphic_radiobutton) metamorphic_radiobutton.IsChecked = false;
+            if (radioButton != sedimantory_radiobutton) sedimantory_radiobutton.IsChecked = false;
+            if(radioButton != gravel_radiobutton) gravel_radiobutton.IsChecked = false;
+            if (radioButton != sand_radiobutton) sand_radiobutton.IsChecked = false;
+            if (radioButton != silt_radiobutton && radioButton != nonplastic_radiobutton && radioButton != plastic_radiobutton) silt_radiobutton.IsChecked = false;
+            if (radioButton != clay_radiobutton) clay_radiobutton.IsChecked = false;
+            if (radioButton != nonplastic_radiobutton) nonplastic_radiobutton.IsChecked = false;
+            if (radioButton != plastic_radiobutton) plastic_radiobutton.IsChecked = false;
+            if (radioButton != loose_radiobutton) loose_radiobutton.IsChecked = false;
+            if (radioButton != mediumdense_radiobutton) mediumdense_radiobutton.IsChecked = false;
+            if (radioButton != dense_radiobutton) dense_radiobutton.IsChecked = false;
+            if (radioButton != soft_radiobutton) soft_radiobutton.IsChecked = false;
+            if (radioButton != mediumstiff_radiobutton) mediumstiff_radiobutton.IsChecked= false;
+            if (radioButton != stiff_radiobutton) stiff_radiobutton.IsChecked = false;
+            if (radioButton != poor_radiobutton) poor_radiobutton.IsChecked = false;
+            if (radioButton != fair_radiobutton) fair_radiobutton.IsChecked = false;
+            if (radioButton != excellent_radiobutton) excellent_radiobutton.IsChecked = false;
+        }
+        private void DeselectDense(RadioButton radioButton = null)
+        {
+            if (radioButton != dense_radiobutton) dense_radiobutton.IsChecked = false;
+            if (radioButton != loose_radiobutton) loose_radiobutton.IsChecked = false;
+            if (radioButton != mediumdense_radiobutton) mediumdense_radiobutton.IsChecked = false;
+            if (radioButton != soft_radiobutton) soft_radiobutton.IsChecked = false;
+            if (radioButton != stiff_radiobutton) stiff_radiobutton.IsChecked = false;
+            if (radioButton != mediumstiff_radiobutton) mediumstiff_radiobutton.IsChecked = false;
+        }
+
+        private void DeselectPoor(RadioButton radioButton = null)
+        {
+            if (radioButton != poor_radiobutton) poor_radiobutton.IsChecked = false;
+            if (radioButton != fair_radiobutton) fair_radiobutton.IsChecked = false;
+            if (radioButton != excellent_radiobutton) excellent_radiobutton.IsChecked = false;
+        }
+
     }
 }

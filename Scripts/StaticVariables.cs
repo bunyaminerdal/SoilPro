@@ -112,4 +112,52 @@ namespace ExDesign.Scripts
         Right,
         Point
     }
+    public enum SoilRockTypes
+    {
+        None,
+        Soil,
+        Rock,
+    }
+    public enum SoilTypes
+    {
+        None,
+        Gravel,
+        Sand,
+        Silt,
+        Clay,
+    }
+    public enum SoilDenseTypes
+    {
+        None,
+        Loose,
+        MediumDense,
+        Dense,
+    }
+    public enum SoilStiffTypes
+    {
+        None,
+        Soft,
+        MediumStiff,
+        Stiff,
+    }
+    public enum SiltTypes
+    {
+        None,
+        NonPlastic,
+        Plastic,
+    }
+    public enum RockTypes
+    {
+        None,
+        Volcanic,
+        Metamorphic,
+        Sedimantory,
+    }
+    public enum RockSubTypes
+    {
+        None,
+        Poor,
+        Fair,
+        Excellent,
+    }
 }
