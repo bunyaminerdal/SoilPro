@@ -84,7 +84,7 @@ namespace ExDesign.Windows
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList;
             LibrarySoilList.DisplayMemberPath = "Name";
             LibrarySoilList.SelectionMode = SelectionMode.Single;
-            if (tempSoilDataList.Count <= 0)  tempSoilDataList.Add(new SoilData() { ID = Guid.NewGuid(), isDefault = false, Name = "new soil", isSoilTexture = false, SoilColor = Colors.AliceBlue, SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
+            if (tempSoilDataList.Count <= 0)  tempSoilDataList.Add(new SoilData() { ID = Guid.NewGuid(), isDefault = false, Name = "new soil", isSoilTexture = false, SoilColor = Color.FromArgb(100, 50, 50, 255), SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
                         
             UserSoilList.SelectedIndex = 0;
 
@@ -433,7 +433,7 @@ namespace ExDesign.Windows
 
         private void addnew_button_Click(object sender, RoutedEventArgs e)
         {
-            tempSoilDataList.Add(new SoilData() {ID=Guid.NewGuid(), isDefault = false, Name = "new soil",  isSoilTexture = false, SoilColor = Colors.AliceBlue ,SoilTexture=SoilTexture.tempSoilTextureDataList[0]}); ;
+            tempSoilDataList.Add(new SoilData() {ID=Guid.NewGuid(), isDefault = false, Name = "new soil",  isSoilTexture = false, SoilColor = Color.FromArgb(100, 50, 50, 255), SoilTexture=SoilTexture.tempSoilTextureDataList[0]}); ;
             UserSoilList.SelectedIndex = tempSoilDataList.Count - 1;
             selectedSoilData = tempSoilDataList[tempSoilDataList.Count-1];
 
@@ -441,6 +441,7 @@ namespace ExDesign.Windows
 
         private void delete_button_Click(object sender, RoutedEventArgs e)
         {
+            if (tempSoilDataList.Count < 2) return;
             if (!selectedSoilData.isDefault)
             {
                 tempSoilDataList.Remove(selectedSoilData);

@@ -65,7 +65,7 @@
                                                            
                                 <ListBox  x:Name="LibrarySoilList"  Height="490"  SelectionChanged="LibrarySoilList_SelectionChanged" GotFocus="LibrarySoilList_GotFocus" />
                                 <Button  x:Name="AddCopyFromLibrary_button" Content="{DynamicResource AddCopyFromLibrary}"  Margin="5" VerticalAlignment="Top" Grid.RowSpan="2" Click="AddCopyFromLibrary_button_Click"   />
-                                <GroupBox Header="filters" >
+                                <GroupBox Header="{DynamicResource Filters}" >
                                     <StackPanel>
                                         <DockPanel x:Name="soilrocktype_radiobutton_panel" Margin="2.5" >
                                             <Grid>
@@ -73,8 +73,8 @@
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Soil" x:Name="soil_radiobutton" PreviewMouseDown="soil_radiobutton_PreviewMouseDown" Checked="soil_radiobutton_Checked"  ></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="Rock" x:Name="rock_radiobutton" PreviewMouseDown="soil_radiobutton_PreviewMouseDown" Checked="soil_radiobutton_Checked"  ></RadioButton>
+                                            <RadioButton Grid.Column="0" Content="{DynamicResource Soil}" x:Name="soil_radiobutton" PreviewMouseDown="soil_radiobutton_PreviewMouseDown" Checked="soil_radiobutton_Checked"  ></RadioButton>
+                                                <RadioButton Grid.Column="1" Content="{DynamicResource Rock}" x:Name="rock_radiobutton" PreviewMouseDown="soil_radiobutton_PreviewMouseDown" Checked="soil_radiobutton_Checked"  ></RadioButton>
                                             </Grid>
 
                                         </DockPanel>
@@ -86,10 +86,10 @@
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Gravel" x:Name="gravel_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="Sand" x:Name="sand_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="2" Content="Silt" x:Name="silt_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="3" Content="Clay" x:Name="clay_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                                <RadioButton Grid.Column="0" Content="{DynamicResource Gravel}" x:Name="gravel_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="1" Content="{DynamicResource Sand}" x:Name="sand_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="2" Content="{DynamicResource Silt}" x:Name="silt_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="3" Content="{DynamicResource Clay}" x:Name="clay_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             </Grid>
                                         </DockPanel>
                                         <DockPanel x:Name="rocktype_radiobutton_panel" Visibility="Collapsed" Margin="2.5">
@@ -100,9 +100,9 @@
                                                     <ColumnDefinition Width="*"/>
 
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Volcanic" x:Name="volcanic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="Metamorphic" x:Name="metamorphic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="2" Content="Sedimantory" x:Name="sedimantory_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                                <RadioButton Grid.Column="0" Content="{DynamicResource Volcanic}" x:Name="volcanic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="1" Content="{DynamicResource Metamorphic}" x:Name="metamorphic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="2" Content="{DynamicResource Sedimantory}" x:Name="sedimantory_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             </Grid>
                                         </DockPanel>
                                         <DockPanel x:Name="silttype_radiobutton_panel" Visibility="Collapsed" Margin="2.5">
@@ -112,8 +112,8 @@
                                                     <ColumnDefinition Width="*"/>
 
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Non-Plastic" x:Name="nonplastic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="Plastic" x:Name="plastic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="0" Content="{DynamicResource NonPlastic}" x:Name="nonplastic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="1" Content="{DynamicResource Plastic}" x:Name="plastic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
 
                                             </Grid>
                                         </DockPanel>
@@ -125,9 +125,9 @@
                                                     <ColumnDefinition Width="*"/>
 
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Loose" x:Name="loose_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="M.Dense" x:Name="mediumdense_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="2" Content="Dense" x:Name="dense_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                                <RadioButton Grid.Column="0" Content="{DynamicResource Loose}" x:Name="loose_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="1" Content="{DynamicResource MDense}" x:Name="mediumdense_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="2" Content="{DynamicResource Dense}" x:Name="dense_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             </Grid>
                                         </DockPanel>
                                         <DockPanel x:Name="soilstifftype_radiobutton_panel" Visibility="Collapsed" Margin="2.5">
@@ -138,9 +138,9 @@
                                                     <ColumnDefinition Width="*"/>
 
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Soft" x:Name="soft_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="M.Stiff" x:Name="mediumstiff_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="2" Content="Stiff" x:Name="stiff_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                                <RadioButton Grid.Column="0" Content="{DynamicResource Soft}" x:Name="soft_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="1" Content="{DynamicResource MStiff}" x:Name="mediumstiff_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="2" Content="{DynamicResource Stiff}" x:Name="stiff_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             </Grid>
                                         </DockPanel>
 
@@ -152,9 +152,9 @@
                                                     <ColumnDefinition Width="*"/>
 
                                                 </Grid.ColumnDefinitions>
-                                                <RadioButton Grid.Column="0" Content="Poor" x:Name="poor_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="1" Content="Fair" x:Name="fair_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                                <RadioButton Grid.Column="2" Content="Excellent" x:Name="excellent_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                                <RadioButton Grid.Column="0" Content="{DynamicResource Poor}" x:Name="poor_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="1" Content="{DynamicResource Fair}" x:Name="fair_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="2" Content="{DynamicResource Excellent}" x:Name="excellent_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             </Grid>
                                         </DockPanel>
                                     </StackPanel>

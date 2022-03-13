@@ -127,6 +127,27 @@
     <system:String x:Key="AddCopyFromSaved" >Add Copy From Saved</system:String>
     <system:String x:Key="SoilRockLibrary" >Soil-Rock Library</system:String>
     <system:String x:Key="DefinedSoilRockMetarials" >Defined Soil-Rock Metarials</system:String>
-    <system:String x:Key="SavedSoilRockMaterials" >Saved Soil-Rock Materials</system:String>    
+    <system:String x:Key="SavedSoilRockMaterials" >Saved Soil-Rock Materials</system:String>
+    <system:String x:Key="Soil" >Soil</system:String>    
+    <system:String x:Key="Rock" >Rock</system:String>    
+    <system:String x:Key="Gravel" >Gravel</system:String>    
+    <system:String x:Key="Sand" >Sand</system:String>    
+    <system:String x:Key="Silt" >Silt</system:String>    
+    <system:String x:Key="Clay" >Clay</system:String>    
+    <system:String x:Key="Volcanic" >Volcanic</system:String>
+    <system:String x:Key="Metamorphic" >Metamorphic</system:String>
+    <system:String x:Key="Sedimantory" >Sedimantory</system:String>
+    <system:String x:Key="NonPlastic" >Non-Plastic</system:String>
+    <system:String x:Key="Plastic" >Plastic</system:String>    
+    <system:String x:Key="Loose" >Loose</system:String>    
+    <system:String x:Key="MDense" >M.Dense</system:String>
+    <system:String x:Key="Dense" >Dense</system:String>    
+    <system:String x:Key="Soft" >Soft</system:String>
+    <system:String x:Key="MStiff" >M.Stiff</system:String>
+    <system:String x:Key="Stiff" >Stiff</system:String>
+    <system:String x:Key="Poor" >Poor</system:String>    
+    <system:String x:Key="Fair" >Fair</system:String>
+    <system:String x:Key="Excellent" >Excellent</system:String>
+    <system:String x:Key="Filters" >Filters</system:String>    
 
 </ResourceDictionary>
