@@ -95,7 +95,7 @@ namespace ExDesign
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            
+           
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -115,15 +115,19 @@ namespace ExDesign
 
         private void save_menuitem_Click(object sender, RoutedEventArgs e)
         {
-            if(StaticVariables.viewModel.Path!= "Untitled" && StaticVariables.viewModel.Path != null && StaticVariables.viewModel.Path != "")
+            Save();
+                
+        }
+        private void Save()
+        {
+            if (StaticVariables.viewModel.Path != "Untitled" && StaticVariables.viewModel.Path != null && StaticVariables.viewModel.Path != "")
             {
                 ViewModel.ModelSave();
-            }                
+            }
             else
             {
                 SaveAs();
             }
-                
         }
 
         private void open_menuitem_Click(object sender, RoutedEventArgs e)
@@ -153,6 +157,21 @@ namespace ExDesign
             }
             this.Title = "Ex-Design | " + StaticVariables.viewModel.ProjectName;
             
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //MessageBoxResult messageBoxResult = MessageBox.Show(FindResource("ClosingMessage").ToString(), "Question",
+            //  MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+            //if (messageBoxResult == MessageBoxResult.Cancel)
+            //{
+            //    e.Cancel = true;
+            //}
+            //else if (messageBoxResult == MessageBoxResult.Yes)
+            //{
+            //    Save();
+            //}
         }
     }
 }

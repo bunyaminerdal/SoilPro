@@ -61,7 +61,7 @@ namespace ExDesign.Windows
             soilfrictionanglePanel.Visibility = Visibility.Visible;
             wallsoilfrictionanglePanel.Visibility = Visibility.Visible;
             ocrPanel.Visibility = Visibility.Collapsed;
-            koPanel.Visibility = Visibility.Collapsed;
+            
 
             foreach (var soil in StaticVariables.viewModel.soilDatas)
             {
@@ -97,7 +97,30 @@ namespace ExDesign.Windows
             SavedSoilList.SelectionMode = SelectionMode.Single;
             ListFocused(2);
         }
+        private void K0_calculator()
+        {
+            if (soilstate_combobox.SelectedIndex < 0) return;
+            switch (soilstate_combobox.SelectedIndex)
+            {
+                case 1: //kohezyonlu
+                    selectedSoilData.K0 = selectedSoilData.PoissonRatio/(1-selectedSoilData.PoissonRatio);
+                    K0.Text = WpfUtils.ChangeDecimalOptions(selectedSoilData.K0);
+                    break;
+                case 0: //kohezyonsuz
+                    selectedSoilData.K0 = 1 - (Math.Sin(selectedSoilData.SoilFrictionAngle*Math.PI/180));
+                    K0.Text = WpfUtils.ChangeDecimalOptions(selectedSoilData.K0);
+                    break;
+                case 2: //aşırı konsolide
+                    selectedSoilData.K0 = 0.5 * (Math.Pow(selectedSoilData.Ocr, 0.5));
+                    K0.Text = WpfUtils.ChangeDecimalOptions(selectedSoilData.K0);
+                    break;
+                case 3: //user defined
+                    break;
 
+                default:
+                    break;
+            }
+        }
         private void UserSoilList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (UserSoilList.SelectedIndex < 0) return;
@@ -125,6 +148,13 @@ namespace ExDesign.Windows
             wallSoilAdhesion.IsEnabled = !(selectedSoilData).isDefault;
             poissonRatio.IsEnabled = !(selectedSoilData).isDefault;
             K0.IsEnabled = !(selectedSoilData).isDefault;
+            if((selectedSoilData).isDefault==false)
+            {
+                if(soilstate_combobox.SelectedIndex !=3)
+                {
+                    K0.IsEnabled = false;
+                }
+            }
             ocr.IsEnabled = !(selectedSoilData).isDefault;
             OedometricModulus.IsEnabled = !(selectedSoilData).isDefault;
             CohesionFactor.IsEnabled = !(selectedSoilData).isDefault;
@@ -216,23 +246,24 @@ namespace ExDesign.Windows
             {
                 case 0:
                     ocrPanel.Visibility = Visibility.Collapsed;
-                    koPanel.Visibility = Visibility.Collapsed;
+                    K0.IsEnabled = false;
                     break;
                 case 1:
                     ocrPanel.Visibility = Visibility.Collapsed;
-                    koPanel.Visibility = Visibility.Collapsed;
+                    K0.IsEnabled = false;
                     break;
                 case 2:
                     ocrPanel.Visibility = Visibility.Visible;
-                    koPanel.Visibility = Visibility.Collapsed;
+                    K0.IsEnabled = false;
                     break;
                 case 3:
                     ocrPanel.Visibility = Visibility.Collapsed;
-                    koPanel.Visibility = Visibility.Visible;
+                    K0.IsEnabled = true;
                     break;
                 default:
                     break;
             }
+            K0_calculator();
         }
 
         private void useTexture_Checked(object sender, RoutedEventArgs e)
@@ -328,6 +359,7 @@ namespace ExDesign.Windows
             if (double.TryParse(textBox.Text, out double result))
             {
                 selectedSoilData.SoilFrictionAngle = result;
+                K0_calculator();
             }
         }
 
@@ -378,6 +410,7 @@ namespace ExDesign.Windows
             if (double.TryParse(textBox.Text, out double result))
             {
                 selectedSoilData.PoissonRatio = result;
+                K0_calculator();
             }
         }
 
@@ -388,6 +421,7 @@ namespace ExDesign.Windows
             if (double.TryParse(textBox.Text, out double result))
             {
                 selectedSoilData.K0 = result;
+                K0_calculator();
             }
         }
 
@@ -398,6 +432,7 @@ namespace ExDesign.Windows
             if (double.TryParse(textBox.Text, out double result))
             {
                 selectedSoilData.Ocr = result;
+                K0_calculator();
             }
         }
 
@@ -917,7 +952,7 @@ namespace ExDesign.Windows
         {
             rocksubtype_radiobutton_panel.Visibility = Visibility.Visible;
             DeSelectAll(sedimantory_radiobutton);
-            RockType = RockTypes.Sedimantory;
+            RockType = RockTypes.Sedimentary;
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList.Where(soil =>
             soil.RockType == RockType);
         }

@@ -32,13 +32,22 @@ namespace ExDesign.Datas
         {
             if(!File.Exists(Path))
             {
-                PileData pile1 = new PileData() { isDefault = true,Name= "ф40", t=0.40};
-                PileData pile2 = new PileData() { isDefault = true,Name= "ф65", t=0.65};
-                PileData pile3 = new PileData() { isDefault = true,Name= "ф80", t=0.80};
+                PileData pile1 = new PileData() { isDefault = true, Name = "ф40", t = 0.40 };
+                PileData pile2 = new PileData() { isDefault = true, Name = "ф65", t = 0.65 };
+                PileData pile3 = new PileData() { isDefault = true, Name = "ф80", t = 0.80 };
+                PileData pile4 = new PileData() { isDefault = true, Name = "ф100", t = 1.00 };
+                PileData pile5 = new PileData() { isDefault = true, Name = "ф110", t = 1.10 };
+                PileData pile6 = new PileData() { isDefault = true, Name = "ф120", t = 1.20 };
+                PileData pile7 = new PileData() { isDefault = true, Name = "ф140", t = 1.40 };
+
                 List<PileData> tempList = new List<PileData>();
                 tempList.Add(pile1);
                 tempList.Add(pile2);
                 tempList.Add(pile3);
+                tempList.Add(pile4);
+                tempList.Add(pile5);
+                tempList.Add(pile6);
+                tempList.Add(pile7);
                 string json = JsonConvert.SerializeObject(tempList.ToArray());
 
                 //write string to file

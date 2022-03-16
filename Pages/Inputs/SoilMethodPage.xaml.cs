@@ -106,14 +106,18 @@ namespace ExDesign.Pages.Inputs
                 textbox_height.PreviewKeyDown += Textbox_height_PreviewKeyDown;
                 textbox_height.PreviewTextInput += Textbox_height_PreviewTextInput;
                 textbox_height.Name = "textboxheight_" + layerIndex;
-                TextBox textbox_layername = new TextBox();
-                textbox_layername.Width = 200;
-                textbox_layername.Text = item.Name;
-                textbox_layername.Name ="textboxlayername_"+layerIndex;
-                textbox_layername.VerticalContentAlignment = VerticalAlignment.Center;
-                textbox_layername.TextChanged += Textbox_layername_TextChanged;
-                ComboBox comboBox = new ComboBox();                
-                comboBox.Width = 200;
+                //TextBox textbox_layername = new TextBox();
+                //textbox_layername.Width = 200;
+                //textbox_layername.Text = item.Name;
+                //textbox_layername.Name ="textboxlayername_"+layerIndex;
+                //textbox_layername.VerticalContentAlignment = VerticalAlignment.Center;
+                //textbox_layername.TextChanged += Textbox_layername_TextChanged;
+                Image textureImage = new Image();
+                textureImage.Height = 27;
+                textureImage.Width = 55;
+                if (item.Soil != null) textureImage = TextureImage(WpfUtils.GetSoilData(item.Soil.ID));
+                ComboBox comboBox = new ComboBox();
+                comboBox.Width = 260;
                 comboBox.ItemsSource = StaticVariables.viewModel.soilDatas;
                 comboBox.DisplayMemberPath = "Name";                
                 comboBox.Name ="combo_"+ layerIndex;
@@ -153,7 +157,8 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(deleteButton);
                 dockPanel.Children.Add(textBox_no);
                 dockPanel.Children.Add(textbox_height);
-                dockPanel.Children.Add(textbox_layername);
+                //dockPanel.Children.Add(textbox_layername);
+                dockPanel.Children.Add(textureImage);
                 dockPanel.Children.Add(comboBox);
                 dockPanel.Children.Add(textbox_gama);
                 dockPanel.Children.Add(textbox_gamasat);
@@ -167,6 +172,34 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.view3DPage.Refreshview();
                 StaticVariables.SideviewPage.Refreshview();
             }
+        }
+        private Image TextureImage(SoilData soil)
+        {
+            Image image = new Image();
+            image.Width = 55;
+            image.Height = 27;
+            if (soil.isSoilTexture)
+            {
+                image.Source = new BitmapImage(soil.SoilTexture.TextureUri);
+                image.Stretch = Stretch.Fill;
+            }
+            else
+            {
+                image.Source = new DrawingImage(
+                    new GeometryDrawing(
+                        new SolidColorBrush(soil.SoilColor),
+                        new Pen(new SolidColorBrush(Color.FromRgb(171,173,179)),
+                        1),
+                        new RectangleGeometry(
+                            new Rect(
+                                new Size(55, 27)
+                                )
+                            )
+                        )
+                    );
+                image.Stretch = Stretch.Fill;
+            }
+            return image;
         }
 
         private void Textbox_layername_TextChanged(object sender, TextChangedEventArgs e)

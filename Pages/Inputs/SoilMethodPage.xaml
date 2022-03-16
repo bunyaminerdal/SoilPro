@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
       xmlns:datas="clr-namespace:ExDesign.Datas"
       mc:Ignorable="d" 
-      d:DesignHeight="750" d:DesignWidth="900"
+      d:DesignHeight="750" d:DesignWidth="1250"
       Title="SoilMethodPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid>
@@ -73,8 +73,8 @@
                                         <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Height}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="200" Text="{DynamicResource SoilLayerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="200" Text="{DynamicResource AssignedSoilType}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="55" Text="{DynamicResource Texture}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="260" Text="{DynamicResource AssignedSoilName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="γ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="γd" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="Φ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>

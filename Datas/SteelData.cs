@@ -32,9 +32,14 @@ namespace ExDesign.Datas
         {
             if (!File.Exists(Path))
             {
-                SteelData steel1 = new SteelData() { isDefault = true, Name = "S235", fy=235000,E = 200000000};
+                SteelData steel1 = new SteelData() { isDefault = true, Name = "S235H", fy = 235000, E = 200000000 };
+                SteelData steel2 = new SteelData() { isDefault = true, Name = "S275H", fy = 275000, E = 200000000 };
+                SteelData steel3 = new SteelData() { isDefault = true, Name = "S355H", fy = 355000, E = 200000000 };
+
                 List<SteelData> tempList = new List<SteelData>();
                 tempList.Add(steel1);
+                tempList.Add(steel2);
+                tempList.Add(steel3);
 
                 string json = JsonConvert.SerializeObject(tempList.ToArray());
 

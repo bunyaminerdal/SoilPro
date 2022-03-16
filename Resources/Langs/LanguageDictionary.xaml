@@ -87,7 +87,7 @@
     <system:String x:Key="VesicInfo" >Vesic model used widely thru all world. Model find soil subgrade modulus according to soils Young Modulus	 and Poisson ratio. Also this model includes the beam elements rigidity. Can be used in all cases.
     </system:String>
     <system:String x:Key="SoilLayerName" >Soil Layer Name</system:String>
-    <system:String x:Key="AssignedSoilType" >Assigned Soil Type</system:String>
+    <system:String x:Key="AssignedSoilName" >Assigned Soil Name</system:String>
     <system:String x:Key="AddSoilLayer" >Add Soil Layer</system:String>
     <system:String x:Key="DeleteSoilLayer" >Delete Soil Layer</system:String>
     <system:String x:Key="SoilLayer" >Soil Layer</system:String>
@@ -136,7 +136,7 @@
     <system:String x:Key="Clay" >Clay</system:String>    
     <system:String x:Key="Volcanic" >Volcanic</system:String>
     <system:String x:Key="Metamorphic" >Metamorphic</system:String>
-    <system:String x:Key="Sedimantory" >Sedimantory</system:String>
+    <system:String x:Key="Sedimentary" >Sedimentary</system:String>
     <system:String x:Key="NonPlastic" >Non-Plastic</system:String>
     <system:String x:Key="Plastic" >Plastic</system:String>    
     <system:String x:Key="Loose" >Loose</system:String>    
@@ -148,6 +148,9 @@
     <system:String x:Key="Poor" >Poor</system:String>    
     <system:String x:Key="Fair" >Fair</system:String>
     <system:String x:Key="Excellent" >Excellent</system:String>
-    <system:String x:Key="Filters" >Filters</system:String>    
+    <system:String x:Key="Filters" >Filters</system:String>
+    <system:String x:Key="ClosingMessage" >ExDesign is closing, do you want to save before closing?</system:String> 
+    <system:String x:Key="Texture" >Texture</system:String> 
+    
 
 </ResourceDictionary>

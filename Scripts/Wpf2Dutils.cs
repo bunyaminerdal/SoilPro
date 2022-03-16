@@ -168,7 +168,11 @@ namespace ExDesign.Scripts
             LineGeometry lineGeometry = new LineGeometry(new Point(start.X - ex, start.Y - ex - diff), new Point(start.X + _length + ex, start.Y - ex - diff));
             LineGeometry lineGeometryleft = new LineGeometry(new Point(start.X, start.Y - diff), new Point(start.X, start.Y - 2 * ex - diff));
             LineGeometry lineGeometryright = new LineGeometry(new Point(start.X + _length, start.Y - diff), new Point(start.X + _length, start.Y - 2 * ex - diff));
-            if(text =="") text =string.Join( Math.Round(_length,2).ToString()," ",StaticVariables.dimensionUnit);
+            if(text =="") text =Math.Round(_length,2).ToString();
+            if(StaticVariables.IsDimensionShowed)
+            {
+                text = string.Join(text," ", StaticVariables.dimensionUnit);
+            }
             // Create the initial formatted text string.
             FormattedText formattedText = new FormattedText(
                 text,

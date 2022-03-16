@@ -284,9 +284,9 @@ namespace ExDesign.Pages.Inputs.Views
                         case WallType.ConcreteRectangleWall:
                             break;
                         case WallType.ConcretePileWall:                            
-                            GeometryDrawing capBeamDimension = Wpf2Dutils.Dimension(capBeamCenter, new Point(capBeamCenter.X+capBeam_b,capBeamCenter.Y), Colors.DarkBlue, WpfUtils.GetDimension(capBeam_b).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing capBeamDimension = Wpf2Dutils.Dimension(capBeamCenter, new Point(capBeamCenter.X+capBeam_b,capBeamCenter.Y), Colors.DarkBlue, WpfUtils.GetDimension(capBeam_b).ToString() );
                             mainDrawingGroup.Children.Add(capBeamDimension);
-                            GeometryDrawing capBeamDimension1 = Wpf2Dutils.Dimension(new Point(capBeamCenter.X + capBeam_b, capBeamCenter.Y), new Point(capBeamCenter.X + capBeam_b, capBeamCenter.Y+capBeam_h), Colors.DarkBlue, WpfUtils.GetDimension(capBeam_h).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing capBeamDimension1 = Wpf2Dutils.Dimension(new Point(capBeamCenter.X + capBeam_b, capBeamCenter.Y), new Point(capBeamCenter.X + capBeam_b, capBeamCenter.Y+capBeam_h), Colors.DarkBlue, WpfUtils.GetDimension(capBeam_h).ToString() );
                             mainDrawingGroup.Children.Add(capBeamDimension1);
                             break;
                         case WallType.SteelSheetWall:
@@ -294,33 +294,33 @@ namespace ExDesign.Pages.Inputs.Views
                         default:
                             break;
                     }                    
-                    GeometryDrawing wallDimensionDown = Wpf2Dutils.Dimension(new Point(center.X + wall_t, center.Y + wall_h), new Point(center.X, center.Y + wall_h), Colors.DarkBlue, WpfUtils.GetDimension(wall_t).ToString() + " " + StaticVariables.dimensionUnit);
+                    GeometryDrawing wallDimensionDown = Wpf2Dutils.Dimension(new Point(center.X + wall_t, center.Y + wall_h), new Point(center.X, center.Y + wall_h), Colors.DarkBlue, WpfUtils.GetDimension(wall_t).ToString() );
                     mainDrawingGroup.Children.Add(wallDimensionDown);                                       
-                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X, center.Y+wall_h),new Point(center.X, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() + " " + StaticVariables.dimensionUnit);
+                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X, center.Y+wall_h),new Point(center.X, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() );
                     mainDrawingGroup.Children.Add(wallHeightLeft);
                     
                     break;
                 case Stage.ExDesign:
-                    GeometryDrawing exHeightLeft = Wpf2Dutils.Dimension(new Point(center.X-frontT_X1-frontT_X2, center.Y + excavationHeight), new Point(center.X - frontT_X1 - frontT_X2, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(excavationHeight).ToString() + " " + StaticVariables.dimensionUnit);
+                    GeometryDrawing exHeightLeft = Wpf2Dutils.Dimension(new Point(center.X-frontT_X1-frontT_X2, center.Y + excavationHeight), new Point(center.X - frontT_X1 - frontT_X2, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(excavationHeight).ToString() );
                     mainDrawingGroup.Children.Add(exHeightLeft);
                     switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
                     {
                         case ExcavationType.none:
                             break;
                         case ExcavationType.type1:
-                            GeometryDrawing _exZ = Wpf2Dutils.Dimension( new Point(center.X + wall_t, center.Y + excavationHeight-frontT_Z), new Point(center.X + wall_t, center.Y + excavationHeight), Colors.DarkBlue, WpfUtils.GetDimension(frontT_Z).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _exZ = Wpf2Dutils.Dimension( new Point(center.X + wall_t, center.Y + excavationHeight-frontT_Z), new Point(center.X + wall_t, center.Y + excavationHeight), Colors.DarkBlue, WpfUtils.GetDimension(frontT_Z).ToString() );
                             mainDrawingGroup.Children.Add(_exZ);
-                            GeometryDrawing _exX1 = Wpf2Dutils.Dimension(new Point(center.X - frontT_X2, center.Y + excavationHeight ), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight ), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X1).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _exX1 = Wpf2Dutils.Dimension(new Point(center.X - frontT_X2, center.Y + excavationHeight ), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight ), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X1).ToString() );
                             mainDrawingGroup.Children.Add(_exX1);
-                            GeometryDrawing _exX2 = Wpf2Dutils.Dimension(new Point(center.X, center.Y + excavationHeight ), new Point(center.X - frontT_X2, center.Y + excavationHeight ), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X2).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _exX2 = Wpf2Dutils.Dimension(new Point(center.X, center.Y + excavationHeight ), new Point(center.X - frontT_X2, center.Y + excavationHeight ), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X2).ToString() );
                             mainDrawingGroup.Children.Add(_exX2);
                             break;
                         case ExcavationType.type2:
-                            GeometryDrawing exZ = Wpf2Dutils.Dimension(new Point(center.X +wall_t, center.Y + excavationHeight ), new Point(center.X +wall_t, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_Z).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing exZ = Wpf2Dutils.Dimension(new Point(center.X +wall_t, center.Y + excavationHeight ), new Point(center.X +wall_t, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_Z).ToString() );
                             mainDrawingGroup.Children.Add(exZ);
-                            GeometryDrawing exX1 = Wpf2Dutils.Dimension(new Point(center.X -  frontT_X2, center.Y + excavationHeight+frontT_Z), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X1).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing exX1 = Wpf2Dutils.Dimension(new Point(center.X -  frontT_X2, center.Y + excavationHeight+frontT_Z), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X1).ToString() );
                             mainDrawingGroup.Children.Add(exX1);
-                            GeometryDrawing exX2 = Wpf2Dutils.Dimension(new Point(center.X , center.Y + excavationHeight + frontT_Z), new Point(center.X - frontT_X2, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X2).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing exX2 = Wpf2Dutils.Dimension(new Point(center.X , center.Y + excavationHeight + frontT_Z), new Point(center.X - frontT_X2, center.Y + excavationHeight + frontT_Z), Colors.DarkBlue, WpfUtils.GetDimension(frontT_X2).ToString() );
                             mainDrawingGroup.Children.Add(exX2);
                             break;
                         default:
@@ -331,21 +331,21 @@ namespace ExDesign.Pages.Inputs.Views
                         case GroundSurfaceType.flat:
                             break;
                         case GroundSurfaceType.type1:
-                            GeometryDrawing grA1 = Wpf2Dutils.Dimension(new Point(center.X +wall_t + backT_A1, center.Y ), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing grA1 = Wpf2Dutils.Dimension(new Point(center.X +wall_t + backT_A1, center.Y ), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() );
                             mainDrawingGroup.Children.Add(grA1);
                             break;
                         case GroundSurfaceType.type2:
-                            GeometryDrawing _grA1 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1, center.Y), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _grA1 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1, center.Y), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() );
                             mainDrawingGroup.Children.Add(_grA1);
-                            GeometryDrawing grB = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 , center.Y - backT_h), new Point(center.X + wall_t + backT_A1 , center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_B).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing grB = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 , center.Y - backT_h), new Point(center.X + wall_t + backT_A1 , center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_B).ToString() );
                             mainDrawingGroup.Children.Add(grB);
                             break;
                         case GroundSurfaceType.type3:
-                            GeometryDrawing _1grA1 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1, center.Y), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _1grA1 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1, center.Y), new Point(center.X + wall_t, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A1).ToString() );
                             mainDrawingGroup.Children.Add(_1grA1);
-                            GeometryDrawing _grA2 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 +backT_A2, center.Y), new Point(center.X + wall_t+backT_A1, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A2).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _grA2 = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 +backT_A2, center.Y), new Point(center.X + wall_t+backT_A1, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(backT_A2).ToString() );
                             mainDrawingGroup.Children.Add(_grA2);
-                            GeometryDrawing _grB = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y -backT_h), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y ), Colors.DarkBlue, WpfUtils.GetDimension(backT_B).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing _grB = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y -backT_h), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y ), Colors.DarkBlue, WpfUtils.GetDimension(backT_B).ToString() );
                             mainDrawingGroup.Children.Add(_grB);
                             break;
                         default:
@@ -357,9 +357,9 @@ namespace ExDesign.Pages.Inputs.Views
                         case GroundWaterType.none:
                             break;
                         default:
-                            GeometryDrawing frontWDimension = Wpf2Dutils.Dimension(new Point(center.X-frontT_X1-frontT_X2, center.Y+excavationHeight+groundW_h2), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight ),Colors.DarkBlue, WpfUtils.GetDimension(groundW_h2).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing frontWDimension = Wpf2Dutils.Dimension(new Point(center.X-frontT_X1-frontT_X2, center.Y+excavationHeight+groundW_h2), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight ),Colors.DarkBlue, WpfUtils.GetDimension(groundW_h2).ToString() );
                             mainDrawingGroup.Children.Add(frontWDimension);                           
-                            GeometryDrawing backWDimension = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y+groundW_h1), Colors.DarkBlue, WpfUtils.GetDimension(groundW_h1).ToString() + " " + StaticVariables.dimensionUnit);
+                            GeometryDrawing backWDimension = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y+groundW_h1), Colors.DarkBlue, WpfUtils.GetDimension(groundW_h1).ToString() );
                             mainDrawingGroup.Children.Add(backWDimension);
                             break;
                     }
@@ -383,7 +383,7 @@ namespace ExDesign.Pages.Inputs.Views
                                 {
                                     soilLayerheight = soilLayer.LayerHeight;
                                 }
-                                GeometryDrawing soilLayerDimension = Wpf2Dutils.Dimension(soilLayerDimensionCenter,new Point(soilLayerDimensionCenter.X,soilLayerDimensionCenter.Y+soilLayerheight),Colors.DarkBlue, WpfUtils.GetDimension(soilLayerheight).ToString() + " " + StaticVariables.dimensionUnit);
+                                GeometryDrawing soilLayerDimension = Wpf2Dutils.Dimension(soilLayerDimensionCenter,new Point(soilLayerDimensionCenter.X,soilLayerDimensionCenter.Y+soilLayerheight),Colors.DarkBlue, WpfUtils.GetDimension(soilLayerheight).ToString() );
                                 totalHeight += soilLayer.LayerHeight;
                                 mainDrawingGroup.Children.Add(soilLayerDimension);
                             }

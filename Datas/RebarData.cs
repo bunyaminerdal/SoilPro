@@ -32,8 +32,11 @@ namespace ExDesign.Datas
             if (!File.Exists(Path))
             {
                 RebarData rebar1 = new RebarData() { isDefault = true, Name = "B420C", fyk = 420000, E = 200000000 };
+                RebarData rebar2 = new RebarData() { isDefault = true, Name = "B500C", fyk = 500000, E = 200000000 };
+
                 List<RebarData> tempList = new List<RebarData>();
                 tempList.Add(rebar1);
+                tempList.Add(rebar2);
 
                 string json = JsonConvert.SerializeObject(tempList.ToArray());
 

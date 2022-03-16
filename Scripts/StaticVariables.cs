@@ -46,6 +46,7 @@ namespace ExDesign.Scripts
         public static double levelFontHeight = 0.4;
         public static double soilLayerBoxWidth = 3;
         public static double levelIconHeight = 0.3;
+        public static bool IsDimensionShowed = false;
     }
     public enum WallType
     {
@@ -151,7 +152,7 @@ namespace ExDesign.Scripts
         None,
         Volcanic,
         Metamorphic,
-        Sedimantory,
+        Sedimentary,
     }
     public enum RockSubTypes
     {

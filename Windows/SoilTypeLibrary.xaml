@@ -102,7 +102,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <RadioButton Grid.Column="0" Content="{DynamicResource Volcanic}" x:Name="volcanic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             <RadioButton Grid.Column="1" Content="{DynamicResource Metamorphic}" x:Name="metamorphic_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
-                                            <RadioButton Grid.Column="2" Content="{DynamicResource Sedimantory}" x:Name="sedimantory_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
+                                            <RadioButton Grid.Column="2" Content="{DynamicResource Sedimentary}" x:Name="sedimantory_radiobutton" Checked="soil_radiobutton_Checked" PreviewMouseDown="soil_radiobutton_PreviewMouseDown"></RadioButton>
                                             </Grid>
                                         </DockPanel>
                                         <DockPanel x:Name="silttype_radiobutton_panel" Visibility="Collapsed" Margin="2.5">
@@ -179,7 +179,7 @@
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource name}" Width="80"/>
                         <Label  Content=":" Width="30" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="soilname" MaxLength="30" Width="210" Margin="2" TextChanged="soilname_TextChanged"  />
+                        <TextBox x:Name="soilname" MaxLength="45" Width="270" Margin="2" TextChanged="soilname_TextChanged"  />
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource NaturalUnitWeight}" Width="160"/>
@@ -247,17 +247,18 @@
                         <TextBox x:Name="poissonRatio" Width="120" Margin="2" TextChanged="poissonRatio_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="poissonRatio_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
-                    <DockPanel  HorizontalAlignment="Left" x:Name="koPanel">
-                        <Label  Content="{DynamicResource K0}" Width="160"/>
-                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="K0" Width="120" Margin="2" TextChanged="K0_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
-                        <Label x:Name="ko_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
-                    </DockPanel>
+                    
                     <DockPanel  HorizontalAlignment="Left" x:Name="ocrPanel">
                         <Label  Content="{DynamicResource OCR}" Width="160"/>
                         <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
                         <TextBox x:Name="ocr" Width="120" Margin="2" TextChanged="ocr_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
                         <Label x:Name="ocr_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
+                    </DockPanel>
+                    <DockPanel  HorizontalAlignment="Left" x:Name="koPanel">
+                        <Label  Content="{DynamicResource K0}" Width="160"/>
+                        <Label  Content=":" Width="40" HorizontalContentAlignment="Right"/>
+                        <TextBox x:Name="K0" Width="120" Margin="2" TextChanged="K0_TextChanged" PreviewTextInput="naturalUnitWeight_PreviewTextInput" PreviewKeyDown="naturalUnitWeight_PreviewKeyDown" />
+                        <Label x:Name="ko_unit" Content="" Width="80" HorizontalContentAlignment="Left"/>
                     </DockPanel>
                     
                     <DockPanel HorizontalAlignment="Left">
