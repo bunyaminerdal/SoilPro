@@ -117,7 +117,7 @@ namespace ExDesign.Pages.Inputs
                 textureImage.Width = 55;
                 if (item.Soil != null) textureImage = TextureImage(WpfUtils.GetSoilData(item.Soil.ID));
                 ComboBox comboBox = new ComboBox();
-                comboBox.Width = 260;
+                comboBox.Width = 300;
                 comboBox.ItemsSource = StaticVariables.viewModel.soilDatas;
                 comboBox.DisplayMemberPath = "Name";                
                 comboBox.Name ="combo_"+ layerIndex;
@@ -126,34 +126,102 @@ namespace ExDesign.Pages.Inputs
                 comboBox.VerticalContentAlignment = VerticalAlignment.Center;
                 TextBox textbox_gama = new TextBox();
                 textbox_gama.Width = 80;
-                textbox_gama.Text = comboBox.SelectedIndex >=0 ? ((SoilData)comboBox.SelectedItem).NaturalUnitWeight.ToString():"" ;
+                textbox_gama.Text = comboBox.SelectedIndex >=0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetDensity(((SoilData)comboBox.SelectedItem).NaturalUnitWeight)) : "" ;
                 textbox_gama.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_gama.IsEnabled = false;
                 TextBox textbox_gamasat = new TextBox();
                 textbox_gamasat.Width = 80;
-                textbox_gamasat.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).SaturatedUnitWeight.ToString():"";
+                textbox_gamasat.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetDensity(((SoilData)comboBox.SelectedItem).SaturatedUnitWeight)) : "";
                 textbox_gamasat.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_gamasat.IsEnabled = false;
                 TextBox textbox_fi = new TextBox();
                 textbox_fi.Width = 80;
-                textbox_fi.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).SoilFrictionAngle.ToString():"";
                 textbox_fi.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_fi.IsEnabled = false;
                 TextBox textbox_Cprime = new TextBox();
                 textbox_Cprime.Width = 80;
-                textbox_Cprime.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).EffectiveCohesion.ToString():"";
                 textbox_Cprime.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_Cprime.IsEnabled = false;
                 TextBox textbox_Cu = new TextBox();
                 textbox_Cu.Width = 80;
-                textbox_Cu.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).UndrainedShearStrength.ToString():"";
+                if (comboBox.SelectedIndex >= 0)
+                {
+                    switch (WpfUtils.GetSoilState(((SoilData)comboBox.SelectedItem).SoilStressStateIndex))
+                    {
+                        case SoilState.Drained:
+                            textbox_Cu.Text = " - ";
+                            textbox_fi.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(((SoilData)comboBox.SelectedItem).SoilFrictionAngle) : "";
+                            textbox_Cprime.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).EffectiveCohesion)) : "";
+                            break;
+                        case SoilState.UnDrained:
+                            textbox_Cu.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).UndrainedShearStrength)) : "";
+                            textbox_fi.Text = "0";
+                            textbox_Cprime.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).WallSoilAdhesion)) : "";
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 textbox_Cu.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_Cu.IsEnabled = false;
+                TextBox textbox_gamad = new TextBox();
+                textbox_gamad.Width = 80;
+                textbox_gamad.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(((SoilData)comboBox.SelectedItem).WallSoilFrictionAngle) : "";
+                textbox_gamad.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_gamad.IsEnabled = false;
                 TextBox textbox_Poisson = new TextBox();
                 textbox_Poisson.Width = 80;
-                textbox_Poisson.Text = comboBox.SelectedIndex >= 0 ? ((SoilData)comboBox.SelectedItem).PoissonRatio.ToString():"";
+                textbox_Poisson.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(((SoilData)comboBox.SelectedItem).PoissonRatio) : "";
                 textbox_Poisson.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_Poisson.IsEnabled = false;
+                TextBox textbox_SoilState = new TextBox();
+                textbox_SoilState.Width = 80;
+                textbox_SoilState.Text = comboBox.SelectedIndex >= 0 ? FindResource(WpfUtils.GetSoilState(((SoilData)comboBox.SelectedItem).SoilStressStateIndex).ToString()).ToString() : "";
+                textbox_SoilState.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_SoilState.IsEnabled = false;
+                TextBox textbox_OCR = new TextBox();
+                textbox_OCR.Width = 80;
+                if(comboBox.SelectedIndex >= 0)
+                {
+                    switch (((SoilData)comboBox.SelectedItem).SoilStateKoIndex)
+                    {
+                        case 2:
+                            textbox_OCR.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(((SoilData)comboBox.SelectedItem).Ocr) : "";
+                            break;
+                        default:
+                            textbox_OCR.Text = "1";
+                            break;
+                    }
+                }
+                
+                textbox_OCR.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_OCR.IsEnabled = false;
+                TextBox textbox_K0 = new TextBox();
+                textbox_K0.Width = 80;
+                textbox_K0.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(((SoilData)comboBox.SelectedItem).K0) : "";
+                textbox_K0.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_K0.IsEnabled = false;
+                TextBox textbox_model_parameter = new TextBox();
+                textbox_model_parameter.Width = 80;
+                switch (WpfUtils.GetSoilModelType(StaticVariables.viewModel.SoilModelIndex))
+                {
+                    case SoilModelType.Schmitt_Model:
+                        textbox_model_parameter.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).OedometricModulus)) : "";
+                        selected_parameter.Text = "Eoed";
+                        break;
+                    case SoilModelType.Chadeisson_Model:
+                        textbox_model_parameter.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(((SoilData)comboBox.SelectedItem).CohesionFactor) : "";
+                        selected_parameter.Text = "Ap";
+                        break;
+                    case SoilModelType.Vesic_Model:
+                        textbox_model_parameter.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).YoungModulus)) : "";
+                        selected_parameter.Text = "Es'";
+                        break;
+                    default:
+                        break;
+                }
+                textbox_model_parameter.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_model_parameter.IsEnabled = false;
                 dockPanel.Children.Add(deleteButton);
                 dockPanel.Children.Add(textBox_no);
                 dockPanel.Children.Add(textbox_height);
@@ -164,8 +232,13 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_gamasat);
                 dockPanel.Children.Add(textbox_fi);
                 dockPanel.Children.Add(textbox_Cprime);
-                dockPanel.Children.Add(textbox_Cu);
+                dockPanel.Children.Add(textbox_Cu);  
+                dockPanel.Children.Add(textbox_gamad);
                 dockPanel.Children.Add(textbox_Poisson);
+                dockPanel.Children.Add(textbox_SoilState);
+                dockPanel.Children.Add(textbox_OCR);
+                dockPanel.Children.Add(textbox_K0);
+                dockPanel.Children.Add(textbox_model_parameter);
                 soilLayerGroupbox.Children.Add(dockPanel);
 
                 //refresh windows

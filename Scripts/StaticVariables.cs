@@ -161,4 +161,9 @@ namespace ExDesign.Scripts
         Fair,
         Excellent,
     }
+    public enum SoilState
+    {
+        Drained,
+        UnDrained,
+    }
 }

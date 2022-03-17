@@ -179,7 +179,7 @@
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource name}" Width="80"/>
                         <Label  Content=":" Width="30" HorizontalContentAlignment="Right"/>
-                        <TextBox x:Name="soilname" MaxLength="45" Width="270" Margin="2" TextChanged="soilname_TextChanged"  />
+                        <TextBox x:Name="soilname" MaxLength="50" Width="290" Margin="2" TextChanged="soilname_TextChanged"  />
                     </DockPanel>
                     <DockPanel  HorizontalAlignment="Left" >
                         <Label  Content="{DynamicResource NaturalUnitWeight}" Width="160"/>

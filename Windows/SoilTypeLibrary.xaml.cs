@@ -182,7 +182,7 @@ namespace ExDesign.Windows
             OedometricModulus.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress((selectedSoilData).OedometricModulus));
             CohesionFactor.Text = WpfUtils.ChangeDecimalOptions((selectedSoilData).CohesionFactor);
             YoungModulus.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress((selectedSoilData).YoungModulus));
-
+            
         }
 
         private void TextureDefinition()
@@ -235,6 +235,7 @@ namespace ExDesign.Windows
                 default:
                     break;
             }
+            selectedSoilData.SoilStressStateIndex = ((ComboBox)sender).SelectedIndex;
         }
 
         
@@ -264,6 +265,7 @@ namespace ExDesign.Windows
                     break;
             }
             K0_calculator();
+            selectedSoilData.SoilStateKoIndex = ((ComboBox)sender).SelectedIndex;
         }
 
         private void useTexture_Checked(object sender, RoutedEventArgs e)

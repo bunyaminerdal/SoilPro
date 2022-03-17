@@ -150,7 +150,8 @@
     <system:String x:Key="Excellent" >Excellent</system:String>
     <system:String x:Key="Filters" >Filters</system:String>
     <system:String x:Key="ClosingMessage" >ExDesign is closing, do you want to save before closing?</system:String> 
-    <system:String x:Key="Texture" >Texture</system:String> 
+    <system:String x:Key="Texture" >Texture</system:String>
+    <system:String x:Key="SoilState" >Soil State</system:String> 
     
 
 </ResourceDictionary>

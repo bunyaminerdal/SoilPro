@@ -422,6 +422,19 @@ namespace ExDesign.Scripts
             }
             return null;
         }
+        public static SoilState GetSoilState(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return SoilState.Drained;
+                    
+                case 1:
+                    return SoilState.UnDrained;
+                default:
+                    return SoilState.Drained;
+            }
+        }
         
         public static String LevelText(double level)
         {

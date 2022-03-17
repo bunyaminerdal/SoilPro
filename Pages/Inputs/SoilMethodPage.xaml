@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
       xmlns:datas="clr-namespace:ExDesign.Datas"
       mc:Ignorable="d" 
-      d:DesignHeight="750" d:DesignWidth="1250"
+      d:DesignHeight="750" d:DesignWidth="1980"
       Title="SoilMethodPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid>
@@ -41,7 +41,7 @@
 
                                 <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3">
                                     <ComboBox x:Name="soilModelCombobox" MinWidth="200" SelectionChanged="soilModelCombobox_SelectionChanged"  >
-                                        <ComboBoxItem x:Name="SMC1" >Schmitt Model</ComboBoxItem>
+                                        <ComboBoxItem x:Name="SMC1">Schmitt Model</ComboBoxItem>
                                         <ComboBoxItem x:Name="SMC2">Chadeisson Model</ComboBoxItem>
                                         <ComboBoxItem x:Name="SMC3">Vesic Model</ComboBoxItem>
                                     </ComboBox>
@@ -74,13 +74,18 @@
                                         <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Height}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="55" Text="{DynamicResource Texture}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="260" Text="{DynamicResource AssignedSoilName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="300" Text="{DynamicResource AssignedSoilName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="γ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="γd" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="Φ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="c'" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="Cu" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="δd" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="ν" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource SoilState}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="OCR" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="K0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox x:Name="selected_parameter" IsEnabled="False" Width="80" Text="K0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                     </DockPanel>
                                 </ScrollViewer>
                                 

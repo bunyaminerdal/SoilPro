@@ -275,7 +275,7 @@ namespace ExDesign.Pages.Inputs.Views
             double backT_d = 0;
             double backT_w_bottom = 0;
             double backT_w_top = 0;
-            Color backT_color = Colors.Transparent;
+            Color backT_color = Color.FromArgb(100, 200, 200, 200);
             switch (WpfUtils.GetGroundSurfaceType(StaticVariables.viewModel.GroundSurfaceTypeIndex))
             {
                 case GroundSurfaceType.flat:
@@ -287,7 +287,7 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_d = wall_d;
                     backT_w_bottom = backCubeLength - backT_A1;
                     backT_w_top = 0;
-                    backT_color = Color.FromArgb(100, 200, 200, 200);
+                    
                     break;
                 case GroundSurfaceType.type2:
                     backT_w_top_dis = backT_A1;
@@ -296,7 +296,7 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_d = wall_d;
                     backT_w_bottom = backCubeLength;
                     backT_w_top = backCubeLength - backT_A1;
-                    backT_color = Color.FromArgb(100, 200, 200, 200);
+                    
                     break;
                 case GroundSurfaceType.type3:
                     backT_w_top_dis = backT_A1 + backT_A2;
@@ -305,15 +305,26 @@ namespace ExDesign.Pages.Inputs.Views
                     backT_d = wall_d;
                     backT_w_bottom = backCubeLength - backT_A1;
                     backT_w_top = backCubeLength - backT_A1 - backT_A2;
-                    backT_color = Color.FromArgb(100, 200, 200, 200);
+                    
                     break;
                 default:
                     break;
             }
+            bool isbackTTextured = false;
+            Uri bacTTextureUri = null;
+            if (StaticVariables.viewModel.soilLayerDatas.Count > 0)
+            {
+                if(StaticVariables.viewModel.soilLayerDatas[0].Soil != null)
+                {
+                    backT_color = StaticVariables.viewModel.soilLayerDatas[0].Soil.SoilColor;
+                    isbackTTextured = StaticVariables.viewModel.soilLayerDatas[0].Soil.isSoilTexture;
+                    bacTTextureUri = StaticVariables.viewModel.soilLayerDatas[0].Soil.SoilTexture.TextureUri;
 
+                }
+            }
             Point3D BackTCenter = new Point3D(center3d.X, center3d.Y + centerY + backT_h, center3d.Z - wall_d / 2);
             WpfTrapezoid backT = new WpfTrapezoid(BackTCenter, backT_w_top, backT_w_bottom, backT_h, backT_d, backT_w_top_dis, backT_w_bottom_dis);
-            GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color, true, soilUri);
+            GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color, isbackTTextured, bacTTextureUri);
             //create backWater model
             Point3D backWCenter = new Point3D(center3d.X + 0.1, center3d.Y - groundW_h1 + centerY - 0.01, center3d.Z - backW_d / 2);
             WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
@@ -329,7 +340,7 @@ namespace ExDesign.Pages.Inputs.Views
                 if(soilLayer != null)
                 {
                     soiltotalHeight += soilLayer.LayerHeight;
-                    if (soiltotalHeight < wall_h)
+                    if (soiltotalHeight <= wall_h)
                     {
                         double soilbackCube_w = backCubeLength;
                         double soilbackCube_h = soilLayer.LayerHeight;
@@ -339,6 +350,11 @@ namespace ExDesign.Pages.Inputs.Views
                         if(soilLayer.Soil != null)
                         {
                             GeometryModel3D soilbackCubeModel = WpfCube.CreateCubeModel(soilbackCube, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                            groupScene.Children.Add(soilbackCubeModel);
+                        }
+                        else
+                        {
+                            GeometryModel3D soilbackCubeModel = WpfCube.CreateCubeModel(soilbackCube, Color.FromArgb(100, 200, 200, 200), false, soilUri);
                             groupScene.Children.Add(soilbackCubeModel);
                         }
                         
@@ -354,7 +370,7 @@ namespace ExDesign.Pages.Inputs.Views
                 double backCube_d = wall_d;
                 Point3D backCubeCenter = new Point3D(center3d.X, center3d.Y + centerY-soiltotalHeight, center3d.Z - backCube_d / 2);
                 WpfCube backCube = new WpfCube(backCubeCenter, backCube_w, backCube_h, backCube_d);
-                GeometryModel3D backCubeModel = WpfCube.CreateCubeModel(backCube, Color.FromArgb(100, 200, 200, 200), true, soilUri);
+                GeometryModel3D backCubeModel = WpfCube.CreateCubeModel(backCube, Color.FromArgb(100, 200, 200, 200), false, soilUri);
                 groupScene.Children.Add(backCubeModel);
 
             }
@@ -373,7 +389,7 @@ namespace ExDesign.Pages.Inputs.Views
             double frontT_w_bottom  =0;
             double frontT_w_top  =0;
             Point3D TrapezoidCenter = new Point3D(frontCubeCenter.X + frontT_w_bottom_dis, frontCubeCenter.Y + frontT_h, frontCubeCenter.Z);
-            Color frontT_color = Colors.Transparent;
+            Color frontT_color = Color.FromArgb(100, 200, 200, 200);
             switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
             {
                 case ExcavationType.none:                     
@@ -386,7 +402,7 @@ namespace ExDesign.Pages.Inputs.Views
                      frontT_w_bottom = frontT_X1 + frontT_X2;
                      frontT_w_top =  frontT_X2;
                     TrapezoidCenter = new Point3D(frontCubeCenter.X , frontCubeCenter.Y + frontT_h, frontCubeCenter.Z);
-                    frontT_color = Color.FromArgb(100, 200, 200, 200);
+                    
                     break;
                 case ExcavationType.type2:
                     frontCube_h = Math.Clamp(wall_h - excavationHeight-frontT_Z, 0, double.MaxValue);
@@ -398,18 +414,17 @@ namespace ExDesign.Pages.Inputs.Views
                      frontT_w_bottom = frontCube_w - frontT_w_bottom_dis - frontT_X2;
                      frontT_w_top = frontCube_w - frontT_X1 - frontT_X2;
                     TrapezoidCenter = new Point3D(frontCubeCenter.X + frontT_w_bottom_dis, frontCubeCenter.Y + frontT_h, frontCubeCenter.Z);
-                    frontT_color = Color.FromArgb(100, 200, 200, 200);
                     break;
                 default:                     
                     break;
             }
             
             WpfCube frontCube = new WpfCube(frontCubeCenter, frontCube_w, frontCube_h, frontCube_d);
-            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200), true, soilUri);
+            GeometryModel3D frontCubeModel = WpfCube.CreateCubeModel(frontCube, Color.FromArgb(100, 200, 200, 200), false, soilUri);
 
 
             WpfTrapezoid frontT = new WpfTrapezoid(TrapezoidCenter, frontT_w_top, frontT_w_bottom, frontT_h, frontT_d, frontT_w_top_dis, frontT_w_bottom_dis);
-            GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color,true,soilUri);
+            GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color,false,soilUri);
                         
                                  
             Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y +centerY- groundW_h2 - 0.01 - excavationHeight, center3d.Z - frontW_d / 2);
@@ -418,7 +433,7 @@ namespace ExDesign.Pages.Inputs.Views
 
             Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
             WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(frontCubeLength+backCubeLength), bottomT_h, wall_d);
-            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), true, soilUri);
+            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
 
 
             
