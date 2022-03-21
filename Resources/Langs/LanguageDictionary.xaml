@@ -152,6 +152,21 @@
     <system:String x:Key="ClosingMessage" >ExDesign is closing, do you want to save before closing?</system:String> 
     <system:String x:Key="Texture" >Texture</system:String>
     <system:String x:Key="SoilState" >Soil State</system:String> 
+    <system:String x:Key="Anchors" >Anchors</system:String> 
+    <system:String x:Key="AddAnchor" >Add Anchor</system:String>
+    <system:String x:Key="AnchorParameterLibrary" >Anchor Parameter Library</system:String>
+    <system:String x:Key="Depth" >Depth</system:String> 
+    <system:String x:Key="AnchorName" >Anchor Name</system:String> 
+    <system:String x:Key="FreeLength" >Free Length</system:String> 
+    <system:String x:Key="RootLength" >Root Length</system:String>
+    <system:String x:Key="Inclination" >Inclination</system:String> 
+    <system:String x:Key="Spacing" >Spacing</system:String>
+    <system:String x:Key="RootDiameter" >Root Diameter</system:String>
+    <system:String x:Key="NumberOfCable" >Number of Cable</system:String> 
+    <system:String x:Key="CableDiameter" >Cable Diameter</system:String> 
+    <system:String x:Key="RootModulus" >Root Modulus</system:String>
+    <system:String x:Key="PreStressForce" >Pre-Stress Force</system:String> 
+    <system:String x:Key="BreakingStrength" >Breaking Strength</system:String> 
+    <system:String x:Key="TotalNominalArea" >Total Nominal Area</system:String> 
     
-
 </ResourceDictionary>

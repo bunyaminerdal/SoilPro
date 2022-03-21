@@ -26,6 +26,7 @@ namespace ExDesign.Pages.Inputs
         WallProperties wallProperties   =new WallProperties();
         ExDesignPage exDesignPage = new ExDesignPage();
         SoilMethodPage soilMethodPage = new SoilMethodPage();
+        AnchorsPage anchorsPage = new AnchorsPage();
         public InputsMainPage()
         {
             InitializeComponent();
@@ -51,6 +52,9 @@ namespace ExDesign.Pages.Inputs
                 case Stage.SoilMethod:
                     Main_pro.Content = soilMethodPage;
                     break;
+                case Stage.Anchors:
+                    Main_pro.Content = anchorsPage;
+                    break;
                 default:
                     Main_pro.Content = materialsPage;
                     break;
@@ -75,6 +79,9 @@ namespace ExDesign.Pages.Inputs
                 case Stage.SoilMethod:
                     SoilMethodBttn.IsChecked= true;
                     break;
+                case Stage.Anchors:
+                    AnchorBttn.IsChecked = true;
+                    break;
                 default:
                     MaterialsBttn.IsChecked = true;
                     break;
@@ -95,6 +102,10 @@ namespace ExDesign.Pages.Inputs
         private void SolidMethodBttn_Checked(object sender, RoutedEventArgs e)
         {
             StaticEvents.StageChangeEvent?.Invoke(Stage.SoilMethod);
+        }
+        private void AnchorBttn_Checked(object sender, RoutedEventArgs e)
+        {
+            StaticEvents.StageChangeEvent?.Invoke(Stage.Anchors);
         }
         private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -157,8 +168,6 @@ namespace ExDesign.Pages.Inputs
             SoilLibrary.SoilLibraryDataReader();
             StaticVariables.view3DPage.Refreshview();
             StaticEvents.SetStageEvent?.Invoke(StaticVariables.viewModel.stage);
-        }
-
-        
+        }        
     }
 }

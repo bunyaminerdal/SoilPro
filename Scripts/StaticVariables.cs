@@ -105,7 +105,8 @@ namespace ExDesign.Scripts
         Materials,
         WallProperties,
         ExDesign,
-        SoilMethod
+        SoilMethod,
+        Anchors
     }
     public enum LevelDirection
     {

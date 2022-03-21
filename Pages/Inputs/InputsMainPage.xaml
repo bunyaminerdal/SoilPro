@@ -40,6 +40,7 @@
                 <RadioButton x:Name="WallPropertiesBttn" MinWidth="80" Content="{DynamicResource WallProperties}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="WallPropertiesBttn_Checked" />
                 <RadioButton x:Name="ExDesignBttn" MinWidth="80" Content="{DynamicResource ExDesign}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="ExDesignBttn_Checked" />
                 <RadioButton x:Name="SoilMethodBttn" MinWidth="80" Content="{DynamicResource SoilMethod}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SolidMethodBttn_Checked" />
+                <RadioButton x:Name="AnchorBttn" MinWidth="80" Content="{DynamicResource Anchors}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="AnchorBttn_Checked"  />
             </DockPanel>
         </DockPanel >
 

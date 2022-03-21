@@ -1,0 +1,71 @@
+﻿<Page x:Class="ExDesign.Pages.Inputs.AnchorsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1980"
+      Title="{DynamicResource Anchors}" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Frame x:Name="view3d_main" Grid.Column="0" NavigationUIVisibility="Hidden"/>
+                <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+            </Grid>
+            <StackPanel Grid.Row="1" Background="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>                    
+                    <StackPanel Grid.Column="0" >
+                        <GroupBox   Margin="5" Header="{DynamicResource Anchors}" >
+                            <StackPanel>
+                                <DockPanel HorizontalAlignment="Left">
+                                    <Button x:Name="addanchor_bttn" Content="{DynamicResource AddAnchor}" Width="150" Margin="10" Click="addanchor_bttn_Click" ></Button>
+                                    <Button x:Name="anchorparameterlibrary_bttn" Content="{DynamicResource AnchorParameterLibrary}" Width="150" Margin="10" ></Button>
+                                </DockPanel>
+                                <ScrollViewer x:Name="headerScrollBar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
+                                    <DockPanel HorizontalAlignment="Left" Margin="2" Height="27">
+                                        <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Depth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource FreeLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource RootLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Inclination}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Spacing}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource RootDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource NumberOfCable}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource CableDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource TotalNominalArea}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource RootModulus}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource PreStressForce}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                    </DockPanel>
+                                </ScrollViewer>
+
+                                <ScrollViewer x:Name="anchorsGridScrollBar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="200" ScrollChanged="anchorsGridScrollBar_ScrollChanged"  >
+                                    <StackPanel x:Name="anchorsGroupbox"  ></StackPanel>
+
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </GroupBox>
+                    </StackPanel>
+
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

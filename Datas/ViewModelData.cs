@@ -56,6 +56,7 @@ namespace ExDesign.Datas
         public double WallEA { get; set; } 
         public int SoilModelIndex { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
+        public ObservableCollection<AnchorData> anchorDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
         public ObservableCollection<SoilTextureData> soilTextures { get; set; }
         public Stage stage { get; set; }
@@ -331,6 +332,7 @@ namespace ExDesign.Datas
                     SaveDate = "0",
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),
+                    anchorDatas = new ObservableCollection<AnchorData>(),
                     soilTextures = new ObservableCollection<SoilTextureData>(),
 
                     stage = Stage.Materials,

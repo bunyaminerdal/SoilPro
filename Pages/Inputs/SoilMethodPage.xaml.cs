@@ -34,31 +34,7 @@ namespace ExDesign.Pages.Inputs
         private void UnitChange()
         {
             LayerGridInitialize();
-            //concretewall_height_unit.Content = StaticVariables.dimensionUnit;
-            //concretewall_thickness_unit.Content = StaticVariables.dimensionUnit;
-            //pilewall_height_unit.Content = StaticVariables.dimensionUnit;
-            //pile_diameter_unit.Content = StaticVariables.dimensionUnit;
-            //pile_space_unit.Content = StaticVariables.dimensionUnit;
-            //beam_height_unit.Content = StaticVariables.dimensionUnit;
-            //beam_width_unit.Content = StaticVariables.dimensionUnit;
-            //sheetpilewall_height_unit.Content = StaticVariables.dimensionUnit;
-            //areaText_unit.Content = StaticVariables.areaUnit + "/m";
-            //inertiaText_unit.Content = StaticVariables.inertiaUnit + "/m";
-            //EIText_unit.Content = StaticVariables.EIUnit + "/m";
-            //EAText_unit.Content = StaticVariables.forceUnit + "/m";
-
-            //concretewall_height.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()));
-            //concretewall_thickness.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()));
-            //pilewall_height.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()));
-            //pile_diameter.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallThickness()));
-            //pile_space.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetPileSpace()));
-            //beam_height.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamH()));
-            //beam_width.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetCapBeamB()));
-            //sheetpilewall_height.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()));
-            //areaText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetArea(StaticVariables.viewModel.GetWallArea()));
-            //inertiaText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetInertia(StaticVariables.viewModel.GetWallInertia()));
-            //EIText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetMomentScaleDimension(StaticVariables.viewModel.GetWallEI()));
-            //EAText.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(StaticVariables.viewModel.GetWallEA()));
+            
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
