@@ -12,7 +12,7 @@ using ExDesign.Scripts;
 
 namespace ExDesign.Datas
 {
-    public class SoilData
+    public class SoilData : ICloneable
     {
         public Guid ID { get; set; }
         public string Name { get; set; }

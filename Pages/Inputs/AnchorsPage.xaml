@@ -26,8 +26,8 @@
             <StackPanel Grid.Row="1" Background="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
+                        
                     </Grid.ColumnDefinitions>                    
                     <StackPanel Grid.Column="0" >
                         <GroupBox   Margin="5" Header="{DynamicResource Anchors}" >
@@ -35,6 +35,7 @@
                                 <DockPanel HorizontalAlignment="Left">
                                     <Button x:Name="addanchor_bttn" Content="{DynamicResource AddAnchor}" Width="150" Margin="10" Click="addanchor_bttn_Click" ></Button>
                                     <Button x:Name="anchorparameterlibrary_bttn" Content="{DynamicResource AnchorParameterLibrary}" Width="150" Margin="10" ></Button>
+                                    <CheckBox x:Name="useCableData_checkbox" Content="{DynamicResource UseCableDiameterAndNumberForDesign}" Margin="10" VerticalAlignment="Center"  Checked="useCableData_checkbox_Checked" Unchecked="useCableData_checkbox_Unchecked" ></CheckBox>
                                 </DockPanel>
                                 <ScrollViewer x:Name="headerScrollBar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
                                     <DockPanel HorizontalAlignment="Left" Margin="2" Height="27">
@@ -46,12 +47,15 @@
                                         <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Inclination}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Spacing}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="100" Text="{DynamicResource RootDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource NumberOfCable}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="105" Text="{DynamicResource NumberOfCable}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="100" Text="{DynamicResource CableDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource TotalNominalArea}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource RootModulus}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource PreStressForce}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                     </DockPanel>
                                 </ScrollViewer>
 

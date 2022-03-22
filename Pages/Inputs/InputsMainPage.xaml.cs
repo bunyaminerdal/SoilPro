@@ -164,10 +164,11 @@ namespace ExDesign.Pages.Inputs
             Steel.SteelDataReader();
             Pile.pileDiameterReader();
             Sheet.SheetDataReader();  
+            Wire.WireDataReader();  
             SoilTexture.SoilTextureLibraryDataReader();
             SoilLibrary.SoilLibraryDataReader();
             StaticVariables.view3DPage.Refreshview();
             StaticEvents.SetStageEvent?.Invoke(StaticVariables.viewModel.stage);
-        }        
+        }
     }
 }

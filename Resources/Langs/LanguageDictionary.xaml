@@ -167,6 +167,10 @@
     <system:String x:Key="RootModulus" >Root Modulus</system:String>
     <system:String x:Key="PreStressForce" >Pre-Stress Force</system:String> 
     <system:String x:Key="BreakingStrength" >Breaking Strength</system:String> 
-    <system:String x:Key="TotalNominalArea" >Total Nominal Area</system:String> 
+    <system:String x:Key="TotalNominalArea" >Total Nominal Area</system:String>
+    <system:String x:Key="UseCableDiameterAndNumberForDesign" >Use Cable Diameter And Number For Design</system:String> 
+    <system:String x:Key="SoldierBeam" >Soldier Beam</system:String> 
+    <system:String x:Key="BeamHeight" >Beam Height</system:String> 
+    <system:String x:Key="BeamWidth" >Beam Width</system:String> 
     
 </ResourceDictionary>

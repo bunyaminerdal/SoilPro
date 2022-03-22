@@ -15,10 +15,13 @@ namespace ExDesign.Datas
         public double Spacing { get; set; }
         public double RootDiameter { get; set; }
         public int NumberofCable { get; set; }
-        public int CableDiameter { get; set; }
+        public WireData CableData { get; set; }
         public double TotalNominalArea { get; set; }
         public double RootModulus { get; set; }
         public double PreStressForce { get; set; }
         public double BreakingStrength { get; set; }
+        public bool IsSoldierBeam { get; set; }
+        public double SoldierBeamHeight { get; set; }
+        public double SoldierBeamwidth { get; set; }
     }
 }

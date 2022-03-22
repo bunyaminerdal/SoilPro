@@ -422,6 +422,17 @@ namespace ExDesign.Scripts
             }
             return null;
         }
+        public static WireData GetWireData(string name)
+        {
+            foreach (var wire in Wire.WireDataList)
+            {
+                if (name == wire.NominalDiameter)
+                {
+                    return wire;
+                }
+            }
+            return null;
+        }
         public static SoilState GetSoilState(int index)
         {
             switch (index)

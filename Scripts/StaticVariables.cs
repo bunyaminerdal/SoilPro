@@ -31,7 +31,7 @@ namespace ExDesign.Scripts
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 100 },{ Units.N_m, 1 },
                                                                                                         { Units.kN_mm, 1000 },{ Units.kN_cm, 100 },{ Units.kN_m, 1 } };
 
-        public static Dictionary<Units,double> UnitForceFactors = new Dictionary<Units,double> {{ Units.kg_mm, (1000/gravity_factor) },{Units.kg_cm,(1000/gravity_factor) },{ Units.kg_m,(1000/gravity_factor)},
+        public static Dictionary<Units,double> UnitForceFactors = new Dictionary<Units,double> {{ Units.kg_mm, (1000*gravity_factor) },{Units.kg_cm,(1000*gravity_factor) },{ Units.kg_m,(1000*gravity_factor)},
                                                                                                         { Units.ton_mm, gravity_factor },{ Units.ton_cm, gravity_factor },{ Units.ton_m, gravity_factor },
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 1000 },{ Units.N_m, 1000 },
                                                                                                         { Units.kN_mm, 1 },{ Units.kN_cm, 1 },{ Units.kN_m, 1 } };

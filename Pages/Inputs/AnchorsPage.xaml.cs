@@ -34,6 +34,7 @@ namespace ExDesign.Pages.Inputs
 
         private void UnitChange()
         {
+            
             AnchorsGridInitialize();
 
         }
@@ -43,6 +44,15 @@ namespace ExDesign.Pages.Inputs
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.SideviewPage;
 
+            if (StaticVariables.viewModel.useCableDiameterAndNumberForDesign == true)
+            {                
+                useCableData_checkbox.IsChecked = true;
+            }
+            else
+            {
+                useCableData_checkbox.IsChecked = false;
+            }
+            
             StaticEvents.UnitChangeEvent += UnitChange;
 
             AnchorsGridInitialize();
@@ -129,7 +139,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_rootDiameter.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_rootDiameter.Name = "textboxRootDiameter_" + anchorIndex;
                 ComboBox comboBox_numberofcable = new ComboBox();
-                comboBox_numberofcable.Width = 100;
+                comboBox_numberofcable.Width = 105;
                 comboBox_numberofcable.Items.Add("2");
                 comboBox_numberofcable.Items.Add("3");
                 comboBox_numberofcable.Items.Add("4");
@@ -137,19 +147,103 @@ namespace ExDesign.Pages.Inputs
                 comboBox_numberofcable.Items.Add("6");
                 comboBox_numberofcable.Name = "comboNumberofCable_" + anchorIndex;
                 comboBox_numberofcable.SelectedIndex = item.NumberofCable;
+                if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
+                {
+                    comboBox_numberofcable.SelectedIndex = -1;
+                    comboBox_numberofcable.IsEnabled = false;
+                }
                 comboBox_numberofcable.SelectionChanged += ComboBox_numberofcable_SelectionChanged;
                 comboBox_numberofcable.VerticalContentAlignment = VerticalAlignment.Center;
                 ComboBox comboBox_cableDiameter = new ComboBox();
                 comboBox_cableDiameter.Width = 100;
-                comboBox_cableDiameter.Items.Add("3/8 in");
-                comboBox_cableDiameter.Items.Add("7/16 in");
-                comboBox_cableDiameter.Items.Add("1/2 in");
-                comboBox_cableDiameter.Items.Add("0.6 in");
+                comboBox_cableDiameter.ItemsSource = Wire.WireDataList;
+                comboBox_cableDiameter.DisplayMemberPath = "NominalDiameter";
                 comboBox_cableDiameter.Name = "comboCableDiameter_" + anchorIndex;
-                comboBox_cableDiameter.SelectedIndex = item.CableDiameter;
+                comboBox_cableDiameter.SelectedItem =WpfUtils.GetWireData( item.CableData.NominalDiameter);
+                if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
+                {
+                    comboBox_cableDiameter.SelectedIndex = -1;
+                    comboBox_cableDiameter.IsEnabled = false;
+                }
                 comboBox_cableDiameter.SelectionChanged += ComboBox_cableDiameter_SelectionChanged;
                 comboBox_cableDiameter.VerticalContentAlignment = VerticalAlignment.Center;
-
+                TextBox textbox_totalNominalArea = new TextBox();
+                textbox_totalNominalArea.Width = 125;
+                textbox_totalNominalArea.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetArea(item.TotalNominalArea));
+                textbox_totalNominalArea.VerticalContentAlignment = VerticalAlignment.Center;
+                if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
+                {
+                    textbox_totalNominalArea.IsEnabled = true;
+                }
+                else
+                {
+                    textbox_totalNominalArea.IsEnabled = false;
+                }
+                textbox_totalNominalArea.TextChanged += Textbox_totalnominalarea_TextChanged;
+                textbox_totalNominalArea.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_totalNominalArea.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_totalNominalArea.Name = "textboxTotalNominalArea_" + anchorIndex;
+                
+                TextBox textbox_breakingStrength = new TextBox();
+                textbox_breakingStrength.Width = 125;
+                textbox_breakingStrength.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(item.BreakingStrength));
+                textbox_breakingStrength.VerticalContentAlignment = VerticalAlignment.Center;
+                if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
+                {
+                    textbox_breakingStrength.IsEnabled = true;
+                }
+                else
+                {
+                    textbox_breakingStrength.IsEnabled = false;
+                }
+                textbox_breakingStrength.TextChanged += Textbox_breakingStrength_TextChanged;
+                textbox_breakingStrength.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_breakingStrength.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_breakingStrength.Name = "textboxbreakingStrength_" + anchorIndex;
+                
+                TextBox textbox_rootModulus = new TextBox();
+                textbox_rootModulus.Width = 125;
+                textbox_rootModulus.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(item.RootModulus));
+                textbox_rootModulus.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_rootModulus.TextChanged += Textbox_rootmodulus_TextChanged;
+                textbox_rootModulus.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_rootModulus.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_rootModulus.Name = "textboxRootModulus_" + anchorIndex;
+                TextBox textbox_preStressForce = new TextBox();
+                textbox_preStressForce.Width = 125;
+                textbox_preStressForce.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(item.PreStressForce));
+                textbox_preStressForce.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_preStressForce.TextChanged += Textbox_prestressforce_TextChanged;
+                textbox_preStressForce.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_preStressForce.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_preStressForce.Name = "textboxPreStressForce_" + anchorIndex;
+                DockPanel tempPanel = new DockPanel();
+                tempPanel.Width = 40;
+                CheckBox checkBox_soldierBeam = new CheckBox();
+                checkBox_soldierBeam.Width = 60;
+                checkBox_soldierBeam.VerticalContentAlignment = VerticalAlignment.Center;
+                if (item.IsSoldierBeam) checkBox_soldierBeam.IsChecked = true;
+                checkBox_soldierBeam.Checked += CheckBox_soldierBeam_Checked;
+                checkBox_soldierBeam.Unchecked += CheckBox_soldierBeam_Unchecked;
+                checkBox_soldierBeam.Name = "checkboxSoldierBeam_" + anchorIndex;
+                TextBox textbox_beamHeight = new TextBox();
+                textbox_beamHeight.Width = 100;
+                textbox_beamHeight.Text = WpfUtils.GetDimension(item.SoldierBeamHeight).ToString();
+                textbox_beamHeight.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_beamHeight.TextChanged += Textbox_beamheight_TextChanged;
+                textbox_beamHeight.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_beamHeight.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_beamHeight.Name = "textboxBeamHeight_" + anchorIndex;
+                if (!item.IsSoldierBeam) textbox_beamHeight.IsEnabled = false;
+                TextBox textbox_beamWidth = new TextBox();
+                textbox_beamWidth.Width = 100;
+                textbox_beamWidth.Text = WpfUtils.GetDimension(item.SoldierBeamwidth).ToString();
+                textbox_beamWidth.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_beamWidth.TextChanged += Textbox_beamwidth_TextChanged;
+                textbox_beamWidth.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_beamWidth.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_beamWidth.Name = "textboxBeamWidth_" + anchorIndex;
+                if (!item.IsSoldierBeam) textbox_beamWidth.IsEnabled = false;
                 dockPanel.Children.Add(deleteButton);
                 dockPanel.Children.Add(textBox_no);
                 dockPanel.Children.Add(textbox_depth);
@@ -158,8 +252,16 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_inclination);
                 dockPanel.Children.Add(textbox_spacing);
                 dockPanel.Children.Add(textbox_rootDiameter);
-                dockPanel.Children.Add(comboBox_numberofcable);                
+                dockPanel.Children.Add(comboBox_numberofcable);
                 dockPanel.Children.Add(comboBox_cableDiameter);                
+                dockPanel.Children.Add(textbox_totalNominalArea);
+                dockPanel.Children.Add(textbox_breakingStrength);
+                dockPanel.Children.Add(textbox_rootModulus);                
+                dockPanel.Children.Add(textbox_preStressForce);                
+                dockPanel.Children.Add(tempPanel);                
+                dockPanel.Children.Add(checkBox_soldierBeam);                
+                dockPanel.Children.Add(textbox_beamHeight);                
+                dockPanel.Children.Add(textbox_beamWidth);                
                 anchorsGroupbox.Children.Add(dockPanel);
 
                 //refresh windows
@@ -167,18 +269,63 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.SideviewPage.Refreshview();
             }
         }
+
+        private void CheckBox_soldierBeam_Unchecked(object sender, RoutedEventArgs e)
+        {
+            string checkName = ((CheckBox)sender).Name.Split('_')[1];
+            StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsSoldierBeam = false;
+
+            AnchorsGridInitialize();
+        }
+
+        private void CheckBox_soldierBeam_Checked(object sender, RoutedEventArgs e)
+        {
+            string checkName = ((CheckBox)sender).Name.Split('_')[1];
+            StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsSoldierBeam = true;
+            
+            AnchorsGridInitialize();
+        }
+
+        private void TotalNominalAreaCalc(AnchorData anchor)
+        {
+            int count = 0;
+            switch (anchor.NumberofCable)
+            {
+                case 0:
+                    count = 2;
+                    break;
+                case 1:
+                    count = 3;
+                    break;
+                case 2:
+                    count = 4;
+                    break;
+                case 3:
+                    count = 5;
+                    break;
+                case 4:
+                    count = 6;
+                    break;
+                default:
+                    count = 2;
+                    break;
+            }
+            anchor.BreakingStrength = count*anchor.CableData.BreakingStrength;
+            anchor.TotalNominalArea = count * anchor.CableData.NominalArea;            
+        }
+
         private void ComboBox_numberofcable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string comboname = ((ComboBox)sender).Name.Split('_')[1];
             StaticVariables.viewModel.anchorDatas[int.Parse(comboname)].NumberofCable = (((ComboBox)sender).SelectedIndex);
-
+            TotalNominalAreaCalc(StaticVariables.viewModel.anchorDatas[int.Parse(comboname)]);
             AnchorsGridInitialize();
         }
         private void ComboBox_cableDiameter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {            
             string comboname = ((ComboBox)sender).Name.Split('_')[1];
-            StaticVariables.viewModel.anchorDatas[int.Parse(comboname)].CableDiameter = (((ComboBox)sender).SelectedIndex);
-
+            StaticVariables.viewModel.anchorDatas[int.Parse(comboname)].CableData = ((WireData)((ComboBox)sender).SelectedItem);
+            TotalNominalAreaCalc(StaticVariables.viewModel.anchorDatas[int.Parse(comboname)]);
             AnchorsGridInitialize();
         }
         private void Textbox_depth_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -270,6 +417,64 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.SideviewPage.Refreshview();
             }
         }
+        private void Textbox_totalnominalarea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].TotalNominalArea = WpfUtils.GetValueArea(result);                
+            }
+        }
+        private void Textbox_rootmodulus_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].RootModulus = WpfUtils.GetValueStress(result);
+            }
+        }
+        private void Textbox_prestressforce_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].PreStressForce = WpfUtils.GetValueForce(result);
+            }
+        }
+        private void Textbox_breakingStrength_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].BreakingStrength = WpfUtils.GetForce(result);
+            }
+        }
+        private void Textbox_beamheight_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].SoldierBeamHeight = WpfUtils.GetValueDimension(result);
+                StaticVariables.view3DPage.Refreshview();
+                StaticVariables.SideviewPage.Refreshview();
+            }
+        }
+        private void Textbox_beamwidth_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].SoldierBeamwidth = WpfUtils.GetValueDimension(result);
+                StaticVariables.view3DPage.Refreshview();
+                StaticVariables.SideviewPage.Refreshview();
+            }
+        }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             view3d_main.Content = null;
@@ -279,14 +484,37 @@ namespace ExDesign.Pages.Inputs
 
         private void addanchor_bttn_Click(object sender, RoutedEventArgs e)
         {
-            AnchorData anchorData = new AnchorData { AnchorDepth = 3 };
+            double lastDepth = 3;
+            if(StaticVariables.viewModel.anchorDatas.Count > 0)
+            {
+                lastDepth = StaticVariables.viewModel.anchorDatas[StaticVariables.viewModel.anchorDatas.Count-1].AnchorDepth + 3;
+            }
+            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=5,RootLength=4,RootDiameter=0.5,Spacing=0.8,Inclination=15,CableData=Wire.WireDataList[1], NumberofCable = 1};
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
+            TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();
         }
 
         private void anchorsGridScrollBar_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             headerScrollBar?.ScrollToHorizontalOffset(anchorsGridScrollBar.HorizontalOffset);
+        }
+
+        private void useCableData_checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+           StaticVariables.viewModel.useCableDiameterAndNumberForDesign = true  ;
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+            {
+                TotalNominalAreaCalc(anchor);
+            }
+           AnchorsGridInitialize();
+           
+        }
+
+        private void useCableData_checkbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            StaticVariables.viewModel.useCableDiameterAndNumberForDesign = false;
+            AnchorsGridInitialize();
         }
     }
 }

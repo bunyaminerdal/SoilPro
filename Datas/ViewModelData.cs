@@ -55,6 +55,7 @@ namespace ExDesign.Datas
         public double WallEI { get; set; } 
         public double WallEA { get; set; } 
         public int SoilModelIndex { get; set; }
+        public bool useCableDiameterAndNumberForDesign { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<AnchorData> anchorDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
@@ -330,14 +331,17 @@ namespace ExDesign.Datas
                     Path = "Untitled",
                     ProjectName = "Untitled",
                     SaveDate = "0",
+                    useCableDiameterAndNumberForDesign = true,
+                    isCapBeamBottom = true,
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),
                     anchorDatas = new ObservableCollection<AnchorData>(),
                     soilTextures = new ObservableCollection<SoilTextureData>(),
 
                     stage = Stage.Materials,
-                    isCapBeamBottom = true,
                     
+                    
+
                 };
                 
                 string json = JsonConvert.SerializeObject(viewModel);
