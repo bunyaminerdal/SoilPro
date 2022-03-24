@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace ExDesign.Scripts
                                                                                                         { Units.kN_mm, 1 },{ Units.kN_cm, 1 },{ Units.kN_m, 1 } };
         public static double wall_d = 11;
         public static int maxPileCount = 20;
-        public static double penThickness = 0.06;
+        public static double penThickness = 0.04;
         public static double dimensionPenThickness = 0.03;
         public static double dimensionExtension = 0.3;
         public static double dimensionDiff = 0.3;
@@ -46,7 +47,38 @@ namespace ExDesign.Scripts
         public static double levelFontHeight = 0.4;
         public static double soilLayerBoxWidth = 3;
         public static double levelIconHeight = 0.3;
+        public static double wireScaleFactor = 4;
         public static bool IsDimensionShowed = false;
+
+
+
+        public static void Sort(this ObservableCollection<AnchorData> collection)
+        {
+            List<AnchorData> sorted = collection.OrderBy(x => x.AnchorDepth).ToList();
+
+            int ptr = 0;
+            while (ptr < sorted.Count - 1)
+            {
+                if (!collection[ptr].Equals(sorted[ptr]))
+                {
+                    int idx = search(collection, ptr + 1, sorted[ptr]);
+                    collection.Move(idx, ptr);
+                }
+
+                ptr++;
+            }
+        }
+
+        public static int search<T>(ObservableCollection<T> collection, int startIndex, T other)
+        {
+            for (int i = startIndex; i < collection.Count; i++)
+            {
+                if (other.Equals(collection[i]))
+                    return i;
+            }
+
+            return -1; // decide how to handle error case
+        }
     }
     public enum WallType
     {

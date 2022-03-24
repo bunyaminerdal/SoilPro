@@ -53,9 +53,9 @@
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource RootModulus}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource PreStressForce}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox x:Name="soldier1" IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox x:Name="soldier2" IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox x:Name="soldier3" IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                     </DockPanel>
                                 </ScrollViewer>
 

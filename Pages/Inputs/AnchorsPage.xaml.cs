@@ -57,21 +57,26 @@ namespace ExDesign.Pages.Inputs
 
             AnchorsGridInitialize();
         }
-
+        
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             string buttonName = ((Button)sender).Name;
             StaticVariables.viewModel.anchorDatas.RemoveAt(int.Parse(buttonName.Split('_')[1]));
             AnchorsGridInitialize();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         public void AnchorsGridInitialize()
         {
             if (StaticVariables.viewModel.anchorDatas == null) return;
             anchorsGroupbox.Children.Clear();
-            foreach (var item in StaticVariables.viewModel.anchorDatas)
+            
+            StaticVariables.Sort(StaticVariables.viewModel.anchorDatas);
+
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
             {
-                string anchorIndex = StaticVariables.viewModel.anchorDatas.IndexOf(item).ToString();
+                string anchorIndex = StaticVariables.viewModel.anchorDatas.IndexOf(anchor).ToString();
                 DockPanel dockPanel = new DockPanel();
                 dockPanel.Margin = new Thickness(2);
                 dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
@@ -92,7 +97,7 @@ namespace ExDesign.Pages.Inputs
                 textBox_no.IsEnabled = false;
                 TextBox textbox_depth = new TextBox();
                 textbox_depth.Width = 80;
-                textbox_depth.Text = WpfUtils.GetDimension(item.AnchorDepth).ToString();
+                textbox_depth.Text = WpfUtils.GetDimension(anchor.AnchorDepth).ToString();
                 textbox_depth.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_depth.TextChanged += Textbox_depth_TextChanged;
                 textbox_depth.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -100,7 +105,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_depth.Name = "textboxdepth_" + anchorIndex;
                 TextBox textbox_freeLength = new TextBox();
                 textbox_freeLength.Width = 80;
-                textbox_freeLength.Text = WpfUtils.GetDimension(item.FreeLength).ToString();
+                textbox_freeLength.Text = WpfUtils.GetDimension(anchor.FreeLength).ToString();
                 textbox_freeLength.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_freeLength.TextChanged += Textbox_freeLength_TextChanged;
                 textbox_freeLength.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -108,7 +113,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_freeLength.Name = "textboxFreeLength_" + anchorIndex;
                 TextBox textbox_rootLength = new TextBox();
                 textbox_rootLength.Width = 80;
-                textbox_rootLength.Text = WpfUtils.GetDimension(item.RootLength).ToString();
+                textbox_rootLength.Text = WpfUtils.GetDimension(anchor.RootLength).ToString();
                 textbox_rootLength.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_rootLength.TextChanged += Textbox_rootLength_TextChanged;
                 textbox_rootLength.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -116,7 +121,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_rootLength.Name = "textboxRootLength_" + anchorIndex;
                 TextBox textbox_inclination = new TextBox();
                 textbox_inclination.Width = 80;
-                textbox_inclination.Text = item.Inclination.ToString();
+                textbox_inclination.Text = anchor.Inclination.ToString();
                 textbox_inclination.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_inclination.TextChanged += Textbox_inclination_TextChanged;
                 textbox_inclination.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -124,7 +129,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_inclination.Name = "textboxinclination_" + anchorIndex;
                 TextBox textbox_spacing = new TextBox();
                 textbox_spacing.Width = 80;
-                textbox_spacing.Text = WpfUtils.GetDimension(item.Spacing).ToString();
+                textbox_spacing.Text = WpfUtils.GetDimension(anchor.Spacing).ToString();
                 textbox_spacing.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_spacing.TextChanged += Textbox_spacing_TextChanged;
                 textbox_spacing.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -132,7 +137,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_spacing.Name = "textboxSpacing_" + anchorIndex;
                 TextBox textbox_rootDiameter = new TextBox();
                 textbox_rootDiameter.Width = 100;
-                textbox_rootDiameter.Text = WpfUtils.GetDimension(item.RootDiameter).ToString();
+                textbox_rootDiameter.Text = WpfUtils.GetDimension(anchor.RootDiameter).ToString();
                 textbox_rootDiameter.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_rootDiameter.TextChanged += Textbox_rootDiameter_TextChanged;
                 textbox_rootDiameter.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -146,7 +151,7 @@ namespace ExDesign.Pages.Inputs
                 comboBox_numberofcable.Items.Add("5");
                 comboBox_numberofcable.Items.Add("6");
                 comboBox_numberofcable.Name = "comboNumberofCable_" + anchorIndex;
-                comboBox_numberofcable.SelectedIndex = item.NumberofCable;
+                comboBox_numberofcable.SelectedIndex = anchor.NumberofCable;
                 if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
                 {
                     comboBox_numberofcable.SelectedIndex = -1;
@@ -159,7 +164,7 @@ namespace ExDesign.Pages.Inputs
                 comboBox_cableDiameter.ItemsSource = Wire.WireDataList;
                 comboBox_cableDiameter.DisplayMemberPath = "NominalDiameter";
                 comboBox_cableDiameter.Name = "comboCableDiameter_" + anchorIndex;
-                comboBox_cableDiameter.SelectedItem =WpfUtils.GetWireData( item.CableData.NominalDiameter);
+                comboBox_cableDiameter.SelectedItem =WpfUtils.GetWireData( anchor.CableData.NominalDiameter);
                 if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
                 {
                     comboBox_cableDiameter.SelectedIndex = -1;
@@ -169,7 +174,7 @@ namespace ExDesign.Pages.Inputs
                 comboBox_cableDiameter.VerticalContentAlignment = VerticalAlignment.Center;
                 TextBox textbox_totalNominalArea = new TextBox();
                 textbox_totalNominalArea.Width = 125;
-                textbox_totalNominalArea.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetArea(item.TotalNominalArea));
+                textbox_totalNominalArea.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetArea(anchor.TotalNominalArea));
                 textbox_totalNominalArea.VerticalContentAlignment = VerticalAlignment.Center;
                 if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
                 {
@@ -186,7 +191,7 @@ namespace ExDesign.Pages.Inputs
                 
                 TextBox textbox_breakingStrength = new TextBox();
                 textbox_breakingStrength.Width = 125;
-                textbox_breakingStrength.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(item.BreakingStrength));
+                textbox_breakingStrength.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(anchor.BreakingStrength));
                 textbox_breakingStrength.VerticalContentAlignment = VerticalAlignment.Center;
                 if (!StaticVariables.viewModel.useCableDiameterAndNumberForDesign)
                 {
@@ -203,7 +208,7 @@ namespace ExDesign.Pages.Inputs
                 
                 TextBox textbox_rootModulus = new TextBox();
                 textbox_rootModulus.Width = 125;
-                textbox_rootModulus.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(item.RootModulus));
+                textbox_rootModulus.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(anchor.RootModulus));
                 textbox_rootModulus.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_rootModulus.TextChanged += Textbox_rootmodulus_TextChanged;
                 textbox_rootModulus.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -211,7 +216,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_rootModulus.Name = "textboxRootModulus_" + anchorIndex;
                 TextBox textbox_preStressForce = new TextBox();
                 textbox_preStressForce.Width = 125;
-                textbox_preStressForce.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(item.PreStressForce));
+                textbox_preStressForce.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(anchor.PreStressForce));
                 textbox_preStressForce.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_preStressForce.TextChanged += Textbox_prestressforce_TextChanged;
                 textbox_preStressForce.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -222,28 +227,28 @@ namespace ExDesign.Pages.Inputs
                 CheckBox checkBox_soldierBeam = new CheckBox();
                 checkBox_soldierBeam.Width = 60;
                 checkBox_soldierBeam.VerticalContentAlignment = VerticalAlignment.Center;
-                if (item.IsSoldierBeam) checkBox_soldierBeam.IsChecked = true;
+                if (anchor.IsSoldierBeam) checkBox_soldierBeam.IsChecked = true;
                 checkBox_soldierBeam.Checked += CheckBox_soldierBeam_Checked;
                 checkBox_soldierBeam.Unchecked += CheckBox_soldierBeam_Unchecked;
                 checkBox_soldierBeam.Name = "checkboxSoldierBeam_" + anchorIndex;
                 TextBox textbox_beamHeight = new TextBox();
                 textbox_beamHeight.Width = 100;
-                textbox_beamHeight.Text = WpfUtils.GetDimension(item.SoldierBeamHeight).ToString();
+                textbox_beamHeight.Text = WpfUtils.GetDimension(anchor.SoldierBeamHeight).ToString();
                 textbox_beamHeight.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_beamHeight.TextChanged += Textbox_beamheight_TextChanged;
                 textbox_beamHeight.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_beamHeight.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_beamHeight.Name = "textboxBeamHeight_" + anchorIndex;
-                if (!item.IsSoldierBeam) textbox_beamHeight.IsEnabled = false;
+                if (!anchor.IsSoldierBeam) textbox_beamHeight.IsEnabled = false;
                 TextBox textbox_beamWidth = new TextBox();
                 textbox_beamWidth.Width = 100;
-                textbox_beamWidth.Text = WpfUtils.GetDimension(item.SoldierBeamwidth).ToString();
+                textbox_beamWidth.Text = WpfUtils.GetDimension(anchor.SoldierBeamwidth).ToString();
                 textbox_beamWidth.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_beamWidth.TextChanged += Textbox_beamwidth_TextChanged;
                 textbox_beamWidth.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_beamWidth.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_beamWidth.Name = "textboxBeamWidth_" + anchorIndex;
-                if (!item.IsSoldierBeam) textbox_beamWidth.IsEnabled = false;
+                if (!anchor.IsSoldierBeam) textbox_beamWidth.IsEnabled = false;
                 dockPanel.Children.Add(deleteButton);
                 dockPanel.Children.Add(textBox_no);
                 dockPanel.Children.Add(textbox_depth);
@@ -258,16 +263,34 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_breakingStrength);
                 dockPanel.Children.Add(textbox_rootModulus);                
                 dockPanel.Children.Add(textbox_preStressForce);                
-                dockPanel.Children.Add(tempPanel);                
-                dockPanel.Children.Add(checkBox_soldierBeam);                
-                dockPanel.Children.Add(textbox_beamHeight);                
-                dockPanel.Children.Add(textbox_beamWidth);                
+                dockPanel.Children.Add(tempPanel);
+                if (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) != WallType.SteelSheetWall)
+                {
+                    dockPanel.Children.Add(checkBox_soldierBeam);
+                    dockPanel.Children.Add(textbox_beamHeight);
+                    dockPanel.Children.Add(textbox_beamWidth);
+                }
+                else
+                {
+                    soldier1.Visibility = Visibility.Hidden;
+                    soldier2.Visibility = Visibility.Hidden;
+                    soldier3.Visibility = Visibility.Hidden;
+                    anchor.IsSoldierBeam = false;
+                    anchor.SoldierBeamHeight = 0;
+                    anchor.SoldierBeamwidth = 0;
+                }
+                                
                 anchorsGroupbox.Children.Add(dockPanel);
 
                 //refresh windows
                 StaticVariables.view3DPage.Refreshview();
                 StaticVariables.SideviewPage.Refreshview();
             }
+        }
+
+        private void Textbox_depth_LostFocus(object sender, RoutedEventArgs e)
+        {
+            AnchorsGridInitialize();
         }
 
         private void CheckBox_soldierBeam_Unchecked(object sender, RoutedEventArgs e)
@@ -484,12 +507,16 @@ namespace ExDesign.Pages.Inputs
 
         private void addanchor_bttn_Click(object sender, RoutedEventArgs e)
         {
+
             double lastDepth = 3;
             if(StaticVariables.viewModel.anchorDatas.Count > 0)
             {
-                lastDepth = StaticVariables.viewModel.anchorDatas[StaticVariables.viewModel.anchorDatas.Count-1].AnchorDepth + 3;
+                lastDepth = StaticVariables.viewModel.anchorDatas[StaticVariables.viewModel.anchorDatas.Count-1].AnchorDepth ;
+                if (lastDepth >= StaticVariables.viewModel.excavationHeight) return;
+                lastDepth += 3;
             }
-            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=5,RootLength=4,RootDiameter=0.5,Spacing=0.8,Inclination=15,CableData=Wire.WireDataList[1], NumberofCable = 1};
+            
+            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=8,RootLength=4,RootDiameter=0.15,Spacing=0.8,Inclination=15,CableData=Wire.WireDataList[1], NumberofCable = 1};
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
             TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();
@@ -516,5 +543,7 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.useCableDiameterAndNumberForDesign = false;
             AnchorsGridInitialize();
         }
+        
     }
+    
 }
