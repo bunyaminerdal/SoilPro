@@ -18,6 +18,7 @@ namespace ExDesign.Datas
         public WireData CableData { get; set; }
         public double TotalNominalArea { get; set; }
         public double RootModulus { get; set; }
+        public bool IsPassiveAnchor { get; set; }
         public double PreStressForce { get; set; }
         public double BreakingStrength { get; set; }
         public bool IsSoldierBeam { get; set; }

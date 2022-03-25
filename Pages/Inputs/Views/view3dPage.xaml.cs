@@ -257,10 +257,11 @@ namespace ExDesign.Pages.Inputs.Views
                     numofanchor = 1;
                 }
 
-                anchor_free_L = anchor.FreeLength;
+                
                 anchor_loc = anchor.AnchorDepth;
                 beam_w = anchor.IsSoldierBeam ? anchor.SoldierBeamwidth : 0;
                 beam_h = anchor.IsSoldierBeam ? anchor.SoldierBeamHeight : 0;
+                anchor_free_L = anchor.FreeLength + wall_t + 0.2 + beam_w;
                 anchor_angle = anchor.Inclination;
                 anchor_root_d = anchor.RootDiameter;
                 anchor_root_L = anchor.RootLength;
@@ -278,7 +279,7 @@ namespace ExDesign.Pages.Inputs.Views
                     AxisAngleRotation3D rotationY = new AxisAngleRotation3D(new Vector3D(0, 0, 1), -anchor_angle);
                     RotateTransform3D rotateTransformY = new RotateTransform3D(rotationY, cylinderCenter);
                     Transform3DGroup myTransform3DGroup = new Transform3DGroup();
-
+                    
 
                     Point3D cylinderCenter1 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L + i * anchor.Spacing + anchor.Spacing / 2);
                     WpfCylinder cylinder1 = new WpfCylinder(cylinderCenter1, 10, anchor_root_d, anchor_root_d, anchor_root_L);
@@ -287,30 +288,31 @@ namespace ExDesign.Pages.Inputs.Views
                     myTransform3DGroup.Children.Add(rotateTransformY);
                     cylinderModel.Transform = myTransform3DGroup;
                     cylinderModel1.Transform = myTransform3DGroup;
-                    groupScene.Children.Add(cylinderModel);
 
+                    groupScene.Children.Add(cylinderModel);
                     groupScene.Children.Add(cylinderModel1);
                 }
                 for (int i = 0; i < numofanchor; i++)
                 {
 
-                    Point3D cylinderCenter = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - i * anchor.Spacing - anchor.Spacing / 2);
-                    WpfCylinder cylinder = new WpfCylinder(cylinderCenter, 10, anchor_wire_d, anchor_wire_d, anchor_free_L);
+                    Point3D cylinderCenter2 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - i * anchor.Spacing - anchor.Spacing / 2);
+                    WpfCylinder cylinder = new WpfCylinder(cylinderCenter2, 10, anchor_wire_d, anchor_wire_d, anchor_free_L);
                     GeometryModel3D cylinderModel = cylinder.CreateModel(Colors.Gray, true, true);
-                    AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
-                    RotateTransform3D rotateTransformX = new RotateTransform3D(rotationX, cylinderCenter);
-                    AxisAngleRotation3D rotationY = new AxisAngleRotation3D(new Vector3D(0, 0, 1), -anchor_angle);
-                    RotateTransform3D rotateTransformY = new RotateTransform3D(rotationY, cylinderCenter);
-                    Transform3DGroup myTransform3DGroup = new Transform3DGroup();
+                    AxisAngleRotation3D rotationX1 = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
+                    RotateTransform3D rotateTransformX1 = new RotateTransform3D(rotationX1, cylinderCenter2);
+                    AxisAngleRotation3D rotationY1 = new AxisAngleRotation3D(new Vector3D(0, 0, 1), -anchor_angle);
+                    RotateTransform3D rotateTransformY1 = new RotateTransform3D(rotationY1, cylinderCenter2);
+                    Transform3DGroup myTransform3DGroup1 = new Transform3DGroup();
 
 
-                    Point3D cylinderCenter1 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L - i * anchor.Spacing - anchor.Spacing / 2);
-                    WpfCylinder cylinder1 = new WpfCylinder(cylinderCenter1, 10, anchor_root_d, anchor_root_d, anchor_root_L);
+                    Point3D cylinderCenter3 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L - i * anchor.Spacing - anchor.Spacing / 2);
+                    WpfCylinder cylinder1 = new WpfCylinder(cylinderCenter3, 10, anchor_root_d, anchor_root_d, anchor_root_L);
                     GeometryModel3D cylinderModel1 = cylinder1.CreateModel(Colors.DarkGray, true, true);
-                    myTransform3DGroup.Children.Add(rotateTransformX);
-                    myTransform3DGroup.Children.Add(rotateTransformY);
-                    cylinderModel.Transform = myTransform3DGroup;
-                    cylinderModel1.Transform = myTransform3DGroup;
+                    myTransform3DGroup1.Children.Add(rotateTransformX1);
+                    myTransform3DGroup1.Children.Add(rotateTransformY1);
+                    cylinderModel.Transform = myTransform3DGroup1;
+                    cylinderModel1.Transform = myTransform3DGroup1;
+
                     groupScene.Children.Add(cylinderModel);
 
                     groupScene.Children.Add(cylinderModel1);

@@ -300,7 +300,7 @@ namespace ExDesign.Datas
                     frontCubeLength = 8,
                     backCubeLength = 12,
                     CubeLength = 15,
-                    TopOfWallLevel = 1,
+                    TopOfWallLevel = 0,
                     excavationHeight = 8,
                     frontT_Z = 2,
                     frontT_X1 = 2,
@@ -340,8 +340,6 @@ namespace ExDesign.Datas
 
                     stage = Stage.Materials,
                     
-                    
-
                 };
                 
                 string json = JsonConvert.SerializeObject(viewModel);

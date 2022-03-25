@@ -77,6 +77,27 @@ namespace ExDesign.Scripts
                     );
             return wallDrawing;
         }
+        public static GeometryDrawing AnchorGeometryDrawing(Point rotationCenter,double inclination,double wall_t,double freeL, double rootD, double rootL,double ex,double beamW, Color color)
+        {
+            LineGeometry lineGeometry = new LineGeometry(new Point(rotationCenter.X-ex,rotationCenter.Y), new Point(rotationCenter.X+beamW+wall_t+freeL,rotationCenter.Y));
+            RectangleGeometry rectangleGeometry = new RectangleGeometry(new Rect(rotationCenter.X+wall_t+beamW+freeL, rotationCenter.Y-rootD/2, Math.Clamp(rootL, 0, double.MaxValue), Math.Clamp(rootD, 0, double.MaxValue)));
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            RotateTransform rotateAnchor = new RotateTransform(inclination, rotationCenter.X, rotationCenter.Y);
+
+            lineGeometry.Transform = rotateAnchor;
+            rectangleGeometry.Transform = rotateAnchor;
+            geometryGroup.Children.Add(lineGeometry);
+            geometryGroup.Children.Add(rectangleGeometry);
+
+            GeometryDrawing wallDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(Brushes.Black, StaticVariables.penThickness),
+                    geometryGroup
+                    );
+            return wallDrawing;
+        }
         public static GeometryDrawing SoilGeometryDrawing(Point center, double H, double W, Color color, Uri texture, bool textured)
         {
             RectangleGeometry rectangleGeometry = new RectangleGeometry(new Rect(center.X, center.Y, Math.Clamp(W, 0, double.MaxValue), Math.Clamp(H, 0, double.MaxValue)));

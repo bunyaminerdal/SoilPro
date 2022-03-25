@@ -16,8 +16,8 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
                 </Grid.ColumnDefinitions>
                 <Frame x:Name="view3d_main" Grid.Column="0" NavigationUIVisibility="Hidden"/>
                 <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden"/>
@@ -38,24 +38,25 @@
                                     <CheckBox x:Name="useCableData_checkbox" Content="{DynamicResource UseCableDiameterAndNumberForDesign}" Margin="10" VerticalAlignment="Center"  Checked="useCableData_checkbox_Checked" Unchecked="useCableData_checkbox_Unchecked" ></CheckBox>
                                 </DockPanel>
                                 <ScrollViewer x:Name="headerScrollBar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
-                                    <DockPanel HorizontalAlignment="Left" Margin="2" Height="27">
+                                    <DockPanel HorizontalAlignment="Left" Margin="2">
                                         <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Depth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource FreeLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource RootLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Inclination}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="80" Text="{DynamicResource Spacing}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource RootDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="105" Text="{DynamicResource NumberOfCable}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource CableDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource TotalNominalArea}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource RootModulus}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource PreStressForce}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox x:Name="soldier1" IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox x:Name="soldier2" IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
-                                        <TextBox x:Name="soldier3" IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="depth_txtbox" IsEnabled="False" Width="80" Text="{DynamicResource Depth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="freeLength_txtbox" IsEnabled="False" Width="80" Text="{DynamicResource FreeLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="rootLength_txtbox" IsEnabled="False" Width="80" Text="{DynamicResource RootLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="Inclination_txtbox" IsEnabled="False" Width="80" Text="{DynamicResource Inclination}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="Spacing_txtbox" IsEnabled="False" Width="80" Text="{DynamicResource Spacing}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="RootDiameter_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource RootDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox IsEnabled="False" Width="105" Text="{DynamicResource NumberOfCable}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox IsEnabled="False" Width="100" Text="{DynamicResource CableDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="totalNominalArea_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource TotalNominalArea}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="BreakingStrength_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="rootModulus_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource RootModulus}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource PassiveAnchor}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="prestressForce_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource PreStressForce}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="soldier1" IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="soldier2" IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="soldier3" IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                     </DockPanel>
                                 </ScrollViewer>
 

@@ -36,7 +36,18 @@ namespace ExDesign.Pages.Inputs
         {
             
             AnchorsGridInitialize();
-
+            depth_txtbox.Text = FindResource("Depth").ToString() + " (" + StaticVariables.dimensionUnit + ")";
+            freeLength_txtbox.Text = FindResource("FreeLength").ToString() + " (" + StaticVariables.dimensionUnit + ")";
+            rootLength_txtbox.Text = FindResource("RootLength").ToString() + " (" + StaticVariables.dimensionUnit + ")";
+            Inclination_txtbox.Text = FindResource("Inclination").ToString() + " (°)";
+            Spacing_txtbox.Text = FindResource("Spacing").ToString() + " (" + StaticVariables.dimensionUnit + ")";
+            RootDiameter_txtbox.Text = FindResource("RootDiameter").ToString() + " (" + StaticVariables.dimensionUnit + ")";
+            totalNominalArea_txtbox.Text = FindResource("TotalNominalArea").ToString() + " (" + StaticVariables.areaUnit + ")";
+            BreakingStrength_txtbox.Text = FindResource("BreakingStrength").ToString() + " (" + StaticVariables.forceUnit + ")";
+            rootModulus_txtbox.Text = FindResource("RootModulus").ToString() + " (" + StaticVariables.StressUnit + ")";
+            prestressForce_txtbox.Text = FindResource("PreStressForce").ToString() + " (" + StaticVariables.forceUnit + ")";
+            soldier2.Text = FindResource("BeamHeight").ToString() + " (" + StaticVariables.dimensionUnit + ")";
+            soldier3.Text = FindResource("BeamWidth").ToString() + " (" + StaticVariables.dimensionUnit + ")";
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -54,7 +65,7 @@ namespace ExDesign.Pages.Inputs
             }
             
             StaticEvents.UnitChangeEvent += UnitChange;
-
+            UnitChange();
             AnchorsGridInitialize();
         }
         
@@ -214,6 +225,15 @@ namespace ExDesign.Pages.Inputs
                 textbox_rootModulus.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_rootModulus.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_rootModulus.Name = "textboxRootModulus_" + anchorIndex;
+                DockPanel tempPanel1 = new DockPanel();
+                tempPanel1.Width = 50;
+                CheckBox checkBox_isPassiveAnchor = new CheckBox();
+                checkBox_isPassiveAnchor.Width = 75;
+                checkBox_isPassiveAnchor.VerticalContentAlignment = VerticalAlignment.Center;
+                if (anchor.IsPassiveAnchor) checkBox_isPassiveAnchor.IsChecked = true;
+                checkBox_isPassiveAnchor.Checked += CheckBox_passiveanchor_Checked;
+                checkBox_isPassiveAnchor.Unchecked += CheckBox_passiveanchor_Unchecked;
+                checkBox_isPassiveAnchor.Name = "checkboxPassiveAnchor_" + anchorIndex;
                 TextBox textbox_preStressForce = new TextBox();
                 textbox_preStressForce.Width = 125;
                 textbox_preStressForce.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(anchor.PreStressForce));
@@ -222,6 +242,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_preStressForce.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_preStressForce.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_preStressForce.Name = "textboxPreStressForce_" + anchorIndex;
+                if (anchor.IsPassiveAnchor) textbox_preStressForce.IsEnabled = false;
                 DockPanel tempPanel = new DockPanel();
                 tempPanel.Width = 40;
                 CheckBox checkBox_soldierBeam = new CheckBox();
@@ -262,6 +283,8 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_totalNominalArea);
                 dockPanel.Children.Add(textbox_breakingStrength);
                 dockPanel.Children.Add(textbox_rootModulus);                
+                dockPanel.Children.Add(tempPanel1);                
+                dockPanel.Children.Add(checkBox_isPassiveAnchor);                
                 dockPanel.Children.Add(textbox_preStressForce);                
                 dockPanel.Children.Add(tempPanel);
                 if (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) != WallType.SteelSheetWall)
@@ -306,6 +329,21 @@ namespace ExDesign.Pages.Inputs
             string checkName = ((CheckBox)sender).Name.Split('_')[1];
             StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsSoldierBeam = true;
             
+            AnchorsGridInitialize();
+        }
+        private void CheckBox_passiveanchor_Unchecked(object sender, RoutedEventArgs e)
+        {
+            string checkName = ((CheckBox)sender).Name.Split('_')[1];
+            StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsPassiveAnchor = false;
+
+            AnchorsGridInitialize();
+        }
+
+        private void CheckBox_passiveanchor_Checked(object sender, RoutedEventArgs e)
+        {
+            string checkName = ((CheckBox)sender).Name.Split('_')[1];
+            StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsPassiveAnchor = true;
+
             AnchorsGridInitialize();
         }
 
@@ -508,15 +546,15 @@ namespace ExDesign.Pages.Inputs
         private void addanchor_bttn_Click(object sender, RoutedEventArgs e)
         {
 
-            double lastDepth = 3;
+            double lastDepth = 2;
             if(StaticVariables.viewModel.anchorDatas.Count > 0)
             {
                 lastDepth = StaticVariables.viewModel.anchorDatas[StaticVariables.viewModel.anchorDatas.Count-1].AnchorDepth ;
                 if (lastDepth >= StaticVariables.viewModel.excavationHeight) return;
-                lastDepth += 3;
+                lastDepth += 2;
             }
             
-            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=8,RootLength=4,RootDiameter=0.15,Spacing=0.8,Inclination=15,CableData=Wire.WireDataList[1], NumberofCable = 1};
+            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=8,RootDiameter=0.15,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4};
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
             TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();

@@ -20,13 +20,13 @@ namespace ExDesign.Scripts
         public static Units CurrentUnit = Units.kg_cm;
         public static Units LastUnit = Units.kg_cm;
         public static string dimensionUnit { get { return CurrentUnit.ToString().Split('_')[1]; } }
-        public static string areaUnit { get { return CurrentUnit.ToString().Split('_')[1]+"2"; } }
-        public static string volumeUnit { get { return CurrentUnit.ToString().Split('_')[1] + "3"; } }
-        public static string inertiaUnit { get { return CurrentUnit.ToString().Split('_')[1] + "4"; } }
+        public static string areaUnit { get { return CurrentUnit.ToString().Split('_')[1]+ "²"; } }
+        public static string volumeUnit { get { return CurrentUnit.ToString().Split('_')[1] + "³"; } }
+        public static string inertiaUnit { get { return CurrentUnit.ToString().Split('_')[1] + "⁴"; } }
         public static string forceUnit { get { return CurrentUnit.ToString().Split('_')[0]; } }
-        public static string StressUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] + "2"; } }
-        public static string DensityUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] + "3"; } }
-        public static string EIUnit { get { return CurrentUnit.ToString().Split('_')[0]+ CurrentUnit.ToString().Split('_')[1] + "2"; } }
+        public static string StressUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] + "²"; } }
+        public static string DensityUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] + "³"; } }
+        public static string EIUnit { get { return CurrentUnit.ToString().Split('_')[0]+ CurrentUnit.ToString().Split('_')[1] + "²"; } }
         public static Dictionary<Units, double> UnitDimensionFactors = new Dictionary<Units, double> {{ Units.kg_mm, 1000 },{Units.kg_cm,100 },{ Units.kg_m,1},
                                                                                                         { Units.ton_mm, 1000 },{ Units.ton_cm, 100 },{ Units.ton_m, 1 },
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 100 },{ Units.N_m, 1 },
@@ -40,8 +40,8 @@ namespace ExDesign.Scripts
         public static int maxPileCount = 20;
         public static double penThickness = 0.04;
         public static double dimensionPenThickness = 0.03;
-        public static double dimensionExtension = 0.3;
-        public static double dimensionDiff = 0.3;
+        public static double dimensionExtension = 0.1;
+        public static double dimensionDiff = 0.2;
         public static Typeface typeface = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#Quicksand Light"), FontStyles.Normal, FontWeights.Thin, FontStretches.Normal);
         public static double dimensionFontHeight = 0.4;
         public static double levelFontHeight = 0.4;

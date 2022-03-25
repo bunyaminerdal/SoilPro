@@ -41,7 +41,6 @@ namespace ExDesign.Pages.Inputs.Views
         double groundW_h2 = 2;
         double capBeam_h = 0.8;
         double capBeam_b = 0.65;
-        int sheetIndex = 0;
         bool isCapBeamBottom = true;
         double soilLayerBoxW = 5;
         public SideviewPage()
@@ -69,7 +68,6 @@ namespace ExDesign.Pages.Inputs.Views
             groundW_h2 = StaticVariables.viewModel.groundW_h2;
             capBeam_b = StaticVariables.viewModel.capBeam_b;
             capBeam_h = StaticVariables.viewModel.capBeam_h;
-            sheetIndex = StaticVariables.viewModel.SheetIndex;
             isCapBeamBottom = StaticVariables.viewModel.isCapBeamBottom;
             soilLayerBoxW = StaticVariables.soilLayerBoxWidth;
         }
@@ -107,6 +105,36 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
                 default:
                     break;
+            }
+
+            double wallExtension = 0;
+            double anchorDimensionExt1 = 0;
+            //anchors
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+            {
+
+
+                double soldierBeamH = 0;
+                double soldierBeamW = 0;
+                if (anchor.IsSoldierBeam)
+                {
+                    soldierBeamH = anchor.SoldierBeamHeight;
+                    soldierBeamW = anchor.SoldierBeamwidth;
+                    Point soldierBeamCenter = new Point(center.X - soldierBeamW, center.Y + anchor.AnchorDepth - soldierBeamH / 2);
+                    GeometryDrawing soldierBeamGeometry = Wpf2Dutils.WallGeometryDrawing(soldierBeamCenter, soldierBeamH, soldierBeamW, Colors.Transparent);
+                    mainDrawingGroup.Children.Add(soldierBeamGeometry);
+
+                    if (wallExtension < anchor.SoldierBeamwidth) wallExtension = anchor.SoldierBeamwidth;
+                }
+                anchorDimensionExt1 += (soldierBeamW + StaticVariables.dimensionDiff + StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionFontHeight);
+
+                Point rotationCenter = new Point(center.X - soldierBeamW, center.Y + anchor.AnchorDepth);
+                GeometryDrawing anchorGeometry = Wpf2Dutils.AnchorGeometryDrawing(rotationCenter, anchor.Inclination, wall_t, anchor.FreeLength, anchor.RootDiameter, anchor.RootLength, 0.2, soldierBeamW, Colors.DarkGray);
+                mainDrawingGroup.Children.Add(anchorGeometry);
+                double totalLength = Math.Cos((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength);
+                if (totalLength > backCubeLength) backCubeLength = totalLength;
+                if(anchorDimensionExt1 > frontCubeLength) frontCubeLength = anchorDimensionExt1;
+
             }
 
             double frontT_w_top_dis = 0;
@@ -148,6 +176,8 @@ namespace ExDesign.Pages.Inputs.Views
                 default:
                     break;
             }
+
+            
 
             double backT_w_top_dis = 0;
             double backT_w_bottom_dis = 0;
@@ -212,6 +242,8 @@ namespace ExDesign.Pages.Inputs.Views
                     mainDrawingGroup.Children.Add(backWaterModel);
                     break;
             }
+            
+
 
             double totalHeight = 0;
             //soil boxes
@@ -247,6 +279,11 @@ namespace ExDesign.Pages.Inputs.Views
             mainDrawingGroup.Children.Add(wallGeometryDrawing);
             mainDrawingGroup.Children.Add(backSoilGeometry);
             mainDrawingGroup.Children.Add(frontSoilGeometry);
+
+
+            
+
+
             //levels
             GeometryDrawing topOfWallLevel = Wpf2Dutils.Level(new Point(center.X-frontCubeLength, center.Y), LevelDirection.Left, Colors.Red);
             mainDrawingGroup.Children.Add(topOfWallLevel);
@@ -273,6 +310,10 @@ namespace ExDesign.Pages.Inputs.Views
                     mainDrawingGroup.Children.Add(groundWaterLevel);
                     break;
             }
+
+            
+
+
             //dimensions
             switch (StaticVariables.viewModel.stage)
             {
@@ -296,7 +337,7 @@ namespace ExDesign.Pages.Inputs.Views
                     }                    
                     GeometryDrawing wallDimensionDown = Wpf2Dutils.Dimension(new Point(center.X + wall_t, center.Y + wall_h), new Point(center.X, center.Y + wall_h), Colors.DarkBlue, WpfUtils.GetDimension(wall_t).ToString() );
                     mainDrawingGroup.Children.Add(wallDimensionDown);                                       
-                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X, center.Y+wall_h),new Point(center.X, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() );
+                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X - wallExtension, center.Y+wall_h),new Point(center.X - wallExtension, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() );
                     mainDrawingGroup.Children.Add(wallHeightLeft);
                     
                     break;
@@ -388,6 +429,32 @@ namespace ExDesign.Pages.Inputs.Views
                                 mainDrawingGroup.Children.Add(soilLayerDimension);
                             }
                         }
+                    }
+                    break;
+                case Stage.Anchors:
+                    //anchors
+                    double anchorDimensionExt = 0;
+                    foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+                    {
+                        double soldierBeamH = 0;
+                        double soldierBeamW = 0;
+                        if (anchor.IsSoldierBeam)
+                        {
+                            soldierBeamH = anchor.SoldierBeamHeight;
+                            soldierBeamW = anchor.SoldierBeamwidth;
+                            Point soldierBeamCenter = new Point(center.X - soldierBeamW, center.Y + anchor.AnchorDepth + soldierBeamH / 2);
+                            GeometryDrawing soldierBeamDimensionLeft = Wpf2Dutils.Dimension(soldierBeamCenter, new Point(soldierBeamCenter.X, soldierBeamCenter.Y - soldierBeamH), Colors.Blue);
+                            mainDrawingGroup.Children.Add(soldierBeamDimensionLeft);
+                            GeometryDrawing soldierBeamDimensionTop = Wpf2Dutils.Dimension(new Point(soldierBeamCenter.X + soldierBeamW, soldierBeamCenter.Y), new Point(soldierBeamCenter.X, soldierBeamCenter.Y), Colors.Blue);
+                            mainDrawingGroup.Children.Add(soldierBeamDimensionTop);
+
+                        }
+                        anchorDimensionExt += (soldierBeamW + StaticVariables.dimensionDiff + StaticVariables.dimensionExtension*2 + StaticVariables.dimensionFontHeight);
+                        Point rotationCenter = new Point(center.X , center.Y + anchor.AnchorDepth);
+                        GeometryDrawing anchorDepthDimension = Wpf2Dutils.Dimension(new Point( rotationCenter.X - anchorDimensionExt,rotationCenter.Y), new Point(center.X - anchorDimensionExt, center.Y), Colors.Blue);
+                        mainDrawingGroup.Children.Add(anchorDepthDimension);
+
+                        
                     }
                     break;
                 default:
