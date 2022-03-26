@@ -132,8 +132,14 @@ namespace ExDesign.Pages.Inputs.Views
                 GeometryDrawing anchorGeometry = Wpf2Dutils.AnchorGeometryDrawing(rotationCenter, anchor.Inclination, wall_t, anchor.FreeLength, anchor.RootDiameter, anchor.RootLength, 0.2, soldierBeamW, Colors.DarkGray);
                 mainDrawingGroup.Children.Add(anchorGeometry);
                 double totalLength = Math.Cos((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength);
+                double totaldepth = Math.Sin((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength);
                 if (totalLength > backCubeLength) backCubeLength = totalLength;
                 if(anchorDimensionExt1 > frontCubeLength) frontCubeLength = anchorDimensionExt1;
+                string anchorText = FindResource("LFree").ToString() +WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension( anchor.FreeLength)) +" "+StaticVariables.dimensionUnit+"   "+
+                    FindResource("LRoot").ToString() + WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(anchor.RootLength)) + " " + StaticVariables.dimensionUnit + "   " +
+                    (anchor.IsPassiveAnchor == false ? "F = " + WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(anchor.PreStressForce)) + " " + StaticVariables.forceUnit: FindResource("PassiveAnchor").ToString());
+                GeometryDrawing anchorTextGeometry = Wpf2Dutils.FreeTextDrawing(rotationCenter,new Point(rotationCenter.X +totalLength,rotationCenter.Y+totaldepth),Colors.Black,anchorText,anchor.RootDiameter/2);
+                mainDrawingGroup.Children.Add(anchorTextGeometry);
 
             }
 

@@ -173,5 +173,7 @@
     <system:String x:Key="BeamHeight" >Beam Height</system:String> 
     <system:String x:Key="BeamWidth" >Beam Width</system:String> 
     <system:String x:Key="PassiveAnchor" >Passive Anchor</system:String> 
+    <system:String x:Key="LFree" >Lfree = </system:String> 
+    <system:String x:Key="LRoot" >Lroot = </system:String> 
     
 </ResourceDictionary>

@@ -40,10 +40,12 @@ namespace ExDesign.Scripts
         public static int maxPileCount = 20;
         public static double penThickness = 0.04;
         public static double dimensionPenThickness = 0.03;
+        public static double freeTextPenThickness = 0.03;
         public static double dimensionExtension = 0.1;
         public static double dimensionDiff = 0.2;
         public static Typeface typeface = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#Quicksand Light"), FontStyles.Normal, FontWeights.Thin, FontStretches.Normal);
         public static double dimensionFontHeight = 0.4;
+        public static double freeTextFontHeight = 0.4;
         public static double levelFontHeight = 0.4;
         public static double soilLayerBoxWidth = 3;
         public static double levelIconHeight = 0.3;

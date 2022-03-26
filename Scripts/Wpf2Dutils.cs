@@ -239,6 +239,63 @@ namespace ExDesign.Scripts
                     );
             return lineDrawing;
         }
+        /// <summary>
+        /// 4 yöne text yazmak için
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="color"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static GeometryDrawing FreeTextDrawing(Point start, Point end, Color color, string text ,double ex=0)
+        {
+            double diff = StaticVariables.dimensionDiff;
+            double xDiff = start.X - end.X;
+            double yDiff = start.Y - end.Y;
+            double angle = (Math.Atan2(yDiff, xDiff) * 180 / Math.PI) - 180;
+            double _length = Point.Subtract(end, start).Length;
+            
+            
+            // Create the initial formatted text string.
+            FormattedText formattedText = new FormattedText(
+                text,
+                CultureInfo.GetCultureInfo("en-us"),
+                FlowDirection.LeftToRight,
+                StaticVariables.typeface,
+                StaticVariables.freeTextFontHeight,
+                Brushes.Black, VisualTreeHelper.GetDpi(Application.Current.MainWindow).PixelsPerDip);
+
+            // Set a maximum width and height. If the text overflows these values, an ellipsis "..." appears.
+            formattedText.MaxTextWidth = 1000;
+            formattedText.MaxTextHeight = 240;
+            GeometryGroup geometryGroup = new GeometryGroup();
+            var textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y -ex - diff - formattedText.Height));
+
+            RotateTransform rotateLine = new RotateTransform(angle, start.X, start.Y);
+            if (angle < -90 && angle > -270)
+            {
+                angle += 180;
+                textgeometry = formattedText.BuildGeometry(new Point(start.X - (_length / 2) - formattedText.Width / 2, start.Y +ex + diff));
+            }
+            else
+            {
+                textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y -ex - diff - formattedText.Height));
+            }
+            RotateTransform rotateText = new RotateTransform(angle, start.X, start.Y);
+
+            textgeometry.Transform = rotateText;
+
+            
+            geometryGroup.Children.Add(textgeometry);            
+
+            GeometryDrawing lineDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(new SolidColorBrush(color), StaticVariables.freeTextPenThickness),
+                    geometryGroup
+                    );
+            return lineDrawing;
+        }
         public static GeometryDrawing Level(Point start, LevelDirection direction , Color color)
         {
             double ex = StaticVariables.dimensionExtension;
