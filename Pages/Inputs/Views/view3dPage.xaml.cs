@@ -122,8 +122,7 @@ namespace ExDesign.Pages.Inputs.Views
         {
             //başta anchorage ve duvar olmalı döngünün içinde yapınca işler karıştı
             SetViewModel();
-            double centerY = wall_h / 2 + bottomT_h / 2;
-            wall_d = StaticVariables.wall_d;
+            double centerY = wall_h / 2 + bottomT_h / 2;            
             groupScene = new Model3DGroup();
             Uri soilUri = new Uri(@"Textures/Soil/Kil.png", UriKind.Relative); 
             Uri soilUri1 = new Uri(@"Textures/Soil/killikum.png", UriKind.Relative);
@@ -250,8 +249,14 @@ namespace ExDesign.Pages.Inputs.Views
                 anchor_wire_d = StaticVariables.wireScaleFactor * Math.Sqrt(anchor.TotalNominalArea / Math.PI);
                 if (wall_d > anchor.Spacing)
                 {
-                    numofanchor = anchor.Spacing > 0 ? Math.Round(((wall_d / 2) - (anchor.Spacing / 2) - anchor_wire_d / 2) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
-                    //if (wall_d / 2 < anchor.Spacing * numofanchor + anchor.Spacing / 2) numofanchor--;
+                    if(anchor.IsCentralPlacement)
+                    {
+                        numofanchor = anchor.Spacing > 0 ? Math.Round(((wall_d / 2)  - anchor_wire_d) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                    }
+                    else
+                    {
+                        numofanchor = anchor.Spacing > 0 ? Math.Round(((wall_d / 2) - (anchor.Spacing / 2) - anchor_wire_d / 2) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                    }
                 }
                 else
                 {
@@ -272,7 +277,7 @@ namespace ExDesign.Pages.Inputs.Views
                 if(totalLength > backCubeLength) backCubeLength = totalLength;
                 for (int i = 0; i < numofanchor; i++)
                 {
-                    Point3D cylinderCenter = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z + i * anchor.Spacing + anchor.Spacing / 2);
+                    Point3D cylinderCenter = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z + i * anchor.Spacing + (anchor.IsCentralPlacement ? 0 : anchor.Spacing / 2));
                     WpfCylinder cylinder = new WpfCylinder(cylinderCenter, 10, anchor_wire_d, anchor_wire_d, anchor_free_L);
                     GeometryModel3D cylinderModel = cylinder.CreateModel(Colors.Gray, true, true);
                     AxisAngleRotation3D rotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
@@ -282,7 +287,7 @@ namespace ExDesign.Pages.Inputs.Views
                     Transform3DGroup myTransform3DGroup = new Transform3DGroup();
                     
 
-                    Point3D cylinderCenter1 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L + i * anchor.Spacing + anchor.Spacing / 2);
+                    Point3D cylinderCenter1 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L + i * anchor.Spacing + (anchor.IsCentralPlacement ? 0 : anchor.Spacing / 2));
                     WpfCylinder cylinder1 = new WpfCylinder(cylinderCenter1, 10, anchor_root_d, anchor_root_d, anchor_root_L);
                     GeometryModel3D cylinderModel1 = cylinder1.CreateModel(Colors.DarkGray, true, true);
                     myTransform3DGroup.Children.Add(rotateTransformX);
@@ -296,7 +301,7 @@ namespace ExDesign.Pages.Inputs.Views
                 for (int i = 0; i < numofanchor; i++)
                 {
 
-                    Point3D cylinderCenter2 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - i * anchor.Spacing - anchor.Spacing / 2);
+                    Point3D cylinderCenter2 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - i * anchor.Spacing - (anchor.IsCentralPlacement ? 0 : anchor.Spacing / 2));
                     WpfCylinder cylinder = new WpfCylinder(cylinderCenter2, 10, anchor_wire_d, anchor_wire_d, anchor_free_L);
                     GeometryModel3D cylinderModel = cylinder.CreateModel(Colors.Gray, true, true);
                     AxisAngleRotation3D rotationX1 = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
@@ -306,7 +311,7 @@ namespace ExDesign.Pages.Inputs.Views
                     Transform3DGroup myTransform3DGroup1 = new Transform3DGroup();
 
 
-                    Point3D cylinderCenter3 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L - i * anchor.Spacing - anchor.Spacing / 2);
+                    Point3D cylinderCenter3 = new Point3D(center3d.X - wall_t - 0.2 - beam_w, center3d.Y + centerY - anchor_loc, center3d.Z - anchor_free_L - i * anchor.Spacing - (anchor.IsCentralPlacement ? 0 : anchor.Spacing / 2));
                     WpfCylinder cylinder1 = new WpfCylinder(cylinderCenter3, 10, anchor_root_d, anchor_root_d, anchor_root_L);
                     GeometryModel3D cylinderModel1 = cylinder1.CreateModel(Colors.DarkGray, true, true);
                     myTransform3DGroup1.Children.Add(rotateTransformX1);

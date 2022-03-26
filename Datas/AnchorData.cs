@@ -12,6 +12,7 @@ namespace ExDesign.Datas
         public double FreeLength { get; set; }
         public double RootLength { get; set; }
         public double Inclination { get; set; }
+        public bool IsCentralPlacement { get; set; }
         public double Spacing { get; set; }
         public double RootDiameter { get; set; }
         public int NumberofCable { get; set; }

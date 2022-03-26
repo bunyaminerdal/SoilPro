@@ -139,6 +139,15 @@ namespace ExDesign.Pages.Inputs
                 textbox_inclination.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_inclination.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_inclination.Name = "textboxinclination_" + anchorIndex;
+                DockPanel tempPanel2 = new DockPanel();
+                tempPanel2.Width = 30;
+                CheckBox checkBox_centralPlacement = new CheckBox();
+                checkBox_centralPlacement.Width = 50;
+                checkBox_centralPlacement.VerticalContentAlignment = VerticalAlignment.Center;
+                if (anchor.IsCentralPlacement) checkBox_centralPlacement.IsChecked = true;
+                checkBox_centralPlacement.Checked += CheckBox_centralPlacement_Checked;
+                checkBox_centralPlacement.Unchecked += CheckBox_centralPlacement_Unchecked;
+                checkBox_centralPlacement.Name = "checkboxCentralPlacement_" + anchorIndex;
                 TextBox textbox_spacing = new TextBox();
                 textbox_spacing.Width = 80;
                 textbox_spacing.Text = WpfUtils.GetDimension(anchor.Spacing).ToString();
@@ -244,7 +253,7 @@ namespace ExDesign.Pages.Inputs
                 checkBox_isPassiveAnchor.Unchecked += CheckBox_passiveanchor_Unchecked;
                 checkBox_isPassiveAnchor.Name = "checkboxPassiveAnchor_" + anchorIndex;
                 TextBox textbox_preStressForce = new TextBox();
-                textbox_preStressForce.Width = 125;
+                textbox_preStressForce.Width = 100;
                 textbox_preStressForce.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(anchor.PreStressForce));
                 textbox_preStressForce.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_preStressForce.TextChanged += Textbox_prestressforce_TextChanged;
@@ -285,6 +294,8 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_freeLength);
                 dockPanel.Children.Add(textbox_rootLength);
                 dockPanel.Children.Add(textbox_inclination);
+                dockPanel.Children.Add(tempPanel2);
+                dockPanel.Children.Add(checkBox_centralPlacement);
                 dockPanel.Children.Add(textbox_spacing);
                 dockPanel.Children.Add(textbox_rootDiameter);
                 dockPanel.Children.Add(comboBox_numberofcable);
@@ -319,6 +330,28 @@ namespace ExDesign.Pages.Inputs
                 //StaticVariables.view3DPage.Refreshview();
                 //StaticVariables.SideviewPage.Refreshview();
             }
+        }
+
+        private void CheckBox_centralPlacement_Unchecked(object sender, RoutedEventArgs e)
+        {
+            string checkName = ((CheckBox)sender).Name.Split('_')[1];
+            StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsCentralPlacement = false;
+
+            AnchorsGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
+        }
+
+        private void CheckBox_centralPlacement_Checked(object sender, RoutedEventArgs e)
+        {
+            string checkName = ((CheckBox)sender).Name.Split('_')[1];
+            StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsCentralPlacement = true;
+
+            AnchorsGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void Textbox_depth_LostFocus(object sender, RoutedEventArgs e)
@@ -589,7 +622,7 @@ namespace ExDesign.Pages.Inputs
                 lastDepth += 2;
             }
             
-            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=10,RootDiameter=0.15,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4 ,RootSoilFrictionResistance=65};
+            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=10,RootDiameter=0.15,IsCentralPlacement=false,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4 ,RootSoilFrictionResistance=65};
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
             TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();

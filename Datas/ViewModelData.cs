@@ -296,7 +296,7 @@ namespace ExDesign.Datas
                     center3d = new Point3D(0, 0, 0),
                     wall_t = 0.65,
                     wall_h = 12,
-                    wall_d = 7,
+                    wall_d = 11.5,
                     pile_s = 0.80,
                     frontCubeLength = 8,
                     backCubeLength = 12,

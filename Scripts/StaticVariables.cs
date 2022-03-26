@@ -37,7 +37,6 @@ namespace ExDesign.Scripts
                                                                                                         { Units.ton_mm, gravity_factor },{ Units.ton_cm, gravity_factor },{ Units.ton_m, gravity_factor },
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 1000 },{ Units.N_m, 1000 },
                                                                                                         { Units.kN_mm, 1 },{ Units.kN_cm, 1 },{ Units.kN_m, 1 } };
-        public static double wall_d = 11;
         public static int maxPileCount = 20;
         public static double penThickness = 0.04;
         public static double dimensionPenThickness = 0.03;
