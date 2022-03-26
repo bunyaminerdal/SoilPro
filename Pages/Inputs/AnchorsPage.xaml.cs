@@ -45,7 +45,7 @@ namespace ExDesign.Pages.Inputs
             totalNominalArea_txtbox.Text = FindResource("TotalNominalArea").ToString() + " (" + StaticVariables.areaUnit + ")";
             BreakingStrength_txtbox.Text = FindResource("BreakingStrength").ToString() + " (" + StaticVariables.forceUnit + ")";
             rootModulus_txtbox.Text = FindResource("RootModulus").ToString() + " (" + StaticVariables.StressUnit + ")";
-            skinfriction_txtbox.Text = FindResource("RootSoilFrictionResistance").ToString() + " (" + StaticVariables.SurfaceStressUnit + ")";
+            skinfriction_txtbox.Text = FindResource("RootSoilSurfaceResistance").ToString() + " (" + StaticVariables.StressUnit + ")";
             prestressForce_txtbox.Text = FindResource("PreStressForce").ToString() + " (" + StaticVariables.forceUnit + ")";
             soldier2.Text = FindResource("BeamHeight").ToString() + " (" + StaticVariables.dimensionUnit + ")";
             soldier3.Text = FindResource("BeamWidth").ToString() + " (" + StaticVariables.dimensionUnit + ")";
@@ -84,7 +84,7 @@ namespace ExDesign.Pages.Inputs
             if (StaticVariables.viewModel.anchorDatas == null) return;
             anchorsGroupbox.Children.Clear();
             
-            StaticVariables.Sort(StaticVariables.viewModel.anchorDatas);
+            StaticVariables.SortAnchors(StaticVariables.viewModel.anchorDatas);
 
             foreach (var anchor in StaticVariables.viewModel.anchorDatas)
             {
@@ -228,7 +228,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_rootModulus.Name = "textboxRootModulus_" + anchorIndex;
                 TextBox textbox_rootsoilfriction = new TextBox();
                 textbox_rootsoilfriction.Width = 125;
-                textbox_rootsoilfriction.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetSurfaceStress(anchor.RootSoilFrictionResistance));
+                textbox_rootsoilfriction.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(anchor.RootSoilFrictionResistance));
                 textbox_rootsoilfriction.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_rootsoilfriction.TextChanged += Textbox_rootsoilfriction_TextChanged;
                 textbox_rootsoilfriction.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
@@ -296,9 +296,9 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(tempPanel1);                
                 dockPanel.Children.Add(checkBox_isPassiveAnchor);                
                 dockPanel.Children.Add(textbox_preStressForce);                
-                dockPanel.Children.Add(tempPanel);
                 if (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) != WallType.SteelSheetWall)
                 {
+                    dockPanel.Children.Add(tempPanel);
                     dockPanel.Children.Add(checkBox_soldierBeam);
                     dockPanel.Children.Add(textbox_beamHeight);
                     dockPanel.Children.Add(textbox_beamWidth);
@@ -526,7 +526,7 @@ namespace ExDesign.Pages.Inputs
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].RootSoilFrictionResistance = WpfUtils.GetValueSurfaceStress(result);
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].RootSoilFrictionResistance = WpfUtils.GetValueStress(result);
             }
         }
         private void Textbox_prestressforce_TextChanged(object sender, TextChangedEventArgs e)
@@ -589,7 +589,7 @@ namespace ExDesign.Pages.Inputs
                 lastDepth += 2;
             }
             
-            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=8,RootDiameter=0.15,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4};
+            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=10,RootDiameter=0.15,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4 ,RootSoilFrictionResistance=65};
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
             TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();

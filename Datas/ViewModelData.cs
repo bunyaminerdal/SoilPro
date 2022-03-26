@@ -58,6 +58,7 @@ namespace ExDesign.Datas
         public bool useCableDiameterAndNumberForDesign { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<AnchorData> anchorDatas { get; set; }
+        public ObservableCollection<StrutData> strutDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
         public ObservableCollection<SoilTextureData> soilTextures { get; set; }
         public Stage stage { get; set; }
@@ -336,6 +337,7 @@ namespace ExDesign.Datas
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),
                     anchorDatas = new ObservableCollection<AnchorData>(),
+                    strutDatas = new ObservableCollection<StrutData>(),
                     soilTextures = new ObservableCollection<SoilTextureData>(),
 
                     stage = Stage.Materials,

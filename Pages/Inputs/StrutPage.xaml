@@ -1,0 +1,69 @@
+﻿<Page x:Class="ExDesign.Pages.Inputs.StrutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StrutPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Frame x:Name="view3d_main" Grid.Column="0" NavigationUIVisibility="Hidden"/>
+                <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+            </Grid>
+            <StackPanel Grid.Row="1" Background="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" >
+                        <GroupBox   Margin="5" Header="{DynamicResource Struts}" >
+                            <StackPanel>
+                                <DockPanel HorizontalAlignment="Left">
+                                    <Button x:Name="addanchor_bttn" Content="{DynamicResource AddStrut}" Width="150" Margin="10" Click="addanchor_bttn_Click" ></Button>
+                                    
+                                </DockPanel>
+                                <ScrollViewer x:Name="headerScrollBar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False">
+                                    <DockPanel HorizontalAlignment="Left" Margin="2">
+                                        <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="depth_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource Depth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="strutLength_txtbox" IsEnabled="False" Width="120" Text="{DynamicResource StrutLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="strutdiameter_txtbox" IsEnabled="False" Width="120" Text="{DynamicResource StrutDiameter}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="strutthickness_txtbox" IsEnabled="False" Width="120" Text="{DynamicResource StrutThickness}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox IsEnabled="False" Width="125" Text="{DynamicResource CentralPlacement}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="Spacing_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource Spacing}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="soldier1" IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="soldier2" IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="soldier3" IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <DockPanel Width="30"></DockPanel>
+                                    </DockPanel>
+                                </ScrollViewer>
+
+                                <ScrollViewer x:Name="strutsGridScrollBar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="200" ScrollChanged="anchorsGridScrollBar_ScrollChanged"  >
+                                    <StackPanel x:Name="strutssGroupbox"  ></StackPanel>
+
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </GroupBox>
+                    </StackPanel>
+
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

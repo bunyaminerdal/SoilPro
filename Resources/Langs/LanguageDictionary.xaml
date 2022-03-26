@@ -175,6 +175,12 @@
     <system:String x:Key="PassiveAnchor" >Passive Anchor</system:String> 
     <system:String x:Key="LFree" >Lfree = </system:String> 
     <system:String x:Key="LRoot" >Lroot = </system:String>
-    <system:String x:Key="RootSoilFrictionResistance" >Root-Soil Friction Resistance</system:String> 
+    <system:String x:Key="RootSoilSurfaceResistance" >Root-Soil Surface Resistance</system:String> 
+    <system:String x:Key="Struts" >Struts</system:String> 
+    <system:String x:Key="AddStrut" >Add Strut</system:String> 
+    <system:String x:Key="StrutLength" >Strut Length</system:String> 
+    <system:String x:Key="StrutDiameter" >Strut Diameter</system:String> 
+    <system:String x:Key="StrutThickness" >Strut Thickness</system:String>
+    <system:String x:Key="CentralPlacement" >Central Placement</system:String> 
     
 </ResourceDictionary>

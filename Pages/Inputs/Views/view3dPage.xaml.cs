@@ -234,6 +234,7 @@ namespace ExDesign.Pages.Inputs.Views
                 default:
                     break;
             }
+            
             //anchorage
             double anchor_free_L = 7;
             double anchor_wire_d = 0.15;
@@ -246,7 +247,7 @@ namespace ExDesign.Pages.Inputs.Views
             double numofanchor = 3;
             foreach (var anchor in StaticVariables.viewModel.anchorDatas)
             {
-
+                anchor_wire_d = StaticVariables.wireScaleFactor * Math.Sqrt(anchor.TotalNominalArea / Math.PI);
                 if (wall_d > anchor.Spacing)
                 {
                     numofanchor = anchor.Spacing > 0 ? Math.Round(((wall_d / 2) - (anchor.Spacing / 2) - anchor_wire_d / 2) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
@@ -263,10 +264,10 @@ namespace ExDesign.Pages.Inputs.Views
                 beam_h = anchor.IsSoldierBeam ? anchor.SoldierBeamHeight : 0;
                 anchor_free_L = anchor.FreeLength + wall_t + 0.2 + beam_w;
                 anchor_angle = anchor.Inclination;
-                anchor_root_d = anchor.RootDiameter;
+                anchor_root_d = anchor.RootDiameter/2;
                 anchor_root_L = anchor.RootLength;
                 //anchor_wire_d =anchor_root_d <= 0.3 ? 0.05 : 0.7;
-                anchor_wire_d = StaticVariables.wireScaleFactor * Math.Sqrt(anchor.TotalNominalArea / Math.PI);
+                
                 double totalLength = anchor_free_L + anchor_root_L;
                 if(totalLength > backCubeLength) backCubeLength = totalLength;
                 for (int i = 0; i < numofanchor; i++)
@@ -325,6 +326,72 @@ namespace ExDesign.Pages.Inputs.Views
                     groupScene.Children.Add(beamModel);
                 }
             }
+
+
+            double numofStrut = 3;
+            double strut_D = 0;
+            double strut_T = 0.01;
+            double strut_L = 10;
+            double strutbeam_w = 1;
+            double strutbeam_h = 1;
+            double strut_loc = 1;
+
+            //Struts
+            foreach (var strut in StaticVariables.viewModel.strutDatas)
+            {
+                strut_D = strut.StrutOuterDiameter/2;
+                if (wall_d > strut.StrutSpacing)
+                {
+                    if(strut.IsCentralPlacement)
+                    {
+                        numofStrut = strut.StrutSpacing > 0 ? Math.Round(((wall_d / 2)  - strut_D) / strut.StrutSpacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                    }
+                    else { 
+                        numofStrut = strut.StrutSpacing > 0 ? Math.Round(((wall_d / 2) - (strut.StrutSpacing / 2) - strut_D ) / strut.StrutSpacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                    }
+                }
+                else
+                {
+                    numofStrut = 1;
+                }
+                strut_loc = strut.StrutDepth;
+                strutbeam_w = strut.IsSoldierBeam ? strut.SoldierBeamwidth : 0;
+                strutbeam_h = strut.IsSoldierBeam ? strut.SoldierBeamHeight : 0;
+                strut_T = strut.StrutThickness;
+                strut_L = StaticVariables.strutLength;
+                for (int i = 0; i < numofStrut; i++)
+                {
+                    Point3D strutCenter = new Point3D(center3d.X - wall_t - strutbeam_w - strut_L, center3d.Y + centerY - strut_loc , center3d.Z - i * strut.StrutSpacing - (strut.IsCentralPlacement? 0: strut.StrutSpacing / 2));
+                    WpfCylinder strutGeometry = new WpfCylinder(strutCenter, 15, strut_D, strut_D, strut_L);
+                    GeometryModel3D strutModel = strutGeometry.CreateModel(Colors.MistyRose, true, true);
+                    AxisAngleRotation3D strutrotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
+                    RotateTransform3D strutrotateTransformX = new RotateTransform3D(strutrotationX, strutCenter);                    
+                    Transform3DGroup strutmyTransform3DGroup = new Transform3DGroup();
+                    strutmyTransform3DGroup.Children.Add(strutrotateTransformX);
+                    strutModel.Transform = strutmyTransform3DGroup;
+                    groupScene.Children.Add(strutModel);
+                }
+                for (int i = 0; i < numofStrut; i++)
+                {
+                    Point3D strutCenter = new Point3D(center3d.X - wall_t - strutbeam_w - strut_L, center3d.Y + centerY - strut_loc, center3d.Z + i * strut.StrutSpacing + (strut.IsCentralPlacement ? 0 : strut.StrutSpacing / 2));
+                    WpfCylinder strutGeometry = new WpfCylinder(strutCenter, 15, strut_D, strut_D, strut_L);
+                    GeometryModel3D strutModel = strutGeometry.CreateModel(Colors.MistyRose, true, true);
+                    AxisAngleRotation3D strutrotationX = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 270);
+                    RotateTransform3D strutrotateTransformX = new RotateTransform3D(strutrotationX, strutCenter);
+                    Transform3DGroup strutmyTransform3DGroup = new Transform3DGroup();
+                    strutmyTransform3DGroup.Children.Add(strutrotateTransformX);
+                    strutModel.Transform = strutmyTransform3DGroup;
+                    groupScene.Children.Add(strutModel);
+                }
+                if (strut.IsSoldierBeam)
+                {
+                    Point3D beamCenter = new Point3D(center3d.X - wall_t - strutbeam_w, center3d.Y + centerY - strut_loc + strutbeam_h / 2, center3d.Z - wall_d / 2);
+                    WpfCube bemaCube = new WpfCube(beamCenter, strutbeam_w, strutbeam_h, wall_d);
+                    GeometryModel3D beamModel = WpfCube.CreateCubeModel(bemaCube, Colors.DarkGray, false, soilUri);
+                    groupScene.Children.Add(beamModel);
+                }
+            }
+
             //create backT model
             double backW_w = 0;
             double backW_h = 0;

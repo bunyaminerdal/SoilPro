@@ -27,6 +27,7 @@ namespace ExDesign.Pages.Inputs
         ExDesignPage exDesignPage = new ExDesignPage();
         SoilMethodPage soilMethodPage = new SoilMethodPage();
         AnchorsPage anchorsPage = new AnchorsPage();
+        StrutPage strutsPage = new StrutPage();
         public InputsMainPage()
         {
             InitializeComponent();
@@ -55,6 +56,9 @@ namespace ExDesign.Pages.Inputs
                 case Stage.Anchors:
                     Main_pro.Content = anchorsPage;
                     break;
+                case Stage.Struts:
+                    Main_pro.Content = strutsPage;
+                    break;
                 default:
                     Main_pro.Content = materialsPage;
                     break;
@@ -82,6 +86,9 @@ namespace ExDesign.Pages.Inputs
                 case Stage.Anchors:
                     AnchorBttn.IsChecked = true;
                     break;
+                case Stage.Struts:
+                    StrutBttn.IsChecked = true;
+                    break;
                 default:
                     MaterialsBttn.IsChecked = true;
                     break;
@@ -106,6 +113,11 @@ namespace ExDesign.Pages.Inputs
         private void AnchorBttn_Checked(object sender, RoutedEventArgs e)
         {
             StaticEvents.StageChangeEvent?.Invoke(Stage.Anchors);
+        }
+        
+        private void StrutBttn_Checked(object sender, RoutedEventArgs e)
+        {
+            StaticEvents.StageChangeEvent?.Invoke(Stage.Struts);
         }
         private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -170,5 +182,7 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.view3DPage.Refreshview();
             StaticEvents.SetStageEvent?.Invoke(StaticVariables.viewModel.stage);
         }
+
+        
     }
 }

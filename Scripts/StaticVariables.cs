@@ -50,14 +50,31 @@ namespace ExDesign.Scripts
         public static double levelFontHeight = 0.4;
         public static double soilLayerBoxWidth = 3;
         public static double levelIconHeight = 0.3;
-        public static double wireScaleFactor = 4;
+        public static double wireScaleFactor = 2;
+        public static double strutLength = 3;
         public static bool IsDimensionShowed = false;
 
 
 
-        public static void Sort(this ObservableCollection<AnchorData> collection)
+        public static void SortAnchors(this ObservableCollection<AnchorData> collection)
         {
             List<AnchorData> sorted = collection.OrderBy(x => x.AnchorDepth).ToList();
+
+            int ptr = 0;
+            while (ptr < sorted.Count - 1)
+            {
+                if (!collection[ptr].Equals(sorted[ptr]))
+                {
+                    int idx = search(collection, ptr + 1, sorted[ptr]);
+                    collection.Move(idx, ptr);
+                }
+
+                ptr++;
+            }
+        }
+        public static void SortStruts(this ObservableCollection<StrutData> collection)
+        {
+            List<StrutData> sorted = collection.OrderBy(x => x.StrutDepth).ToList();
 
             int ptr = 0;
             while (ptr < sorted.Count - 1)
@@ -141,7 +158,8 @@ namespace ExDesign.Scripts
         WallProperties,
         ExDesign,
         SoilMethod,
-        Anchors
+        Anchors,
+        Struts
     }
     public enum LevelDirection
     {
