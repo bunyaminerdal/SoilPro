@@ -45,6 +45,7 @@ namespace ExDesign.Pages.Inputs
             totalNominalArea_txtbox.Text = FindResource("TotalNominalArea").ToString() + " (" + StaticVariables.areaUnit + ")";
             BreakingStrength_txtbox.Text = FindResource("BreakingStrength").ToString() + " (" + StaticVariables.forceUnit + ")";
             rootModulus_txtbox.Text = FindResource("RootModulus").ToString() + " (" + StaticVariables.StressUnit + ")";
+            skinfriction_txtbox.Text = FindResource("RootSoilFrictionResistance").ToString() + " (" + StaticVariables.SurfaceStressUnit + ")";
             prestressForce_txtbox.Text = FindResource("PreStressForce").ToString() + " (" + StaticVariables.forceUnit + ")";
             soldier2.Text = FindResource("BeamHeight").ToString() + " (" + StaticVariables.dimensionUnit + ")";
             soldier3.Text = FindResource("BeamWidth").ToString() + " (" + StaticVariables.dimensionUnit + ")";
@@ -102,7 +103,7 @@ namespace ExDesign.Pages.Inputs
                 deleteButton.Click += DeleteButton_Click;
                 TextBox textBox_no = new TextBox();
                 textBox_no.Width = 30;
-                textBox_no.Text = anchorIndex;
+                textBox_no.Text = (int.Parse(anchorIndex) + 1).ToString();
                 textBox_no.VerticalContentAlignment = VerticalAlignment.Center;
                 textBox_no.HorizontalContentAlignment = HorizontalAlignment.Center;
                 textBox_no.IsEnabled = false;
@@ -225,6 +226,14 @@ namespace ExDesign.Pages.Inputs
                 textbox_rootModulus.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_rootModulus.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_rootModulus.Name = "textboxRootModulus_" + anchorIndex;
+                TextBox textbox_rootsoilfriction = new TextBox();
+                textbox_rootsoilfriction.Width = 125;
+                textbox_rootsoilfriction.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetSurfaceStress(anchor.RootSoilFrictionResistance));
+                textbox_rootsoilfriction.VerticalContentAlignment = VerticalAlignment.Center;
+                textbox_rootsoilfriction.TextChanged += Textbox_rootsoilfriction_TextChanged;
+                textbox_rootsoilfriction.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
+                textbox_rootsoilfriction.PreviewTextInput += Textbox_depth_PreviewTextInput;
+                textbox_rootsoilfriction.Name = "textboxRootSoilFriction_" + anchorIndex;
                 DockPanel tempPanel1 = new DockPanel();
                 tempPanel1.Width = 50;
                 CheckBox checkBox_isPassiveAnchor = new CheckBox();
@@ -283,6 +292,7 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_totalNominalArea);
                 dockPanel.Children.Add(textbox_breakingStrength);
                 dockPanel.Children.Add(textbox_rootModulus);                
+                dockPanel.Children.Add(textbox_rootsoilfriction);                
                 dockPanel.Children.Add(tempPanel1);                
                 dockPanel.Children.Add(checkBox_isPassiveAnchor);                
                 dockPanel.Children.Add(textbox_preStressForce);                
@@ -305,9 +315,9 @@ namespace ExDesign.Pages.Inputs
                                 
                 anchorsGroupbox.Children.Add(dockPanel);
 
-                //refresh windows
-                StaticVariables.view3DPage.Refreshview();
-                StaticVariables.SideviewPage.Refreshview();
+                ////refresh windows
+                //StaticVariables.view3DPage.Refreshview();
+                //StaticVariables.SideviewPage.Refreshview();
             }
         }
 
@@ -322,6 +332,9 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsSoldierBeam = false;
 
             AnchorsGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void CheckBox_soldierBeam_Checked(object sender, RoutedEventArgs e)
@@ -330,6 +343,9 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsSoldierBeam = true;
             
             AnchorsGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
         private void CheckBox_passiveanchor_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -337,6 +353,9 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsPassiveAnchor = false;
 
             AnchorsGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void CheckBox_passiveanchor_Checked(object sender, RoutedEventArgs e)
@@ -345,6 +364,9 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.anchorDatas[int.Parse(checkName)].IsPassiveAnchor = true;
 
             AnchorsGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void TotalNominalAreaCalc(AnchorData anchor)
@@ -372,7 +394,9 @@ namespace ExDesign.Pages.Inputs
                     break;
             }
             anchor.BreakingStrength = count*anchor.CableData.BreakingStrength;
-            anchor.TotalNominalArea = count * anchor.CableData.NominalArea;            
+            anchor.TotalNominalArea = count * anchor.CableData.NominalArea;
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
         }
 
         private void ComboBox_numberofcable_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -496,6 +520,15 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].RootModulus = WpfUtils.GetValueStress(result);
             }
         }
+        private void Textbox_rootsoilfriction_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].RootSoilFrictionResistance = WpfUtils.GetValueSurfaceStress(result);
+            }
+        }
         private void Textbox_prestressforce_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -504,6 +537,8 @@ namespace ExDesign.Pages.Inputs
             {
                 StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].PreStressForce = WpfUtils.GetValueForce(result);
             }
+            //refresh windows
+            StaticVariables.SideviewPage.Refreshview();
         }
         private void Textbox_breakingStrength_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -558,6 +593,8 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
             TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void anchorsGridScrollBar_ScrollChanged(object sender, ScrollChangedEventArgs e)

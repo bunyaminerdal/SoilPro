@@ -543,7 +543,7 @@ namespace ExDesign.Windows
         }
         private void SaveChanges()
         {            
-           StaticVariables.viewModel.soilDatas = tempSoilDataList;
+            StaticVariables.viewModel.soilDatas = tempSoilDataList;
             SoilLibrary.SavedSoilDataList.Clear();
             foreach (var soil in tempSavedSoilDataList)
             {
@@ -556,6 +556,9 @@ namespace ExDesign.Windows
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
             if (methodPage != null) methodPage.LayerGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void UserSoilList_GotFocus(object sender, RoutedEventArgs e)

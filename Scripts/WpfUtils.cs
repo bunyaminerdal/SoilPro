@@ -234,6 +234,18 @@ namespace ExDesign.Scripts
             newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * Math.Pow(StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit], 2);
             return newValue;
         }
+        public static double GetSurfaceStress(double value) //kN/m
+        {
+            double newValue;
+            newValue = value * StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] / StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit];
+            return newValue;
+        }
+        public static double GetValueSurfaceStress(double value) //kN/m
+        {
+            double newValue;
+            newValue = value / StaticVariables.UnitForceFactors[StaticVariables.CurrentUnit] * StaticVariables.UnitDimensionFactors[StaticVariables.CurrentUnit];
+            return newValue;
+        }
         public static double GetDensity(double value)
         {
             double newValue;

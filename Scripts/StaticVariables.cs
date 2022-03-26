@@ -25,6 +25,7 @@ namespace ExDesign.Scripts
         public static string inertiaUnit { get { return CurrentUnit.ToString().Split('_')[1] + "⁴"; } }
         public static string forceUnit { get { return CurrentUnit.ToString().Split('_')[0]; } }
         public static string StressUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] + "²"; } }
+        public static string SurfaceStressUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] ; } }
         public static string DensityUnit { get { return CurrentUnit.ToString().Split('_')[0]+"/" + CurrentUnit.ToString().Split('_')[1] + "³"; } }
         public static string EIUnit { get { return CurrentUnit.ToString().Split('_')[0]+ CurrentUnit.ToString().Split('_')[1] + "²"; } }
         public static Dictionary<Units, double> UnitDimensionFactors = new Dictionary<Units, double> {{ Units.kg_mm, 1000 },{Units.kg_cm,100 },{ Units.kg_m,1},

@@ -108,7 +108,7 @@ namespace ExDesign.Pages.Inputs.Views
             }
 
             double wallExtension = 0;
-            double anchorDimensionExt1 = 0;
+            double anchorDimensionExt1 = StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff + StaticVariables.dimensionFontHeight;
             //anchors
             foreach (var anchor in StaticVariables.viewModel.anchorDatas)
             {
@@ -439,7 +439,7 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
                 case Stage.Anchors:
                     //anchors
-                    double anchorDimensionExt = 0;
+                    double anchorDimensionExt = StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff;
                     foreach (var anchor in StaticVariables.viewModel.anchorDatas)
                     {
                         double soldierBeamH = 0;
@@ -455,11 +455,10 @@ namespace ExDesign.Pages.Inputs.Views
                             mainDrawingGroup.Children.Add(soldierBeamDimensionTop);
 
                         }
-                        anchorDimensionExt += (soldierBeamW + StaticVariables.dimensionDiff + StaticVariables.dimensionExtension*2 + StaticVariables.dimensionFontHeight);
+                        anchorDimensionExt += (soldierBeamW   + StaticVariables.dimensionDiff + StaticVariables.dimensionExtension *2  + StaticVariables.dimensionFontHeight);
                         Point rotationCenter = new Point(center.X , center.Y + anchor.AnchorDepth);
                         GeometryDrawing anchorDepthDimension = Wpf2Dutils.Dimension(new Point( rotationCenter.X - anchorDimensionExt,rotationCenter.Y), new Point(center.X - anchorDimensionExt, center.Y), Colors.Blue);
                         mainDrawingGroup.Children.Add(anchorDepthDimension);
-
                         
                     }
                     break;

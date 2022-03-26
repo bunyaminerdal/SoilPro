@@ -52,11 +52,13 @@
                                         <TextBox x:Name="totalNominalArea_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource TotalNominalArea}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="BreakingStrength_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource BreakingStrength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="rootModulus_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource RootModulus}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="skinfriction_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource RootSoilFrictionResistance}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox IsEnabled="False" Width="125" Text="{DynamicResource PassiveAnchor}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="prestressForce_txtbox" IsEnabled="False" Width="125" Text="{DynamicResource PreStressForce}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="soldier1" IsEnabled="False" Width="100" Text="{DynamicResource SoldierBeam}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="soldier2" IsEnabled="False" Width="100" Text="{DynamicResource BeamHeight}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="soldier3" IsEnabled="False" Width="100" Text="{DynamicResource BeamWidth}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <DockPanel Width="30"></DockPanel>
                                     </DockPanel>
                                 </ScrollViewer>
 

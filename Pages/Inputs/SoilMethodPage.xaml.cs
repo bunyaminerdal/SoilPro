@@ -70,7 +70,7 @@ namespace ExDesign.Pages.Inputs
                 deleteButton.Click += DeleteButton_Click;
                 TextBox textBox_no = new TextBox();
                 textBox_no.Width = 30;
-                textBox_no.Text = layerIndex;
+                textBox_no.Text = (int.Parse( layerIndex)+1).ToString();
                 textBox_no.VerticalContentAlignment = VerticalAlignment.Center;
                 textBox_no.HorizontalContentAlignment = HorizontalAlignment.Center;
                 textBox_no.IsEnabled = false;
@@ -82,12 +82,6 @@ namespace ExDesign.Pages.Inputs
                 textbox_height.PreviewKeyDown += Textbox_height_PreviewKeyDown;
                 textbox_height.PreviewTextInput += Textbox_height_PreviewTextInput;
                 textbox_height.Name = "textboxheight_" + layerIndex;
-                //TextBox textbox_layername = new TextBox();
-                //textbox_layername.Width = 200;
-                //textbox_layername.Text = item.Name;
-                //textbox_layername.Name ="textboxlayername_"+layerIndex;
-                //textbox_layername.VerticalContentAlignment = VerticalAlignment.Center;
-                //textbox_layername.TextChanged += Textbox_layername_TextChanged;
                 Image textureImage = new Image();
                 textureImage.Height = 27;
                 textureImage.Width = 55;
@@ -217,9 +211,9 @@ namespace ExDesign.Pages.Inputs
                 dockPanel.Children.Add(textbox_model_parameter);
                 soilLayerGroupbox.Children.Add(dockPanel);
 
-                //refresh windows
-                StaticVariables.view3DPage.Refreshview();
-                StaticVariables.SideviewPage.Refreshview();
+                ////refresh windows
+                //StaticVariables.view3DPage.Refreshview();
+                //StaticVariables.SideviewPage.Refreshview();
             }
         }
         private Image TextureImage(SoilData soil)
@@ -296,6 +290,8 @@ namespace ExDesign.Pages.Inputs
             string buttonName = ((Button)sender).Name;
             StaticVariables.viewModel.soilLayerDatas.RemoveAt(int.Parse( buttonName.Split('_')[1]));
             LayerGridInitialize();
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -304,6 +300,9 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.viewModel.soilLayerDatas[int.Parse(comboname)].Soil = ((SoilData)((ComboBox)sender).SelectedItem);
             
             LayerGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -344,6 +343,9 @@ namespace ExDesign.Pages.Inputs
             SoilLayerData soilLayerData1 = new SoilLayerData { LayerHeight=3,Name=FindResource("SoilLayer").ToString() };
             StaticVariables.viewModel.soilLayerDatas.Add(soilLayerData1);
             LayerGridInitialize();
+            //refresh windows
+            StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
         }
 
         private void LayerGridScrollBar_ScrollChanged(object sender, ScrollChangedEventArgs e)

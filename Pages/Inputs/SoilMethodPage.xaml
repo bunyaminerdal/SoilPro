@@ -86,6 +86,7 @@
                                         <TextBox IsEnabled="False" Width="80" Text="OCR" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox IsEnabled="False" Width="80" Text="K0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
                                         <TextBox x:Name="selected_parameter" IsEnabled="False" Width="80" Text="K0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <DockPanel Width="30"></DockPanel>
                                     </DockPanel>
                                 </ScrollViewer>
                                 
