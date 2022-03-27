@@ -48,7 +48,7 @@ namespace ExDesign.Pages.Inputs
         {
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.SideviewPage;
-
+            if (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.SteelSheetWall) addanchor_bttn.IsEnabled = false;
             StaticEvents.UnitChangeEvent += UnitChange;
             UnitChange();
             StrutsGridInitialize();
@@ -62,7 +62,8 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.SideviewPage.Refreshview();
         }
         public void StrutsGridInitialize()
-        {
+        {            
+
             if (StaticVariables.viewModel.strutDatas == null) return;
             strutssGroupbox.Children.Clear();
 
@@ -185,10 +186,7 @@ namespace ExDesign.Pages.Inputs
                 {
                     soldier1.Visibility = Visibility.Hidden;
                     soldier2.Visibility = Visibility.Hidden;
-                    soldier3.Visibility = Visibility.Hidden;
-                    strut.IsSoldierBeam = false;
-                    strut.SoldierBeamHeight = 0;
-                    strut.SoldierBeamwidth = 0;
+                    soldier3.Visibility = Visibility.Hidden;                    
                 }
 
                 strutssGroupbox.Children.Add(dockPanel);
@@ -360,7 +358,7 @@ namespace ExDesign.Pages.Inputs
                 lastDepth += 2;
             }
 
-            StrutData strutData = new StrutData {StrutDepth =lastDepth,StrutLength =10,StrutOuterDiameter=0.3,StrutThickness=0.01,StrutSpacing=2.4,IsCentralPlacement=false, IsSoldierBeam = true, SoldierBeamHeight = 0.7, SoldierBeamwidth = 0.4 };
+            StrutData strutData = new StrutData {StrutDepth =lastDepth,StrutLength =14,StrutOuterDiameter=0.812,StrutThickness=0.016,StrutSpacing=4.5,IsCentralPlacement=true, IsSoldierBeam = true, SoldierBeamHeight = 1.1, SoldierBeamwidth = 0.5 };
             StaticVariables.viewModel.strutDatas.Add(strutData);
             StrutsGridInitialize();
             StaticVariables.view3DPage.Refreshview();

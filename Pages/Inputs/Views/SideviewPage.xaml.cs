@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExDesign.Scripts;
+using ExDesign.Datas;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace ExDesign.Pages.Inputs.Views
 {
@@ -107,8 +109,7 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
             }
 
-            double wallExtension = 0;
-            double anchorDimensionExt1 = StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff + StaticVariables.dimensionFontHeight;
+            double anchorDimensionExt1 =(StaticVariables.viewModel.strutDatas.Count>0?StaticVariables.strutLength:0) + StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff + StaticVariables.dimensionFontHeight;
             //anchors
             foreach (var anchor in StaticVariables.viewModel.anchorDatas)
             {
@@ -124,23 +125,106 @@ namespace ExDesign.Pages.Inputs.Views
                     GeometryDrawing soldierBeamGeometry = Wpf2Dutils.WallGeometryDrawing(soldierBeamCenter, soldierBeamH, soldierBeamW, Colors.Transparent);
                     mainDrawingGroup.Children.Add(soldierBeamGeometry);
 
-                    if (wallExtension < anchor.SoldierBeamwidth) wallExtension = anchor.SoldierBeamwidth;
                 }
                 anchorDimensionExt1 += (soldierBeamW + StaticVariables.dimensionDiff + StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionFontHeight);
 
                 Point rotationCenter = new Point(center.X - soldierBeamW, center.Y + anchor.AnchorDepth);
+                
                 GeometryDrawing anchorGeometry = Wpf2Dutils.AnchorGeometryDrawing(rotationCenter, anchor.Inclination, wall_t, anchor.FreeLength, anchor.RootDiameter, anchor.RootLength, 0.2, soldierBeamW, Colors.DarkGray);
                 mainDrawingGroup.Children.Add(anchorGeometry);
+                double rootstartX = Math.Cos((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + wall_t + soldierBeamW) - soldierBeamW;
+                double rootendX = Math.Cos((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength + wall_t + soldierBeamW) - soldierBeamW;
+                double rootstartY = rotationCenter.Y + Math.Sin((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + wall_t + soldierBeamW);
+                double rootendY = rotationCenter.Y + Math.Sin((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength + wall_t + soldierBeamW);
+                double layerHeight = 0;
+                List<Tuple<Point, SoilData>> points = new List<Tuple<Point, SoilData>>();
+                points.Add(new Tuple<Point, SoilData>(new Point(rootstartX, rootstartY),new SoilData()));
+                SoilData lastSoilData = new SoilData();
+                if (StaticVariables.viewModel.soilLayerDatas.Count > 0)
+                {
+                    for (int i = 0; i < StaticVariables.viewModel.soilLayerDatas.Count; i++)
+                    {
+                        layerHeight += StaticVariables.viewModel.soilLayerDatas[i].LayerHeight;
+                        Scripts.Line rootLine = new Scripts.Line(rootstartX, rootendX, rootstartY, rootendY);
+                        Scripts.Line soilLine = new Scripts.Line(0, StaticVariables.viewModel.backCubeLength * 3, layerHeight, layerHeight);
+
+                        Point intersect = LineIntersection.FindIntersection(rootLine, soilLine);
+                        if (StaticVariables.viewModel.soilLayerDatas[i].Soil != null && intersect != new Point(0, 0))
+                        {                            
+                            points.Add(new Tuple<Point, SoilData>(intersect, StaticVariables.viewModel.soilLayerDatas[i].Soil));
+                            if(i< StaticVariables.viewModel.soilLayerDatas.Count-1)
+                            {
+                                if(StaticVariables.viewModel.soilLayerDatas[i+1].Soil != null) lastSoilData = StaticVariables.viewModel.soilLayerDatas[i+1].Soil;
+                            }
+                            
+                        }
+                    }
+                }
+                
+
+                points.Add(new Tuple<Point, SoilData>(new Point(rootendX, rootendY), lastSoilData));
+                if (points.Count > 2)
+                {
+                    for (int i = 1; i < points.Count; i++)
+                    {
+                        double length1 = Point.Subtract(rotationCenter, points[i - 1].Item1).Length;
+                        double length2 = Point.Subtract(rotationCenter, points[i].Item1).Length;
+                        GeometryDrawing deneme = Wpf2Dutils.AnchorRootPartGeometryDrawing(rotationCenter, anchor.Inclination, length1, length2,anchor.RootDiameter, points[i].Item2.SoilColor);
+                        mainDrawingGroup.Children.Add(deneme);                        
+                    }
+                }
+                else
+                {
+                    double soilH = 0;
+                    foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+                    {
+                        if (rootstartY > soilH && rootendY < soilH+soilLayer.LayerHeight)
+                        {
+                            double length1 = Point.Subtract(rotationCenter, new Point(rootstartX,rootstartY)).Length;
+                            double length2 = Point.Subtract(rotationCenter, new Point(rootendX, rootendY)).Length;
+                            GeometryDrawing deneme = Wpf2Dutils.AnchorRootPartGeometryDrawing(rotationCenter, anchor.Inclination, length1, length2, anchor.RootDiameter, soilLayer.Soil.SoilColor);
+                            mainDrawingGroup.Children.Add(deneme);
+                        }
+                            soilH += soilLayer.LayerHeight;
+                        
+                    }
+                }
+                
                 double totalLength = Math.Cos((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength);
                 double totaldepth = Math.Sin((anchor.Inclination) * Math.PI / 180) * (anchor.FreeLength + anchor.RootLength);
                 if (totalLength > backCubeLength) backCubeLength = totalLength;
                 if(anchorDimensionExt1 > frontCubeLength) frontCubeLength = anchorDimensionExt1;
                 string anchorText = FindResource("LFree").ToString() +WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension( anchor.FreeLength)) +" "+StaticVariables.dimensionUnit+"   "+
                     FindResource("LRoot").ToString() + WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(anchor.RootLength)) + " " + StaticVariables.dimensionUnit + "   " +
+                    "S = " + WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(anchor.Spacing)) + " " + StaticVariables.dimensionUnit + "   " +
                     (anchor.IsPassiveAnchor == false ? "F = " + WpfUtils.ChangeDecimalOptions(WpfUtils.GetForce(anchor.PreStressForce)) + " " + StaticVariables.forceUnit: FindResource("PassiveAnchor").ToString());
                 GeometryDrawing anchorTextGeometry = Wpf2Dutils.FreeTextDrawing(rotationCenter,new Point(rotationCenter.X +totalLength,rotationCenter.Y+totaldepth),Colors.Black,anchorText,anchor.RootDiameter/2);
                 mainDrawingGroup.Children.Add(anchorTextGeometry);
 
+            }
+
+            double strutDimensionExt1 =StaticVariables.strutLength+ StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff + StaticVariables.dimensionFontHeight;
+            //struts
+            foreach (var strut in StaticVariables.viewModel.strutDatas)
+            {
+                double soldierBeamH = 0;
+                double soldierBeamW = 0;
+                if (strut.IsSoldierBeam)
+                {
+                    soldierBeamH = strut.SoldierBeamHeight;
+                    soldierBeamW = strut.SoldierBeamwidth;
+                    Point soldierBeamCenter = new Point(center.X - soldierBeamW, center.Y + strut.StrutDepth - soldierBeamH / 2);
+                    GeometryDrawing soldierBeamGeometry = Wpf2Dutils.WallGeometryDrawing(soldierBeamCenter, soldierBeamH, soldierBeamW, Colors.Transparent);
+                    mainDrawingGroup.Children.Add(soldierBeamGeometry);
+
+                }
+                strutDimensionExt1 += (soldierBeamW + StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff + StaticVariables.dimensionFontHeight);
+                Point rotationCenter = new Point(center.X - soldierBeamW, center.Y + strut.StrutDepth);
+                GeometryDrawing strutGeometry = Wpf2Dutils.StrutGeometryDrawing(rotationCenter,StaticVariables.strutLength,strut.StrutOuterDiameter, Colors.Transparent);
+                mainDrawingGroup.Children.Add(strutGeometry);
+                
+                if (strutDimensionExt1 > frontCubeLength) frontCubeLength = strutDimensionExt1;
+                
             }
 
             double frontT_w_top_dis = 0;
@@ -343,7 +427,7 @@ namespace ExDesign.Pages.Inputs.Views
                     }                    
                     GeometryDrawing wallDimensionDown = Wpf2Dutils.Dimension(new Point(center.X + wall_t, center.Y + wall_h), new Point(center.X, center.Y + wall_h), Colors.DarkBlue, WpfUtils.GetDimension(wall_t).ToString() );
                     mainDrawingGroup.Children.Add(wallDimensionDown);                                       
-                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X - wallExtension, center.Y+wall_h),new Point(center.X - wallExtension, center.Y), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() );
+                    GeometryDrawing wallHeightLeft = Wpf2Dutils.Dimension(new Point(center.X + wall_t , center.Y), new Point(center.X +wall_t, center.Y + wall_h), Colors.DarkBlue, WpfUtils.GetDimension(wall_h).ToString() );
                     mainDrawingGroup.Children.Add(wallHeightLeft);
                     
                     break;
@@ -421,7 +505,7 @@ namespace ExDesign.Pages.Inputs.Views
                             if (soilLayer.Soil != null)
                             {
                                 double soilLayerheight = 0;
-                                if (soilLayer == StaticVariables.viewModel.soilLayerDatas[0] && StaticVariables.viewModel.GroundSurfaceTypeIndex != 0)
+                                if (soilLayer == StaticVariables.viewModel.soilLayerDatas[0] && StaticVariables.viewModel.GroundSurfaceTypeIndex != 0 && StaticVariables.viewModel.GroundSurfaceTypeIndex != 1)
                                 {
                                     soilLayerheight = backT_h + soilLayer.LayerHeight;
                                     soilLayerDimensionCenter = new Point(center.X + backCubeLength + wall_t + soilLayerBoxW + 7 * StaticVariables.levelIconHeight, center.Y + totalHeight - backT_h);
@@ -439,7 +523,7 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
                 case Stage.Anchors:
                     //anchors
-                    double anchorDimensionExt = StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff;
+                    double anchorDimensionExt = (StaticVariables.viewModel.strutDatas.Count > 0 ? StaticVariables.strutLength : 0) + StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff;
                     foreach (var anchor in StaticVariables.viewModel.anchorDatas)
                     {
                         double soldierBeamH = 0;
@@ -460,6 +544,35 @@ namespace ExDesign.Pages.Inputs.Views
                         GeometryDrawing anchorDepthDimension = Wpf2Dutils.Dimension(new Point( rotationCenter.X - anchorDimensionExt,rotationCenter.Y), new Point(center.X - anchorDimensionExt, center.Y), Colors.Blue);
                         mainDrawingGroup.Children.Add(anchorDepthDimension);
                         
+                    }
+                    break;
+                case Stage.Struts:
+                    //anchors
+                    double strutDimensionExt = StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionDiff +StaticVariables.strutLength;
+                    foreach (var strut in StaticVariables.viewModel.strutDatas)
+                    {
+                        double soldierBeamH = 0;
+                        double soldierBeamW = 0;
+                        if (strut.IsSoldierBeam)
+                        {
+                            soldierBeamH = strut.SoldierBeamHeight;
+                            soldierBeamW = strut.SoldierBeamwidth;
+                            Point soldierBeamCenter = new Point(center.X - soldierBeamW, center.Y + strut.StrutDepth + soldierBeamH / 2);
+                            GeometryDrawing soldierBeamDimensionLeft = Wpf2Dutils.Dimension(soldierBeamCenter, new Point(soldierBeamCenter.X, soldierBeamCenter.Y - soldierBeamH), Colors.Blue);
+                            mainDrawingGroup.Children.Add(soldierBeamDimensionLeft);
+                            GeometryDrawing soldierBeamDimensionTop = Wpf2Dutils.Dimension(new Point(soldierBeamCenter.X + soldierBeamW, soldierBeamCenter.Y), new Point(soldierBeamCenter.X, soldierBeamCenter.Y), Colors.Blue);
+                            mainDrawingGroup.Children.Add(soldierBeamDimensionTop);
+
+                        }
+                        Point strutCenter = new Point(center.X-StaticVariables.strutLength - strut.SoldierBeamwidth, center.Y + strut.StrutDepth+strut.StrutOuterDiameter/2);
+                        GeometryDrawing strutDimension = Wpf2Dutils.Dimension( strutCenter, new Point(strutCenter.X, strutCenter.Y - strut.StrutOuterDiameter), Colors.Blue);
+                        mainDrawingGroup.Children.Add(strutDimension);
+
+                        strutDimensionExt += (soldierBeamW + StaticVariables.dimensionDiff + StaticVariables.dimensionExtension * 2 + StaticVariables.dimensionFontHeight);
+                        Point rotationCenter = new Point(center.X, center.Y + strut.StrutDepth);
+                        GeometryDrawing strutDepthDimension = Wpf2Dutils.Dimension(new Point(rotationCenter.X - strutDimensionExt, rotationCenter.Y), new Point(center.X - strutDimensionExt, center.Y), Colors.Blue);
+                        mainDrawingGroup.Children.Add(strutDepthDimension);
+
                     }
                     break;
                 default:

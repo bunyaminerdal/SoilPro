@@ -137,7 +137,12 @@ namespace ExDesign.Scripts
             return radians * one_rad_in_degrees;
         }
 
-        
+        //public static Point FindIntersection(Point anchorRootStart,Point anchorRootEnd,Point layerStart,Point layerEnd)
+        //{
+        //    double A = layerEnd.Y - anchorRootEnd.Y;
+        //    double B = anchor layerEnd.X 
+        //    return new Point();
+        //}
         public static double GetDimension(double value)
         {
             double newValue;

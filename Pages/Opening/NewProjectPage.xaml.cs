@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,11 +45,24 @@ namespace ExDesign.Pages.Opening
                     StaticVariables.viewModel.Path = "Untitled";
                     StaticVariables.viewModel.ProjectName = "Untitled";
                     StaticVariables.viewModel.SaveDate = "0";
+                    
                 }
             }
             
             StaticVariables.viewModel.UnitIndex= unitIndex;
             StaticVariables.viewModel.WallTypeIndex = WpfUtils.GetWallTypeIndex(wallType);
+            if (WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.SteelSheetWall)
+            {
+                StaticVariables.viewModel.strutDatas = new ObservableCollection<StrutData>();
+                foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+                {
+                    anchor.IsSoldierBeam = false;
+                    anchor.SoldierBeamHeight = 0;
+                    anchor.SoldierBeamwidth = 0;
+                    anchor.IsPassiveAnchor = true;
+                    anchor.PreStressForce = 0;
+                }
+            }
             ProgramWindow mainWindow = new ProgramWindow();            
             WpfUtils.OpenWindow(mainWindow);
         }

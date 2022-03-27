@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Collections.Generic;
+
 
 namespace ExDesign.Scripts
 {
@@ -79,15 +82,51 @@ namespace ExDesign.Scripts
         }
         public static GeometryDrawing AnchorGeometryDrawing(Point rotationCenter,double inclination,double wall_t,double freeL, double rootD, double rootL,double ex,double beamW, Color color)
         {
+            
             LineGeometry lineGeometry = new LineGeometry(new Point(rotationCenter.X-ex,rotationCenter.Y), new Point(rotationCenter.X+beamW+wall_t+freeL,rotationCenter.Y));
             RectangleGeometry rectangleGeometry = new RectangleGeometry(new Rect(rotationCenter.X+wall_t+beamW+freeL, rotationCenter.Y-rootD/2, Math.Clamp(rootL, 0, double.MaxValue), Math.Clamp(rootD, 0, double.MaxValue)));
 
             GeometryGroup geometryGroup = new GeometryGroup();
             RotateTransform rotateAnchor = new RotateTransform(inclination, rotationCenter.X, rotationCenter.Y);
-
-            lineGeometry.Transform = rotateAnchor;
+            
+            lineGeometry.Transform = rotateAnchor;            
             rectangleGeometry.Transform = rotateAnchor;
             geometryGroup.Children.Add(lineGeometry);
+            geometryGroup.Children.Add(rectangleGeometry);
+            
+            GeometryDrawing wallDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(Brushes.Black, StaticVariables.penThickness),
+                    geometryGroup
+                    );
+            return wallDrawing;
+        }
+        public static GeometryDrawing AnchorRootPartGeometryDrawing(Point rotationCenter, double inclination, double startL, double endL, double rootD, Color color)
+        {
+
+            RectangleGeometry rectangleGeometry = new RectangleGeometry(new Rect(rotationCenter.X + startL, rotationCenter.Y - rootD / 2, Math.Clamp(endL-startL, 0, double.MaxValue), Math.Clamp(rootD, 0, double.MaxValue)));
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            RotateTransform rotateAnchor = new RotateTransform(inclination, rotationCenter.X, rotationCenter.Y);
+
+            rectangleGeometry.Transform = rotateAnchor;
+            geometryGroup.Children.Add(rectangleGeometry);
+
+            GeometryDrawing wallDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(Brushes.Black, StaticVariables.penThickness),
+                    geometryGroup
+                    );
+            return wallDrawing;
+        }
+        public static GeometryDrawing StrutGeometryDrawing(Point rotationCenter, double strutL, double strutD, Color color)
+        {
+            RectangleGeometry rectangleGeometry = new RectangleGeometry(new Rect(rotationCenter.X  -strutL, rotationCenter.Y-strutD/2,strutL,strutD) );
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+
             geometryGroup.Children.Add(rectangleGeometry);
 
             GeometryDrawing wallDrawing =

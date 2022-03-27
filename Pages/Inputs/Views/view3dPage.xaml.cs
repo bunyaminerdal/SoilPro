@@ -140,6 +140,11 @@ namespace ExDesign.Pages.Inputs.Views
                     break;
                 case WallType.ConcretePileWall:
                     double spaceCount =Math.Clamp( Math.Round((wall_d - wall_t) / pile_s,MidpointRounding.ToNegativeInfinity),1,StaticVariables.maxPileCount);
+                    if(spaceCount%2 == 0)
+                    {
+                        wall_d += pile_s;
+                        spaceCount = Math.Clamp(Math.Round((wall_d - wall_t) / pile_s, MidpointRounding.ToNegativeInfinity), 1, StaticVariables.maxPileCount);
+                    }
                     double pile_h = wall_h;
                     double pile_d = wall_t / 2;
                     double pile_start = (wall_d - (spaceCount * pile_s)) / 2;
@@ -251,11 +256,11 @@ namespace ExDesign.Pages.Inputs.Views
                 {
                     if(anchor.IsCentralPlacement)
                     {
-                        numofanchor = anchor.Spacing > 0 ? Math.Round(((wall_d / 2)  - anchor_wire_d) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                        numofanchor = anchor.Spacing > 0 ? Math.Clamp( Math.Round(((wall_d / 2)  - anchor_wire_d) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity),1,StaticVariables.maxAnchorCount) : 1;
                     }
                     else
                     {
-                        numofanchor = anchor.Spacing > 0 ? Math.Round(((wall_d / 2) - (anchor.Spacing / 2) - anchor_wire_d / 2) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                        numofanchor = anchor.Spacing > 0 ? Math.Clamp(Math.Round(((wall_d / 2) - (anchor.Spacing / 2) - anchor_wire_d / 2) / anchor.Spacing, 0, MidpointRounding.ToPositiveInfinity), 1, StaticVariables.maxAnchorCount) : 1;
                     }
                 }
                 else
@@ -269,7 +274,7 @@ namespace ExDesign.Pages.Inputs.Views
                 beam_h = anchor.IsSoldierBeam ? anchor.SoldierBeamHeight : 0;
                 anchor_free_L = anchor.FreeLength + wall_t + 0.2 + beam_w;
                 anchor_angle = anchor.Inclination;
-                anchor_root_d = anchor.RootDiameter/2;
+                anchor_root_d =StaticVariables.rootScaleFactor * anchor.RootDiameter/2;
                 anchor_root_L = anchor.RootLength;
                 //anchor_wire_d =anchor_root_d <= 0.3 ? 0.05 : 0.7;
                 
@@ -349,10 +354,10 @@ namespace ExDesign.Pages.Inputs.Views
                 {
                     if(strut.IsCentralPlacement)
                     {
-                        numofStrut = strut.StrutSpacing > 0 ? Math.Round(((wall_d / 2)  - strut_D) / strut.StrutSpacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                        numofStrut = strut.StrutSpacing > 0 ? Math.Clamp( Math.Round(((wall_d / 2)  - strut_D) / strut.StrutSpacing, 0, MidpointRounding.ToPositiveInfinity), 1, StaticVariables.maxAnchorCount) : 1;
                     }
                     else { 
-                        numofStrut = strut.StrutSpacing > 0 ? Math.Round(((wall_d / 2) - (strut.StrutSpacing / 2) - strut_D ) / strut.StrutSpacing, 0, MidpointRounding.ToPositiveInfinity) : 1;
+                        numofStrut = strut.StrutSpacing > 0 ? Math.Clamp( Math.Round(((wall_d / 2) - (strut.StrutSpacing / 2) - strut_D ) / strut.StrutSpacing, 0, MidpointRounding.ToPositiveInfinity), 1, StaticVariables.maxAnchorCount) : 1;
                     }
                 }
                 else

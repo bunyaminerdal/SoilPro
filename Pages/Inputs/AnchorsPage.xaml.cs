@@ -319,9 +319,7 @@ namespace ExDesign.Pages.Inputs
                     soldier1.Visibility = Visibility.Hidden;
                     soldier2.Visibility = Visibility.Hidden;
                     soldier3.Visibility = Visibility.Hidden;
-                    anchor.IsSoldierBeam = false;
-                    anchor.SoldierBeamHeight = 0;
-                    anchor.SoldierBeamwidth = 0;
+                    
                 }
                                 
                 anchorsGroupbox.Children.Add(dockPanel);
@@ -622,7 +620,7 @@ namespace ExDesign.Pages.Inputs
                 lastDepth += 2;
             }
             
-            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=10,RootDiameter=0.15,IsCentralPlacement=false,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4 ,RootSoilFrictionResistance=65};
+            AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=10,RootDiameter=0.15,IsCentralPlacement=true,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4 ,RootSoilFrictionResistance=65};
             StaticVariables.viewModel.anchorDatas.Add(anchorData);
             TotalNominalAreaCalc(anchorData);
             AnchorsGridInitialize();

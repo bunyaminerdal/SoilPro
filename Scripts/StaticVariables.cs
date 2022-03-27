@@ -38,6 +38,7 @@ namespace ExDesign.Scripts
                                                                                                         { Units.N_mm, 1000 },{ Units.N_cm, 1000 },{ Units.N_m, 1000 },
                                                                                                         { Units.kN_mm, 1 },{ Units.kN_cm, 1 },{ Units.kN_m, 1 } };
         public static int maxPileCount = 20;
+        public static int maxAnchorCount = 20;
         public static double penThickness = 0.04;
         public static double dimensionPenThickness = 0.03;
         public static double freeTextPenThickness = 0.03;
@@ -49,7 +50,8 @@ namespace ExDesign.Scripts
         public static double levelFontHeight = 0.4;
         public static double soilLayerBoxWidth = 3;
         public static double levelIconHeight = 0.3;
-        public static double wireScaleFactor = 2;
+        public static double wireScaleFactor = 4;
+        public static double rootScaleFactor = 2;
         public static double strutLength = 3;
         public static bool IsDimensionShowed = false;
 
