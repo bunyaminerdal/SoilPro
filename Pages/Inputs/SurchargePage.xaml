@@ -1,0 +1,123 @@
+﻿<Page x:Class="ExDesign.Pages.Inputs.SurchargePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1980"
+      Title="SurchargePage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Frame x:Name="view3d_main" Grid.Column="0" NavigationUIVisibility="Hidden"/>
+                <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+            </Grid>
+            <StackPanel Grid.Row="1" Background="White">
+
+                <ScrollViewer x:Name="anchorsGridScrollBar" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Height="300"  >
+                    <DockPanel >
+                        <StackPanel>
+                            <GroupBox Header="{DynamicResource SurfaceSurcharge}" Height="280" >
+                                <StackPanel>
+
+                                    <DockPanel HorizontalAlignment="Left">
+                                        <Button x:Name="surfaceSurcharge_bttn" Content="{DynamicResource AddSurfaceSurcharge}" Width="170" Margin="10"  Click="surfaceSurcharge_bttn_Click"></Button>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Left" Margin="2">
+                                        <TextBox IsEnabled="False" Width="27" MinHeight="34" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="surfaceSurchargeName_txtbox" IsEnabled="False" Width="150" Text="{DynamicResource SurchargeName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="surfaceLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource Load}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                    </DockPanel>
+                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="180"   >
+                                        <StackPanel x:Name="surfaceSurchargeGroupbox"  ></StackPanel>
+
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                        <StackPanel>
+                            <GroupBox Header="{DynamicResource StripSurcharge}" Height="280" >
+                                <StackPanel>
+
+                                    <DockPanel HorizontalAlignment="Left">
+                                        <Button x:Name="stripSurcharge_bttn" Content="{DynamicResource AddStripLoad}" Width="170" Margin="10"  Click="stripSurcharge_bttn_Click"></Button>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Left" Margin="2">
+                                        <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="stripSurchargeName_txtbox" IsEnabled="False" Width="150" Text="{DynamicResource SurchargeName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="stripdistance_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource DistanceFromWall}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="stripLength_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource StripLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="stripStartLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource StartLoad}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="stripEndLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource EndLoad}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                    </DockPanel>
+                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="180"  >
+                                        <StackPanel x:Name="stripSurchargeGroupbox"  ></StackPanel>
+
+                                    </ScrollViewer>
+
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                        <StackPanel>
+                            <GroupBox Header="{DynamicResource LineSurcharge}" Height="280">
+                                <StackPanel>
+
+                                    <DockPanel HorizontalAlignment="Left">
+                                        <Button x:Name="LineSurcharge_bttn" Content="{DynamicResource AddLineLoad}" Width="170" Margin="10" Click="LineSurcharge_bttn_Click" ></Button>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Left" Margin="2">
+                                        <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="LineSurchargeName_txtbox" IsEnabled="False" Width="150" Text="{DynamicResource SurchargeName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="Linedistance_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource DistanceFromWall}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="LineLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource LineLoad}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                    </DockPanel>
+                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="180"  >
+                                        <StackPanel x:Name="lineSurchargeGroupbox"  ></StackPanel>
+
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                        <StackPanel>
+                            <GroupBox Header="{DynamicResource PointSurcharge}" Height="280">
+                                <StackPanel>
+
+                                    <DockPanel HorizontalAlignment="Left">
+                                        <Button x:Name="pointSurcharge_bttn" Content="{DynamicResource AddPointLoad}" Width="170" Margin="10" Click="pointSurcharge_bttn_Click" ></Button>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Left" Margin="2">
+                                        <TextBox IsEnabled="False" Width="27" Text="" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"></TextBox>
+                                        <TextBox IsEnabled="False" Width="30" Text="No" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="pointSurchargeName_txtbox" IsEnabled="False" Width="150" Text="{DynamicResource SurchargeName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="pointdistance_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource DistanceFromWall}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="pointLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource PointLoad}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                    </DockPanel>
+                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="180"  >
+                                        <StackPanel x:Name="pointSurchargeGroupbox"  ></StackPanel>
+
+                                    </ScrollViewer>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </DockPanel>
+
+                </ScrollViewer>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

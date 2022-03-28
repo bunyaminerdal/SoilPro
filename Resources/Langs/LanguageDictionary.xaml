@@ -182,5 +182,22 @@
     <system:String x:Key="StrutDiameter" >Strut Diameter</system:String> 
     <system:String x:Key="StrutThickness" >Strut Thickness</system:String>
     <system:String x:Key="CentralPlacement" >Central Placement</system:String> 
+    <system:String x:Key="Surcharge" >Surcharge</system:String> 
+    <system:String x:Key="AddSurfaceSurcharge" >Add Surface Surcharge</system:String>
+    <system:String x:Key="SurchargeName" >Surcharge Name</system:String> 
+    <system:String x:Key="SurfaceSurcharge" >Surface Surcharge</system:String> 
+    <system:String x:Key="Load" >Load</system:String> 
+    <system:String x:Key="StripSurcharge" >Strip Surcharge</system:String>
+    <system:String x:Key="AddStripLoad" >Add Strip Load</system:String> 
+    <system:String x:Key="StartLoad" >Start Load</system:String> 
+    <system:String x:Key="EndLoad" >End Load</system:String>
+    <system:String x:Key="DistanceFromWall" >Distance From Wall</system:String> 
+    <system:String x:Key="StripLength" >Strip Length</system:String>
+    <system:String x:Key="LineSurcharge" >Line Surcharge</system:String> 
+    <system:String x:Key="AddLineLoad" >Add Line Load</system:String> 
+    <system:String x:Key="LineLoad" >Line Load</system:String>
+    <system:String x:Key="PointSurcharge" >Point Surcharge</system:String> 
+    <system:String x:Key="PointLoad" >Point Load</system:String> 
+    <system:String x:Key="AddPointLoad" >Add Point Load</system:String> 
     
 </ResourceDictionary>

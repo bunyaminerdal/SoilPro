@@ -61,6 +61,10 @@ namespace ExDesign.Datas
         public ObservableCollection<StrutData> strutDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
         public ObservableCollection<SoilTextureData> soilTextures { get; set; }
+        public ObservableCollection<SurfaceSurchargeData> surfaceSurchargeDatas { get; set; }
+        public ObservableCollection<StripLoadData> stripLoadDatas { get; set; }
+        public ObservableCollection<LineLoadData> LineLoadDatas { get; set; }
+        public ObservableCollection<PointLoadData> PointLoadDatas { get; set; }
         public Stage stage { get; set; }
         public bool isCapBeamBottom { get; set; }
 
@@ -339,7 +343,10 @@ namespace ExDesign.Datas
                     anchorDatas = new ObservableCollection<AnchorData>(),
                     strutDatas = new ObservableCollection<StrutData>(),
                     soilTextures = new ObservableCollection<SoilTextureData>(),
-
+                    surfaceSurchargeDatas = new ObservableCollection<SurfaceSurchargeData>(),
+                    stripLoadDatas = new ObservableCollection<StripLoadData>(),
+                    LineLoadDatas = new ObservableCollection<LineLoadData>(),
+                    PointLoadDatas = new ObservableCollection<PointLoadData>(),
                     stage = Stage.Materials,
                     
                 };
