@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1980"
-      Title="SurchargePage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+      Title="{DynamicResource Surcharge}" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid>
         <Grid>

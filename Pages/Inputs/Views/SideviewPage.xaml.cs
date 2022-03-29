@@ -226,7 +226,38 @@ namespace ExDesign.Pages.Inputs.Views
                 if (strutDimensionExt1 > frontCubeLength) frontCubeLength = strutDimensionExt1;
                 
             }
+            
+            //loads conditions
+            double _maxLoadHeight = 0;
+            double _maxPointLoadHeight = 0;
+            double loadScaleFactor = 0;
+            double pointloadScaleFactor = 0;
+            double maxBackLength = 0;
+            foreach (var pointLoad in StaticVariables.viewModel.PointLoadDatas)
+            {
+                if (pointLoad.Load > _maxPointLoadHeight) _maxPointLoadHeight = pointLoad.Load;
+                if (pointLoad.DistanceFromWall > maxBackLength) maxBackLength = pointLoad.DistanceFromWall;
+            }
+            foreach (var lineLoad in StaticVariables.viewModel.LineLoadDatas)
+            {
+                if (lineLoad.Load > _maxLoadHeight) _maxLoadHeight = lineLoad.Load;
+                if (lineLoad.DistanceFromWall > maxBackLength) maxBackLength = lineLoad.DistanceFromWall;
+            }
+            foreach (var stripLoad in StaticVariables.viewModel.stripLoadDatas)
+            {
+                if (stripLoad.StartLoad > _maxLoadHeight) _maxLoadHeight = stripLoad.StartLoad;
+                if (stripLoad.EndLoad > _maxLoadHeight) _maxLoadHeight = stripLoad.EndLoad;
+                if (stripLoad.DistanceFromWall + stripLoad.StripLength > maxBackLength) maxBackLength = stripLoad.DistanceFromWall + stripLoad.StripLength;
 
+            }
+            foreach (var surchargeLoad in StaticVariables.viewModel.surfaceSurchargeDatas)
+            {
+                if (surchargeLoad.Load > _maxLoadHeight) _maxLoadHeight = surchargeLoad.Load;
+            }
+            loadScaleFactor = StaticVariables.maxLoadHeight / _maxLoadHeight;
+            pointloadScaleFactor = StaticVariables.maxPointLoadHeight / _maxPointLoadHeight;
+            if(backCubeLength < maxBackLength) backCubeLength = maxBackLength;
+            
             double frontT_w_top_dis = 0;
             double frontT_w_bottom_dis = 0;
             double frontT_h = 0;
@@ -370,8 +401,31 @@ namespace ExDesign.Pages.Inputs.Views
             mainDrawingGroup.Children.Add(backSoilGeometry);
             mainDrawingGroup.Children.Add(frontSoilGeometry);
 
-
-            
+            //loads
+            foreach (var pointLoad in StaticVariables.viewModel.PointLoadDatas)
+            {
+                Point PointLoadCenter = new Point(center.X + wall_t, center.Y - backT_h);
+                GeometryDrawing pointLoadGeometry = Wpf2Dutils.PointLoadGeometryDrawing(PointLoadCenter, pointloadScaleFactor * pointLoad.Load, pointLoad.DistanceFromWall, Colors.Purple);
+                mainDrawingGroup.Children.Add(pointLoadGeometry);
+            }
+            foreach (var lineLoad in StaticVariables.viewModel.LineLoadDatas)
+            {
+                Point LineLoadCenter = new Point(center.X + wall_t, center.Y - backT_h);
+                GeometryDrawing LineLoadGeometry = Wpf2Dutils.LineLoadGeometryDrawing(LineLoadCenter, loadScaleFactor * lineLoad.Load, lineLoad.DistanceFromWall, Colors.Orange);
+                mainDrawingGroup.Children.Add(LineLoadGeometry);
+            }
+            foreach (var stripLoad in StaticVariables.viewModel.stripLoadDatas)
+            {
+                Point StripLoadCenter = new Point(center.X + wall_t, center.Y - backT_h);
+                GeometryDrawing StripLoadGeometry = Wpf2Dutils.StripLoadGeometryDrawing(StripLoadCenter, loadScaleFactor * stripLoad.StartLoad,loadScaleFactor*stripLoad.EndLoad, stripLoad.DistanceFromWall,stripLoad.StripLength, Colors.DarkCyan);
+                mainDrawingGroup.Children.Add(StripLoadGeometry);
+            }
+            foreach (var surcharge in StaticVariables.viewModel.surfaceSurchargeDatas)
+            {
+                Point SurchargeLoadCenter = new Point(center.X + wall_t, center.Y - backT_h);
+                GeometryDrawing SurchargeLoadGeometry = Wpf2Dutils.SurchargeGeometryDrawing(SurchargeLoadCenter, loadScaleFactor * surcharge.Load,backCubeLength , Colors.Cyan);
+                mainDrawingGroup.Children.Add(SurchargeLoadGeometry);
+            }
 
 
             //levels

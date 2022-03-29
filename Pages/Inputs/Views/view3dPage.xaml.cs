@@ -69,7 +69,7 @@ namespace ExDesign.Pages.Inputs.Views
         public DirectionalLight positionLight(Point3D position)
         {
             DirectionalLight directionalLight = new DirectionalLight();
-            directionalLight.Color = Colors.Gray;
+            directionalLight.Color = Colors.DarkGray;
             directionalLight.Direction = new Point3D(0, 0, 0) - position;
             return directionalLight;
         }

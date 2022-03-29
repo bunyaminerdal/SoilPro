@@ -199,5 +199,6 @@
     <system:String x:Key="PointSurcharge" >Point Surcharge</system:String> 
     <system:String x:Key="PointLoad" >Point Load</system:String> 
     <system:String x:Key="AddPointLoad" >Add Point Load</system:String> 
+    <system:String x:Key="StripLoad" >Strip Load</system:String> 
     
 </ResourceDictionary>

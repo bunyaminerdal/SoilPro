@@ -396,5 +396,123 @@ namespace ExDesign.Scripts
                     );
             return lineDrawing;
         }
+        public static GeometryDrawing PointLoadGeometryDrawing(Point center, double height, double distance, Color color)
+        {
+            if(height< StaticVariables.minLoadHeight) height = StaticVariables.minLoadHeight;
+            double arrowScale = StaticVariables.loadArrowScale;
+            LineGeometry lineGeometry = new LineGeometry(new Point(center.X+distance,center.Y), new Point(center.X+distance,center.Y-height));
+            LineGeometry lineGeometryleft = new LineGeometry(new Point(center.X+distance,center.Y), new Point(center.X+distance-height*arrowScale/2,center.Y-height*arrowScale));
+            LineGeometry lineGeometryright = new LineGeometry(new Point(center.X+distance,center.Y), new Point(center.X+distance+height*arrowScale/2,center.Y-height*arrowScale));
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            geometryGroup.Children.Add(lineGeometry);
+            geometryGroup.Children.Add(lineGeometryleft);
+            geometryGroup.Children.Add(lineGeometryright);
+
+            GeometryDrawing lineDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(new SolidColorBrush(color), StaticVariables.LoadPenThickness),
+                    geometryGroup
+                    );
+            return lineDrawing;
+        }
+        public static GeometryDrawing LineLoadGeometryDrawing(Point center, double height, double distance, Color color)
+        {
+            if (height < StaticVariables.minLoadHeight) height = StaticVariables.minLoadHeight;
+            double arrowScale = StaticVariables.loadArrowScale;
+            LineGeometry lineGeometry = new LineGeometry(new Point(center.X + distance, center.Y), new Point(center.X + distance, center.Y - height));
+            LineGeometry lineGeometryleft = new LineGeometry(new Point(center.X + distance, center.Y), new Point(center.X + distance - height * arrowScale / 2, center.Y - height * arrowScale));
+            LineGeometry lineGeometryright = new LineGeometry(new Point(center.X + distance, center.Y), new Point(center.X + distance + height * arrowScale / 2, center.Y - height * arrowScale));
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            geometryGroup.Children.Add(lineGeometry);
+            geometryGroup.Children.Add(lineGeometryleft);
+            geometryGroup.Children.Add(lineGeometryright);
+
+            GeometryDrawing lineDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(new SolidColorBrush(color), StaticVariables.LoadPenThickness),
+                    geometryGroup
+                    );
+            return lineDrawing;
+        }
+        public static GeometryDrawing StripLoadGeometryDrawing(Point center, double startHeight, double endHeight, double distance,double stripLength, Color color)
+        {
+            if (startHeight>0 && startHeight < StaticVariables.minLoadHeight) startHeight = StaticVariables.minLoadHeight;
+            if (endHeight>0 && endHeight < StaticVariables.minLoadHeight) endHeight = StaticVariables.minLoadHeight;
+            double arrowScale = StaticVariables.loadArrowScale;
+            double arrowHeight = Math.Max(startHeight, endHeight)*arrowScale;
+            double loadLineAmount = Math.Round( stripLength * 2,0);
+            double lineStep = loadLineAmount > 0 ? stripLength / loadLineAmount : 1 ;
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+
+            LineGeometry lineStartGeometry = new LineGeometry(new Point(center.X + distance, center.Y), new Point(center.X + distance, center.Y - startHeight));
+            LineGeometry lineStartGeometryright = new LineGeometry(new Point(center.X + distance, center.Y), new Point(center.X + distance + arrowHeight / 2, center.Y - arrowHeight));
+            geometryGroup.Children.Add(lineStartGeometry);
+            if(startHeight > 0 )geometryGroup.Children.Add(lineStartGeometryright);            
+            for (int i = 1; i < loadLineAmount; i++)
+            {                
+                LineGeometry lineGeometry = new LineGeometry(new Point(center.X + distance + i*lineStep, center.Y), new Point(center.X + distance + i * lineStep, center.Y - startHeight-(i*(lineStep/stripLength)*(endHeight-startHeight))));
+                LineGeometry lineGeometryleft = new LineGeometry(new Point(center.X + distance + i * lineStep, center.Y), new Point(center.X + distance + i * lineStep - arrowHeight / 2, center.Y - arrowHeight));
+                LineGeometry lineGeometryright = new LineGeometry(new Point(center.X + distance + i * lineStep, center.Y), new Point(center.X + distance + i * lineStep + arrowHeight / 2, center.Y - arrowHeight));
+                geometryGroup.Children.Add(lineGeometry);
+                geometryGroup.Children.Add(lineGeometryleft);
+                geometryGroup.Children.Add(lineGeometryright);
+            }
+            LineGeometry lineEndGeometry = new LineGeometry(new Point(center.X + distance +stripLength, center.Y), new Point(center.X + distance + stripLength, center.Y - endHeight));
+            LineGeometry lineEndGeometryleft = new LineGeometry(new Point(center.X + distance + stripLength, center.Y), new Point(center.X + distance + stripLength - arrowHeight / 2, center.Y - arrowHeight));
+            geometryGroup.Children.Add(lineEndGeometry);
+            if (endHeight > 0) geometryGroup.Children.Add(lineEndGeometryleft);
+            LineGeometry lineTopGeometry = new LineGeometry(new Point(center.X + distance , center.Y-startHeight), new Point(center.X + distance + stripLength, center.Y - endHeight));
+            geometryGroup.Children.Add(lineTopGeometry);
+            GeometryDrawing lineDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(new SolidColorBrush(color), StaticVariables.LoadPenThickness),
+                    geometryGroup
+                    );
+            return lineDrawing;
+        }
+        public static GeometryDrawing SurchargeGeometryDrawing(Point center, double height,double backCubeLenght, Color color)
+        {
+            if (height > 0 && height < StaticVariables.minLoadHeight) height = StaticVariables.minLoadHeight;
+            double arrowHeight = height * StaticVariables.loadArrowScale;
+            double loadLineAmount = Math.Round( backCubeLenght * 2, 0);
+            double lineStep = loadLineAmount > 0 ? backCubeLenght / loadLineAmount : 1;
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+
+            LineGeometry lineStartGeometry = new LineGeometry(new Point(center.X , center.Y), new Point(center.X , center.Y - height));
+            LineGeometry lineStartGeometryright = new LineGeometry(new Point(center.X , center.Y), new Point(center.X  + arrowHeight / 2, center.Y - arrowHeight));
+            geometryGroup.Children.Add(lineStartGeometry);
+            geometryGroup.Children.Add(lineStartGeometryright);
+            for (int i = 1; i < loadLineAmount; i++)
+            {
+                LineGeometry lineGeometry = new LineGeometry(new Point(center.X  + i * lineStep, center.Y), new Point(center.X  + i * lineStep, center.Y - height ));
+                LineGeometry lineGeometryleft = new LineGeometry(new Point(center.X  + i * lineStep, center.Y), new Point(center.X  + i * lineStep - arrowHeight / 2, center.Y - arrowHeight));
+                LineGeometry lineGeometryright = new LineGeometry(new Point(center.X  + i * lineStep, center.Y), new Point(center.X  + i * lineStep + arrowHeight / 2, center.Y - arrowHeight));
+                geometryGroup.Children.Add(lineGeometry);
+                geometryGroup.Children.Add(lineGeometryleft);
+                geometryGroup.Children.Add(lineGeometryright);
+            }
+            LineGeometry lineEndGeometry = new LineGeometry(new Point(center.X  + backCubeLenght, center.Y), new Point(center.X  + backCubeLenght, center.Y - height));
+            LineGeometry lineEndGeometryleft = new LineGeometry(new Point(center.X  + backCubeLenght, center.Y), new Point(center.X  + backCubeLenght - arrowHeight / 2, center.Y - arrowHeight));
+            geometryGroup.Children.Add(lineEndGeometry);
+             geometryGroup.Children.Add(lineEndGeometryleft);
+            LineGeometry lineTopGeometry = new LineGeometry(new Point(center.X , center.Y - height), new Point(center.X  + backCubeLenght, center.Y - height));
+            geometryGroup.Children.Add(lineTopGeometry);
+
+
+            GeometryDrawing lineDrawing =
+            new GeometryDrawing(
+                    new SolidColorBrush(color),
+                    new Pen(new SolidColorBrush(color), StaticVariables.LoadPenThickness),
+                    geometryGroup
+                    );
+            return lineDrawing;
+        }
     }
 }

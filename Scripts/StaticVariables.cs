@@ -41,6 +41,7 @@ namespace ExDesign.Scripts
         public static int maxAnchorCount = 20;
         public static double penThickness = 0.04;
         public static double dimensionPenThickness = 0.03;
+        public static double LoadPenThickness = 0.05;
         public static double freeTextPenThickness = 0.03;
         public static double dimensionExtension = 0.1;
         public static double dimensionDiff = 0.2;
@@ -53,6 +54,10 @@ namespace ExDesign.Scripts
         public static double wireScaleFactor = 4;
         public static double rootScaleFactor = 2;
         public static double strutLength = 3;
+        public static double maxLoadHeight = 2;
+        public static double minLoadHeight = 0.3;
+        public static double maxPointLoadHeight = 3;
+        public static double loadArrowScale = 0.2;
         public static bool IsDimensionShowed = false;
 
 
