@@ -1,0 +1,104 @@
+﻿<Page x:Class="ExDesign.Pages.Inputs.SystemLoadPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExDesign.Pages.Inputs.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1024"
+      Title="SystemLoadPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="300"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <Frame x:Name="view3d_main" Grid.Column="0" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+        </Grid>
+        <StackPanel Grid.Row="1" Background="White">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource EarthquakeDesign}">
+                        <StackPanel>
+                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" >
+                                <CheckBox x:Name="earthquakeCheckbox" Content="{DynamicResource EarthquakeDesign}"></CheckBox>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" VerticalAlignment="Top" Margin="5" >
+                                <Label Width="40" Content="SDS :"/>
+                                <TextBox  x:Name="sds_textbox" Width="150" Height="22"    />
+                                <CheckBox x:Name="sdscheckbox" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" VerticalAlignment="Top" Margin="5,5,5,2" >
+                                <Label Width="40" Content="Kh :"/>
+                                <TextBox  x:Name="kh_textbox" Width="150" Height="22"    />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" VerticalAlignment="Top" Margin="5,2,5,2" >
+                                <Label Width="40" Content="Kv :"/>
+                                <TextBox  x:Name="kv_textbox" Width="150" Height="22"    />
+                            </DockPanel>
+                        </StackPanel>
+                        </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource StageConstruction}">
+                        <StackPanel>
+                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" >
+                                <CheckBox x:Name="stageconstructionCheckbox" Content="{DynamicResource StageConstruction}"></CheckBox>
+                            </DockPanel>
+                            <DockPanel   Margin="5">
+                                <Label  Content="{DynamicResource DepthAfterAnchorsStruts}"/>
+                            </DockPanel>
+                            <DockPanel    Margin="5">
+                                <Label Width="50" Content="(depth):"/>
+                                <TextBox x:Name="depthafteranchorstruttextbox" Height="22" Width="120"   PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="excavationheight_LostFocus" />
+                                <Label x:Name="depthafteranchorstruttextbox_unit" Width="30" Content="cm"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource AnalysMethod}">
+                        <StackPanel>
+                            <DockPanel  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3">
+                                <ComboBox x:Name="soilModelCombobox" MinWidth="200" SelectionChanged="soilModelCombobox_SelectionChanged"  >
+                                    <ComboBoxItem Content="{DynamicResource ClassicLoading}" x:Name="analizmodel1"/>
+                                    <ComboBoxItem Content="{DynamicResource EquivalentLinear}" x:Name="analizmodel2"/>
+                                    <ComboBoxItem Content="{DynamicResource FHVA}" x:Name="analizmodel3"/>
+                                </ComboBox>
+                            </DockPanel>
+                            <DockPanel  x:Name="classicloadingInfo" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+                                <TextBlock   Text="{DynamicResource ClassicLoadingInfo}" TextTrimming="WordEllipsis" LineStackingStrategy="MaxHeight" TextWrapping="Wrap"/>
+                            </DockPanel>
+                            <DockPanel  x:Name="equivalentLinearInfo" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+                                <TextBlock   Text="{DynamicResource EquivalentLinearInfo}" TextTrimming="WordEllipsis" LineStackingStrategy="MaxHeight" TextWrapping="Wrap"/>
+                            </DockPanel>
+                            <DockPanel  x:Name="FHVAinfo" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+                                <TextBlock   Text="{DynamicResource FHVAinfo}" TextTrimming="WordEllipsis" LineStackingStrategy="MaxHeight" TextWrapping="Wrap"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -29,6 +29,7 @@ namespace ExDesign.Pages.Inputs
         AnchorsPage anchorsPage = new AnchorsPage();
         StrutPage strutsPage = new StrutPage();
         SurchargePage surchargePage = new SurchargePage();
+        SystemLoadPage systemloadPage = new SystemLoadPage();
         public InputsMainPage()
         {
             InitializeComponent();
@@ -63,6 +64,9 @@ namespace ExDesign.Pages.Inputs
                 case Stage.Surcharge:
                     Main_pro.Content = surchargePage;
                     break;
+                case Stage.SystemLoad:
+                    Main_pro.Content = systemloadPage;
+                    break;
                 default:
                     Main_pro.Content = materialsPage;
                     break;
@@ -95,6 +99,9 @@ namespace ExDesign.Pages.Inputs
                     break;
                 case Stage.Surcharge:
                     SurchargeBttn.IsChecked = true;
+                    break;
+                case Stage.SystemLoad:
+                    SystemLoadBttn.IsChecked = true;
                     break;
                 default:
                     MaterialsBttn.IsChecked = true;
@@ -129,6 +136,10 @@ namespace ExDesign.Pages.Inputs
         private void SurchargeBttn_Checked(object sender, RoutedEventArgs e)
         {
             StaticEvents.StageChangeEvent?.Invoke(Stage.Surcharge);
+        }
+        private void SystemLoadBttn_Checked(object sender, RoutedEventArgs e)
+        {
+            StaticEvents.StageChangeEvent?.Invoke(Stage.SystemLoad);
         }
         private void UnitCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

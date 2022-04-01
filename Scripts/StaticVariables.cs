@@ -166,7 +166,8 @@ namespace ExDesign.Scripts
         SoilMethod,
         Anchors,
         Struts,
-        Surcharge
+        Surcharge,
+        SystemLoad
     }
     public enum LevelDirection
     {
