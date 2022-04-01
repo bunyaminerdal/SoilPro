@@ -112,6 +112,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_depth.Text = WpfUtils.GetDimension(anchor.AnchorDepth).ToString();
                 textbox_depth.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_depth.TextChanged += Textbox_depth_TextChanged;
+                textbox_depth.LostFocus += Textbox_depth_LostFocus;
                 textbox_depth.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_depth.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_depth.Name = "textboxdepth_" + anchorIndex;
@@ -330,6 +331,8 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
+        
+
         private void CheckBox_centralPlacement_Unchecked(object sender, RoutedEventArgs e)
         {
             string checkName = ((CheckBox)sender).Name.Split('_')[1];
@@ -352,10 +355,7 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.SideviewPage.Refreshview();
         }
 
-        private void Textbox_depth_LostFocus(object sender, RoutedEventArgs e)
-        {
-            AnchorsGridInitialize();
-        }
+        
 
         private void CheckBox_soldierBeam_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -463,19 +463,36 @@ namespace ExDesign.Pages.Inputs
         {
             if (e.Key == Key.Space)
             {
+                sideview_main.Focus();
                 e.Handled = true;
+            }
+            if (e.Key == Key.Enter)
+            {
+                sideview_main.Focus();
             }
         }
 
         private void Textbox_depth_TextChanged(object sender, TextChangedEventArgs e)
         {
+            
+        }
+        private void Textbox_depth_LostFocus(object sender, RoutedEventArgs e)
+        {
             TextBox textBox = (TextBox)sender;
 
             if (double.TryParse(textBox.Text, out double result))
             {
-                StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].AnchorDepth = WpfUtils.GetValueDimension(result);
-                StaticVariables.view3DPage.Refreshview();
-                StaticVariables.SideviewPage.Refreshview();
+                if (WpfUtils.AnchorPlacementControl(StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])], WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].AnchorDepth = WpfUtils.GetValueDimension(result);
+                    StaticVariables.view3DPage.Refreshview();
+                    StaticVariables.SideviewPage.Refreshview();
+                }
+                else
+                {
+                    textBox.Text =WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension( StaticVariables.viewModel.anchorDatas[int.Parse(textBox.Name.Split('_')[1])].AnchorDepth));
+                }
+
             }
         }
         private void Textbox_freeLength_TextChanged(object sender, TextChangedEventArgs e)
@@ -611,21 +628,18 @@ namespace ExDesign.Pages.Inputs
 
         private void addanchor_bttn_Click(object sender, RoutedEventArgs e)
         {
-
-            double lastDepth = 2;
-            if(StaticVariables.viewModel.anchorDatas.Count > 0)
-            {
-                lastDepth = StaticVariables.viewModel.anchorDatas[StaticVariables.viewModel.anchorDatas.Count-1].AnchorDepth ;
-                if (lastDepth >= StaticVariables.viewModel.excavationHeight) return;
-                lastDepth += 2;
-            }
-            
+            double lastDepth = WpfUtils.NewAnchorStrutPlacementHeight();
+            if (lastDepth <= 0) return;
             AnchorData anchorData = new AnchorData { AnchorDepth = lastDepth ,FreeLength=7,RootLength=10,RootDiameter=0.15,IsCentralPlacement=true,Spacing=2.4,Inclination=15,CableData=Wire.WireDataList[2], NumberofCable = 2,RootModulus=10000000,PreStressForce=300,IsSoldierBeam=true,SoldierBeamHeight=0.7,SoldierBeamwidth=0.4 ,RootSoilFrictionResistance=65};
-            StaticVariables.viewModel.anchorDatas.Add(anchorData);
-            TotalNominalAreaCalc(anchorData);
-            AnchorsGridInitialize();
-            StaticVariables.view3DPage.Refreshview();
-            StaticVariables.SideviewPage.Refreshview();
+
+            if (WpfUtils.AnchorPlacementControl(anchorData,lastDepth))
+            {
+                StaticVariables.viewModel.anchorDatas.Add(anchorData);
+                TotalNominalAreaCalc(anchorData);
+                AnchorsGridInitialize();
+                StaticVariables.view3DPage.Refreshview();
+                StaticVariables.SideviewPage.Refreshview();
+            }
         }
 
         private void anchorsGridScrollBar_ScrollChanged(object sender, ScrollChangedEventArgs e)

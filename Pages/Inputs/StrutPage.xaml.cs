@@ -95,6 +95,7 @@ namespace ExDesign.Pages.Inputs
                 textbox_depth.Text = WpfUtils.GetDimension(strut.StrutDepth).ToString();
                 textbox_depth.VerticalContentAlignment = VerticalAlignment.Center;
                 textbox_depth.TextChanged += Textbox_depth_TextChanged;
+                textbox_depth.LostFocus += Textbox_depth_LostFocus;
                 textbox_depth.PreviewKeyDown += Textbox_depth_PreviewKeyDown;
                 textbox_depth.PreviewTextInput += Textbox_depth_PreviewTextInput;
                 textbox_depth.Name = "textboxdepth_" + strutIndex;
@@ -196,6 +197,26 @@ namespace ExDesign.Pages.Inputs
                 //StaticVariables.SideviewPage.Refreshview();
             }
         }
+
+        private void Textbox_depth_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.StrutPlacementControl(StaticVariables.viewModel.strutDatas[int.Parse(textBox.Name.Split('_')[1])], WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.strutDatas[int.Parse(textBox.Name.Split('_')[1])].StrutDepth = WpfUtils.GetValueDimension(result);
+                    StaticVariables.view3DPage.Refreshview();
+                    StaticVariables.SideviewPage.Refreshview();
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.strutDatas[int.Parse(textBox.Name.Split('_')[1])].StrutDepth));
+                }
+            }
+        }
+
         private void Textbox_beamheight_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -308,14 +329,7 @@ namespace ExDesign.Pages.Inputs
 
         private void Textbox_depth_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.strutDatas[int.Parse(textBox.Name.Split('_')[1])].StrutDepth = WpfUtils.GetValueDimension(result);
-                StaticVariables.view3DPage.Refreshview();
-                StaticVariables.SideviewPage.Refreshview();
-            }
+            
         }
 
         private void Textbox_depth_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -337,7 +351,12 @@ namespace ExDesign.Pages.Inputs
         {
             if (e.Key == Key.Space)
             {
+                sideview_main.Focus();
                 e.Handled = true;
+            }
+            if (e.Key == Key.Enter)
+            {
+                sideview_main.Focus();
             }
         }
 
@@ -350,19 +369,16 @@ namespace ExDesign.Pages.Inputs
         private void addanchor_bttn_Click(object sender, RoutedEventArgs e)
         {
 
-            double lastDepth = 2;
-            if (StaticVariables.viewModel.strutDatas.Count > 0)
-            {
-                lastDepth = StaticVariables.viewModel.strutDatas[StaticVariables.viewModel.strutDatas.Count - 1].StrutDepth;
-                if (lastDepth >= StaticVariables.viewModel.excavationHeight) return;
-                lastDepth += 2;
-            }
-
+            double lastDepth = WpfUtils.NewAnchorStrutPlacementHeight();
+            if (lastDepth <= 0) return;
             StrutData strutData = new StrutData {StrutDepth =lastDepth,StrutLength =14,StrutOuterDiameter=0.812,StrutThickness=0.016,StrutSpacing=4.5,IsCentralPlacement=true, IsSoldierBeam = true, SoldierBeamHeight = 1.1, SoldierBeamwidth = 0.5 };
-            StaticVariables.viewModel.strutDatas.Add(strutData);
-            StrutsGridInitialize();
-            StaticVariables.view3DPage.Refreshview();
-            StaticVariables.SideviewPage.Refreshview();
+            if (WpfUtils.StrutPlacementControl(strutData,lastDepth))
+            {
+                StaticVariables.viewModel.strutDatas.Add(strutData);
+                StrutsGridInitialize();
+                StaticVariables.view3DPage.Refreshview();
+                StaticVariables.SideviewPage.Refreshview();
+            }
         }
         private void anchorsGridScrollBar_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {

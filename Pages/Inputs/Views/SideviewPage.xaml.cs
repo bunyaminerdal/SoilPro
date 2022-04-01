@@ -357,10 +357,17 @@ namespace ExDesign.Pages.Inputs.Views
                 case GroundWaterType.none:
                     break;
                 default:
-                    GeometryDrawing frontWaterModel = Wpf2Dutils.LineGeometryDrawing(new Point(center.X-frontCubeLength, center.Y+excavationHeight+ groundW_h2),new Point(center.X , center.Y + excavationHeight + groundW_h2),Colors.Blue);
-                    mainDrawingGroup.Children.Add(frontWaterModel);
-                    GeometryDrawing backWaterModel = Wpf2Dutils.LineGeometryDrawing(new Point(center.X +wall_t, center.Y +  groundW_h1), new Point(center.X + wall_t + backCubeLength, center.Y +  groundW_h1), Colors.Blue);
-                    mainDrawingGroup.Children.Add(backWaterModel);
+                    if(center.Y + excavationHeight + groundW_h2 -bottomT_h < wall_h)
+                    {
+                        GeometryDrawing frontWaterModel = Wpf2Dutils.LineGeometryDrawing(new Point(center.X - frontCubeLength, center.Y + excavationHeight + groundW_h2), new Point(center.X, center.Y + excavationHeight + groundW_h2), Colors.Blue);
+                        mainDrawingGroup.Children.Add(frontWaterModel);
+                    }
+                    if(center.Y + groundW_h1 - bottomT_h < wall_h)
+                    {
+                        GeometryDrawing backWaterModel = Wpf2Dutils.LineGeometryDrawing(new Point(center.X + wall_t, center.Y + groundW_h1), new Point(center.X + wall_t + backCubeLength, center.Y + groundW_h1), Colors.Blue);
+                        mainDrawingGroup.Children.Add(backWaterModel);
+                    }
+                    
                     break;
             }
             
@@ -448,10 +455,17 @@ namespace ExDesign.Pages.Inputs.Views
                 case GroundWaterType.none:
                     break;
                 default:
-                    GeometryDrawing exWaterLevel = Wpf2Dutils.Level(new Point(center.X - frontCubeLength, center.Y + excavationHeight+groundW_h2), LevelDirection.Left, Colors.Red);
-                    mainDrawingGroup.Children.Add(exWaterLevel);
-                    GeometryDrawing groundWaterLevel = Wpf2Dutils.Level(new Point(center.X + backCubeLength + wall_t, center.Y + groundW_h1), LevelDirection.Right, Colors.Red);
-                    mainDrawingGroup.Children.Add(groundWaterLevel);
+                    if (center.Y + excavationHeight + groundW_h2 - bottomT_h < wall_h)
+                    {
+                        GeometryDrawing exWaterLevel = Wpf2Dutils.Level(new Point(center.X - frontCubeLength, center.Y + excavationHeight + groundW_h2), LevelDirection.Left, Colors.Red);
+                        mainDrawingGroup.Children.Add(exWaterLevel);
+                    }
+                    if (center.Y + groundW_h1 - bottomT_h < wall_h)
+                    {
+                        GeometryDrawing groundWaterLevel = Wpf2Dutils.Level(new Point(center.X + backCubeLength + wall_t, center.Y + groundW_h1), LevelDirection.Right, Colors.Red);
+                        mainDrawingGroup.Children.Add(groundWaterLevel);
+                    }             
+                    
                     break;
             }
 
@@ -542,10 +556,17 @@ namespace ExDesign.Pages.Inputs.Views
                         case GroundWaterType.none:
                             break;
                         default:
-                            GeometryDrawing frontWDimension = Wpf2Dutils.Dimension(new Point(center.X-frontT_X1-frontT_X2, center.Y+excavationHeight+groundW_h2), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight ),Colors.DarkBlue, WpfUtils.GetDimension(groundW_h2).ToString() );
-                            mainDrawingGroup.Children.Add(frontWDimension);                           
-                            GeometryDrawing backWDimension = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y+groundW_h1), Colors.DarkBlue, WpfUtils.GetDimension(groundW_h1).ToString() );
-                            mainDrawingGroup.Children.Add(backWDimension);
+                            if (center.Y + excavationHeight + groundW_h2 - bottomT_h < wall_h)
+                            {
+                                GeometryDrawing frontWDimension = Wpf2Dutils.Dimension(new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight + groundW_h2), new Point(center.X - frontT_X1 - frontT_X2, center.Y + excavationHeight), Colors.DarkBlue, WpfUtils.GetDimension(groundW_h2).ToString());
+                                mainDrawingGroup.Children.Add(frontWDimension);
+                            }
+                            if (center.Y + groundW_h1 - bottomT_h < wall_h)
+                            {
+                                GeometryDrawing backWDimension = Wpf2Dutils.Dimension(new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y), new Point(center.X + wall_t + backT_A1 + backT_A2, center.Y + groundW_h1), Colors.DarkBlue, WpfUtils.GetDimension(groundW_h1).ToString());
+                                mainDrawingGroup.Children.Add(backWDimension);
+                            }                                          
+                            
                             break;
                     }
                     break;

@@ -56,6 +56,12 @@ namespace ExDesign.Datas
         public double WallEA { get; set; } 
         public int SoilModelIndex { get; set; }
         public bool useCableDiameterAndNumberForDesign { get; set; }
+        public bool isCapBeamBottom { get; set; }
+        public double depthAfterAnchorStrut { get; set; }
+        public bool isEarthQuakeDesign { get; set; }
+        public bool isSDSValue { get; set; }
+        public double khValue { get; set; }
+        public double kvValue { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<AnchorData> anchorDatas { get; set; }
         public ObservableCollection<StrutData> strutDatas { get; set; }
@@ -66,7 +72,6 @@ namespace ExDesign.Datas
         public ObservableCollection<LineLoadData> LineLoadDatas { get; set; }
         public ObservableCollection<PointLoadData> PointLoadDatas { get; set; }
         public Stage stage { get; set; }
-        public bool isCapBeamBottom { get; set; }
 
         public void ChangeWallHeight(double h)
         {
@@ -333,11 +338,16 @@ namespace ExDesign.Datas
                     WallEA = 2,
                     WallEI = 3,
                     SoilModelIndex = 0,
+                    depthAfterAnchorStrut = 1,
+                    isEarthQuakeDesign = false,
+                    isSDSValue = true,
                     Path = "Untitled",
                     ProjectName = "Untitled",
                     SaveDate = "0",
                     useCableDiameterAndNumberForDesign = true,
                     isCapBeamBottom = true,
+                    khValue = 0,
+                    kvValue = 0,
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),
                     anchorDatas = new ObservableCollection<AnchorData>(),

@@ -227,4 +227,10 @@ namespace ExDesign.Scripts
         Drained,
         UnDrained,
     }
+    public enum AnalysisSytem
+    {
+        ClassicLoading,
+        EquivalentLinear,
+        FHWA
+    }
 }

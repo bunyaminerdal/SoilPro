@@ -73,12 +73,7 @@ namespace ExDesign.Pages.Inputs
 
         private void concretewall_height_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
             
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValueDimension(result));
-            }
 
         }
         
@@ -102,7 +97,12 @@ namespace ExDesign.Pages.Inputs
         {
             if(e.Key == Key.Space)
             {
+                sideview_main.Focus();
                 e.Handled=true;
+            }
+            if(e.Key == Key.Enter)
+            {
+                sideview_main.Focus();
             }
             
         }
@@ -131,13 +131,7 @@ namespace ExDesign.Pages.Inputs
         
         private void pile_space_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.ChangePileSpace(WpfUtils.GetValueDimension(result));
-            }
-            WallPropertiesChange();
+            
         }
         private void beam_height_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -218,7 +212,10 @@ namespace ExDesign.Pages.Inputs
           if(  pileDiameterCombobox.SelectedIndex>=0) StaticVariables.viewModel.PileIndex = pileDiameterCombobox.SelectedIndex;
             PileData pileDiameterData = pileDiameterCombobox.SelectedItem as PileData;
             if (pileDiameterData != null && WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.ConcretePileWall) StaticVariables.viewModel.ChangeWallThickness(pileDiameterData.t);
-
+            if (!WpfUtils.CheckPileS(StaticVariables.viewModel.GetPileSpace()))
+            {
+                StaticVariables.viewModel.ChangePileSpace(pileDiameterData.t);
+            }
             UnitChange();
         }
 
@@ -234,7 +231,7 @@ namespace ExDesign.Pages.Inputs
            if(sheetpileCombobox.SelectedIndex>=0) StaticVariables.viewModel.SheetIndex = sheetpileCombobox.SelectedIndex;
             SheetData sheetData = sheetpileCombobox.SelectedItem as SheetData;
             if (sheetData != null && WpfUtils.GetWallType(StaticVariables.viewModel.WallTypeIndex) == WallType.SteelSheetWall) StaticVariables.viewModel.ChangeWallThickness(sheetData.Height*2);
-
+            
             UnitChange();
         }
 
@@ -283,6 +280,76 @@ namespace ExDesign.Pages.Inputs
             {
                 StaticVariables.viewModel.ChangeTopOfWallLevel(result);
             }
+        }
+
+        private void sheetpilewall_height_LostFocus(object sender, RoutedEventArgs e)
+        {            
+            TextBox textBox = (TextBox)sender;
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckWallH(WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValueDimension(result));
+
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()));
+                }
+            }
+        }
+
+        private void concretewall_height_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckWallH(WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValueDimension(result));
+
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()));
+                }
+            }
+        }
+
+        private void pilewall_height_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckWallH(WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.ChangeWallHeight(WpfUtils.GetValueDimension(result));
+
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetWallHeight()));
+                }
+            }
+        }
+
+        private void pile_space_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckPileS(WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.ChangePileSpace(WpfUtils.GetValueDimension(result));
+
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetPileSpace()));
+                }
+            }
+            WallPropertiesChange();
         }
     }
    

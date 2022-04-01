@@ -153,27 +153,25 @@ namespace ExDesign.Pages.Inputs
 
         private void exsitetype3_button_Checked(object sender, RoutedEventArgs e)
         {
+            StaticVariables.viewModel.ExcavationTypeIndex = WpfUtils.GetExcavationTypeIndex(ExcavationType.type2);
+
+            if (WpfUtils.CheckExHeight(StaticVariables.viewModel.GetexcavationHeight())==false)
+            {
+                StaticVariables.viewModel.ChangeexcavationZ(WpfUtils.GetValueDimension((StaticVariables.viewModel.wall_h - StaticVariables.viewModel.excavationHeight) / 2));
+                 excavation_Z.Text =   WpfUtils.ChangeDecimalOptions( WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationZ()));
+            }
             if (X1_dock_panel != null)
             {
                 X1_dock_panel.Visibility = Visibility.Visible;
                 X2_dock_panel.Visibility = Visibility.Visible;
                 Z_dock_panel.Visibility = Visibility.Visible;
             }
-            StaticVariables.viewModel.ExcavationTypeIndex = WpfUtils.GetExcavationTypeIndex(ExcavationType.type2);
+            
             StaticVariables.view3DPage.Refreshview();
             StaticVariables.SideviewPage.Refreshview();
 
         }
-
-        private void excavationheight_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.ChangeexcavationHeight(WpfUtils.GetValueDimension(result));
-            }
-        }
+              
 
         private void excavationheight_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -194,30 +192,21 @@ namespace ExDesign.Pages.Inputs
         {
             if (e.Key == Key.Space)
             {
+                sideview_main.Focus();
                 e.Handled = true;
             }
-        }
-
-        private void excavation_Z_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
+            if (e.Key == Key.Enter)
             {
-                StaticVariables.viewModel.ChangeexcavationZ(WpfUtils.GetValueDimension(result));
+                sideview_main.Focus();
             }
         }
 
+        
        
         private void excavation_X1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.ChangeexcavationX1(WpfUtils.GetValueDimension(result));
-            }
-        }              
+            
+        }
 
         private void excavation_X2_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -312,36 +301,6 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        
-
-       
-
-        private void surface_A1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.ChangeSurfaceA1(WpfUtils.GetValueDimension(result));
-            }
-        }
-
-        
-
-       
-
-        private void surface_A2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-
-            if (double.TryParse(textBox.Text, out double result))
-            {
-                StaticVariables.viewModel.ChangeSurfaceA2(WpfUtils.GetValueDimension(result));
-            }
-        }
-
-        
-
        
 
         private void groundwatertype_button_Checked(object sender, RoutedEventArgs e)
@@ -422,6 +381,107 @@ namespace ExDesign.Pages.Inputs
             }
         }
 
-        
+        private void excavationheight_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckExHeight(WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.ChangeexcavationHeight(WpfUtils.GetValueDimension(result));
+
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationHeight()));
+                }
+            }
+        }
+
+        private void excavation_Z_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckExZ(WpfUtils.GetValueDimension(result)))
+                {
+                    StaticVariables.viewModel.ChangeexcavationZ(WpfUtils.GetValueDimension(result));
+
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension( StaticVariables.viewModel.GetexcavationZ()));
+                }
+            }
+        }
+
+        private void excavation_X1_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckFrontLength(WpfUtils.GetValueDimension(result) + StaticVariables.viewModel.GetexcavationX2() + 1))
+                {
+                    StaticVariables.viewModel.ChangeexcavationX1(WpfUtils.GetValueDimension(result));
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX1()));
+                }
+            }
+        }
+
+        private void excavation_X2_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckFrontLength(WpfUtils.GetValueDimension(result) + StaticVariables.viewModel.GetexcavationX1() + 1))
+                {
+                    StaticVariables.viewModel.ChangeexcavationX2(WpfUtils.GetValueDimension(result));
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetexcavationX2()));
+                }
+            }
+        }
+
+        private void surface_A1_LostFocus(object sender, RoutedEventArgs e)
+        {
+            
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckBackLength(WpfUtils.GetValueDimension(result) + StaticVariables.viewModel.GetSurfaceA2() + 1))
+                {
+                    StaticVariables.viewModel.ChangeSurfaceA1(WpfUtils.GetValueDimension(result));
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA1()));
+                }
+            }
+        }
+
+        private void surface_A2_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (double.TryParse(textBox.Text, out double result))
+            {
+                if (WpfUtils.CheckBackLength(WpfUtils.GetValueDimension(result) + StaticVariables.viewModel.GetSurfaceA1() + 1))
+                {
+                    StaticVariables.viewModel.ChangeSurfaceA2(WpfUtils.GetValueDimension(result));
+                }
+                else
+                {
+                    textBox.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetDimension(StaticVariables.viewModel.GetSurfaceA2()));
+                }
+            }
+        }
     }
 }

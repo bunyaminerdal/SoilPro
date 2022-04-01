@@ -67,25 +67,25 @@
                                     <DockPanel x:Name="H_dock_panel" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource Excavationheight}"/>
                                         <Label Width="30" Content="(h):"/>
-                                        <TextBox x:Name="excavationheight" Height="22" Width="70" TextChanged="excavationheight_TextChanged"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" />
+                                        <TextBox x:Name="excavationheight" Height="22" Width="70"   PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="excavationheight_LostFocus" />
                                         <Label x:Name="excavationheight_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="Z_dock_panel" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource ExcavationSurfaceheight}"/>
                                         <Label Width="30" Content="(z):"/>
-                                        <TextBox x:Name="excavation_Z" Height="22" Width="70" TextChanged="excavation_Z_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"  />
+                                        <TextBox x:Name="excavation_Z" Height="22" Width="70"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="excavation_Z_LostFocus"  />
                                         <Label x:Name="excavation_Z_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource ExcavationSurfacedist1}"/>
                                         <Label Width="30" Content="(x1):"/>
-                                        <TextBox x:Name="excavation_X1" Height="22" Width="70"  TextChanged="excavation_X1_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"  />
+                                        <TextBox x:Name="excavation_X1" Height="22" Width="70"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="excavation_X1_LostFocus"  />
                                         <Label x:Name="excavation_X1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="X2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="125" Content="{DynamicResource ExcavationSurfacedist2}"/>
                                         <Label Width="30" Content="(x2):"/>
-                                        <TextBox x:Name="excavation_X2" Height="22" Width="70"  TextChanged="excavation_X2_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"    />
+                                        <TextBox x:Name="excavation_X2" Height="22" Width="70"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="excavation_X2_LostFocus"    />
                                         <Label x:Name="excavation_X2_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                 </Grid>
@@ -147,13 +147,13 @@
                                     <DockPanel x:Name="A1_dock_panel" Visibility="Hidden" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource SurfaceDistance1}"/>
                                         <Label Width="50" Content="(a1):"/>
-                                        <TextBox x:Name="surface_A1" Height="22" Width="70" TextChanged="surface_A1_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"     />
+                                        <TextBox x:Name="surface_A1" Height="22" Width="70"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="surface_A1_LostFocus"     />
                                         <Label x:Name="surface_A1_unit" Width="30" Content="cm"/>
                                     </DockPanel>
                                     <DockPanel x:Name="A2_dock_panel" Visibility="Hidden" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" >
                                         <Label Width="180" Content="{DynamicResource SurfaceDistance2}"/>
                                         <Label Width="50" Content="(a2):"/>
-                                        <TextBox x:Name="surface_A2" Height="22" Width="70" TextChanged="surface_A2_TextChanged" PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown"      />
+                                        <TextBox x:Name="surface_A2" Height="22" Width="70"  PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="surface_A2_LostFocus"      />
                                         <Label x:Name="surface_A2_unit" Width="30" Content="cm"/>
                                     </DockPanel>
 

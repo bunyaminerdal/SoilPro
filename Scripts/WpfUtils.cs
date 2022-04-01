@@ -3,11 +3,363 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media.Media3D;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ExDesign.Scripts
 {
     internal class WpfUtils
     {
+        public static bool CheckFrontLength(double newL)
+        {
+            if(newL > StaticVariables.viewModel.frontCubeLength)
+            {
+                if (newL < StaticVariables.viewModel.backCubeLength)
+                {
+                    StaticVariables.viewModel.frontCubeLength = StaticVariables.viewModel.backCubeLength;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static bool CheckBackLength(double newL)
+        {
+            if (newL > StaticVariables.viewModel.backCubeLength)
+            {
+                if (newL < StaticVariables.viewModel.wall_h)
+                {
+                    StaticVariables.viewModel.backCubeLength = StaticVariables.viewModel.wall_h;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static bool CheckPileS(double newS)
+        {
+            if(newS < StaticVariables.viewModel.GetWallThickness()* 2/3)
+            {
+                return false;
+            }
+            return true;
+        }
+        public static double GetExHeight()
+        {
+            double xheight = StaticVariables.viewModel.TopOfWallLevel;
+            switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
+            {
+                case ExcavationType.none:
+                    xheight = StaticVariables.viewModel.excavationHeight;
+                    break;
+                case ExcavationType.type1:
+                    xheight = StaticVariables.viewModel.excavationHeight - StaticVariables.viewModel.frontT_Z;
+                    break;
+                case ExcavationType.type2:
+                    xheight = StaticVariables.viewModel.excavationHeight + StaticVariables.viewModel.frontT_Z;
+                    break;
+                default:
+                    break;
+            }
+            return xheight;
+        }
+        public static bool CheckExHeight(double newExH)
+        {
+            switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
+            {
+                case ExcavationType.none:
+                    if(newExH>=StaticVariables.viewModel.wall_h) return false;
+                    break;
+                case ExcavationType.type1:
+                    if (newExH  >= StaticVariables.viewModel.wall_h) return false;
+                    break;
+                case ExcavationType.type2:
+                    if (newExH + StaticVariables.viewModel.GetexcavationZ() >= StaticVariables.viewModel.wall_h) return false;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+        public static bool CheckExZ(double newExZ)
+        {
+            switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
+            {
+                case ExcavationType.none:
+                    if (StaticVariables.viewModel.GetexcavationHeight() >= StaticVariables.viewModel.GetWallHeight()) return false;
+                    break;
+                case ExcavationType.type1:
+                    if (StaticVariables.viewModel.GetexcavationHeight() - newExZ < 0) return false;
+                    break;
+                case ExcavationType.type2:
+                    if (newExZ + StaticVariables.viewModel.GetexcavationHeight() >= StaticVariables.viewModel.GetWallHeight()) return false;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+        public static bool CheckWallH(double newWallH)
+        {
+            if(newWallH < 1) return false;
+            switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
+            {
+                case ExcavationType.none:
+                    if (StaticVariables.viewModel.GetexcavationHeight() >= newWallH)
+                    {
+                        StaticVariables.viewModel.ChangeexcavationHeight(StaticVariables.viewModel.GetexcavationHeight()-(StaticVariables.viewModel.GetWallHeight()-newWallH));
+                        return true;
+                    }
+                    break;
+                case ExcavationType.type1:
+                    if (StaticVariables.viewModel.GetexcavationHeight() >= newWallH)
+                    {
+                        if(StaticVariables.viewModel.GetexcavationHeight() - (StaticVariables.viewModel.GetWallHeight() - newWallH) > StaticVariables.viewModel.GetexcavationZ())
+                        {
+                            StaticVariables.viewModel.ChangeexcavationHeight(StaticVariables.viewModel.GetexcavationHeight() - (StaticVariables.viewModel.GetWallHeight() - newWallH));
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }                        
+                    }
+                    break;
+                case ExcavationType.type2:
+                    if (StaticVariables.viewModel.GetexcavationHeight() + StaticVariables.viewModel.GetexcavationZ() >= newWallH)
+                    {
+                        if (StaticVariables.viewModel.GetexcavationHeight() - (StaticVariables.viewModel.GetWallHeight() - newWallH) > StaticVariables.viewModel.GetexcavationZ())
+                        {
+                            StaticVariables.viewModel.ChangeexcavationHeight(StaticVariables.viewModel.GetexcavationHeight() - (StaticVariables.viewModel.GetWallHeight() - newWallH));
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+        public static double NewAnchorStrutPlacementHeight()
+        {
+            double height = 0;
+            double xheight = GetExHeight();
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+            {
+                if(anchor.AnchorDepth>height) height = anchor.AnchorDepth;
+            }
+            foreach (var strut in StaticVariables.viewModel.strutDatas)
+            {
+                if(strut.StrutDepth > height) height = strut.StrutDepth;
+            }
+                        
+            if(xheight > height + 2.5)
+            {
+                return height+2;
+            }
+            else if(xheight > height + 2)
+            {
+                return height + 1.5;
+            }else if(xheight > height + 1.5)
+            {
+                return height + 1;
+            }
+            return 0;            
+        }
+        public static bool StrutPlacementControl(StrutData strutPlaced,double newDepth)
+        {
+            double bottomofplacedanchor = newDepth + strutPlaced.SoldierBeamHeight / 2;
+            double topofplacedanchor = newDepth - strutPlaced.SoldierBeamHeight / 2;
+
+            var tupleList = new List<(double depth, int type, AnchorData? anchor, StrutData? strut)>();
+            tupleList.Add((StaticVariables.viewModel.TopOfWallLevel, 0, null, null));
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+            {
+                
+                    tupleList.Add((anchor.AnchorDepth, 1, anchor, null));
+                
+            }
+            foreach (var strut in StaticVariables.viewModel.strutDatas)
+            {
+                if (strutPlaced != strut)
+                {
+                    tupleList.Add((strut.StrutDepth, 2, null, strut));
+                }
+            }
+            tupleList.Add((GetExHeight(), 3, null, null));
+
+            tupleList.Sort();
+
+            for (int i = 0; i < tupleList.Count - 1; i++)
+            {
+                if (newDepth == tupleList[i].depth)
+                {
+                    return false;
+                }
+                if (newDepth > GetExHeight())
+                {
+                    return false;
+                }
+                if (newDepth < StaticVariables.viewModel.TopOfWallLevel)
+                {
+                    return false;
+                }
+                if ( newDepth > tupleList[i].depth && newDepth < tupleList[i + 1].depth)
+                {
+                    if (tupleList[i].type == 0)
+                    {
+                        Debug.WriteLine("duvardan sonra");
+                        if (topofplacedanchor < StaticVariables.viewModel.TopOfWallLevel)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i].type == 1)
+                    {
+                        Debug.WriteLine("anchordan sonra");
+                        if (topofplacedanchor < tupleList[i].depth + tupleList[i].anchor.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i + 1].type == 1)
+                    {
+                        Debug.WriteLine("anchordan önce");
+                        if (bottomofplacedanchor > tupleList[i + 1].depth - tupleList[i + 1].anchor.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i].type == 2)
+                    {
+                        Debug.WriteLine("struttan sonta");
+                        if (topofplacedanchor < tupleList[i].depth + tupleList[i].strut.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i + 1].type == 2)
+                    {
+                        Debug.WriteLine("struttan önce");
+                        if (bottomofplacedanchor > tupleList[i + 1].depth - tupleList[i + 1].strut.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i + 1].type == 3)
+                    {
+                        Debug.WriteLine("sona geldi");
+                        if (bottomofplacedanchor > GetExHeight())
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+        public static bool AnchorPlacementControl(AnchorData anchorPlaced,double newDepth)
+        {            
+            double bottomofplacedanchor = newDepth + anchorPlaced.SoldierBeamHeight / 2;
+            double topofplacedanchor = newDepth - anchorPlaced.SoldierBeamHeight / 2;
+
+            var tupleList = new List<(double depth,int type, AnchorData? anchor,StrutData? strut)>();
+            tupleList.Add((StaticVariables.viewModel.TopOfWallLevel,0, null, null));
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+            {
+                if(anchorPlaced != anchor)
+                {
+                    tupleList.Add((anchor.AnchorDepth,1,anchor,null));
+                }
+            }
+            foreach (var strut in StaticVariables.viewModel.strutDatas)
+            {
+                tupleList.Add((strut.StrutDepth,2,null,strut));
+            }
+            tupleList.Add((GetExHeight(), 3, null, null));
+
+            tupleList.Sort();
+
+            for (int i = 0; i < tupleList.Count-1; i++)
+            {
+                if (newDepth == tupleList[i].depth)
+                {
+                    return false;
+                }
+                if(newDepth > GetExHeight())
+                {
+                    return false;
+                }
+                if(newDepth < StaticVariables.viewModel.TopOfWallLevel)
+                {
+                    return false;
+                }
+                if (newDepth > tupleList[i].depth && newDepth < tupleList[i+1].depth)
+                {
+                    if (tupleList[i].type == 0)
+                    {
+                        Debug.WriteLine("duvardan sonra");
+                        if (topofplacedanchor < StaticVariables.viewModel.TopOfWallLevel)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i].type == 1)
+                    {
+                        Debug.WriteLine("anchordan sonra");
+                        if (topofplacedanchor < tupleList[i].depth + tupleList[i].anchor.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i + 1].type == 1)
+                    {
+                        Debug.WriteLine("anchordan önce");
+                        if (bottomofplacedanchor > tupleList[i + 1].depth - tupleList[i + 1].anchor.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i].type == 2)
+                    {
+                        Debug.WriteLine("struttan sonta");
+                        if (topofplacedanchor < tupleList[i].depth + tupleList[i].strut.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i + 1].type == 2)
+                    {
+                        Debug.WriteLine("struttan önce");
+                        if (bottomofplacedanchor > tupleList[i + 1].depth - tupleList[i + 1].strut.SoldierBeamHeight / 2)
+                        {
+                            return false;
+                        }
+                    }
+                    if (tupleList[i + 1].type == 3)
+                    {
+                        Debug.WriteLine("sona geldi");
+                        if (bottomofplacedanchor > GetExHeight())
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            return true;
+        }
         static double one_rad_in_degrees = (double)57.0 + ((double)17.0 / (double)60.0) + ((double)44.6 / ((double)3600.0));
         public static string ChangeDecimalOptions(double value)
         {

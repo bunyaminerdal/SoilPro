@@ -39,7 +39,7 @@
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="100" Content="{DynamicResource wallheight}"/>
                                 <Label Width="30" Content="(h):"/>
-                                <TextBox x:Name="concretewall_height" Height="22" Width="80" TextChanged="concretewall_height_TextChanged"  PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown"/>
+                                <TextBox x:Name="concretewall_height" Height="22" Width="80"   PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" LostFocus="concretewall_height_LostFocus"/>
                                 <Label x:Name="concretewall_height_unit" Width="30" Content="cm"/>
                             </DockPanel>
                             
@@ -66,7 +66,7 @@
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="160" Content="{DynamicResource pilewallHeight}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right" Content="(h):"/>
-                                <TextBox x:Name="pilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pilewall_height_TextChanged"/>
+                                <TextBox x:Name="pilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" LostFocus="pilewall_height_LostFocus" />
                                 <Label x:Name="pilewall_height_unit" Width="30" Content="cm"/>
                             </DockPanel>
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -86,7 +86,7 @@
                             <DockPanel Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="160" Content="{DynamicResource pilespacefrompilecenter}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right" Content="(s):"/>
-                                <TextBox x:Name="pile_space" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pile_space_TextChanged"/>
+                                <TextBox x:Name="pile_space" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" LostFocus="pile_space_LostFocus"/>
                                 <Label x:Name="pile_space_unit" Width="30" Content="cm"/>
                             </DockPanel>
                             
@@ -137,7 +137,7 @@
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                 <Label Width="160" Content="{DynamicResource sheetpileWallHeight}"/>
                                 <Label Width="30" HorizontalContentAlignment="Right" Content="(h):"/>
-                                <TextBox x:Name="sheetpilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown" TextChanged="pilewall_height_TextChanged"/>
+                                <TextBox x:Name="sheetpilewall_height" Height="22" Width="80" PreviewTextInput="concretewall_height_PreviewTextInput" PreviewKeyDown="concretewall_height_PreviewKeyDown"  LostFocus="sheetpilewall_height_LostFocus"/>
                                 <Label x:Name="sheetpilewall_height_unit" Width="30" Content="cm"/>
                             </DockPanel>
                             <DockPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" >

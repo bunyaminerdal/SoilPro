@@ -478,12 +478,16 @@ namespace ExDesign.Pages.Inputs.Views
             Point3D BackTCenter = new Point3D(center3d.X, center3d.Y + centerY + backT_h, center3d.Z - wall_d / 2);
             WpfTrapezoid backT = new WpfTrapezoid(BackTCenter, backT_w_top, backT_w_bottom, backT_h, backT_d, backT_w_top_dis, backT_w_bottom_dis);
             GeometryModel3D backTmodel = WpfTrapezoid.CreateTrapezoidModel(backT, backT_color, isbackTTextured, bacTTextureUri);
-            //create backWater model
-            Point3D backWCenter = new Point3D(center3d.X + 0.1, center3d.Y - groundW_h1 + centerY - 0.01, center3d.Z - backW_d / 2);
-            WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
-            GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(150, 0, 0, 255), false, soilUri1);
-
-            groupScene.Children.Add(backWmodel);
+            
+            if (center3d.Y + groundW_h1 - bottomT_h < wall_h)
+            {
+                //create backWater model
+                Point3D backWCenter = new Point3D(center3d.X + 0.1, center3d.Y - groundW_h1 + centerY - 0.01, center3d.Z - backW_d / 2);
+                WpfCube backW = new WpfCube(backWCenter, backW_w, backW_h, backW_d);
+                GeometryModel3D backWmodel = WpfCube.CreateCubeModel(backW, Color.FromArgb(150, 0, 0, 255), false, soilUri1);
+                groupScene.Children.Add(backWmodel);
+            }
+            
             groupScene.Children.Add(backTmodel);
 
             //create backcubemodel
@@ -578,19 +582,21 @@ namespace ExDesign.Pages.Inputs.Views
 
             WpfTrapezoid frontT = new WpfTrapezoid(TrapezoidCenter, frontT_w_top, frontT_w_bottom, frontT_h, frontT_d, frontT_w_top_dis, frontT_w_bottom_dis);
             GeometryModel3D frontTmodel = WpfTrapezoid.CreateTrapezoidModel(frontT, frontT_color,false,soilUri);
-                        
-                                 
-            Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y +centerY- groundW_h2 - 0.01 - excavationHeight, center3d.Z - frontW_d / 2);
-            WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
-            GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(150, 0, 0, 255), false, soilUri);
+
+            if (center3d.Y + excavationHeight + groundW_h2 - bottomT_h < wall_h)
+            {
+                Point3D frontWCenter = new Point3D(center3d.X - wall_t - frontW_w, center3d.Y + centerY - groundW_h2 - 0.01 - excavationHeight, center3d.Z - frontW_d / 2);
+                WpfCube frontW = new WpfCube(frontWCenter, frontW_w, frontW_h, frontW_d);
+                GeometryModel3D frontWmodel = WpfCube.CreateCubeModel(frontW, Color.FromArgb(150, 0, 0, 255), false, soilUri);
+                groupScene.Children.Add(frontWmodel);
+            }
+            
 
             Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
             WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(frontCubeLength+backCubeLength), bottomT_h, wall_d);
             GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
 
-
             
-            groupScene.Children.Add(frontWmodel);
             groupScene.Children.Add(frontTmodel);
             groupScene.Children.Add(frontCubeModel);
             

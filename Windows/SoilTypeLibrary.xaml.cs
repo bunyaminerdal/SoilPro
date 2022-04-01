@@ -84,8 +84,9 @@ namespace ExDesign.Windows
             LibrarySoilList.ItemsSource = SoilLibrary.SoilDataList;
             LibrarySoilList.DisplayMemberPath = "Name";
             LibrarySoilList.SelectionMode = SelectionMode.Single;
-            if (tempSoilDataList.Count <= 0)  tempSoilDataList.Add(new SoilData() { ID = Guid.NewGuid(), isDefault = false, Name = "new soil", isSoilTexture = false, SoilColor = Color.FromArgb(100, 50, 50, 255), SoilTexture = SoilTexture.tempSoilTextureDataList[0] }); ;
-                        
+            if (tempSoilDataList.Count <= 0) tempSoilDataList.Add(
+                new SoilData() { ID = Guid.NewGuid(), isUserDefined = true,isDefault=false, SoilRockType = SoilRockTypes.Soil, SoilType = SoilTypes.Sand, SoilDenseType = SoilDenseTypes.MediumDense, SiltType = SiltTypes.None, SoilStiffType = SoilStiffTypes.None, RockType = RockTypes.None, RockSubType = RockSubTypes.None, Name = "Kötü Derecelenmiş Orta Sıkı Kum", NaturalUnitWeight = 18.7, SaturatedUnitWeight = 19.2, SoilStressStateIndex = 0, SoilStateKoIndex = 0, SoilFrictionAngle = 31, EffectiveCohesion = 0, UndrainedShearStrength = 0, WallSoilFrictionAngle = 20.7, WallSoilAdhesion = 0, PoissonRatio = 0.3, K0 = 0.48, Ocr = 1, OedometricModulus = 20000, CohesionFactor = 1, YoungModulus = 14900, isSoilTexture = false, SoilColor = Color.FromArgb(50, 50, 50, 255), SoilTexture = SoilTexture.tempSoilTextureDataList[0] }
+                );
             UserSoilList.SelectedIndex = 0;
 
             foreach (var soil in SoilLibrary.SavedSoilDataList)
