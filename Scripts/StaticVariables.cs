@@ -228,7 +228,7 @@ namespace ExDesign.Scripts
         Drained,
         UnDrained,
     }
-    public enum AnalysisSytem
+    public enum AnalysMethod
     {
         ClassicLoading,
         EquivalentLinear,

@@ -28,26 +28,26 @@
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="*"/>
-                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource EarthquakeDesign}">
                         <StackPanel>
                             <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" >
-                                <CheckBox x:Name="earthquakeCheckbox" Content="{DynamicResource EarthquakeDesign}"></CheckBox>
+                                <CheckBox x:Name="earthquakeCheckbox" Content="{DynamicResource EarthquakeDesign}" Unchecked="earthquakeCheckbox_Unchecked" Checked="earthquakeCheckbox_Checked"></CheckBox>
                             </DockPanel>
                             <DockPanel LastChildFill="True" VerticalAlignment="Top" Margin="5" >
                                 <Label Width="40" Content="SDS :"/>
-                                <TextBox  x:Name="sds_textbox" Width="150" Height="22"    />
-                                <CheckBox x:Name="sdscheckbox" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                                <TextBox  x:Name="sds_textbox" Width="100" Height="22" HorizontalAlignment="Left" TextChanged="sds_textbox_TextChanged" PreviewTextInput="depthafteranchorstruttextbox_PreviewTextInput" PreviewKeyDown="depthafteranchorstruttextbox_PreviewKeyDown"   />
+                                <CheckBox x:Name="sdscheckbox" Width="16" Height="16" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"  Checked="sdscheckbox_Checked" Unchecked="sdscheckbox_Unchecked"></CheckBox>
                             </DockPanel>
                             <DockPanel LastChildFill="True" VerticalAlignment="Top" Margin="5,5,5,2" >
                                 <Label Width="40" Content="Kh :"/>
-                                <TextBox  x:Name="kh_textbox" Width="150" Height="22"    />
+                                <TextBox  x:Name="kh_textbox" Width="100" Height="22" HorizontalAlignment="Left" TextChanged="kh_textbox_TextChanged"  PreviewTextInput="depthafteranchorstruttextbox_PreviewTextInput" PreviewKeyDown="depthafteranchorstruttextbox_PreviewKeyDown"  />
                             </DockPanel>
                             <DockPanel LastChildFill="True" VerticalAlignment="Top" Margin="5,2,5,2" >
                                 <Label Width="40" Content="Kv :"/>
-                                <TextBox  x:Name="kv_textbox" Width="150" Height="22"    />
+                                <TextBox  x:Name="kv_textbox" Width="100" Height="22" HorizontalAlignment="Left" TextChanged="kv_textbox_TextChanged" PreviewTextInput="depthafteranchorstruttextbox_PreviewTextInput" PreviewKeyDown="depthafteranchorstruttextbox_PreviewKeyDown"   />
                             </DockPanel>
                         </StackPanel>
                         </GroupBox>
@@ -56,14 +56,14 @@
                     <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource StageConstruction}">
                         <StackPanel>
                             <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" >
-                                <CheckBox x:Name="stageconstructionCheckbox" Content="{DynamicResource StageConstruction}"></CheckBox>
+                                <CheckBox x:Name="stageconstructionCheckbox" Content="{DynamicResource StageConstruction}" Checked="stageconstructionCheckbox_Checked" Unchecked="stageconstructionCheckbox_Unchecked"></CheckBox>
                             </DockPanel>
                             <DockPanel   Margin="5">
                                 <Label  Content="{DynamicResource DepthAfterAnchorsStruts}"/>
                             </DockPanel>
                             <DockPanel    Margin="5">
                                 <Label Width="50" Content="(depth):"/>
-                                <TextBox x:Name="depthafteranchorstruttextbox" Height="22" Width="120"   PreviewTextInput="excavationheight_PreviewTextInput" PreviewKeyDown="excavationheight_PreviewKeyDown" LostFocus="excavationheight_LostFocus" />
+                                <TextBox x:Name="depthafteranchorstruttextbox" Height="22" Width="100" PreviewTextInput="depthafteranchorstruttextbox_PreviewTextInput" PreviewKeyDown="depthafteranchorstruttextbox_PreviewKeyDown" LostFocus="depthafteranchorstruttextbox_LostFocus"    />
                                 <Label x:Name="depthafteranchorstruttextbox_unit" Width="30" Content="cm"/>
                             </DockPanel>
                         </StackPanel>
@@ -74,7 +74,7 @@
                     <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource AnalysMethod}">
                         <StackPanel>
                             <DockPanel  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3">
-                                <ComboBox x:Name="soilModelCombobox" MinWidth="200" SelectionChanged="soilModelCombobox_SelectionChanged"  >
+                                <ComboBox x:Name="analysmethodCombobox"  MinWidth="150" SelectionChanged="analysmethod_SelectionChanged"  >
                                     <ComboBoxItem Content="{DynamicResource ClassicLoading}" x:Name="analizmodel1"/>
                                     <ComboBoxItem Content="{DynamicResource EquivalentLinear}" x:Name="analizmodel2"/>
                                     <ComboBoxItem Content="{DynamicResource FHVA}" x:Name="analizmodel3"/>

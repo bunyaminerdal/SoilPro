@@ -60,8 +60,11 @@ namespace ExDesign.Datas
         public double depthAfterAnchorStrut { get; set; }
         public bool isEarthQuakeDesign { get; set; }
         public bool isSDSValue { get; set; }
+        public double SDSValue { get; set; }
         public double khValue { get; set; }
         public double kvValue { get; set; }
+        public bool isStageConstruction { get; set; }
+        public int analysMethodIndex { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<AnchorData> anchorDatas { get; set; }
         public ObservableCollection<StrutData> strutDatas { get; set; }
@@ -346,8 +349,10 @@ namespace ExDesign.Datas
                     SaveDate = "0",
                     useCableDiameterAndNumberForDesign = true,
                     isCapBeamBottom = true,
+                    SDSValue = 0,
                     khValue = 0,
                     kvValue = 0,
+                    isStageConstruction = false,
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),
                     anchorDatas = new ObservableCollection<AnchorData>(),

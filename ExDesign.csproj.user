@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="OpeningWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\AnchorsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\InputsMainPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\MaterialsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\SoilMethodPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\StrutPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\SurchargePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\SystemLoadPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\WallProperties.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\ExDesignPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\Views\SideviewPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Inputs\Views\view3dPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Opening\NewProjectPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Opening\newsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Opening\OpeningMainPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Options\GeneralOptions.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Options\OptionsMainPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Options\RegionOptions.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Reports\ReportMainPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\ConcreteWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\RebarWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\SheetPileWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\SoilTypeLibrary.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\SteelWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\TextureWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Inputs\AnchorsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\MaterialsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\SoilMethodPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\StrutPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\SurchargePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\SystemLoadPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ProgramWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OpeningWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\InputsMainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\WallProperties.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\ExDesignPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\Views\SideviewPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\Views\view3dPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Opening\NewProjectPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Opening\newsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Opening\OpeningMainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Options\GeneralOptions.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Options\OptionsMainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Options\RegionOptions.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Reports\ReportMainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Langs\LanguageDictionary.tr-TR.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Langs\LanguageDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ConcreteWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\PileWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\RebarWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\SheetPileWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\SoilTypeLibrary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\SteelWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TextureWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

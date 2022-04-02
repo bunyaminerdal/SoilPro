@@ -10,6 +10,33 @@ namespace ExDesign.Scripts
 {
     internal class WpfUtils
     {
+        public static bool DepthAfterControl( double newDepth)
+        {            
+            var tupleList = new List<(double depth, int type, AnchorData? anchor, StrutData? strut)>();
+            tupleList.Add((StaticVariables.viewModel.TopOfWallLevel, 0, null, null));
+            foreach (var anchor in StaticVariables.viewModel.anchorDatas)
+            {
+                
+                    tupleList.Add((anchor.AnchorDepth, 1, anchor, null));
+                
+            }
+            foreach (var strut in StaticVariables.viewModel.strutDatas)
+            {
+                tupleList.Add((strut.StrutDepth, 2, null, strut));
+            }
+            tupleList.Add((GetExHeight(), 3, null, null));
+
+            tupleList.Sort();
+            double minDepth = double.MaxValue;
+            for (int i = 1; i < tupleList.Count; i++)
+            {
+                if(minDepth > tupleList[i].depth) minDepth = tupleList[i].depth;
+            }
+            if (minDepth == double.MaxValue) return false;
+            if(minDepth < newDepth) return false;
+            return true;
+        }
+
         public static bool CheckFrontLength(double newL)
         {
             if(newL > StaticVariables.viewModel.frontCubeLength)
@@ -774,6 +801,34 @@ namespace ExDesign.Scripts
                 case SoilModelType.Chadeisson_Model:
                     return 1;
                 case SoilModelType.Vesic_Model:
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
+        public static AnalysMethod GetAnalysMethodType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return AnalysMethod.ClassicLoading;
+                case 1:
+                    return AnalysMethod.EquivalentLinear;
+                case 2:
+                    return AnalysMethod.FHWA;
+                default:
+                    return AnalysMethod.ClassicLoading;
+            }
+        }
+        public static int GetAnalysMethodIndex(AnalysMethod analysmethod)
+        {
+            switch (analysmethod)
+            {
+                case AnalysMethod.ClassicLoading:
+                    return 0;
+                case AnalysMethod.EquivalentLinear:
+                    return 1;
+                case AnalysMethod.FHWA:
                     return 2;
                 default:
                     return 0;
