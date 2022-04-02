@@ -3,7 +3,6 @@ C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ExDesign.deps.j
 C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ExDesign.runtimeconfig.json
 C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ExDesign.runtimeconfig.dev.json
 C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ExDesign.dll
-C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ref\ExDesign.dll
 C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ExDesign.pdb
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Resources\Langs\LanguageDictionary.tr-TR.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Resources\Langs\LanguageDictionary.baml
@@ -80,3 +79,4 @@ C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\Su
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\SurchargePage.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\SystemLoadPage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\SystemLoadPage.baml
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\refint\ExDesign.dll
