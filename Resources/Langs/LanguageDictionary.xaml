@@ -220,5 +220,6 @@
     <system:String x:Key="TheColoumbTheory" >The Coloumb Theory</system:String>
     <system:String x:Key="TheCaquoutTheory" >The Caquout Theory</system:String> 
     <system:String x:Key="TotalStress" >Total Stress</system:String> 
+    <system:String x:Key="Analysis" >Analysis</system:String> 
     
 </ResourceDictionary>

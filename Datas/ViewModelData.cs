@@ -65,6 +65,10 @@ namespace ExDesign.Datas
         public double kvValue { get; set; }
         public bool isStageConstruction { get; set; }
         public int analysMethodIndex { get; set; }
+        public int activeDrainedCoefficientIndex { get; set; }
+        public int activeUnDrainedCoefficientIndex { get; set; }
+        public int passiveDrainedCoefficientIndex { get; set; }
+        public int passiveUnDrainedCoefficientIndex { get; set; }
         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<AnchorData> anchorDatas { get; set; }
         public ObservableCollection<StrutData> strutDatas { get; set; }
@@ -353,6 +357,11 @@ namespace ExDesign.Datas
                     khValue = 0,
                     kvValue = 0,
                     isStageConstruction = false,
+                    activeDrainedCoefficientIndex = 0,
+                    activeUnDrainedCoefficientIndex = 0,
+                    passiveDrainedCoefficientIndex = 3,
+                    passiveUnDrainedCoefficientIndex = 3,
+                
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),
                     anchorDatas = new ObservableCollection<AnchorData>(),

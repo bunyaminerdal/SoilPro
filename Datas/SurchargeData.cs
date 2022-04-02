@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ExDesign.Datas
 {
-    public class SurfaceSurchargeData
+    public class SurfaceSurchargeData : Load
     {
         public string SurchargeName { get; set; }
         public double Load { get; set; }
     }
-    public class StripLoadData
+    public class StripLoadData : Load
     {
         public string SurchargeName { get; set; }        
         public double DistanceFromWall { get; set; }
@@ -19,16 +19,20 @@ namespace ExDesign.Datas
         public double StartLoad { get; set; }
         public double EndLoad { get; set; }
     }
-    public class PointLoadData
+    public class PointLoadData : Load
     {
         public string SurchargeName { get; set; }
         public double DistanceFromWall { get; set; }
         public double Load { get; set; }
     }
-    public class LineLoadData
+    public class LineLoadData : Load
     {
         public string SurchargeName { get; set; }
         public double DistanceFromWall { get; set; }
         public double Load { get; set; }
+    }
+    public class Load
+    {
+
     }
 }

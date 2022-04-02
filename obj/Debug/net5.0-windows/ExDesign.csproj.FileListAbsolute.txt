@@ -79,4 +79,6 @@ C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\Su
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\SurchargePage.baml
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\SystemLoadPage.g.cs
 C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\SystemLoadPage.baml
-C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\refint\ExDesign.dll
+C:\Users\leoni\Documents\GitHub\SoilPro\bin\Debug\net5.0-windows\ref\ExDesign.dll
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\AnalysisPage.g.cs
+C:\Users\leoni\Documents\GitHub\SoilPro\obj\Debug\net5.0-windows\Pages\Inputs\AnalysisPage.baml

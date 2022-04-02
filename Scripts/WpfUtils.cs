@@ -96,12 +96,31 @@ namespace ExDesign.Scripts
             }
             return xheight;
         }
+        public static double GetExHeightForCalculation()
+        {
+            double xheight = StaticVariables.viewModel.TopOfWallLevel;
+            switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
+            {
+                case ExcavationType.none:
+                    xheight = StaticVariables.viewModel.excavationHeight;
+                    break;
+                case ExcavationType.type1:
+                    xheight = StaticVariables.viewModel.excavationHeight ;
+                    break;
+                case ExcavationType.type2:
+                    xheight = StaticVariables.viewModel.excavationHeight + StaticVariables.viewModel.frontT_Z;
+                    break;
+                default:
+                    break;
+            }
+            return xheight;
+        }
         public static bool CheckExHeight(double newExH)
         {
             switch (WpfUtils.GetExcavationType(StaticVariables.viewModel.ExcavationTypeIndex))
             {
                 case ExcavationType.none:
-                    if(newExH>=StaticVariables.viewModel.wall_h) return false;
+                    if(newExH >= StaticVariables.viewModel.wall_h) return false;
                     break;
                 case ExcavationType.type1:
                     if (newExH  >= StaticVariables.viewModel.wall_h) return false;

@@ -167,7 +167,8 @@ namespace ExDesign.Scripts
         Anchors,
         Struts,
         Surcharge,
-        SystemLoad
+        SystemLoad,
+        Analysis
     }
     public enum LevelDirection
     {

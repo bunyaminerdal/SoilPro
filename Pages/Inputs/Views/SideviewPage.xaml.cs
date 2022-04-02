@@ -178,15 +178,20 @@ namespace ExDesign.Pages.Inputs.Views
                     double soilH = 0;
                     foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                     {
-                        if (rootstartY > soilH && rootendY < soilH+soilLayer.LayerHeight)
+                        if(soilLayer.Soil != null)
                         {
-                            double length1 = Point.Subtract(rotationCenter, new Point(rootstartX,rootstartY)).Length;
-                            double length2 = Point.Subtract(rotationCenter, new Point(rootendX, rootendY)).Length;
-                            GeometryDrawing deneme = Wpf2Dutils.AnchorRootPartGeometryDrawing(rotationCenter, anchor.Inclination, length1, length2, anchor.RootDiameter, soilLayer.Soil.SoilColor);
-                            mainDrawingGroup.Children.Add(deneme);
+                            if (rootstartY > soilH && rootendY < soilH + soilLayer.LayerHeight)
+                            {
+                                double length1 = Point.Subtract(rotationCenter, new Point(rootstartX, rootstartY)).Length;
+                                double length2 = Point.Subtract(rotationCenter, new Point(rootendX, rootendY)).Length;
+
+                                GeometryDrawing deneme = Wpf2Dutils.AnchorRootPartGeometryDrawing(rotationCenter, anchor.Inclination, length1, length2, anchor.RootDiameter, soilLayer.Soil.SoilColor);
+                                mainDrawingGroup.Children.Add(deneme);
+                            }
+                            
                         }
-                            soilH += soilLayer.LayerHeight;
-                        
+                        soilH += soilLayer.LayerHeight;
+
                     }
                 }
                 

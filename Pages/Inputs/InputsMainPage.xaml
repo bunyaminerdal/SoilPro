@@ -44,6 +44,7 @@
                 <RadioButton x:Name="StrutBttn" MinWidth="80" Content="{DynamicResource Struts}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="StrutBttn_Checked"   />
                 <RadioButton x:Name="SurchargeBttn" MinWidth="80" Content="{DynamicResource Surcharge}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SurchargeBttn_Checked"    />
                 <RadioButton x:Name="SystemLoadBttn" MinWidth="80" Content="{DynamicResource SystemLoad}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SystemLoadBttn_Checked"     />
+                <RadioButton x:Name="AnalysisBttn" MinWidth="80" Content="{DynamicResource Analysis}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="AnalysisBttn_Checked"      />
             </DockPanel>
         </DockPanel >
 
