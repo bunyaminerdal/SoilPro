@@ -261,5 +261,21 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.viewModel.kvValue = result;
             }
         }
+
+        private void changeTheoryCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            ActiveDrained_combobox.IsEnabled = true;
+            ActiveUndrained_combobox.IsEnabled=true;
+            PassiveDrained_combobox.IsEnabled = true;
+            PassiveUndrained_combobox.IsEnabled = true;
+        }
+
+        private void changeTheoryCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ActiveDrained_combobox.IsEnabled = false;
+            ActiveUndrained_combobox.IsEnabled = false;
+            PassiveDrained_combobox.IsEnabled = false;
+            PassiveUndrained_combobox.IsEnabled = false;
+        }
     }
 }

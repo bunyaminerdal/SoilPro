@@ -234,4 +234,19 @@ namespace ExDesign.Scripts
         EquivalentLinear,
         FHWA
     }
+    public enum DrainedTheories
+    {
+        TBDY,
+        MazindraniTheory,
+        TheColoumbTheory,
+        TheCaquoutTheory
+    }
+    public enum UnDrainedTheories
+    {
+        TBDY,
+        MazindraniTheory,
+        TheColoumbTheory,
+        TheCaquoutTheory,
+        TotalStress
+    }
 }

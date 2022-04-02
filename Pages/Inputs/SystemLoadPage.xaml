@@ -28,7 +28,7 @@
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="*"/>
                     <ColumnDefinition  Width="*"/>
-                    <ColumnDefinition  Width="2*"/>
+                    <ColumnDefinition  Width="1.6*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <GroupBox Margin="0,5,2.5,5" Header="{DynamicResource EarthquakeDesign}">
@@ -97,6 +97,55 @@
 
                 </StackPanel>
                 <StackPanel Grid.Column="3">
+                    <GroupBox Header="{DynamicResource ActivePassiveCoefficients}">
+                        <StackPanel>
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="1.4*"/>
+                                    <ColumnDefinition Width="1.4*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="22"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"></TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{DynamicResource Drained}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource UnDrained}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Active}" HorizontalAlignment="Center"></TextBlock>
+                                <ComboBox x:Name="ActiveDrained_combobox" IsEnabled="False" Grid.Row="1" Grid.Column="1">
+                                    <ComboBoxItem Content="{DynamicResource TBDY}"/>
+                                    <ComboBoxItem Content="{DynamicResource MazindraniTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheColoumbTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheCaquoutTheory}"/>
+                                </ComboBox>
+                                <ComboBox x:Name="ActiveUndrained_combobox" IsEnabled="False" Grid.Row="1" Grid.Column="2">
+                                    <ComboBoxItem Content="{DynamicResource TBDY}"/>
+                                    <ComboBoxItem Content="{DynamicResource MazindraniTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheColoumbTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheCaquoutTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TotalStress}"/>
+                                </ComboBox>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Passive}" HorizontalAlignment="Center"></TextBlock>
+                                <ComboBox x:Name="PassiveDrained_combobox" IsEnabled="False" Grid.Row="2" Grid.Column="1">
+                                    <ComboBoxItem Content="{DynamicResource TBDY}"/>
+                                    <ComboBoxItem Content="{DynamicResource MazindraniTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheColoumbTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheCaquoutTheory}"/>
+                                </ComboBox>
+                                <ComboBox x:Name="PassiveUndrained_combobox" IsEnabled="False" Grid.Row="2" Grid.Column="2">
+                                    <ComboBoxItem Content="{DynamicResource TBDY}"/>
+                                    <ComboBoxItem Content="{DynamicResource MazindraniTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheColoumbTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TheCaquoutTheory}"/>
+                                    <ComboBoxItem Content="{DynamicResource TotalStress}"/>
+                                </ComboBox>
+                            </Grid>
+                            <CheckBox x:Name="changeTheoryCheckbox" Margin="10" Content="{DynamicResource ChangeTheory}" Checked="changeTheoryCheckbox_Checked" Unchecked="changeTheoryCheckbox_Unchecked"></CheckBox>
+                        </StackPanel>
+                        
+                    </GroupBox>
                 </StackPanel>
             </Grid>
         </StackPanel>

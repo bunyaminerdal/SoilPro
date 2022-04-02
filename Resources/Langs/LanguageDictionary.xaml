@@ -210,6 +210,15 @@
     <system:String x:Key="FHVA" >FHVA</system:String>
     <system:String x:Key="ClassicLoadingInfo" >Classic Loading analysis method calculate acting forces according to retaining wall analysis. Recommended for non-pre-stressed anchors and strut usage.</system:String>
     <system:String x:Key="EquivalentLinearInfo" >In equivalent linear analysis program will find acting forces on wall step by step starting from rest pressure. Highly recommended for pre-stressed anchors and strut usage.</system:String>
-    <system:String x:Key="FHVAinfo" >Program calculates acting forces according to FHVA. In this loading type program will only find Active presures over the wall according to FHVA and passive presure will be calculatte with Classic Loading system.</system:String> 
+    <system:String x:Key="FHVAinfo" >Program calculates acting forces according to FHVA. In this loading type program will only find Active presures over the wall according to FHVA and passive presure will be calculatte with Classic Loading system.</system:String>
+    <system:String x:Key="ActivePassiveCoefficients" >Active-Passive Coefficients</system:String> 
+    <system:String x:Key="Active" >Active</system:String> 
+    <system:String x:Key="Passive" >Passive</system:String> 
+    <system:String x:Key="ChangeTheory" >Change Theory</system:String> 
+    <system:String x:Key="TBDY" >TBDY</system:String>
+    <system:String x:Key="MazindraniTheory" >Mazindrani Theory</system:String> 
+    <system:String x:Key="TheColoumbTheory" >The Coloumb Theory</system:String>
+    <system:String x:Key="TheCaquoutTheory" >The Caquout Theory</system:String> 
+    <system:String x:Key="TotalStress" >Total Stress</system:String> 
     
 </ResourceDictionary>
