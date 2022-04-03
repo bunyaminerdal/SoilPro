@@ -39,8 +39,7 @@ namespace ExDesign.Pages.Inputs
             Linedistance_txtbox.Text = FindResource("DistanceFromWall").ToString() + " (" + StaticVariables.dimensionUnit + ")";
             pointdistance_txtbox.Text = FindResource("DistanceFromWall").ToString() + " (" + StaticVariables.dimensionUnit + ")";
             stripLength_txtbox.Text = FindResource("StripLength").ToString() + " (" + StaticVariables.dimensionUnit + ")";
-            stripStartLoad_txtbox.Text = FindResource("StartLoad").ToString() + " (" + StaticVariables.StressUnit + ")";
-            stripEndLoad_txtbox.Text = FindResource("EndLoad").ToString() + " (" + StaticVariables.StressUnit + ")";
+            stripStartLoad_txtbox.Text = FindResource("Load").ToString() + " (" + StaticVariables.StressUnit + ")";
             LineLoad_txtbox.Text = FindResource("LineLoad").ToString() + " (" + StaticVariables.SurfaceStressUnit + ")";
             pointLoad_txtbox.Text = FindResource("PointLoad").ToString() + " (" + StaticVariables.forceUnit + ")";
             
@@ -68,7 +67,7 @@ namespace ExDesign.Pages.Inputs
 
         private void surfaceSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            SurfaceSurchargeData surfaceSurchargeData = new SurfaceSurchargeData() { SurchargeName=FindResource("Surcharge").ToString(),Load=10};
+            SurfaceSurchargeData surfaceSurchargeData = new SurfaceSurchargeData() { SurchargeName=FindResource("Surcharge").ToString(),Load=10, Type = LoadType.SurfaceLoad };
             StaticVariables.viewModel.surfaceSurchargeDatas.Add(surfaceSurchargeData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -77,7 +76,7 @@ namespace ExDesign.Pages.Inputs
 
         private void stripSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            StripLoadData stripLoadData = new StripLoadData() { SurchargeName=FindResource("StripLoad").ToString(),DistanceFromWall=1,StripLength=2,StartLoad=11,EndLoad=13};
+            StripLoadData stripLoadData = new StripLoadData() { SurchargeName=FindResource("StripLoad").ToString(),DistanceFromWall=1,StripLength=2,StartLoad=11,EndLoad=11, Type = LoadType.StripLoad };
             StaticVariables.viewModel.stripLoadDatas.Add(stripLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -86,7 +85,7 @@ namespace ExDesign.Pages.Inputs
 
         private void LineSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            LineLoadData lineLoadData = new LineLoadData() { SurchargeName= FindResource("LineLoad").ToString(), DistanceFromWall=3,Load=20};
+            LineLoadData lineLoadData = new LineLoadData() { SurchargeName= FindResource("LineLoad").ToString(), DistanceFromWall=3,Load=20,Type = LoadType.LineLoad};
             StaticVariables.viewModel.LineLoadDatas.Add(lineLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -95,7 +94,7 @@ namespace ExDesign.Pages.Inputs
 
         private void pointSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            PointLoadData pointLoadData = new PointLoadData() { SurchargeName= FindResource("PointLoad").ToString(), DistanceFromWall=2.5,Load=50};
+            PointLoadData pointLoadData = new PointLoadData() { SurchargeName= FindResource("PointLoad").ToString(), DistanceFromWall=2.5,Load=50, Type = LoadType.PointLoad };
             StaticVariables.viewModel.PointLoadDatas.Add(pointLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -212,21 +211,13 @@ namespace ExDesign.Pages.Inputs
                     textbox_StartLoad.PreviewKeyDown += Textbox_SurfaceLoad_PreviewKeyDown;
                     textbox_StartLoad.PreviewTextInput += Textbox_SurfaceLoad_PreviewTextInput;
                     textbox_StartLoad.Name = "textboxstartLoad_" + stripLoadIndex;
-                    TextBox textbox_EndLoad = new TextBox();
-                    textbox_EndLoad.Width = 100;
-                    textbox_EndLoad.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(stripLoad.EndLoad));
-                    textbox_EndLoad.VerticalContentAlignment = VerticalAlignment.Center;
-                    textbox_EndLoad.TextChanged += Textbox_EndLoad_TextChanged;
-                    textbox_EndLoad.PreviewKeyDown += Textbox_SurfaceLoad_PreviewKeyDown;
-                    textbox_EndLoad.PreviewTextInput += Textbox_SurfaceLoad_PreviewTextInput;
-                    textbox_EndLoad.Name = "textboxstartLoad_" + stripLoadIndex;
+                    
                     dockPanel.Children.Add(deleteStripButton);
                     dockPanel.Children.Add(textBox_no);
                     dockPanel.Children.Add(textbox_StripName);
                     dockPanel.Children.Add(textbox_Distance);
                     dockPanel.Children.Add(textbox_Length);
                     dockPanel.Children.Add(textbox_StartLoad);
-                    dockPanel.Children.Add(textbox_EndLoad);
 
                     stripSurchargeGroupbox.Children.Add(dockPanel);
 
@@ -453,6 +444,7 @@ namespace ExDesign.Pages.Inputs
             if (double.TryParse(textBox.Text, out double result))
             {
                 StaticVariables.viewModel.stripLoadDatas[int.Parse(textBox.Name.Split('_')[1])].StartLoad = WpfUtils.GetValueStress(result);
+                StaticVariables.viewModel.stripLoadDatas[int.Parse(textBox.Name.Split('_')[1])].EndLoad = WpfUtils.GetValueStress(result);
                 StaticVariables.view3DPage.Refreshview();
                 StaticVariables.SideviewPage.Refreshview();
             }

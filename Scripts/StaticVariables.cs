@@ -59,6 +59,7 @@ namespace ExDesign.Scripts
         public static double maxPointLoadHeight = 3;
         public static double loadArrowScale = 0.2;
         public static bool IsDimensionShowed = false;
+        public static double waterDensity = 9.807;
 
 
 
@@ -249,5 +250,15 @@ namespace ExDesign.Scripts
         TheColoumbTheory,
         TheCaquoutTheory,
         TotalStress
+    }
+
+    public enum LoadType
+    {
+        SurfaceLoad,
+        StripLoad,
+        LineLoad,
+        PointLoad,
+        WaterLoad,
+        EffectiveStress
     }
 }

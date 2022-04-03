@@ -60,8 +60,7 @@
                                         <TextBox x:Name="stripSurchargeName_txtbox" IsEnabled="False" Width="150" Text="{DynamicResource SurchargeName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="stripdistance_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource DistanceFromWall}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                         <TextBox x:Name="stripLength_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource StripLength}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
-                                        <TextBox x:Name="stripStartLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource StartLoad}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
-                                        <TextBox x:Name="stripEndLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource EndLoad}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
+                                        <TextBox x:Name="stripStartLoad_txtbox" IsEnabled="False" Width="100" Text="{DynamicResource Load}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"></TextBox>
                                     </DockPanel>
                                     <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="180"  >
                                         <StackPanel x:Name="stripSurchargeGroupbox"  ></StackPanel>
