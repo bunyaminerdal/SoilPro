@@ -424,7 +424,6 @@ namespace ExDesign.Scripts
                 frame.startNodeLoadAndForce.Add(effectiveStress,new Tuple<double,double>(startLoad,startNodeForce));
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(effectiveStress, new Tuple<double, double>(endLoad, endNodeForce));
-                Debug.WriteLine(endLoad);
             }
         }
     }
