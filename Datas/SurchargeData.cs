@@ -9,14 +9,14 @@ namespace ExDesign.Datas
 {
     public class SurfaceSurchargeData : Load
     {
-        public string SurchargeName { get; set; }
+        public string Name { get; set; }
         public double Load { get; set; }
         public LoadType Type { get; set; }
 
     }
     public class StripLoadData : Load
     {
-        public string SurchargeName { get; set; }        
+        public string Name { get; set; }        
         public double DistanceFromWall { get; set; }
         public double StripLength { get; set; }
         public double StartLoad { get; set; }
@@ -26,7 +26,7 @@ namespace ExDesign.Datas
     }
     public class PointLoadData : Load
     {
-        public string SurchargeName { get; set; }
+        public string Name { get; set; }
         public double DistanceFromWall { get; set; }
         public double Load { get; set; }
         public LoadType Type { get; set; }
@@ -34,7 +34,7 @@ namespace ExDesign.Datas
     }
     public class LineLoadData : Load
     {
-        public string SurchargeName { get; set; }
+        public string Name { get; set; }
         public double DistanceFromWall { get; set; }
         public double Load { get; set; }
         public LoadType Type { get; set; }
@@ -42,14 +42,22 @@ namespace ExDesign.Datas
     public interface Load
     {
         public LoadType Type { get; set; }
+        public string Name { get; set; }
     }
     public class WaterLoadData: Load
     {
         public LoadType Type { get; set; }
+        public string Name { get; set; }
 
     }
     public class EffectiveStress : Load
     {
         public LoadType Type { get; set; }
+        public string Name { get; set; }
+    }
+    public class SoilSpringCoef : Load
+    {
+        public LoadType Type { get; set;}
+        public string Name { get; set; }
     }
 }

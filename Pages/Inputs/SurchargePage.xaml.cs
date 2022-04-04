@@ -67,7 +67,7 @@ namespace ExDesign.Pages.Inputs
 
         private void surfaceSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            SurfaceSurchargeData surfaceSurchargeData = new SurfaceSurchargeData() { SurchargeName=FindResource("Surcharge").ToString(),Load=10, Type = LoadType.SurfaceLoad };
+            SurfaceSurchargeData surfaceSurchargeData = new SurfaceSurchargeData() { Name=FindResource("Surcharge").ToString(),Load=10, Type = LoadType.SurfaceLoad };
             StaticVariables.viewModel.surfaceSurchargeDatas.Add(surfaceSurchargeData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -76,7 +76,7 @@ namespace ExDesign.Pages.Inputs
 
         private void stripSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            StripLoadData stripLoadData = new StripLoadData() { SurchargeName=FindResource("StripLoad").ToString(),DistanceFromWall=1,StripLength=2,StartLoad=11,EndLoad=11, Type = LoadType.StripLoad };
+            StripLoadData stripLoadData = new StripLoadData() { Name=FindResource("StripLoad").ToString(),DistanceFromWall=1,StripLength=2,StartLoad=11,EndLoad=11, Type = LoadType.StripLoad };
             StaticVariables.viewModel.stripLoadDatas.Add(stripLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -85,7 +85,7 @@ namespace ExDesign.Pages.Inputs
 
         private void LineSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            LineLoadData lineLoadData = new LineLoadData() { SurchargeName= FindResource("LineLoad").ToString(), DistanceFromWall=3,Load=20,Type = LoadType.LineLoad};
+            LineLoadData lineLoadData = new LineLoadData() { Name= FindResource("LineLoad").ToString(), DistanceFromWall=3,Load=20,Type = LoadType.LineLoad};
             StaticVariables.viewModel.LineLoadDatas.Add(lineLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -94,7 +94,7 @@ namespace ExDesign.Pages.Inputs
 
         private void pointSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            PointLoadData pointLoadData = new PointLoadData() { SurchargeName= FindResource("PointLoad").ToString(), DistanceFromWall=2.5,Load=50, Type = LoadType.PointLoad };
+            PointLoadData pointLoadData = new PointLoadData() { Name= FindResource("PointLoad").ToString(), DistanceFromWall=2.5,Load=50, Type = LoadType.PointLoad };
             StaticVariables.viewModel.PointLoadDatas.Add(pointLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -131,7 +131,7 @@ namespace ExDesign.Pages.Inputs
                     TextBox textbox_SurfaceName = new TextBox();
                     textbox_SurfaceName.Width = 150;
                     textbox_SurfaceName.MaxLength = 50;
-                    textbox_SurfaceName.Text = surfaceLoad.SurchargeName.ToString();
+                    textbox_SurfaceName.Text = surfaceLoad.Name.ToString();
                     textbox_SurfaceName.VerticalContentAlignment = VerticalAlignment.Center;
                     textbox_SurfaceName.TextChanged += Textbox_SurfaceName_TextChanged;
                     textbox_SurfaceName.Name = "textboxsurfaceName_" + surfaceLoadIndex;
@@ -183,7 +183,7 @@ namespace ExDesign.Pages.Inputs
                     TextBox textbox_StripName = new TextBox();
                     textbox_StripName.Width = 150;
                     textbox_StripName.MaxLength = 50;
-                    textbox_StripName.Text = stripLoad.SurchargeName.ToString();
+                    textbox_StripName.Text = stripLoad.Name.ToString();
                     textbox_StripName.VerticalContentAlignment = VerticalAlignment.Center;
                     textbox_StripName.TextChanged += Textbox_SurfaceName_TextChanged;
                     textbox_StripName.Name = "textboxStripName_" + stripLoadIndex;
@@ -253,7 +253,7 @@ namespace ExDesign.Pages.Inputs
                     TextBox textbox_LİneLoadName = new TextBox();
                     textbox_LİneLoadName.Width = 150;
                     textbox_LİneLoadName.MaxLength = 50;
-                    textbox_LİneLoadName.Text = lineLoad.SurchargeName.ToString();
+                    textbox_LİneLoadName.Text = lineLoad.Name.ToString();
                     textbox_LİneLoadName.VerticalContentAlignment = VerticalAlignment.Center;
                     textbox_LİneLoadName.TextChanged += Textbox_LİneLoadName_TextChanged;
                     textbox_LİneLoadName.Name = "textboxStripName_" + lineLoadIndex;
@@ -313,7 +313,7 @@ namespace ExDesign.Pages.Inputs
                     TextBox textbox_PointLoadName = new TextBox();
                     textbox_PointLoadName.Width = 150;
                     textbox_PointLoadName.MaxLength = 50;
-                    textbox_PointLoadName.Text = pointLoad.SurchargeName.ToString();
+                    textbox_PointLoadName.Text = pointLoad.Name.ToString();
                     textbox_PointLoadName.VerticalContentAlignment = VerticalAlignment.Center;
                     textbox_PointLoadName.TextChanged += Textbox_PointLoadName_TextChanged;
                     textbox_PointLoadName.Name = "textboxpointName_" + pointLoadIndex;
@@ -373,7 +373,7 @@ namespace ExDesign.Pages.Inputs
         private void Textbox_PointLoadName_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            StaticVariables.viewModel.PointLoadDatas[int.Parse(textBox.Name.Split('_')[1])].SurchargeName = textBox.Text;
+            StaticVariables.viewModel.PointLoadDatas[int.Parse(textBox.Name.Split('_')[1])].Name = textBox.Text;
 
         }
 
@@ -413,7 +413,7 @@ namespace ExDesign.Pages.Inputs
         private void Textbox_LİneLoadName_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            StaticVariables.viewModel.LineLoadDatas[int.Parse(textBox.Name.Split('_')[1])].SurchargeName = textBox.Text;
+            StaticVariables.viewModel.LineLoadDatas[int.Parse(textBox.Name.Split('_')[1])].Name = textBox.Text;
         }
 
         private void DeleteLineLoad_Click(object sender, RoutedEventArgs e)
@@ -486,7 +486,7 @@ namespace ExDesign.Pages.Inputs
         private void Textbox_SurfaceName_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            StaticVariables.viewModel.surfaceSurchargeDatas[int.Parse(textBox.Name.Split('_')[1])].SurchargeName = textBox.Text;
+            StaticVariables.viewModel.surfaceSurchargeDatas[int.Parse(textBox.Name.Split('_')[1])].Name = textBox.Text;
         }
 
         private void Textbox_SurfaceLoad_TextChanged(object sender, TextChangedEventArgs e)

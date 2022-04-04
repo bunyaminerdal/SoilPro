@@ -260,6 +260,7 @@ namespace ExDesign.Scripts
         LineLoad,
         PointLoad,
         WaterLoad,
-        EffectiveStress
+        EffectiveStress,
+        SoilSpringCoef
     }
 }

@@ -220,6 +220,9 @@
     <system:String x:Key="TheColoumbTheory" >The Coloumb Theory</system:String>
     <system:String x:Key="TheCaquoutTheory" >The Caquout Theory</system:String> 
     <system:String x:Key="TotalStress" >Total Stress</system:String> 
-    <system:String x:Key="Analysis" >Analysis</system:String> 
+    <system:String x:Key="Analysis" >Analysis</system:String>
+    <system:String x:Key="HydroStaticWaterPressure" >Hydro-Static Water Pressure</system:String>
+    <system:String x:Key="SubgradeModulusofSoil" >Subgrade Modulus of Soil</system:String>
+    <system:String x:Key="EffectiveStress" >Effective Stress</system:String> 
     
 </ResourceDictionary>

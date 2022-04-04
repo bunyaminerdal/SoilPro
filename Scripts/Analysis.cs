@@ -235,7 +235,7 @@ namespace ExDesign.Scripts
                         if (waterH1 < endLength)
                         {
                             endLoad = (endLength - waterH1) * _waterDensity;
-                        }
+                        }                        
                         WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
@@ -291,9 +291,11 @@ namespace ExDesign.Scripts
                         if (startLength > exH + waterH2)
                         {
                             startfrontLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(exH + waterH2 - frame.StartPoint.Y, 2)));
+                        }
+                        if(endLength > exH + waterH2)
+                        {
                             endfrontLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(exH + waterH2 - frame.EndPoint.Y, 2)));
                         }
-
 
                         double startLoad = 0;
                         double endLoad = 0;
@@ -311,6 +313,7 @@ namespace ExDesign.Scripts
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                         frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,endLoad, endNodeForce));
+                        
                     }
                     break;
                 default:
@@ -357,7 +360,6 @@ namespace ExDesign.Scripts
                     {
                         if (soilLayer.Soil != null)
                         {
-                            lastSoil = soilLayer.Soil;
                             if (endLength <= waterH1)
                             {
                                 endLoad += (frameLength * soilLayer.Soil.NaturalUnitWeight);
@@ -414,6 +416,214 @@ namespace ExDesign.Scripts
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(effectiveStress,endLoad, endNodeForce));
             }
+        }
+        public static void ActivePassiveCoefToFrameNodes()
+        {
+            double wallH = StaticVariables.viewModel.GetWallHeight();
+            double wallt = StaticVariables.viewModel.GetWallThickness();
+            double wallEI = StaticVariables.viewModel.GetWallEI();
+            double wallE = StaticVariables.viewModel.GetWallE();
+            double EoedPow = 4.0 / 3.0;
+            double EIPow = 1.0 / 3.0;
+            double Pow3 = 1.0 / 5.0;
+            double Pow4 = 1.0 / 12.0;
+            switch (WpfUtils.GetSoilModelType(StaticVariables.viewModel.SoilModelIndex))
+            {
+                case SoilModelType.Schmitt_Model:
+                    
+                    //Kh for schmitt model
+                    foreach (var frame in FrameData.Frames)
+                    {
+                        double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
+                        double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
+
+                        double startLoad = 0;
+                        double endLoad = 0;
+                        double soilLayerHeight = 0;
+                        SoilData lastSoil = null;
+                        foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+                        {
+                            soilLayerHeight += soilLayer.LayerHeight;
+                            if (startLength <= soilLayerHeight && soilLayerHeight - soilLayer.LayerHeight <= startLength)
+                            {
+                                if (soilLayer.Soil != null)
+                                {
+                                    startLoad = 2.1 * ((Math.Pow(soilLayer.Soil.OedometricModulus, EoedPow) / Math.Pow(wallEI,EIPow)));
+                                    endLoad = 2.1 * (Math.Pow(soilLayer.Soil.OedometricModulus, EoedPow) / Math.Pow(wallEI, EIPow));
+
+                                }
+                            }
+                            
+                            if (soilLayer.Soil != null)
+                            {
+                                lastSoil = soilLayer.Soil;
+                            }
+                        }
+
+                        //duvardan küçükse
+                        if (soilLayerHeight < wallH)
+                        {
+                            if (startLength <= wallH && soilLayerHeight < startLength)
+                            {
+                                if (lastSoil != null)
+                                {
+                                    startLoad = 2.1 * (Math.Pow(lastSoil.OedometricModulus, EoedPow) / Math.Pow(wallEI, EIPow));
+                                    endLoad = 2.1 * (Math.Pow(lastSoil.OedometricModulus, EoedPow) / Math.Pow(wallEI, EIPow));
+
+                                }
+                            }
+                            
+                        }
+
+                        SoilSpringCoef soilSpringCoef = new SoilSpringCoef() { Type =LoadType.SoilSpringCoef };
+                        double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
+                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
+                        double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
+                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, endLoad, endNodeForce));
+                    }
+
+                    break;
+                case SoilModelType.Chadeisson_Model:
+
+                    //Kh for Chadeisson model
+                    foreach (var frame in FrameData.Frames)
+                    {
+
+                        double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
+                        double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
+
+                        double startLoad = 0;
+                        double endLoad = 0;
+                        double soilLayerHeight = 0;
+                        SoilData lastSoil = null;
+                        foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+                        {
+                            soilLayerHeight += soilLayer.LayerHeight;
+                            if (startLength <= soilLayerHeight && soilLayerHeight - soilLayer.LayerHeight <= startLength)
+                            {
+                                if (soilLayer.Soil != null)
+                                {
+                                    double fi = soilLayer.Soil.SoilFrictionAngle * Math.PI / 180;
+                                    double Delta = soilLayer.Soil.WallSoilFrictionAngle * Math.PI / 180;
+                                    double CPrime = soilLayer.Soil.EffectiveCohesion;
+                                    double Ap = soilLayer.Soil.CohesionFactor;
+                                    double K0 = soilLayer.Soil.K0;
+                                    double Gama = soilLayer.Soil.NaturalUnitWeight;
+                                    double alfa = 0.0 * Math.PI / 180;
+                                    double beta = 0.0 * Math.PI / 180;
+                                    double Kp =Math.Pow( Math.Cos(fi + alfa),2)/(
+                                        Math.Pow( Math.Cos(alfa),2) * Math.Cos(Delta-alfa)*
+                                        Math.Pow( 1 - Math.Sqrt(Math.Sin(fi+Delta)*Math.Sin(fi+beta)/
+                                        (Math.Cos(Delta-alfa)*Math.Cos(beta-alfa))),2)
+                                        ) ;
+                                    startLoad = Math.Pow(20 * wallEI * (Math.Pow(Kp * Gama * (1 - (K0 / Kp)) / 0.015, 4)), Pow3) + (Ap * CPrime * Math.Tanh(CPrime / 30) / 0.015);
+                                    endLoad = Math.Pow(20 * wallEI * (Math.Pow(Kp * Gama * (1 - (K0 / Kp)) / 0.015, 4)), Pow3) + (Ap * CPrime * Math.Tanh(CPrime / 30) / 0.015);
+
+                                }
+                            }
+
+                            if (soilLayer.Soil != null)
+                            {
+                                lastSoil = soilLayer.Soil;
+                            }
+                        }
+
+                        //duvardan küçükse
+                        if (soilLayerHeight < wallH)
+                        {
+                            if (startLength <= wallH && soilLayerHeight < startLength)
+                            {
+                                if (lastSoil != null)
+                                {
+                                    double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
+                                    double Delta = lastSoil.WallSoilFrictionAngle * Math.PI / 180;
+                                    double CPrime = lastSoil.EffectiveCohesion;
+                                    double Ap = lastSoil.CohesionFactor;
+                                    double K0 = lastSoil.K0;
+                                    double Gama = lastSoil.NaturalUnitWeight;
+                                    double alfa = 0.0 * Math.PI / 180;
+                                    double beta = 0.0 * Math.PI / 180;
+                                    double Kp = Math.Pow(Math.Cos(fi + alfa), 2) / (
+                                        Math.Pow(Math.Cos(alfa), 2) * Math.Cos(Delta - alfa) *
+                                        Math.Pow(1 - Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi + beta) /
+                                        (Math.Cos(Delta - alfa) * Math.Cos(beta - alfa))), 2)
+                                        );
+                                    startLoad = Math.Pow(20 * wallEI * (Math.Pow(Kp * Gama * (1 - (K0 / Kp)) / 0.015, 4)), Pow3) + (Ap * CPrime * Math.Tanh(CPrime / 30) / 0.015);
+                                    endLoad = Math.Pow(20 * wallEI * (Math.Pow(Kp * Gama * (1 - (K0 / Kp)) / 0.015, 4)), Pow3) + (Ap * CPrime * Math.Tanh(CPrime / 30) / 0.015);
+
+                                }
+                            }
+
+                        }
+
+                        SoilSpringCoef soilSpringCoef = new SoilSpringCoef() { Type = LoadType.SoilSpringCoef };
+                        double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
+                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
+                        double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
+                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, endLoad, endNodeForce));
+                    }
+                    break;
+                case SoilModelType.Vesic_Model:
+                    //Kh for vesic model
+                    foreach (var frame in FrameData.Frames)
+                    {
+
+                        double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
+                        double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
+
+                        double startLoad = 0;
+                        double endLoad = 0;
+                        double soilLayerHeight = 0;
+                        SoilData lastSoil = null;
+                        foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+                        {
+                            soilLayerHeight += soilLayer.LayerHeight;
+                            if (startLength <= soilLayerHeight && soilLayerHeight - soilLayer.LayerHeight <= startLength)
+                            {
+                                if (soilLayer.Soil != null)
+                                {
+                                    double Es = soilLayer.Soil.YoungModulus;
+                                    double poisson = soilLayer.Soil.PoissonRatio ;
+                                    startLoad = (0.65 / wallt) * Math.Pow(Es * Math.Pow(wallt, 4.0) / wallEI, Pow4) * Es / (1.0 - Math.Pow(poisson, 2));
+                                    endLoad = (0.65 / wallt) * Math.Pow(Es * Math.Pow(wallt, 4.0) / wallEI, Pow4) * Es / (1.0 - Math.Pow(poisson, 2));
+                                    
+
+                                }
+                            }
+
+                            if (soilLayer.Soil != null)
+                            {
+                                lastSoil = soilLayer.Soil;
+                            }
+                        }
+
+                        //duvardan küçükse
+                        if (soilLayerHeight < wallH)
+                        {
+                            if (startLength <= wallH && soilLayerHeight < startLength)
+                            {
+                                if (lastSoil != null)
+                                {
+                                    double Es = lastSoil.YoungModulus;
+                                    double poisson = lastSoil.PoissonRatio;
+                                    startLoad = (0.65 / wallt) * Math.Pow(Es * Math.Pow(wallt, 4) / wallEI, Pow4) * Es / (1.0 - Math.Pow(poisson, 2));
+                                    endLoad = (0.65 / wallt) * Math.Pow(Es * Math.Pow(wallt, 4) / wallEI, Pow4) * Es / (1.0 - Math.Pow(poisson, 2));
+
+                                }
+                            }
+                        }
+
+                        SoilSpringCoef soilSpringCoef = new SoilSpringCoef() { Type = LoadType.SoilSpringCoef };
+                        double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
+                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
+                        double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
+                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, endLoad, endNodeForce));
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
         }
     }
 }

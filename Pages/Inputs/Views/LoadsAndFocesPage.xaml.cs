@@ -201,6 +201,7 @@ namespace ExDesign.Pages.Inputs.Views
             double loadLimit = 3;
             if(StaticVariables.isAnalysisDone)
             {
+                
                 if(showenLoad!=null)
                 {
                     if (isLoad)

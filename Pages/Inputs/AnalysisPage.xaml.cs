@@ -33,6 +33,7 @@ namespace ExDesign.Pages.Inputs
             Analysis.SurchargeToFrameNodes();
             Analysis.WaterLoadToFrameNodes();
             Analysis.EffectiveStressToFrameNodes();
+            Analysis.ActivePassiveCoefToFrameNodes();
             StaticVariables.isAnalysisDone = true;
             LoadsAndForcesPre();
         }
@@ -45,11 +46,36 @@ namespace ExDesign.Pages.Inputs
         private void LoadsAndForcesPre()
         {
             if (!StaticVariables.isAnalysisDone) return;
+            foreach (var listitem in FrameData.Frames[0].startNodeLoadAndForce)
+            {
+                switch (listitem.Item1.Type)
+                {
+                    case LoadType.SurfaceLoad:
+                        break;
+                    case LoadType.StripLoad:
+                        break;
+                    case LoadType.LineLoad:
+                        break;
+                    case LoadType.PointLoad:
+                        break;
+                    case LoadType.WaterLoad:
+                        listitem.Item1.Name =FindResource("HydroStaticWaterPressure").ToString();
+                        break;
+                    case LoadType.EffectiveStress:
+                        listitem.Item1.Name = FindResource("EffectiveStress").ToString();
+                        break;
+                    case LoadType.SoilSpringCoef:
+                        listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
             var loadandForceDic = FrameData.Frames[0].startNodeLoadAndForce;
             loads_combobox.ItemsSource = loadandForceDic;
-            loads_combobox.DisplayMemberPath = "Item1.Type";
+            loads_combobox.DisplayMemberPath = "Item1.Name";
             forces_combobox.ItemsSource = loadandForceDic;
-            forces_combobox.DisplayMemberPath = "Item1.Type";
+            forces_combobox.DisplayMemberPath = "Item1.Name";
         }
 
         private void loads_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
