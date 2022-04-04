@@ -83,11 +83,11 @@ namespace ExDesign.Scripts
             }
 
             FrameData.Frames.Sort();
+            FrameData.Frames.Reverse();
         }
         public static void SurchargeToFrameNodes()
         {
             double exH = WpfUtils.GetExHeightForCalculation();
-
             //point loaddan gelen nokta force ları
             foreach (var pointLoad in StaticVariables.viewModel.PointLoadDatas)
             {
@@ -118,8 +118,7 @@ namespace ExDesign.Scripts
                     double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                     frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(pointLoad, endLoad, endNodeForce));
                 }
-            }
-            
+            }            
             //Line loaddan gelen nokta forceları
             foreach (var lineLoad in StaticVariables.viewModel.LineLoadDatas)
             {
@@ -168,7 +167,7 @@ namespace ExDesign.Scripts
                     }
                 }
                 Ka = Math.Pow(Math.Tan((45-fi/2)*Math.PI/180), 2);
-
+                
                 foreach (var frame in FrameData.Frames)
                 {
                     double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
@@ -176,7 +175,7 @@ namespace ExDesign.Scripts
                     double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
                     
                     double alfaStart = Math.Atan(midLoc / startLength);
-                    double alfaEnd = Math.Atan(endLoc / endLength);
+                    double alfaEnd = Math.Atan(midLoc / endLength);
                     double betaStart = Math.Atan(endLoc/startLength)-Math.Atan(startLoc/startLength);
                     double betaEnd = Math.Atan(endLoc/endLength)-Math.Atan(startLoc/endLength);
                     if (startLength == 0)
@@ -206,11 +205,8 @@ namespace ExDesign.Scripts
                     frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(stripLoad,startLoad, startNodeForce));
                     double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                     frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(stripLoad,endLoad, endNodeForce));
-                    Debug.WriteLine(startLoad + "-" + endLoad);
                 }
             }
-            
-            
         }
         public static void WaterLoadToFrameNodes()
         {
@@ -229,7 +225,6 @@ namespace ExDesign.Scripts
                         double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
                         double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
                         double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
-
 
                         double startLoad = 0;
                         double endLoad = 0;
@@ -260,29 +255,26 @@ namespace ExDesign.Scripts
                         if (startLength > exH + waterH2)
                         {
                             startfrontLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(exH + waterH2 - frame.StartPoint.Y, 2)));
+                        }
+                        if(endLength > exH + waterH2)
+                        {
                             endfrontLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(exH + waterH2 - frame.EndPoint.Y, 2)));
                         }
-
-
                         double startLoad = 0;
                         double endLoad = 0;
                         if (waterH1 < startLength)
                         {
                             startLoad = (startLength - waterH1 - startfrontLength) * _waterDensity;
-
                         }
                         if (waterH1 < endLength)
                         {
                             endLoad = (endLength - waterH1 - endfrontLength) * _waterDensity;
-
-
                         }
                         WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                         frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,endLoad, endNodeForce));
-
                     }
                     break;
                 case GroundWaterType.type3:
@@ -327,14 +319,12 @@ namespace ExDesign.Scripts
         }
         public static void EffectiveStressToFrameNodes()
         {
-            FrameData.Frames.Reverse();
-
             double exH = WpfUtils.GetExHeightForCalculation();
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double _waterDensity = StaticVariables.waterDensity;
             double waterH1 = StaticVariables.viewModel.GetGroundWaterH1();
             double waterH2 = StaticVariables.viewModel.GetGroundWaterH2();
-            // water load type1
+
             double startLoad = 0;
             double endLoad = 0;
             foreach (var frame in FrameData.Frames)
@@ -342,9 +332,7 @@ namespace ExDesign.Scripts
                 double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
                 double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
                 double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
-
-
-                
+                                
                 double soilLayerHeight = 0;
                 SoilData lastSoil = null;
                 foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
