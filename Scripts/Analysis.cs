@@ -114,9 +114,9 @@ namespace ExDesign.Scripts
                         endLoad = (0.28*pointLoad.Load/Math.Pow(exH, 2))*(Math.Pow(endN,2)/Math.Pow(Math.Pow(endN,2)+0.16,3));
                     }
                     double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                    frame.startNodeLoadAndForce.Add(pointLoad, new Tuple<double, double>(startLoad, startNodeForce));
+                    frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(pointLoad, startLoad, startNodeForce));
                     double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                    frame.endNodeLoadAndForce.Add(pointLoad, new Tuple<double, double>(endLoad, endNodeForce));
+                    frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(pointLoad, endLoad, endNodeForce));
                 }
             }
             
@@ -146,9 +146,9 @@ namespace ExDesign.Scripts
                         endLoad = (0.203 * lineLoad.Load / exH )* (endN / Math.Pow(Math.Pow(endN, 2) + 0.16, 2));
                     }
                     double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                    frame.startNodeLoadAndForce.Add(lineLoad, new Tuple<double, double>(startLoad, startNodeForce));
+                    frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(lineLoad,startLoad, startNodeForce));
                     double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                    frame.endNodeLoadAndForce.Add(lineLoad, new Tuple<double, double>(endLoad, endNodeForce));
+                    frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(lineLoad,endLoad, endNodeForce));
                 }
             }
             //strip loaddan gelen nokta forceları
@@ -203,9 +203,10 @@ namespace ExDesign.Scripts
                     }
                     
                     double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                    frame.startNodeLoadAndForce.Add(stripLoad, new Tuple<double, double>(startLoad, startNodeForce));
+                    frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(stripLoad,startLoad, startNodeForce));
                     double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                    frame.endNodeLoadAndForce.Add(stripLoad, new Tuple<double, double>(endLoad, endNodeForce));
+                    frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(stripLoad,endLoad, endNodeForce));
+                    Debug.WriteLine(startLoad + "-" + endLoad);
                 }
             }
             
@@ -242,9 +243,9 @@ namespace ExDesign.Scripts
                         }
                         WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                        frame.startNodeLoadAndForce.Add(waterLoadData, new Tuple<double, double>(startLoad, startNodeForce));
+                        frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                        frame.endNodeLoadAndForce.Add(waterLoadData, new Tuple<double, double>(endLoad, endNodeForce));
+                        frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,endLoad, endNodeForce));
                     }
                     break;
                 case GroundWaterType.type2:
@@ -278,9 +279,9 @@ namespace ExDesign.Scripts
                         }
                         WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                        frame.startNodeLoadAndForce.Add(waterLoadData, new Tuple<double, double>(startLoad, startNodeForce));
+                        frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                        frame.endNodeLoadAndForce.Add(waterLoadData, new Tuple<double, double>(endLoad, endNodeForce));
+                        frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,endLoad, endNodeForce));
 
                     }
                     break;
@@ -315,9 +316,9 @@ namespace ExDesign.Scripts
                         }
                         WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                        frame.startNodeLoadAndForce.Add(waterLoadData, new Tuple<double, double>(startLoad, startNodeForce));
+                        frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                        frame.endNodeLoadAndForce.Add(waterLoadData, new Tuple<double, double>(endLoad, endNodeForce));
+                        frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,endLoad, endNodeForce));
                     }
                     break;
                 default:
@@ -421,9 +422,9 @@ namespace ExDesign.Scripts
                 
                 EffectiveStress effectiveStress = new EffectiveStress() { Type = LoadType.EffectiveStress };
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                frame.startNodeLoadAndForce.Add(effectiveStress,new Tuple<double,double>(startLoad,startNodeForce));
+                frame.startNodeLoadAndForce.Add(new Tuple<Load,double,double>(effectiveStress,startLoad,startNodeForce));
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                frame.endNodeLoadAndForce.Add(effectiveStress, new Tuple<double, double>(endLoad, endNodeForce));
+                frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(effectiveStress,endLoad, endNodeForce));
             }
         }
     }

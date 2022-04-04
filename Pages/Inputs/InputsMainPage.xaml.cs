@@ -77,6 +77,8 @@ namespace ExDesign.Pages.Inputs
             }
             StaticVariables.view3DPage.Refreshview();
             StaticVariables.SideviewPage.Refreshview();
+            StaticVariables.loadsAndFocesPage.Refreshview();
+
         }
         private void SetStage(Stage stage)
         {
@@ -213,6 +215,8 @@ namespace ExDesign.Pages.Inputs
             SoilTexture.SoilTextureLibraryDataReader();
             SoilLibrary.SoilLibraryDataReader();
             StaticVariables.view3DPage.Refreshview();
+            StaticVariables.SideviewPage.Refreshview();
+            StaticVariables.loadsAndFocesPage.Refreshview();
             StaticEvents.SetStageEvent?.Invoke(StaticVariables.viewModel.stage);
         }
 

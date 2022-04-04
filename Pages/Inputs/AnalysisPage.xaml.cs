@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExDesign.Scripts;
+using ExDesign.Datas;
 
 namespace ExDesign.Pages.Inputs
 {
@@ -32,6 +33,43 @@ namespace ExDesign.Pages.Inputs
             Analysis.SurchargeToFrameNodes();
             Analysis.WaterLoadToFrameNodes();
             Analysis.EffectiveStressToFrameNodes();
+            StaticVariables.isAnalysisDone = true;
+            LoadsAndForcesPre();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            view3d_main.Content = StaticVariables.view3DPage;
+            sideview_main.Content = StaticVariables.loadsAndFocesPage;
+        }
+        private void LoadsAndForcesPre()
+        {
+            if (!StaticVariables.isAnalysisDone) return;
+            var loadandForceDic = FrameData.Frames[0].startNodeLoadAndForce;
+            loads_combobox.ItemsSource = loadandForceDic;
+            loads_combobox.DisplayMemberPath = "Item1.Type";
+            forces_combobox.ItemsSource = loadandForceDic;
+            forces_combobox.DisplayMemberPath = "Item1.Type";
+        }
+
+        private void loads_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if(comboBox.SelectedItem != null)
+            {
+                var dic =(Tuple<Load,double,double>) comboBox.SelectedItem;
+                StaticVariables.loadsAndFocesPage.ShowLoad(dic.Item1);
+            }
+        }
+
+        private void forces_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem != null)
+            {
+                var dic = (Tuple<Load, double, double>)comboBox.SelectedItem;
+                StaticVariables.loadsAndFocesPage.ShowForce(dic.Item1);
+            }
         }
     }
 }

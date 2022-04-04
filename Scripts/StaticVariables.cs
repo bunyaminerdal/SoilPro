@@ -17,6 +17,7 @@ namespace ExDesign.Scripts
         public static ViewModelData viewModel = new ViewModelData();
         public static View3dPage view3DPage;
         public static SideviewPage SideviewPage;
+        public static LoadsAndFocesPage loadsAndFocesPage;
         public static Units CurrentUnit = Units.kg_cm;
         public static Units LastUnit = Units.kg_cm;
         public static string dimensionUnit { get { return CurrentUnit.ToString().Split('_')[1]; } }
@@ -60,8 +61,8 @@ namespace ExDesign.Scripts
         public static double loadArrowScale = 0.2;
         public static bool IsDimensionShowed = false;
         public static double waterDensity = 9.807;
-
-
+        public static bool isModelReadyToAnalys = false;
+        public static bool isAnalysisDone = false;
 
         public static void SortAnchors(this ObservableCollection<AnchorData> collection)
         {

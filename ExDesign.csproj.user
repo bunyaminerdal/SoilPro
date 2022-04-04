@@ -34,6 +34,9 @@
     <Compile Update="Pages\Inputs\SystemLoadPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\Inputs\Views\LoadsAndFocesPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Inputs\WallProperties.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +109,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Inputs\SystemLoadPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Inputs\Views\LoadsAndFocesPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ProgramWindow.xaml">

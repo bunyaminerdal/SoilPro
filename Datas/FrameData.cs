@@ -23,8 +23,8 @@ namespace ExDesign.Datas
             StartPoint = DeformedStartPoint = _startPoint;
             Frames.Add(this);
         }
-        public Dictionary<Load,Tuple<double,double>> startNodeLoadAndForce = new Dictionary<Load,Tuple<double, double>>();
-        public Dictionary<Load,Tuple<double, double>> endNodeLoadAndForce = new Dictionary<Load, Tuple<double, double>>();
+        public List<Tuple<Load,double,double>> startNodeLoadAndForce = new List<Tuple<Load, double, double>>();
+        public List<Tuple<Load,double, double>> endNodeLoadAndForce = new List< Tuple<Load, double, double>>();
 
         
         public int CompareTo(FrameData? other)
