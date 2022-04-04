@@ -211,6 +211,7 @@ namespace ExDesign.Scripts
         public static void WaterLoadToFrameNodes()
         {
             double exH = WpfUtils.GetExHeightForCalculation();
+            double exH_waterType3 = StaticVariables.viewModel.GetexcavationHeight();
             double _waterDensity = StaticVariables.waterDensity;
             double waterH1 = StaticVariables.viewModel.GetGroundWaterH1();
             double waterH2 = StaticVariables.viewModel.GetGroundWaterH2();
@@ -252,13 +253,13 @@ namespace ExDesign.Scripts
                         double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
                         double startfrontLength = 0;
                         double endfrontLength = 0;
-                        if (startLength > exH + waterH2)
+                        if (startLength > exH_waterType3 + waterH2)
                         {
-                            startfrontLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(exH + waterH2 - frame.StartPoint.Y, 2)));
+                            startfrontLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(exH_waterType3 + waterH2 - frame.StartPoint.Y, 2)));
                         }
-                        if(endLength > exH + waterH2)
+                        if(endLength > exH_waterType3 + waterH2)
                         {
-                            endfrontLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(exH + waterH2 - frame.EndPoint.Y, 2)));
+                            endfrontLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(exH_waterType3 + waterH2 - frame.EndPoint.Y, 2)));
                         }
                         double startLoad = 0;
                         double endLoad = 0;
@@ -279,7 +280,7 @@ namespace ExDesign.Scripts
                     break;
                 case GroundWaterType.type3:
                     // water load type2
-                    double scaleWaterLoad = (exH + waterH2 - waterH1) / (StaticVariables.viewModel.wall_h - exH - waterH2);
+                    double scaleWaterLoad = (exH_waterType3 + waterH2 - waterH1) / (StaticVariables.viewModel.wall_h - exH_waterType3 - waterH2);
                     foreach (var frame in FrameData.Frames)
                     {
                         double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
@@ -288,13 +289,13 @@ namespace ExDesign.Scripts
                         double startfrontLength = 0;
                         double endfrontLength = 0;
 
-                        if (startLength > exH + waterH2)
+                        if (startLength > exH_waterType3 + waterH2)
                         {
-                            startfrontLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(exH + waterH2 - frame.StartPoint.Y, 2)));
+                            startfrontLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(exH_waterType3 + waterH2 - frame.StartPoint.Y, 2)));
                         }
-                        if(endLength > exH + waterH2)
+                        if(endLength > exH_waterType3 + waterH2)
                         {
-                            endfrontLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(exH + waterH2 - frame.EndPoint.Y, 2)));
+                            endfrontLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(exH_waterType3 + waterH2 - frame.EndPoint.Y, 2)));
                         }
 
                         double startLoad = 0;

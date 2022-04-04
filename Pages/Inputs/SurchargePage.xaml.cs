@@ -185,7 +185,7 @@ namespace ExDesign.Pages.Inputs
                     textbox_StripName.MaxLength = 50;
                     textbox_StripName.Text = stripLoad.Name.ToString();
                     textbox_StripName.VerticalContentAlignment = VerticalAlignment.Center;
-                    textbox_StripName.TextChanged += Textbox_SurfaceName_TextChanged;
+                    textbox_StripName.TextChanged += Textbox_StripName_TextChanged ;
                     textbox_StripName.Name = "textboxStripName_" + stripLoadIndex;
                     TextBox textbox_Distance = new TextBox();
                     textbox_Distance.Width = 100;
@@ -344,6 +344,12 @@ namespace ExDesign.Pages.Inputs
                 }
 
             }
+        }
+
+        private void Textbox_StripName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            StaticVariables.viewModel.stripLoadDatas[int.Parse(textBox.Name.Split('_')[1])].Name = textBox.Text;
         }
 
         private void Textbox_PointLoad_TextChanged(object sender, TextChangedEventArgs e)
