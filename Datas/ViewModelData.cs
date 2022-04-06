@@ -69,7 +69,7 @@ namespace ExDesign.Datas
         public int activeUnDrainedCoefficientIndex { get; set; }
         public int passiveDrainedCoefficientIndex { get; set; }
         public int passiveUnDrainedCoefficientIndex { get; set; }
-        public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
+         public ObservableCollection<SoilLayerData> soilLayerDatas { get; set; }
         public ObservableCollection<AnchorData> anchorDatas { get; set; }
         public ObservableCollection<StrutData> strutDatas { get; set; }
         public ObservableCollection<SoilData> soilDatas { get; set; }
@@ -353,14 +353,14 @@ namespace ExDesign.Datas
                     SaveDate = "0",
                     useCableDiameterAndNumberForDesign = true,
                     isCapBeamBottom = true,
-                    SDSValue = 0,
-                    khValue = 0,
-                    kvValue = 0,
+                    SDSValue = 0.8,
+                    khValue = 0.32,
+                    kvValue = 0.16,
                     isStageConstruction = false,
                     activeDrainedCoefficientIndex = 0,
-                    activeUnDrainedCoefficientIndex = 0,
-                    passiveDrainedCoefficientIndex = 3,
-                    passiveUnDrainedCoefficientIndex = 3,
+                    activeUnDrainedCoefficientIndex = 4,
+                    passiveDrainedCoefficientIndex = 0,
+                    passiveUnDrainedCoefficientIndex = 4,
                 
                     soilDatas = new ObservableCollection<SoilData>(),
                     soilLayerDatas = new ObservableCollection<SoilLayerData>(),

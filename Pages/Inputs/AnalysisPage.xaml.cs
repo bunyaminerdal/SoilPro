@@ -31,8 +31,9 @@ namespace ExDesign.Pages.Inputs
         {
             Analysis.WallPartization();
             Analysis.SurchargeToFrameNodes();
-            Analysis.WaterLoadToFrameNodes();
+            Analysis.HydroStaticWaterPressureToFrameNodes();
             Analysis.EffectiveStressToFrameNodes();
+            Analysis.SubgradeModulusofSoilToFrameNodes();
             Analysis.ActivePassiveCoefToFrameNodes();
             StaticVariables.isAnalysisDone = true;
             LoadsAndForcesPre();
@@ -58,13 +59,13 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.PointLoad:
                         break;
-                    case LoadType.WaterLoad:
+                    case LoadType.HydroStaticWaterPressure:
                         listitem.Item1.Name =FindResource("HydroStaticWaterPressure").ToString();
                         break;
                     case LoadType.EffectiveStress:
                         listitem.Item1.Name = FindResource("EffectiveStress").ToString();
                         break;
-                    case LoadType.SoilSpringCoef:
+                    case LoadType.SubgradeModulusofSoil:
                         listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
                         break;
                     default:

@@ -95,6 +95,84 @@ namespace ExDesign.Pages.Inputs
                 default:
                     break;
             }
+            switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
+            {
+                case DrainedTheories.TBDY:
+                    ActiveDrained_combobox.SelectedIndex = 0;
+                    break;
+                case DrainedTheories.MazindraniTheory:
+                    ActiveDrained_combobox.SelectedIndex = 1;
+                    break;
+                case DrainedTheories.TheColoumbTheory:
+                    ActiveDrained_combobox.SelectedIndex = 2;
+                    break;
+                case DrainedTheories.TheCaquoutTheory:
+                    ActiveDrained_combobox.SelectedIndex = 3;
+                    break;
+                default:
+                    ActiveDrained_combobox.SelectedIndex = 0;
+                    break;
+            }
+            switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
+            {
+                case DrainedTheories.TBDY:
+                    PassiveDrained_combobox.SelectedIndex = 0;
+                    break;
+                case DrainedTheories.MazindraniTheory:
+                    PassiveDrained_combobox.SelectedIndex = 1;
+                    break;
+                case DrainedTheories.TheColoumbTheory:
+                    PassiveDrained_combobox.SelectedIndex = 2;
+                    break;
+                case DrainedTheories.TheCaquoutTheory:
+                    PassiveDrained_combobox.SelectedIndex = 3;
+                    break;
+                default:
+                    PassiveDrained_combobox.SelectedIndex = 0;
+                    break;
+            }
+            switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
+            {
+                case UnDrainedTheories.TBDY:
+                    ActiveUndrained_combobox.SelectedIndex = 0;
+                    break;
+                case UnDrainedTheories.MazindraniTheory:
+                    ActiveUndrained_combobox.SelectedIndex = 1;
+                    break;
+                case UnDrainedTheories.TheColoumbTheory:
+                    ActiveUndrained_combobox.SelectedIndex = 2;
+                    break;
+                case UnDrainedTheories.TheCaquoutTheory:
+                    ActiveUndrained_combobox.SelectedIndex = 3;
+                    break;
+                case UnDrainedTheories.TotalStress:
+                    ActiveUndrained_combobox.SelectedIndex = 4;
+                    break;
+                default:
+                    ActiveUndrained_combobox.SelectedIndex = 0;
+                    break;
+            }
+            switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
+            {
+                case UnDrainedTheories.TBDY:
+                    PassiveUndrained_combobox.SelectedIndex = 0;
+                    break;
+                case UnDrainedTheories.MazindraniTheory:
+                    PassiveUndrained_combobox.SelectedIndex = 1;
+                    break;
+                case UnDrainedTheories.TheColoumbTheory:
+                    PassiveUndrained_combobox.SelectedIndex = 2;
+                    break;
+                case UnDrainedTheories.TheCaquoutTheory:
+                    PassiveUndrained_combobox.SelectedIndex = 3;
+                    break;
+                case UnDrainedTheories.TotalStress:
+                    PassiveUndrained_combobox.SelectedIndex = 4;
+                    break;
+                default:
+                    PassiveUndrained_combobox.SelectedIndex = 0;
+                    break;
+            }
             StaticEvents.UnitChangeEvent += UnitChange;
             UnitChange();
         }
@@ -138,6 +216,10 @@ namespace ExDesign.Pages.Inputs
         private void sdscheckbox_Checked(object sender, RoutedEventArgs e)
         {
             StaticVariables.viewModel.isSDSValue = true;
+            StaticVariables.viewModel.khValue = StaticVariables.viewModel.SDSValue * 0.4;
+            kh_textbox.Text = WpfUtils.ChangeDecimalOptions(StaticVariables.viewModel.khValue);
+            StaticVariables.viewModel.kvValue = StaticVariables.viewModel.khValue * 0.5;
+            kv_textbox.Text = WpfUtils.ChangeDecimalOptions(StaticVariables.viewModel.kvValue);
             sds_textbox.IsEnabled = true;
             kh_textbox.IsEnabled = false;
             kv_textbox.IsEnabled = false;
@@ -239,6 +321,13 @@ namespace ExDesign.Pages.Inputs
             if (double.TryParse(textBox.Text, out double result))
             {
                 StaticVariables.viewModel.SDSValue = result;
+                if(sdscheckbox.IsChecked == true)
+                {
+                    StaticVariables.viewModel.khValue = result * 0.4;
+                    kh_textbox.Text = WpfUtils.ChangeDecimalOptions(StaticVariables.viewModel.khValue);
+                    StaticVariables.viewModel.kvValue = StaticVariables.viewModel.khValue * 0.5;
+                    kv_textbox.Text = WpfUtils.ChangeDecimalOptions(StaticVariables.viewModel.kvValue);
+                }
             }
         }
 
@@ -276,6 +365,26 @@ namespace ExDesign.Pages.Inputs
             ActiveUndrained_combobox.IsEnabled = false;
             PassiveDrained_combobox.IsEnabled = false;
             PassiveUndrained_combobox.IsEnabled = false;
+        }
+
+        private void ActiveDrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+         if(ActiveDrained_combobox.SelectedIndex > 0)  StaticVariables.viewModel.activeDrainedCoefficientIndex = ActiveDrained_combobox.SelectedIndex;
+        }
+
+        private void ActiveUndrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ActiveUndrained_combobox.SelectedIndex > 0) StaticVariables.viewModel.activeUnDrainedCoefficientIndex = ActiveUndrained_combobox.SelectedIndex;
+        }
+
+        private void PassiveDrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PassiveDrained_combobox.SelectedIndex > 0) StaticVariables.viewModel.passiveDrainedCoefficientIndex = PassiveDrained_combobox.SelectedIndex;
+        }
+
+        private void PassiveUndrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PassiveUndrained_combobox.SelectedIndex > 0) StaticVariables.viewModel.passiveUnDrainedCoefficientIndex = PassiveUndrained_combobox.SelectedIndex;
         }
     }
 }

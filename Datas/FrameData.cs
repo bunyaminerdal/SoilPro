@@ -25,8 +25,9 @@ namespace ExDesign.Datas
         }
         public List<Tuple<Load,double,double>> startNodeLoadAndForce = new List<Tuple<Load, double, double>>();
         public List<Tuple<Load,double, double>> endNodeLoadAndForce = new List< Tuple<Load, double, double>>();
+        public List<Tuple<Load, double, double,double>> startNodeActivePassiveCoef_S_P_N = new List<Tuple<Load, double, double,double>>();
+        public List<Tuple<Load, double, double,double>> endNodeActivePassiveCoef_S_P_N = new List<Tuple<Load, double, double,double>>();
 
-        
         public int CompareTo(FrameData? other)
         {
             if (this.StartPoint.Y < other.StartPoint.Y)

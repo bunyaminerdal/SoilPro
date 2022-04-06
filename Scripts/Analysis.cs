@@ -16,8 +16,8 @@ namespace ExDesign.Scripts
             FrameData.Frames.Clear();
             double wallHeight = StaticVariables.viewModel.wall_h;
 
-            double waterH1 = StaticVariables.viewModel.GetGroundWaterH1();
-            double waterH2 = StaticVariables.viewModel.GetGroundWaterH2();
+            double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            double waterH2 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue;
 
             double wallPartStep = wallHeight / (wallHeight * 10);
             int wallPartCount =Convert.ToInt32(Math.Round( (wallHeight/wallPartStep),0,MidpointRounding.ToNegativeInfinity));
@@ -208,13 +208,14 @@ namespace ExDesign.Scripts
                 }
             }
         }
-        public static void WaterLoadToFrameNodes()
+        public static void HydroStaticWaterPressureToFrameNodes()
         {
             double exH = WpfUtils.GetExHeightForCalculation();
             double exH_waterType3 = StaticVariables.viewModel.GetexcavationHeight();
             double _waterDensity = StaticVariables.waterDensity;
-            double waterH1 = StaticVariables.viewModel.GetGroundWaterH1();
-            double waterH2 = StaticVariables.viewModel.GetGroundWaterH2();
+            double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            double waterH2 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue;
+
             switch (WpfUtils.GetGroundWaterType(StaticVariables.viewModel.WaterTypeIndex))
             {
                 case GroundWaterType.none:
@@ -237,7 +238,7 @@ namespace ExDesign.Scripts
                         {
                             endLoad = (endLength - waterH1) * _waterDensity;
                         }                        
-                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
+                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.HydroStaticWaterPressure };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -271,7 +272,7 @@ namespace ExDesign.Scripts
                         {
                             endLoad = (endLength - waterH1 - endfrontLength) * _waterDensity;
                         }
-                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
+                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.HydroStaticWaterPressure };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -309,7 +310,7 @@ namespace ExDesign.Scripts
                         {
                             endLoad = (endLength - waterH1 - endfrontLength) * _waterDensity - (endfrontLength * _waterDensity * scaleWaterLoad);
                         }
-                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.WaterLoad };
+                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.HydroStaticWaterPressure };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -326,8 +327,8 @@ namespace ExDesign.Scripts
             double exH = WpfUtils.GetExHeightForCalculation();
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double _waterDensity = StaticVariables.waterDensity;
-            double waterH1 = StaticVariables.viewModel.GetGroundWaterH1();
-            double waterH2 = StaticVariables.viewModel.GetGroundWaterH2();
+            double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            double waterH2 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue;
 
             double startLoad = 0;
             double endLoad = 0;
@@ -418,7 +419,7 @@ namespace ExDesign.Scripts
                 frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(effectiveStress,endLoad, endNodeForce));
             }
         }
-        public static void ActivePassiveCoefToFrameNodes()
+        public static void SubgradeModulusofSoilToFrameNodes()
         {
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double wallt = StaticVariables.viewModel.GetWallThickness();
@@ -476,7 +477,7 @@ namespace ExDesign.Scripts
                             
                         }
 
-                        SoilSpringCoef soilSpringCoef = new SoilSpringCoef() { Type =LoadType.SoilSpringCoef };
+                        SubgradeModulusofSoil soilSpringCoef = new SubgradeModulusofSoil() { Type =LoadType.SubgradeModulusofSoil };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -557,7 +558,7 @@ namespace ExDesign.Scripts
 
                         }
 
-                        SoilSpringCoef soilSpringCoef = new SoilSpringCoef() { Type = LoadType.SoilSpringCoef };
+                        SubgradeModulusofSoil soilSpringCoef = new SubgradeModulusofSoil() { Type = LoadType.SubgradeModulusofSoil };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -614,7 +615,7 @@ namespace ExDesign.Scripts
                             }
                         }
 
-                        SoilSpringCoef soilSpringCoef = new SoilSpringCoef() { Type = LoadType.SoilSpringCoef };
+                        SubgradeModulusofSoil soilSpringCoef = new SubgradeModulusofSoil() { Type = LoadType.SubgradeModulusofSoil };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -625,6 +626,312 @@ namespace ExDesign.Scripts
                     break;
             }
             
+        }
+        public static void ActivePassiveCoefToFrameNodes()
+        {
+            double exH = WpfUtils.GetExHeightForCalculation();
+            double wallH = StaticVariables.viewModel.GetWallHeight();
+            double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            double waterH2 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue;
+            double ksi = 90 * Math.PI / 180;
+            double gamaw = StaticVariables.waterDensity;
+            double beta_back = WpfUtils.GetGroundSurfaceType( StaticVariables.viewModel.GroundSurfaceTypeIndex) == GroundSurfaceType.type1? StaticVariables.viewModel.backT_Beta * Math.PI / 180 : 0;
+            double beta_front = 0 * Math.PI / 180 ;
+
+            foreach (var frame in FrameData.Frames)
+            {
+                double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
+
+                double Ka_P = 0;
+                double Ka_N = 0;
+                double Ka_S = 0;
+                double Kp_P = 0;
+                double Kp_N = 0;
+                double Kp_S = 0;
+                double soilLayerHeight = 0;
+                SoilData lastSoil = null;
+                //ka
+                foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+                {
+                    soilLayerHeight += soilLayer.LayerHeight;
+                    if (startLength <= soilLayerHeight && soilLayerHeight - soilLayer.LayerHeight <= startLength)
+                    {
+                        if (soilLayer.Soil != null)
+                        {
+                            double fi = soilLayer.Soil.SoilFrictionAngle * Math.PI / 180;
+                            double Delta = soilLayer.Soil.WallSoilFrictionAngle * Math.PI / 180;
+                            double teta = 0 * Math.PI / 180;
+                            double gama = soilLayer.Soil.NaturalUnitWeight;
+                            double gamad = soilLayer.Soil.SaturatedUnitWeight;
+                            
+                            if (beta_back > fi - teta)
+                            {
+                                Ka_S = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                            }
+                            else
+                            {
+                                Ka_S = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                    (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                    Math.Sin(ksi - teta - Delta) *
+                                    Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                            }
+                            Kp_S = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1-Math.Sqrt(Math.Sin(fi)*Math.Sin(fi+beta_back-teta)/(Math.Sin(ksi+teta)*Math.Sin(ksi+beta_back))), 2));
+                            if (StaticVariables.viewModel.isEarthQuakeDesign) //dynamic ka
+                            {
+                                double khValue = StaticVariables.viewModel.khValue;
+                                double kvValue = StaticVariables.viewModel.kvValue;
+
+                                if (startLength < waterH1) //su olmayan kısım
+                                {
+                                    teta = Math.Atan(khValue / (1.0 - kvValue));
+                                    if (beta_back > fi - teta)
+                                    {
+                                        Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                    }
+                                    else
+                                    {
+                                        Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                            (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                            Math.Sin(ksi - teta - Delta) *
+                                            Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                    }
+                                    Kp_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                    teta = Math.Atan(khValue / (1.0 + kvValue));
+                                    if (beta_back > fi - teta)
+                                    {
+                                        Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                    }
+                                    else
+                                    {
+                                        Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                            (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                            Math.Sin(ksi - teta - Delta) *
+                                            Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                    }
+                                    Kp_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                }
+                                else //su olan kısım
+                                {
+                                    if (WpfUtils.GetSoilState(soilLayer.Soil.SoilStressStateIndex) == SoilState.Drained) //su olan kısım drained
+                                    {
+                                        teta = Math.Atan((gamad / (gamad - gamaw)) * (khValue / (1.0 - kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                        teta = Math.Atan((gamad / (gamad - gamaw)) * (khValue / (1.0 + kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                    }
+                                    else //su olan kısım undrained
+                                    {
+                                        teta = Math.Atan((gama / (gamad - gamaw)) * (khValue / (1.0 - kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                        teta = Math.Atan((gama / (gamad - gamaw)) * (khValue / (1.0 + kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    if (soilLayer.Soil != null)
+                    {
+                        lastSoil = soilLayer.Soil;
+                    }
+                }
+
+                //duvardan küçükse
+                if (soilLayerHeight < wallH)
+                {
+                    if (startLength <= wallH && soilLayerHeight < startLength)
+                    {
+                        if (lastSoil != null)
+                        {
+
+                            double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
+                            double Delta = lastSoil.WallSoilFrictionAngle * Math.PI / 180;
+                            double teta = 0 * Math.PI / 180;
+                            double gama = lastSoil.NaturalUnitWeight;
+                            double gamad = lastSoil.SaturatedUnitWeight;
+                            if (beta_back > fi - teta)
+                            {
+                                Ka_S = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                            }
+                            else
+                            {
+                                Ka_S = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                    (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                    Math.Sin(ksi - teta - Delta) *
+                                    Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                            }
+                            Kp_S = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                            if (StaticVariables.viewModel.isEarthQuakeDesign) //dynamic ka
+                            {
+                                double khValue = StaticVariables.viewModel.khValue;
+                                double kvValue = StaticVariables.viewModel.kvValue;
+
+                                if (startLength < waterH1) //su olmayan kısım
+                                {
+                                    teta = Math.Atan(khValue / (1.0 - kvValue));
+                                    if (beta_back > fi - teta)
+                                    {
+                                        Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                    }
+                                    else
+                                    {
+                                        Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                            (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                            Math.Sin(ksi - teta - Delta) *
+                                            Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                    }
+                                    Kp_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                    teta = Math.Atan(khValue / (1.0 + kvValue));
+                                    if (beta_back > fi - teta)
+                                    {
+                                        Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                    }
+                                    else
+                                    {
+                                        Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                            (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                            Math.Sin(ksi - teta - Delta) *
+                                            Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                    }
+                                    Kp_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                }
+                                else //su olan kısım
+                                {
+                                    if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained) //su olan kısım drained
+                                    {
+                                        teta = Math.Atan((gamad / (gamad - gamaw)) * (khValue / (1.0 - kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                        teta = Math.Atan((gamad / (gamad - gamaw)) * (khValue / (1.0 + kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                    }
+                                    else //su olan kısım undrained
+                                    {
+                                        teta = Math.Atan((gama / (gamad - gamaw)) * (khValue / (1.0 - kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_N = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                        teta = Math.Atan((gama / (gamad - gamaw)) * (khValue / (1.0 + kvValue)));
+                                        if (beta_back > fi - teta)
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi - teta - Delta));
+                                        }
+                                        else
+                                        {
+                                            Ka_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) /
+                                                (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) *
+                                                Math.Sin(ksi - teta - Delta) *
+                                                Math.Pow(1 + Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi - beta_back - teta) / (Math.Sin(ksi - teta - Delta) * Math.Sin(ksi + beta_back))), 2.0));
+                                        }
+                                        Kp_P = Math.Pow(Math.Sin(ksi + fi - teta), 2.0) / (Math.Cos(teta) * Math.Pow(Math.Sin(ksi), 2.0) * Math.Sin(ksi + teta) * Math.Pow(1 - Math.Sqrt(Math.Sin(fi) * Math.Sin(fi + beta_back - teta) / (Math.Sin(ksi + teta) * Math.Sin(ksi + beta_back))), 2));
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+
+                Ka_Kp Back_Kactive = new Ka_Kp() { Type = LoadType.Back_Kactive };
+                
+                frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double,double>(Back_Kactive, Ka_S, Ka_P,Ka_N));
+                frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double,double>(Back_Kactive, Ka_S, Ka_P, Ka_N));
+
+                Ka_Kp Back_Kpassive = new Ka_Kp() { Type = LoadType.Back_Kpassive };
+                frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Kpassive, Kp_S, Kp_P, Kp_N));
+                frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Kpassive, Kp_S, Kp_P, Kp_N));
+                Debug.WriteLine(startLength+"-" + Kp_S + "-" + Kp_P + "-" + Kp_N);
+            }
         }
     }
 }

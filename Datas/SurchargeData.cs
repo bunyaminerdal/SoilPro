@@ -55,9 +55,15 @@ namespace ExDesign.Datas
         public LoadType Type { get; set; }
         public string Name { get; set; }
     }
-    public class SoilSpringCoef : Load
+    public class SubgradeModulusofSoil : Load
     {
         public LoadType Type { get; set;}
         public string Name { get; set; }
     }
+    public class Ka_Kp : Load
+    {
+        public LoadType Type { get; set; }
+        public string Name { get; set; }
+    }
+    
 }

@@ -259,8 +259,12 @@ namespace ExDesign.Scripts
         StripLoad,
         LineLoad,
         PointLoad,
-        WaterLoad,
+        HydroStaticWaterPressure,
         EffectiveStress,
-        SoilSpringCoef
+        SubgradeModulusofSoil,
+        Front_Kactive,
+        Front_Kpassive,
+        Back_Kactive,
+        Back_Kpassive,
     }
 }

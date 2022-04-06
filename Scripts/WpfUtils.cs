@@ -889,7 +889,76 @@ namespace ExDesign.Scripts
                     return SoilState.Drained;
             }
         }
-        
+        public static DrainedTheories GetDrainedTheoryType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return DrainedTheories.TBDY;
+                case 1:
+                    return DrainedTheories.MazindraniTheory;
+                case 2:
+                    return DrainedTheories.TheColoumbTheory;
+                case 3:
+                    return DrainedTheories.TheCaquoutTheory;
+                default:
+                    return DrainedTheories.TBDY;
+            }
+        }
+        public static int GetDrainedTheoryIndex(DrainedTheories drainedTheory)
+        {
+            switch (drainedTheory)
+            {
+                case DrainedTheories.TBDY:
+                    return 0;
+                case DrainedTheories.MazindraniTheory:
+                    return 1;
+                case DrainedTheories.TheColoumbTheory:
+                    return 2;
+                case DrainedTheories.TheCaquoutTheory:
+                    return 3;
+                default:
+                    return 0;
+            }
+
+        }
+        public static UnDrainedTheories GetUnDrainedTheoryType(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return UnDrainedTheories.TBDY;
+                case 1:
+                    return UnDrainedTheories.MazindraniTheory;
+                case 2:
+                    return UnDrainedTheories.TheColoumbTheory;
+                case 3:
+                    return UnDrainedTheories.TheCaquoutTheory;
+                case 4:
+                    return UnDrainedTheories.TotalStress;
+                default:
+                    return UnDrainedTheories.TBDY;
+            }
+        }
+        public static int GetUnDrainedTheoryIndex(UnDrainedTheories unDrainedTheory)
+        {
+            switch (unDrainedTheory)
+            {
+                case UnDrainedTheories.TBDY:
+                    return 0;
+                case UnDrainedTheories.MazindraniTheory:
+                    return 1;
+                case UnDrainedTheories.TheColoumbTheory:
+                    return 2;
+                case UnDrainedTheories.TheCaquoutTheory:
+                    return 3;
+                case UnDrainedTheories.TotalStress:
+                    return 4;
+                default:
+                    return 0;
+            }
+
+        }
         public static String LevelText(double level)
         {
             char separator = ',';
