@@ -207,13 +207,21 @@ namespace ExDesign.Pages.Inputs.Views
                     if (isLoad)
                     {
                         double totalLoad = 0;
+                        Point endFramePoint = new Point(0,0);
+                        double endEndLoad = 0;
                         foreach (var frame in FrameData.Frames)
                         {
                             var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
-                            if (endLoad.Item2 > totalLoad) totalLoad = endLoad.Item2;
-
+                            if (endLoad.Item2 > totalLoad)
+                            {
+                                totalLoad = endLoad.Item2;
+                                endFramePoint = frame.EndPoint;
+                                endEndLoad = endLoad.Item2;
+                            }
+                            
                         }
                         loadScale = loadLimit / totalLoad;
+                        
                         foreach (var frame in FrameData.Frames)
                         {
                             var startLoad = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
@@ -222,24 +230,66 @@ namespace ExDesign.Pages.Inputs.Views
                                 new Point(frame.StartPoint.X + startLoad.Item2 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item2 * loadScale, frame.EndPoint.Y),
                                 Colors.Red);
-                            mainDrawingGroup.Children.Add(loadLineDrawing);
-
+                            mainDrawingGroup.Children.Add(loadLineDrawing);                           
+                            
+                            
                         }
+                          //deneme texti
+                            GeometryDrawing freeText = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint.X + endEndLoad * loadScale, endFramePoint.Y), new Point(endFramePoint.X + endEndLoad * loadScale + 0.5, endFramePoint.Y), Colors.Red, WpfUtils.ChangeDecimalOptions(endEndLoad));
+                            mainDrawingGroup.Children.Add(freeText);
+                        
+                        
                     }
                     if (isForce)
                     {
                         double totalLoad = 0;
+                        double totalLoad1 = 0;
+                        double totalLoad2 = 0;
+                        Point endFramePoint = new Point(0, 0);
+                        double endEndLoad = 0;
+                        Point endFramePoint1 = new Point(0, 0);
+                        double endEndLoad1 = 0;
+                        Point endFramePoint2 = new Point(0, 0);
+                        double endEndLoad2 = 0;
                         foreach (var frame in FrameData.Frames)
                         {
-                            var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
-                            if (endLoad.Item3 > totalLoad) totalLoad = endLoad.Item3;
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            if (endLoad.Item2 > totalLoad)
+                            {
+                                totalLoad = endLoad.Item2;
+                                endFramePoint = frame.EndPoint;
+                                endEndLoad = endLoad.Item2;
+                            }
+                            if (endLoad.Item3 > totalLoad1)
+                            {
+                                totalLoad1 = endLoad.Item3;
+                                endFramePoint1 = frame.EndPoint;
+                                endEndLoad1 = endLoad.Item3;
+                            }
+                            if (endLoad.Item4 > totalLoad2)
+                            {
+                                totalLoad2 = endLoad.Item4;
+                                endFramePoint2 = frame.EndPoint;
+                                endEndLoad2 = endLoad.Item4;
+                            }
 
                         }
-                        loadScale = loadLimit / totalLoad;
+                        loadScale = loadLimit / Math.Max( totalLoad,Math.Max( totalLoad1,totalLoad2));
                         foreach (var frame in FrameData.Frames)
                         {
-                            var startLoad = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
-                            var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
+                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
+                                new Point(frame.StartPoint.X + startLoad.Item2 * loadScale, frame.StartPoint.Y),
+                                new Point(frame.EndPoint.X + endLoad.Item2 * loadScale, frame.EndPoint.Y),
+                                Colors.Green);
+                            mainDrawingGroup.Children.Add(loadLineDrawing);
+
+                        }
+                        foreach (var frame in FrameData.Frames)
+                        {
+                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
                             GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
                                 new Point(frame.StartPoint.X + startLoad.Item3 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item3 * loadScale, frame.EndPoint.Y),
@@ -247,6 +297,26 @@ namespace ExDesign.Pages.Inputs.Views
                             mainDrawingGroup.Children.Add(loadLineDrawing);
 
                         }
+                        foreach (var frame in FrameData.Frames)
+                        {
+                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
+                                new Point(frame.StartPoint.X + startLoad.Item4 * loadScale, frame.StartPoint.Y),
+                                new Point(frame.EndPoint.X + endLoad.Item4 * loadScale, frame.EndPoint.Y),
+                                Colors.Green);
+                            mainDrawingGroup.Children.Add(loadLineDrawing);
+
+                        }
+                        //deneme texti
+                        GeometryDrawing freeText = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint.X + endEndLoad * loadScale +StaticVariables.freeTextFontHeight, endFramePoint.Y), new Point(endFramePoint.X + endEndLoad * loadScale + StaticVariables.freeTextFontHeight , endFramePoint.Y - 2), Colors.Red,"S = "+ WpfUtils.ChangeDecimalOptions(endEndLoad));
+                        mainDrawingGroup.Children.Add(freeText);
+                        //deneme texti
+                        GeometryDrawing freeText1 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint1.X + endEndLoad1 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint1.Y), new Point(endFramePoint1.X + endEndLoad1 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint1.Y - 2), Colors.Red, "P = " + WpfUtils.ChangeDecimalOptions(endEndLoad1));
+                        mainDrawingGroup.Children.Add(freeText1);
+                        //deneme texti
+                        GeometryDrawing freeText2 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y), new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y - 2), Colors.Red, "N = " + WpfUtils.ChangeDecimalOptions(endEndLoad2));
+                        mainDrawingGroup.Children.Add(freeText2);
                     }
                 }
             }

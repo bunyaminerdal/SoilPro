@@ -242,14 +242,14 @@ namespace ExDesign.Scripts
         TBDY,
         MazindraniTheory,
         TheColoumbTheory,
-        TheCaquoutTheory
+        RankineTheory
     }
     public enum UnDrainedTheories
     {
         TBDY,
         MazindraniTheory,
         TheColoumbTheory,
-        TheCaquoutTheory,
+        RankineTheory,
         TotalStress
     }
 
@@ -260,7 +260,8 @@ namespace ExDesign.Scripts
         LineLoad,
         PointLoad,
         HydroStaticWaterPressure,
-        EffectiveStress,
+        Back_EffectiveStress,
+        Front_EffectiveStress,
         SubgradeModulusofSoil,
         Front_Kactive,
         Front_Kpassive,

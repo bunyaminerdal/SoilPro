@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,8 @@ namespace ExDesign.Datas
 {
     public class FrameData : IComparable<FrameData>
     {
+        public static string Path = System.AppDomain.CurrentDomain.BaseDirectory.ToString() + "Frames.gexdb";
+
         public static List<FrameData> Frames = new List<FrameData>();
         public Guid ID { get; set; }
         public Point StartPoint { get; set; }
@@ -43,6 +47,13 @@ namespace ExDesign.Datas
                 return 0;
             }
         }
-        
+        public static void FrameSave()
+        {
+
+            string json = JsonConvert.SerializeObject(Frames.ToArray());
+
+            //write string to file
+            File.WriteAllText(Path, json);
+        }
     }
 }

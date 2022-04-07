@@ -106,7 +106,7 @@ namespace ExDesign.Pages.Inputs
                 case DrainedTheories.TheColoumbTheory:
                     ActiveDrained_combobox.SelectedIndex = 2;
                     break;
-                case DrainedTheories.TheCaquoutTheory:
+                case DrainedTheories.RankineTheory:
                     ActiveDrained_combobox.SelectedIndex = 3;
                     break;
                 default:
@@ -124,7 +124,7 @@ namespace ExDesign.Pages.Inputs
                 case DrainedTheories.TheColoumbTheory:
                     PassiveDrained_combobox.SelectedIndex = 2;
                     break;
-                case DrainedTheories.TheCaquoutTheory:
+                case DrainedTheories.RankineTheory:
                     PassiveDrained_combobox.SelectedIndex = 3;
                     break;
                 default:
@@ -142,7 +142,7 @@ namespace ExDesign.Pages.Inputs
                 case UnDrainedTheories.TheColoumbTheory:
                     ActiveUndrained_combobox.SelectedIndex = 2;
                     break;
-                case UnDrainedTheories.TheCaquoutTheory:
+                case UnDrainedTheories.RankineTheory:
                     ActiveUndrained_combobox.SelectedIndex = 3;
                     break;
                 case UnDrainedTheories.TotalStress:
@@ -163,7 +163,7 @@ namespace ExDesign.Pages.Inputs
                 case UnDrainedTheories.TheColoumbTheory:
                     PassiveUndrained_combobox.SelectedIndex = 2;
                     break;
-                case UnDrainedTheories.TheCaquoutTheory:
+                case UnDrainedTheories.RankineTheory:
                     PassiveUndrained_combobox.SelectedIndex = 3;
                     break;
                 case UnDrainedTheories.TotalStress:

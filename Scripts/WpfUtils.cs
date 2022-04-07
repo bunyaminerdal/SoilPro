@@ -900,7 +900,7 @@ namespace ExDesign.Scripts
                 case 2:
                     return DrainedTheories.TheColoumbTheory;
                 case 3:
-                    return DrainedTheories.TheCaquoutTheory;
+                    return DrainedTheories.RankineTheory;
                 default:
                     return DrainedTheories.TBDY;
             }
@@ -915,7 +915,7 @@ namespace ExDesign.Scripts
                     return 1;
                 case DrainedTheories.TheColoumbTheory:
                     return 2;
-                case DrainedTheories.TheCaquoutTheory:
+                case DrainedTheories.RankineTheory:
                     return 3;
                 default:
                     return 0;
@@ -933,7 +933,7 @@ namespace ExDesign.Scripts
                 case 2:
                     return UnDrainedTheories.TheColoumbTheory;
                 case 3:
-                    return UnDrainedTheories.TheCaquoutTheory;
+                    return UnDrainedTheories.RankineTheory;
                 case 4:
                     return UnDrainedTheories.TotalStress;
                 default:
@@ -950,7 +950,7 @@ namespace ExDesign.Scripts
                     return 1;
                 case UnDrainedTheories.TheColoumbTheory:
                     return 2;
-                case UnDrainedTheories.TheCaquoutTheory:
+                case UnDrainedTheories.RankineTheory:
                     return 3;
                 case UnDrainedTheories.TotalStress:
                     return 4;

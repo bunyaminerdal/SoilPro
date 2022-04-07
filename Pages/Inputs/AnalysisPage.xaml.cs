@@ -32,11 +32,14 @@ namespace ExDesign.Pages.Inputs
             Analysis.WallPartization();
             Analysis.SurchargeToFrameNodes();
             Analysis.HydroStaticWaterPressureToFrameNodes();
-            Analysis.EffectiveStressToFrameNodes();
+            Analysis.BackEffectiveStressToFrameNodes();
+            Analysis.FrontEffectiveStressToFrameNodes();
             Analysis.SubgradeModulusofSoilToFrameNodes();
-            Analysis.ActivePassiveCoefToFrameNodes();
+            Analysis.BackActivePassiveCoefToFrameNodes();
+            Analysis.FrontActivePassiveCoefToFrameNodes();
             StaticVariables.isAnalysisDone = true;
             LoadsAndForcesPre();
+            FrameData.FrameSave();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -62,8 +65,11 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.HydroStaticWaterPressure:
                         listitem.Item1.Name =FindResource("HydroStaticWaterPressure").ToString();
                         break;
-                    case LoadType.EffectiveStress:
-                        listitem.Item1.Name = FindResource("EffectiveStress").ToString();
+                    case LoadType.Back_EffectiveStress:
+                        listitem.Item1.Name = FindResource("BackEffectiveStress").ToString();
+                        break;
+                    case LoadType.Front_EffectiveStress:
+                        listitem.Item1.Name = FindResource("FrontEffectiveStress").ToString();
                         break;
                     case LoadType.SubgradeModulusofSoil:
                         listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
@@ -72,10 +78,31 @@ namespace ExDesign.Pages.Inputs
                         break;
                 }
             }
+            foreach (var listitem in FrameData.Frames[0].startNodeActivePassiveCoef_S_P_N)
+            {
+                switch (listitem.Item1.Type)
+                {                    
+                    case LoadType.Front_Kactive:
+                        listitem.Item1.Name = FindResource("FrontKactive").ToString();
+                        break;
+                    case LoadType.Back_Kactive:
+                        listitem.Item1.Name = FindResource("BackKactive").ToString();
+                        break;
+                    case LoadType.Front_Kpassive:
+                        listitem.Item1.Name = FindResource("FrontKpassive").ToString();
+                        break;
+                    case LoadType.Back_Kpassive:
+                        listitem.Item1.Name = FindResource("BackKpassive").ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
             var loadandForceDic = FrameData.Frames[0].startNodeLoadAndForce;
             loads_combobox.ItemsSource = loadandForceDic;
             loads_combobox.DisplayMemberPath = "Item1.Name";
-            forces_combobox.ItemsSource = loadandForceDic;
+            var loadandForceDic1 = FrameData.Frames[0].startNodeActivePassiveCoef_S_P_N;
+            forces_combobox.ItemsSource = loadandForceDic1;
             forces_combobox.DisplayMemberPath = "Item1.Name";
         }
 
@@ -94,9 +121,15 @@ namespace ExDesign.Pages.Inputs
             ComboBox comboBox = sender as ComboBox;
             if (comboBox.SelectedItem != null)
             {
-                var dic = (Tuple<Load, double, double>)comboBox.SelectedItem;
+                var dic = (Tuple<Load, double, double,double>)comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowForce(dic.Item1);
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            view3d_main.Content = null;
+            sideview_main.Content = null;
         }
     }
 }
