@@ -125,8 +125,11 @@ namespace ExDesign.Pages.Inputs
                             break;
                         case SoilState.UnDrained:
                             textbox_Cu.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).UndrainedShearStrength)) : "";
+                            ((SoilData)comboBox.SelectedItem).SoilFrictionAngle = 0;
+                            ((SoilData)comboBox.SelectedItem).WallSoilFrictionAngle = 0;
                             textbox_fi.Text = "0";
                             textbox_Cprime.Text = comboBox.SelectedIndex >= 0 ? WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).WallSoilAdhesion)) : "";
+                            ((SoilData)comboBox.SelectedItem).EffectiveCohesion = comboBox.SelectedIndex >= 0 ? WpfUtils.GetStress(((SoilData)comboBox.SelectedItem).WallSoilAdhesion) : ((SoilData)comboBox.SelectedItem).EffectiveCohesion; 
                             break;
                         default:
                             break;

@@ -369,22 +369,22 @@ namespace ExDesign.Pages.Inputs
 
         private void ActiveDrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         if(ActiveDrained_combobox.SelectedIndex > 0)  StaticVariables.viewModel.activeDrainedCoefficientIndex = ActiveDrained_combobox.SelectedIndex;
+         if(ActiveDrained_combobox.SelectedIndex >= 0)  StaticVariables.viewModel.activeDrainedCoefficientIndex = ActiveDrained_combobox.SelectedIndex;
         }
 
         private void ActiveUndrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ActiveUndrained_combobox.SelectedIndex > 0) StaticVariables.viewModel.activeUnDrainedCoefficientIndex = ActiveUndrained_combobox.SelectedIndex;
+            if (ActiveUndrained_combobox.SelectedIndex >= 0) StaticVariables.viewModel.activeUnDrainedCoefficientIndex = ActiveUndrained_combobox.SelectedIndex;
         }
 
         private void PassiveDrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PassiveDrained_combobox.SelectedIndex > 0) StaticVariables.viewModel.passiveDrainedCoefficientIndex = PassiveDrained_combobox.SelectedIndex;
+            if (PassiveDrained_combobox.SelectedIndex >= 0) StaticVariables.viewModel.passiveDrainedCoefficientIndex = PassiveDrained_combobox.SelectedIndex;
         }
 
         private void PassiveUndrained_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PassiveUndrained_combobox.SelectedIndex > 0) StaticVariables.viewModel.passiveUnDrainedCoefficientIndex = PassiveUndrained_combobox.SelectedIndex;
+            if (PassiveUndrained_combobox.SelectedIndex >= 0) StaticVariables.viewModel.passiveUnDrainedCoefficientIndex = PassiveUndrained_combobox.SelectedIndex;
         }
     }
 }

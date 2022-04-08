@@ -39,7 +39,7 @@ namespace ExDesign.Pages.Inputs
             Analysis.FrontActivePassiveCoefToFrameNodes();
             StaticVariables.isAnalysisDone = true;
             LoadsAndForcesPre();
-            FrameData.FrameSave();
+            //FrameData.FrameSave();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -64,6 +64,12 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.HydroStaticWaterPressure:
                         listitem.Item1.Name =FindResource("HydroStaticWaterPressure").ToString();
+                        break;
+                    case LoadType.Back_TotalStress:
+                        listitem.Item1.Name = FindResource("BackTotalStress").ToString();
+                        break;
+                    case LoadType.Front_TotalStress:
+                        listitem.Item1.Name = FindResource("FrontTotalStress").ToString();
                         break;
                     case LoadType.Back_EffectiveStress:
                         listitem.Item1.Name = FindResource("BackEffectiveStress").ToString();

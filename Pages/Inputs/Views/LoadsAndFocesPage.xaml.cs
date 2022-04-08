@@ -282,7 +282,7 @@ namespace ExDesign.Pages.Inputs.Views
                             GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
                                 new Point(frame.StartPoint.X + startLoad.Item2 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item2 * loadScale, frame.EndPoint.Y),
-                                Colors.Green);
+                                Colors.Red);
                             mainDrawingGroup.Children.Add(loadLineDrawing);
 
                         }
@@ -304,7 +304,7 @@ namespace ExDesign.Pages.Inputs.Views
                             GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
                                 new Point(frame.StartPoint.X + startLoad.Item4 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item4 * loadScale, frame.EndPoint.Y),
-                                Colors.Green);
+                                Colors.Yellow);
                             mainDrawingGroup.Children.Add(loadLineDrawing);
 
                         }
@@ -312,10 +312,10 @@ namespace ExDesign.Pages.Inputs.Views
                         GeometryDrawing freeText = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint.X + endEndLoad * loadScale +StaticVariables.freeTextFontHeight, endFramePoint.Y), new Point(endFramePoint.X + endEndLoad * loadScale + StaticVariables.freeTextFontHeight , endFramePoint.Y - 2), Colors.Red,"S = "+ WpfUtils.ChangeDecimalOptions(endEndLoad));
                         mainDrawingGroup.Children.Add(freeText);
                         //deneme texti
-                        GeometryDrawing freeText1 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint1.X + endEndLoad1 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint1.Y), new Point(endFramePoint1.X + endEndLoad1 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint1.Y - 2), Colors.Red, "P = " + WpfUtils.ChangeDecimalOptions(endEndLoad1));
+                        GeometryDrawing freeText1 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint1.X + endEndLoad1 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint1.Y), new Point(endFramePoint1.X + endEndLoad1 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint1.Y - 2), Colors.Green, "P = " + WpfUtils.ChangeDecimalOptions(endEndLoad1));
                         mainDrawingGroup.Children.Add(freeText1);
                         //deneme texti
-                        GeometryDrawing freeText2 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y), new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y - 2), Colors.Red, "N = " + WpfUtils.ChangeDecimalOptions(endEndLoad2));
+                        GeometryDrawing freeText2 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y), new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y - 2), Colors.Yellow, "N = " + WpfUtils.ChangeDecimalOptions(endEndLoad2));
                         mainDrawingGroup.Children.Add(freeText2);
                     }
                 }

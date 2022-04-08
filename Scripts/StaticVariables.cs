@@ -262,6 +262,8 @@ namespace ExDesign.Scripts
         HydroStaticWaterPressure,
         Back_EffectiveStress,
         Front_EffectiveStress,
+        Back_TotalStress,
+        Front_TotalStress,
         SubgradeModulusofSoil,
         Front_Kactive,
         Front_Kpassive,
