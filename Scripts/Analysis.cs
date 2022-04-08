@@ -208,6 +208,67 @@ namespace ExDesign.Scripts
                 }
             }
         }
+        public static void BackWaterPressureToFrameNodes()
+        {
+            double exH = WpfUtils.GetExHeightForCalculation();
+            double exH_waterType3 = StaticVariables.viewModel.GetexcavationHeight();
+            double _waterDensity = StaticVariables.waterDensity;
+            double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            double waterH2 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue;
+            // water load type1
+            foreach (var frame in FrameData.Frames)
+            {
+                double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
+                double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
+                double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
+
+                double startLoad = 0;
+                double endLoad = 0;
+                if (waterH1 < startLength)
+                {
+                    startLoad = (startLength - waterH1) * _waterDensity;
+                }
+                if (waterH1 < endLength)
+                {
+                    endLoad = (endLength - waterH1) * _waterDensity;
+                }
+                WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.Back_WaterPressure };
+                double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
+                frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(waterLoadData, startLoad, startNodeForce));
+                double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
+                frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(waterLoadData, endLoad, endNodeForce));
+            }
+        }
+        public static void FrontWaterPressureToFrameNodes()
+        {
+            double exH = StaticVariables.viewModel.GetexcavationHeight();
+            double _waterDensity = StaticVariables.waterDensity;
+            double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            double waterH2 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue;
+            // water load type1
+            foreach (var frame in FrameData.Frames)
+            {
+                double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
+                double startLength = Math.Sqrt((Math.Pow(0 - frame.StartPoint.X, 2) + Math.Pow(0 - frame.StartPoint.Y, 2)));
+                double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
+
+                double startLoad = 0;
+                double endLoad = 0;
+                if (exH+waterH2 < startLength)
+                {
+                    startLoad = (startLength - (exH + waterH2)) * _waterDensity;
+                }
+                if (exH + waterH2 < endLength)
+                {
+                    endLoad = (endLength - (exH + waterH2)) * _waterDensity;
+                }
+                WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.Front_WaterPressure };
+                double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
+                frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(waterLoadData, startLoad, startNodeForce));
+                double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
+                frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(waterLoadData, endLoad, endNodeForce));
+            }
+        }
         public static void HydroStaticWaterPressureToFrameNodes()
         {
             double exH = WpfUtils.GetExHeightForCalculation();
@@ -418,8 +479,8 @@ namespace ExDesign.Scripts
 
                 //total Stress
                 EffectiveStress totalStress = new EffectiveStress() { Type = LoadType.Back_TotalStress };
-                double totalStartLoad = startLoad + (frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure) != null? frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure).Item2:0);
-                double totalEndLoad = endLoad +(frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure)!=null? frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure).Item2:0);
+                double totalStartLoad = startLoad + (frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure) != null? frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure).Item2:0);
+                double totalEndLoad = endLoad +(frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure) !=null? frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure).Item2:0);
                 double totalStartNodeForce = ((((totalStartLoad + totalEndLoad) / 2) + totalStartLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(totalStress, totalStartLoad, totalStartNodeForce));
                 double totalEndNodeForce = ((((totalStartLoad + totalEndLoad) / 2) + totalEndLoad) / 2) * (frameLength / 2);
@@ -428,6 +489,7 @@ namespace ExDesign.Scripts
         }
         public static void FrontEffectiveStressToFrameNodes()
         {
+            //TODO: exH type3 ü al waterH2 ile toplarken
             double exH = WpfUtils.GetExHeightForCalculation();
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double _waterDensity = StaticVariables.waterDensity;
@@ -451,7 +513,7 @@ namespace ExDesign.Scripts
                         if (soilLayer.Soil != null)
                         {
 
-                            if (startLength <= waterH2)
+                            if (startLength <=  exH + waterH2)
                             {
                                 startLoad += (frameLength * soilLayer.Soil.NaturalUnitWeight);
                             }
@@ -465,7 +527,7 @@ namespace ExDesign.Scripts
                     {
                         if (soilLayer.Soil != null)
                         {
-                            if (endLength <= waterH2)
+                            if (endLength <= exH + waterH2)
                             {
                                 endLoad += (frameLength * soilLayer.Soil.NaturalUnitWeight);
                             }
@@ -488,7 +550,7 @@ namespace ExDesign.Scripts
                     {
                         if (lastSoil != null)
                         {
-                            if (startLength <= waterH2)
+                            if (startLength <= exH + waterH2)
                             {
                                 startLoad += (frameLength * lastSoil.NaturalUnitWeight);
                             }
@@ -503,7 +565,7 @@ namespace ExDesign.Scripts
                         if (lastSoil != null)
                         {
 
-                            if (endLength <= waterH2)
+                            if (endLength <= exH + waterH2)
                             {
                                 endLoad += (frameLength * lastSoil.NaturalUnitWeight);
                             }
@@ -522,8 +584,8 @@ namespace ExDesign.Scripts
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(effectiveStress, endLoad, endNodeForce));
                 //total Stress
                 EffectiveStress totalStress = new EffectiveStress() { Type = LoadType.Front_TotalStress };
-                double totalStartLoad = startLoad + (frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure) != null ? frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure).Item2 : 0);
-                double totalEndLoad = endLoad + (frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure) != null ? frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.HydroStaticWaterPressure).Item2 : 0);
+                double totalStartLoad = startLoad + (frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure) != null ? frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure).Item2 : 0);
+                double totalEndLoad = endLoad + (frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure) != null ? frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure).Item2 : 0);
                 double totalStartNodeForce = ((((totalStartLoad + totalEndLoad) / 2) + totalStartLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(totalStress, totalStartLoad, totalStartNodeForce));
                 double totalEndNodeForce = ((((totalStartLoad + totalEndLoad) / 2) + totalEndLoad) / 2) * (frameLength / 2);
@@ -957,177 +1019,185 @@ namespace ExDesign.Scripts
                 {
                     if (startLength < wallH && soilLayerHeight <= startLength)
                     {
-                        if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
+                        if(lastSoil != null)
                         {
-                            switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
+                            if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
                             {
-                                case DrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Active_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, lastSoil);
-                                    break;
-                                case DrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.EffectiveCohesion;
-                                    Back_Mazindrani_Theory_Active_Start(startLength, beta_back,cPrime, ref Ka_S_start, lastSoil);
-                                    break;
-                                case DrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Active_Start(beta_back, ref Ka_S_start, lastSoil);
-                                    break;
-                                case DrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Active_Start(ref Ka_S_start, lastSoil);
-                                    break;
-                                default:
-                                    break;
+                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
+                                {
+                                    case DrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Active_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, lastSoil);
+                                        break;
+                                    case DrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.EffectiveCohesion;
+                                        Back_Mazindrani_Theory_Active_Start(startLength, beta_back, cPrime, ref Ka_S_start, lastSoil);
+                                        break;
+                                    case DrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Active_Start(beta_back, ref Ka_S_start, lastSoil);
+                                        break;
+                                    case DrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Active_Start(ref Ka_S_start, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
+                                {
+                                    case DrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Passive_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, lastSoil);
+                                        break;
+                                    case DrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.EffectiveCohesion;
+                                        Back_Mazindrani_Theory_Passive_Start(startLength, beta_back, cPrime, ref Kp_S_start, lastSoil);
+                                        break;
+                                    case DrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Passive_Start(beta_back, ref Kp_S_start, lastSoil);
+                                        break;
+                                    case DrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Passive_Start(ref Kp_S_start, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
-                            switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
+                            else
                             {
-                                case DrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Passive_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, lastSoil);
-                                    break;
-                                case DrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.EffectiveCohesion;
-                                    Back_Mazindrani_Theory_Passive_Start(startLength, beta_back,cPrime, ref Kp_S_start, lastSoil);
-                                    break;
-                                case DrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Passive_Start(beta_back, ref Kp_S_start, lastSoil);
-                                    break;
-                                case DrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Passive_Start(ref Kp_S_start, lastSoil);
-                                    break;
-                                default:
-                                    break;
+                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
+                                {
+                                    case UnDrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Active_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.UndrainedShearStrength;
+                                        Back_Mazindrani_Theory_Active_Start(startLength, beta_back, cPrime, ref Ka_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Active_Start(beta_back, ref Ka_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Active_Start(ref Ka_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TotalStress:
+                                        Back_TotalStress_Theory_Active_Start(ref Ka_S_start, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
+                                {
+                                    case UnDrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Passive_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.UndrainedShearStrength;
+                                        Back_Mazindrani_Theory_Passive_Start(startLength, beta_back, cPrime, ref Kp_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Passive_Start(beta_back, ref Kp_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Passive_Start(ref Kp_S_start, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TotalStress:
+                                        Back_TotalStress_Theory_Passive_Start(ref Kp_S_start, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                        else
-                        {
-                            switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
-                            {
-                                case UnDrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Active_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.UndrainedShearStrength;
-                                    Back_Mazindrani_Theory_Active_Start(startLength, beta_back,cPrime, ref Ka_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Active_Start(beta_back, ref Ka_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Active_Start(ref Ka_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TotalStress:
-                                    Back_TotalStress_Theory_Active_Start(ref Ka_S_start, lastSoil);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
-                            {
-                                case UnDrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Passive_Start(waterH1, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.UndrainedShearStrength;
-                                    Back_Mazindrani_Theory_Passive_Start(startLength, beta_back,cPrime, ref Kp_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Passive_Start(beta_back, ref Kp_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Passive_Start(ref Kp_S_start, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TotalStress:
-                                    Back_TotalStress_Theory_Passive_Start(ref Kp_S_start, lastSoil);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        
                     }
                     if (endLength <= wallH && soilLayerHeight < endLength)
                     {
-                        if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
+                        if(lastSoil != null)
                         {
-                            switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
+                            if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
                             {
-                                case DrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Active_End(waterH1, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, lastSoil);
-                                    break;
-                                case DrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.EffectiveCohesion;
-                                    Back_Mazindrani_Theory_Active_End(endLength, beta_back,cPrime, ref Ka_S_end, lastSoil);
-                                    break;
-                                case DrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Active_End(beta_back, ref Ka_S_end, lastSoil);
-                                    break;
-                                case DrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Active_End(ref Ka_S_end, lastSoil);
-                                    break;
-                                default:
-                                    break;
+                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
+                                {
+                                    case DrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Active_End(waterH1, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, lastSoil);
+                                        break;
+                                    case DrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.EffectiveCohesion;
+                                        Back_Mazindrani_Theory_Active_End(endLength, beta_back, cPrime, ref Ka_S_end, lastSoil);
+                                        break;
+                                    case DrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Active_End(beta_back, ref Ka_S_end, lastSoil);
+                                        break;
+                                    case DrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Active_End(ref Ka_S_end, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
+                                {
+                                    case DrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Passive_End(waterH1, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, lastSoil);
+                                        break;
+                                    case DrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.EffectiveCohesion;
+                                        Back_Mazindrani_Theory_Passive_End(endLength, beta_back, cPrime, ref Kp_S_end, lastSoil);
+                                        break;
+                                    case DrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Passive_End(beta_back, ref Kp_S_end, lastSoil);
+                                        break;
+                                    case DrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Passive_End(ref Kp_S_end, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
-                            switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
+                            else
                             {
-                                case DrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Passive_End(waterH1, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, lastSoil);
-                                    break;
-                                case DrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.EffectiveCohesion;
-                                    Back_Mazindrani_Theory_Passive_End(endLength, beta_back,cPrime, ref Kp_S_end, lastSoil);
-                                    break;
-                                case DrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Passive_End(beta_back, ref Kp_S_end, lastSoil);
-                                    break;
-                                case DrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Passive_End(ref Kp_S_end, lastSoil);
-                                    break;
-                                default:
-                                    break;
+                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
+                                {
+                                    case UnDrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Active_End(waterH1, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.UndrainedShearStrength;
+                                        Back_Mazindrani_Theory_Active_End(endLength, beta_back, cPrime, ref Ka_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Active_End(beta_back, ref Ka_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Active_End(ref Ka_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TotalStress:
+                                        Back_TotalStress_Theory_Active_End(ref Ka_S_end, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
+                                {
+                                    case UnDrainedTheories.TBDY:
+                                        Back_TBDY_Theory_Passive_End(waterH1, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.MazindraniTheory:
+                                        double cPrime = lastSoil.UndrainedShearStrength;
+                                        Back_Mazindrani_Theory_Passive_End(endLength, beta_back, cPrime, ref Kp_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TheColoumbTheory:
+                                        Back_Coloumb_Theory_Passive_End(beta_back, ref Kp_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.RankineTheory:
+                                        Back_Rankine_Theory_Passive_End(ref Kp_S_end, lastSoil);
+                                        break;
+                                    case UnDrainedTheories.TotalStress:
+                                        Back_TotalStress_Theory_Passive_End(ref Kp_S_end, lastSoil);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                        else
-                        {
-                            switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
-                            {
-                                case UnDrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Active_End(waterH1, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.UndrainedShearStrength;
-                                    Back_Mazindrani_Theory_Active_End(endLength, beta_back,cPrime, ref Ka_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Active_End(beta_back, ref Ka_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Active_End(ref Ka_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TotalStress:
-                                    Back_TotalStress_Theory_Active_End(ref Ka_S_end, lastSoil);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
-                            {
-                                case UnDrainedTheories.TBDY:
-                                    Back_TBDY_Theory_Passive_End(waterH1, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.MazindraniTheory:
-                                    double cPrime = lastSoil.UndrainedShearStrength;
-                                    Back_Mazindrani_Theory_Passive_End(endLength, beta_back,cPrime, ref Kp_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TheColoumbTheory:
-                                    Back_Coloumb_Theory_Passive_End(beta_back, ref Kp_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.RankineTheory:
-                                    Back_Rankine_Theory_Passive_End(ref Kp_S_end, lastSoil);
-                                    break;
-                                case UnDrainedTheories.TotalStress:
-                                    Back_TotalStress_Theory_Passive_End(ref Kp_S_end, lastSoil);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        
                     }
                 }
 

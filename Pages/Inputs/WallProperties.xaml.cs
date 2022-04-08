@@ -198,6 +198,7 @@ namespace ExDesign.Pages.Inputs
             sheetpileCombobox.SelectedIndex = StaticVariables.viewModel.SheetIndex;
             UnitChange();
             StaticEvents.UnitChangeEvent += UnitChange;
+            
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

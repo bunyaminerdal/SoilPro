@@ -60,7 +60,7 @@ namespace ExDesign.Pages.Inputs
                 fytext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].fy));
                 steelEtext.Text = WpfUtils.ChangeDecimalOptions(WpfUtils.GetStress(Steel.SteelDataList[StaticVariables.viewModel.SteelIndex].E));
             }
-
+            StaticVariables.viewModel.ChangeWallProperties();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

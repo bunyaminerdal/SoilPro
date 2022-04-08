@@ -31,6 +31,8 @@ namespace ExDesign.Pages.Inputs
         {
             Analysis.WallPartization();
             Analysis.SurchargeToFrameNodes();
+            Analysis.BackWaterPressureToFrameNodes();
+            Analysis.FrontWaterPressureToFrameNodes();
             Analysis.HydroStaticWaterPressureToFrameNodes();
             Analysis.BackEffectiveStressToFrameNodes();
             Analysis.FrontEffectiveStressToFrameNodes();
@@ -61,6 +63,12 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.LineLoad:
                         break;
                     case LoadType.PointLoad:
+                        break;
+                    case LoadType.Back_WaterPressure:
+                        listitem.Item1.Name = FindResource("BackWaterPressure").ToString();
+                        break;
+                    case LoadType.Front_WaterPressure:
+                        listitem.Item1.Name = FindResource("FrontWaterPressure").ToString();
                         break;
                     case LoadType.HydroStaticWaterPressure:
                         listitem.Item1.Name =FindResource("HydroStaticWaterPressure").ToString();

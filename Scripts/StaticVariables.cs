@@ -259,6 +259,8 @@ namespace ExDesign.Scripts
         StripLoad,
         LineLoad,
         PointLoad,
+        Back_WaterPressure,
+        Front_WaterPressure,
         HydroStaticWaterPressure,
         Back_EffectiveStress,
         Front_EffectiveStress,
