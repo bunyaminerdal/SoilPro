@@ -1136,6 +1136,67 @@ namespace ExDesign.Scripts
 
             }
         }
+        private static void Back_Rankine_Theory_Active( ref double Ka_S,SoilData soil)
+        {
+            if(soil != null)
+            {
+                double fi = soil.SoilFrictionAngle * Math.PI / 180;
+                double zeta45 = 45.0 * Math.PI / 180;
+                Ka_S = Math.Pow(Math.Tan(zeta45 - (fi / 2.0)), 2.0);
 
+            }
+        }
+        private static void Back_Rankine_Theory_Passive( ref double Kp_S, SoilData soil)
+        {
+            if (soil != null)
+            {
+                double fi = soil.SoilFrictionAngle * Math.PI / 180;
+                double zeta45 = 45.0 * Math.PI / 180;
+                Kp_S = Math.Pow(Math.Tan(zeta45 + (fi / 2.0)), 2.0);
+
+            }
+        }
+        private static void Back_Coloumb_Theory_Active(double beta_back,ref double Ka_S,SoilData soil)
+        {
+            if (soil != null)
+            {
+
+                double fi = soil.SoilFrictionAngle * Math.PI / 180;
+                double Delta = soil.WallSoilFrictionAngle * Math.PI / 180;
+                double alfa = 0 * Math.PI / 180;
+                Ka_S = Math.Pow(Math.Cos(fi - alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(alfa + Delta) * (Math.Pow(1+Math.Sqrt((Math.Sin(fi+Delta)*Math.Sin(fi-beta_back))/(Math.Cos(alfa+Delta)*Math.Cos(alfa-beta_back))),2.0)));
+                double Kahc = Math.Cos(fi)*Math.Cos(beta_back)*Math.Cos(Delta-alfa)*(1+Math.Tan(-alfa)*Math.Tan(beta_back))/(1+Math.Sin(fi+Delta-alfa-beta_back));
+                double Kac = Kahc / Math.Cos(Delta + alfa);
+            }
+        }
+        private static void Back_Coloumb_Theory_Passive( double beta_back, ref double Kp_S, SoilData soil)
+        {
+            if (soil != null)
+            {
+                double fi = soil.SoilFrictionAngle * Math.PI / 180;
+                double Delta = soil.WallSoilFrictionAngle * Math.PI / 180;
+                double alfa = 0 * Math.PI / 180;
+                Kp_S = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos( Delta-alfa) * (Math.Pow(1 + Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos( Delta-alfa) * Math.Cos( beta_back-alfa))), 2.0)));
+                
+            }
+        }
+        private static void Back_TotalStress_Theory_Active(ref double Ka_S,SoilData soil)
+        {
+            if(soil != null)
+            {
+                double cu = soil.UndrainedShearStrength;
+                double au = soil.WallSoilAdhesion;
+                Ka_S = 2.0 * Math.Sqrt(1+au/cu);
+            }
+        }
+        private static void Back_TotalStress_Theory_Passive(ref double Kp_S, SoilData soil)
+        {
+            if (soil != null)
+            {
+                double cu = soil.UndrainedShearStrength;
+                double au = soil.WallSoilAdhesion;
+                Kp_S = 2.0 * Math.Sqrt(1 - au / cu);
+            }
+        }
     }
 }
