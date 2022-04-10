@@ -321,7 +321,6 @@ namespace ExDesign.Scripts
                 textgeometry = formattedText.BuildGeometry(new Point(start.X + (_length / 2) - formattedText.Width / 2, start.Y -ex - diff - formattedText.Height));
             }
             RotateTransform rotateText = new RotateTransform(angle, start.X, start.Y);
-            Debug.WriteLine(angle + " " + start.X  +" "+start.Y);
             if(angle < double.MaxValue) textgeometry.Transform = rotateText;
 
             

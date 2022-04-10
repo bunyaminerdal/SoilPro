@@ -65,5 +65,10 @@ namespace ExDesign.Datas
         public LoadType Type { get; set; }
         public string Name { get; set; }
     }
+    public class Force : Load
+    {
+        public LoadType Type { get; set; }
+        public string Name { get; set; }
+    }
     
 }

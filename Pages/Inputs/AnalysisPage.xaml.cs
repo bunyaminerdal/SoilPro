@@ -88,6 +88,18 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.SubgradeModulusofSoil:
                         listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
                         break;
+                    case LoadType.Back_Active_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Back_Passive_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("BackPassiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Back_Active_Vertical_Force:
+                        listitem.Item1.Name = FindResource("BackActiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Back_Passive_Vertical_Force:
+                        listitem.Item1.Name = FindResource("BackPassiveVerticalForce").ToString();
+                        break;
                     default:
                         break;
                 }

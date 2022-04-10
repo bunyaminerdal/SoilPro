@@ -235,4 +235,8 @@
     <system:String x:Key="BackTotalStress" >Back Total Stress</system:String>
     <system:String x:Key="BackWaterPressure" >Back Water Pressure</system:String>
     <system:String x:Key="FrontWaterPressure" >Front Water Pressure</system:String>
+    <system:String x:Key="BackActiveHorizontalForce" >Back Active Horizontal Force</system:String>
+    <system:String x:Key="BackPassiveHorizontalForce" >Back Passive Horizontal Force</system:String>
+    <system:String x:Key="BackActiveVerticalForce" >Back Active Vertical Force</system:String>
+    <system:String x:Key="BackPassiveVerticalForce" >Back Passive Vertical Force</system:String>
 </ResourceDictionary>
