@@ -29,17 +29,10 @@ namespace ExDesign.Pages.Inputs
 
         private void analysis_button_Click(object sender, RoutedEventArgs e)
         {
-            Analysis.WallPartization();
-            Analysis.SurchargeToFrameNodes();
-            Analysis.BackWaterPressureToFrameNodes();
-            Analysis.FrontWaterPressureToFrameNodes();
-            Analysis.HydroStaticWaterPressureToFrameNodes();
-            Analysis.BackEffectiveStressToFrameNodes();
-            Analysis.FrontEffectiveStressToFrameNodes();
-            Analysis.SubgradeModulusofSoilToFrameNodes();
-            Analysis.BackActivePassiveCoefToFrameNodes();
-            Analysis.FrontActivePassiveCoefToFrameNodes();
-            StaticVariables.isAnalysisDone = true;
+            double exH_waterH2 =StaticVariables.viewModel.GetexcavationHeight() + (StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue);
+            double exH_calc = WpfUtils.GetExHeightForCalculation();
+            Analysis.StageCalculation(exH_waterH2,exH_calc);           
+            
             LoadsAndForcesPre();
             //FrameData.FrameSave();
         }
@@ -99,6 +92,18 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.Back_Passive_Vertical_Force:
                         listitem.Item1.Name = FindResource("BackPassiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Front_Active_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("FrontActiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Front_Passive_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("FrontPassiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Front_Active_Vertical_Force:
+                        listitem.Item1.Name = FindResource("FrontActiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Front_Passive_Vertical_Force:
+                        listitem.Item1.Name = FindResource("FrontPassiveVerticalForce").ToString();
                         break;
                     default:
                         break;

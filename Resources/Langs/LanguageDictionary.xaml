@@ -239,4 +239,9 @@
     <system:String x:Key="BackPassiveHorizontalForce" >Back Passive Horizontal Force</system:String>
     <system:String x:Key="BackActiveVerticalForce" >Back Active Vertical Force</system:String>
     <system:String x:Key="BackPassiveVerticalForce" >Back Passive Vertical Force</system:String>
+    <system:String x:Key="FrontActiveHorizontalForce" >Front Active Horizontal Force</system:String>
+    <system:String x:Key="FrontPassiveHorizontalForce" >Front Passive Horizontal Force</system:String>
+    <system:String x:Key="FrontActiveVerticalForce" >Front Active Vertical Force</system:String>
+    <system:String x:Key="FrontPassiveVerticalForce" >Front Passive Vertical Force</system:String>
+
 </ResourceDictionary>

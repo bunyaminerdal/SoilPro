@@ -275,5 +275,9 @@ namespace ExDesign.Scripts
         Back_Passive_Horizontal_Force,
         Back_Active_Vertical_Force,
         Back_Passive_Vertical_Force,
+        Front_Active_Horizontal_Force,
+        Front_Passive_Horizontal_Force,
+        Front_Active_Vertical_Force,
+        Front_Passive_Vertical_Force,
     }
 }
