@@ -99,7 +99,22 @@ namespace ExDesign.Scripts
             FrameData.Frames.Reverse();
         }
         public static void SurchargeToFrameNodes(double exH_calc)
-        {            
+        {
+            //surface loaddan gelen nokta force ları
+            foreach (var surface in StaticVariables.viewModel.surfaceSurchargeDatas)
+            {
+                foreach (var frame in FrameData.Frames)
+                {
+                    double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));                    
+                    double startLoad = surface.Load;
+                    double endLoad = surface.Load;
+                    
+                    double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
+                    frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(surface, startLoad, startNodeForce));
+                    double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
+                    frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(surface, endLoad, endNodeForce));
+                }
+            }
             //point loaddan gelen nokta force ları
             foreach (var pointLoad in StaticVariables.viewModel.PointLoadDatas)
             {
@@ -224,6 +239,7 @@ namespace ExDesign.Scripts
         {
             double _waterDensity = StaticVariables.waterDensity;
             double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
+            WaterLoadData waterLoadData = new WaterLoadData() { ID = Guid.NewGuid(), Type = LoadType.Back_WaterPressure };
             // water load type1
             foreach (var frame in FrameData.Frames)
             {
@@ -240,8 +256,7 @@ namespace ExDesign.Scripts
                 if (waterH1 < endLength)
                 {
                     endLoad = (endLength - waterH1) * _waterDensity;
-                }
-                WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.Back_WaterPressure };
+                }                
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(waterLoadData, startLoad, startNodeForce));
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -251,6 +266,7 @@ namespace ExDesign.Scripts
         public static void FrontWaterPressureToFrameNodes(double exH_waterH2, double exH_calc)
         {
             double _waterDensity = StaticVariables.waterDensity;
+            WaterLoadData waterLoadData = new WaterLoadData() { ID = Guid.NewGuid(), Type = LoadType.Front_WaterPressure };
             // water load type1
             foreach (var frame in FrameData.Frames)
             {
@@ -268,7 +284,7 @@ namespace ExDesign.Scripts
                 {
                     endLoad = (endLength - (exH_waterH2)) * _waterDensity;
                 }
-                WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.Front_WaterPressure };
+                
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(waterLoadData, startLoad, startNodeForce));
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -279,7 +295,7 @@ namespace ExDesign.Scripts
         {            
             double _waterDensity = StaticVariables.waterDensity;
             double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
-
+            WaterLoadData waterLoadData = new WaterLoadData() { ID = Guid.NewGuid(), Type = LoadType.HydroStaticWaterPressure };
             switch (WpfUtils.GetGroundWaterType(StaticVariables.viewModel.WaterTypeIndex))
             {
                 case GroundWaterType.none:
@@ -302,7 +318,7 @@ namespace ExDesign.Scripts
                         {
                             endLoad = (endLength - waterH1) * _waterDensity;
                         }                        
-                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.HydroStaticWaterPressure };
+                        
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -336,7 +352,6 @@ namespace ExDesign.Scripts
                         {
                             endLoad = (endLength - waterH1 - endfrontLength) * _waterDensity;
                         }
-                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.HydroStaticWaterPressure };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -374,7 +389,6 @@ namespace ExDesign.Scripts
                         {
                             endLoad = (endLength - waterH1 - endfrontLength) * _waterDensity - (endfrontLength * _waterDensity * scaleWaterLoad);
                         }
-                        WaterLoadData waterLoadData = new WaterLoadData() { Type = LoadType.HydroStaticWaterPressure };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add( new Tuple<Load,double, double>(waterLoadData,startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
@@ -391,9 +405,15 @@ namespace ExDesign.Scripts
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double _waterDensity = StaticVariables.waterDensity;
             double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
-
+            EffectiveStress effectiveStress = new EffectiveStress() { ID = Guid.NewGuid(), Type = LoadType.Back_EffectiveStress };
+            EffectiveStress totalStress = new EffectiveStress() { ID = Guid.NewGuid(), Type = LoadType.Back_TotalStress };
             double startLoad = 0;
             double endLoad = 0;
+            foreach (var surfaceLoad in StaticVariables.viewModel.surfaceSurchargeDatas)
+            {
+                startLoad += surfaceLoad.Load;
+                endLoad += surfaceLoad.Load;
+            }
             foreach (var frame in FrameData.Frames)
             {
                 double frameLength = Math.Sqrt((Math.Pow(frame.StartPoint.X - frame.EndPoint.X, 2) + Math.Pow(frame.StartPoint.Y - frame.EndPoint.Y, 2)));
@@ -474,14 +494,13 @@ namespace ExDesign.Scripts
                     }
                 }
                 
-                EffectiveStress effectiveStress = new EffectiveStress() { Type = LoadType.Back_EffectiveStress };                
+                               
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load,double,double>(effectiveStress,startLoad,startNodeForce));
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add( new Tuple<Load,double, double>(effectiveStress,endLoad, endNodeForce));
 
                 //total Stress
-                EffectiveStress totalStress = new EffectiveStress() { Type = LoadType.Back_TotalStress };
                 double totalStartLoad = startLoad + (frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure) != null? frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure).Item2:0);
                 double totalEndLoad = endLoad +(frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure) !=null? frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_WaterPressure).Item2:0);
                 double totalStartNodeForce = ((((totalStartLoad + totalEndLoad) / 2) + totalStartLoad) / 2) * (frameLength / 2);
@@ -494,6 +513,9 @@ namespace ExDesign.Scripts
         {            
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double _waterDensity = StaticVariables.waterDensity;
+            EffectiveStress effectiveStress = new EffectiveStress() { ID = Guid.NewGuid(), Type = LoadType.Front_EffectiveStress };
+            EffectiveStress totalStress = new EffectiveStress() { ID = Guid.NewGuid(), Type = LoadType.Front_TotalStress };
+
             double startLoad = 0;
             double endLoad = 0;
             foreach (var frame in FrameData.Frames)
@@ -576,13 +598,11 @@ namespace ExDesign.Scripts
                     }
                 }
                 
-                EffectiveStress effectiveStress = new EffectiveStress() { Type = LoadType.Front_EffectiveStress };
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(effectiveStress, startLoad, startNodeForce));
                 double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(effectiveStress, endLoad, endNodeForce));
                 //total Stress
-                EffectiveStress totalStress = new EffectiveStress() { Type = LoadType.Front_TotalStress };
                 double totalStartLoad = startLoad + (frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure) != null ? frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure).Item2 : 0);
                 double totalEndLoad = endLoad + (frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure) != null ? frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_WaterPressure).Item2 : 0);
                 double totalStartNodeForce = ((((totalStartLoad + totalEndLoad) / 2) + totalStartLoad) / 2) * (frameLength / 2);
@@ -593,6 +613,8 @@ namespace ExDesign.Scripts
         }
         public static void SubgradeModulusofSoilToFrameNodes()
         {
+            SubgradeModulusofSoil subgrademodulus = new SubgradeModulusofSoil() { ID = Guid.NewGuid(), Type = LoadType.SubgradeModulusofSoil };
+
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double wallt = StaticVariables.viewModel.GetWallThickness();
             double wallEI = StaticVariables.viewModel.GetWallEI();
@@ -648,11 +670,10 @@ namespace ExDesign.Scripts
                             
                         }
 
-                        SubgradeModulusofSoil soilSpringCoef = new SubgradeModulusofSoil() { Type =LoadType.SubgradeModulusofSoil };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
+                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, endLoad, endNodeForce));
+                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, endLoad, endNodeForce));
                     }
 
                     break;
@@ -729,11 +750,10 @@ namespace ExDesign.Scripts
 
                         }
 
-                        SubgradeModulusofSoil soilSpringCoef = new SubgradeModulusofSoil() { Type = LoadType.SubgradeModulusofSoil };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
+                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, endLoad, endNodeForce));
+                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, endLoad, endNodeForce));
                     }
                     break;
                 case SoilModelType.Vesic_Model:
@@ -784,11 +804,10 @@ namespace ExDesign.Scripts
                             }
                         }
 
-                        SubgradeModulusofSoil soilSpringCoef = new SubgradeModulusofSoil() { Type = LoadType.SubgradeModulusofSoil };
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
-                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, startLoad, startNodeForce));
+                        frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, startLoad, startNodeForce));
                         double endNodeForce = ((((startLoad + endLoad) / 2) + endLoad) / 2) * (frameLength / 2);
-                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(soilSpringCoef, endLoad, endNodeForce));
+                        frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, endLoad, endNodeForce));
                     }
                     break;
                 default:
@@ -798,6 +817,14 @@ namespace ExDesign.Scripts
         }
         public static void BackActivePassiveCoefToFrameNodes()
         {
+            Ka_Kp Back_Kactive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Back_Kactive };
+            Ka_Kp Back_Kpassive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Back_Kpassive };
+            Force Back_Active_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Active_Vertical_Force };
+            Force Back_Passive_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Passive_Vertical_Force };
+            Force Back_Active_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Active_Horizontal_Force };
+            Force Back_Passive_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Passive_Horizontal_Force };
+            Force Back_Rest_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Rest_Horizontal_Force };
+
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double waterH1 = StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH1() : double.MaxValue;
             double ksi = 90 * Math.PI / 180;
@@ -830,6 +857,9 @@ namespace ExDesign.Scripts
                 double Passive_Vertical_Force_end = 0;
                 double Passive_Horizontal_Force_start = 0;
                 double Passive_Horizontal_Force_end = 0;
+
+                double Rest_Horizontal_Force_start = 0;
+                double Rest_Horizontal_Force_end = 0;
                 double soilLayerHeight = 0;
 
                 SoilData lastSoil = null;
@@ -840,7 +870,8 @@ namespace ExDesign.Scripts
                     if (soilLayer.Soil != null)
                     {
                         double delta = soilLayer.Soil.WallSoilFrictionAngle * Math.PI / 180;
-
+                        double K0 = soilLayer.Soil.K0;
+                        double fi = soilLayer.Soil.SoilFrictionAngle * Math.PI / 180;
                         if (startLength < soilLayerHeight && soilLayerHeight - soilLayer.LayerHeight <= startLength)
                         {
 
@@ -848,6 +879,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
+                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -887,6 +919,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
+                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -936,6 +969,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
+                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -972,9 +1006,10 @@ namespace ExDesign.Scripts
                                 }
                             }
                             else
-                            {
+                            {                                
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
+                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1030,13 +1065,15 @@ namespace ExDesign.Scripts
                     if (lastSoil != null)
                     {
                         double delta = lastSoil.WallSoilFrictionAngle* Math.PI / 180;
-
+                        double K0 = lastSoil.K0;
+                        double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
                         if (startLength < wallH && soilLayerHeight <= startLength)
                         {
                             if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = lastSoil.EffectiveCohesion;
+                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1076,6 +1113,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = lastSoil.UndrainedShearStrength;
+                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1125,6 +1163,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = lastSoil.EffectiveCohesion;
+                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1164,6 +1203,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = lastSoil.UndrainedShearStrength;
+                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1210,42 +1250,51 @@ namespace ExDesign.Scripts
                     }
                 }
 
-                Ka_Kp Back_Kactive = new Ka_Kp() { Type = LoadType.Back_Kactive };                
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double,double>(Back_Kactive, Ka_S_start, Ka_P_start,Ka_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double,double>(Back_Kactive, Ka_S_end, Ka_P_end, Ka_N_end));
 
-                Ka_Kp Back_Kpassive = new Ka_Kp() { Type = LoadType.Back_Kpassive };
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Kpassive, Kp_S_start, Kp_P_start, Kp_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Kpassive, Kp_S_end, Kp_P_end, Kp_N_end));
                 
 
-                Force Back_Active_Vertical_Force = new Force() { Type = LoadType.Back_Active_Vertical_Force };
                 double Active_vertical_startNodeForce = ((((Active_Vertical_Force_start + Active_Vertical_Force_end) / 2) + Active_Vertical_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Active_Vertical_Force, Active_Vertical_Force_start, Active_vertical_startNodeForce));
                 double Active_vertical_endNodeForce = ((((Active_Vertical_Force_start + Active_Vertical_Force_end) / 2) + Active_Vertical_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Active_Vertical_Force, Active_Vertical_Force_end, Active_vertical_endNodeForce));
 
-                Force Back_Passive_Vertical_Force = new Force() { Type = LoadType.Back_Passive_Vertical_Force };
                 double Passive_Vertical_startNodeForce = ((((Passive_Vertical_Force_start + Passive_Vertical_Force_end) / 2) + Passive_Vertical_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Passive_Vertical_Force, Passive_Vertical_Force_start, Passive_Vertical_startNodeForce));
                 double Passive_Vertical_endNodeForce = ((((Passive_Vertical_Force_start + Passive_Vertical_Force_end) / 2) + Passive_Vertical_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Passive_Vertical_Force, Passive_Vertical_Force_end, Passive_Vertical_endNodeForce));
 
-                Force Back_Active_Horizontal_Force = new Force() { Type = LoadType.Back_Active_Horizontal_Force };
                 double Active_horizontal_startNodeForce = ((((Active_Horizontal_Force_start + Active_Horizontal_Force_end) / 2) + Active_Horizontal_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Active_Horizontal_Force, Active_Horizontal_Force_start, Active_horizontal_startNodeForce));
                 double Active_horizontal_endNodeForce = ((((Active_Horizontal_Force_start + Active_Horizontal_Force_end) / 2) + Active_Horizontal_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Active_Horizontal_Force, Active_Horizontal_Force_end, Active_horizontal_endNodeForce));
 
-                Force Back_Passive_Horizontal_Force = new Force() { Type = LoadType.Back_Passive_Horizontal_Force };
                 double Passive_Horizontal_startNodeForce = ((((Passive_Horizontal_Force_start + Passive_Horizontal_Force_end) / 2) + Passive_Horizontal_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Passive_Horizontal_Force, Passive_Horizontal_Force_start, Passive_Horizontal_startNodeForce));
                 double Passive_Horizontal_endNodeForce = ((((Passive_Horizontal_Force_start + Passive_Horizontal_Force_end) / 2) + Passive_Horizontal_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Passive_Horizontal_Force, Passive_Horizontal_Force_end, Passive_Horizontal_endNodeForce));
+
+                double Rest_horizontal_startNodeForce = ((((Rest_Horizontal_Force_start + Rest_Horizontal_Force_end) / 2) + Rest_Horizontal_Force_start) / 2) * (frameLength / 2);
+                frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Rest_Horizontal_Force, Rest_Horizontal_Force_start, Rest_horizontal_startNodeForce));
+                double Rest_horizontal_endNodeForce = ((((Rest_Horizontal_Force_start + Rest_Horizontal_Force_end) / 2) + Rest_Horizontal_Force_end) / 2) * (frameLength / 2);
+                frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Rest_Horizontal_Force, Rest_Horizontal_Force_end, Rest_horizontal_endNodeForce));
+
+
             }
         }
         public static void FrontActivePassiveCoefToFrameNodes(double exH_waterH2, double exH_calc)
         {
+            Ka_Kp Front_Kactive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Front_Kactive };
+            Ka_Kp Front_Kpassive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Front_Kpassive };
+            Force Front_Active_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Active_Vertical_Force };
+            Force Front_Passive_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Passive_Vertical_Force };
+            Force Front_Active_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Active_Horizontal_Force };
+            Force Front_Passive_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Passive_Horizontal_Force };
+            Force Front_Rest_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Rest_Horizontal_Force };
+
             double wallH = StaticVariables.viewModel.GetWallHeight();
             double ksi = 90 * Math.PI / 180;
             double gamaw = StaticVariables.waterDensity;
@@ -1277,6 +1326,9 @@ namespace ExDesign.Scripts
                 double Passive_Vertical_Force_end = 0;
                 double Passive_Horizontal_Force_start = 0;
                 double Passive_Horizontal_Force_end = 0;
+
+                double Rest_Horizontal_Force_start = 0;
+                double Rest_Horizontal_Force_end = 0;
                 double soilLayerHeight = 0;
 
                 SoilData lastSoil = null;
@@ -1287,14 +1339,16 @@ namespace ExDesign.Scripts
                     if (soilLayer.Soil != null)
                     {
                         double delta = soilLayer.Soil.WallSoilFrictionAngle * Math.PI / 180;
-
+                        double K0 = soilLayer.Soil.K0;
+                        double fi = soilLayer.Soil.SoilFrictionAngle * Math.PI / 180;
                         if (startLength < soilLayerHeight && soilLayerHeight - soilLayer.LayerHeight <= startLength && exH_calc <= startLength)
                         {
 
                             if (WpfUtils.GetSoilState(soilLayer.Soil.SoilStressStateIndex) == SoilState.Drained)
                             {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
+                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
+                                Front_Rest_Start(fi,beta_front, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1332,8 +1386,9 @@ namespace ExDesign.Scripts
                             }
                             else
                             {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
+                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
+                                Front_Rest_Start(fi, beta_front,K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1383,6 +1438,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
+                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1422,6 +1478,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
+                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1477,13 +1534,15 @@ namespace ExDesign.Scripts
                     if (lastSoil != null)
                     {
                         double delta = lastSoil.WallSoilFrictionAngle * Math.PI / 180;
-
+                        double K0 = lastSoil.K0;
+                        double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
                         if (startLength < wallH && soilLayerHeight <= startLength && exH_calc <= startLength)
                         {
                             if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
                             {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
+                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = lastSoil.EffectiveCohesion;
+                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1521,8 +1580,9 @@ namespace ExDesign.Scripts
                             }
                             else
                             {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
+                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = lastSoil.UndrainedShearStrength;
+                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1570,8 +1630,9 @@ namespace ExDesign.Scripts
 
                             if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
                             {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
+                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = lastSoil.EffectiveCohesion;
+                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1609,8 +1670,9 @@ namespace ExDesign.Scripts
                             }
                             else
                             {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
+                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = lastSoil.UndrainedShearStrength;
+                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1657,38 +1719,68 @@ namespace ExDesign.Scripts
                     }
                 }
 
-                Ka_Kp Front_Kactive = new Ka_Kp() { Type = LoadType.Front_Kactive };
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kactive, Ka_S_start, Ka_P_start, Ka_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kactive, Ka_S_end, Ka_P_end, Ka_N_end));
 
-                Ka_Kp Front_Kpassive = new Ka_Kp() { Type = LoadType.Front_Kpassive };
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kpassive, Kp_S_start, Kp_P_start, Kp_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kpassive, Kp_S_end, Kp_P_end, Kp_N_end));
 
 
-                Force Front_Active_Vertical_Force = new Force() { Type = LoadType.Front_Active_Vertical_Force };
                 double Active_vertical_startNodeForce = ((((Active_Vertical_Force_start + Active_Vertical_Force_end) / 2) + Active_Vertical_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Active_Vertical_Force, Active_Vertical_Force_start, Active_vertical_startNodeForce));
                 double Active_vertical_endNodeForce = ((((Active_Vertical_Force_start + Active_Vertical_Force_end) / 2) + Active_Vertical_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Active_Vertical_Force, Active_Vertical_Force_end, Active_vertical_endNodeForce));
 
-                Force Front_Passive_Vertical_Force = new Force() { Type = LoadType.Front_Passive_Vertical_Force };
                 double Passive_Vertical_startNodeForce = ((((Passive_Vertical_Force_start + Passive_Vertical_Force_end) / 2) + Passive_Vertical_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Passive_Vertical_Force, Passive_Vertical_Force_start, Passive_Vertical_startNodeForce));
                 double Passive_Vertical_endNodeForce = ((((Passive_Vertical_Force_start + Passive_Vertical_Force_end) / 2) + Passive_Vertical_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Passive_Vertical_Force, Passive_Vertical_Force_end, Passive_Vertical_endNodeForce));
 
-                Force Front_Active_Horizontal_Force = new Force() { Type = LoadType.Front_Active_Horizontal_Force };
                 double Active_horizontal_startNodeForce = ((((Active_Horizontal_Force_start + Active_Horizontal_Force_end) / 2) + Active_Horizontal_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Active_Horizontal_Force, Active_Horizontal_Force_start, Active_horizontal_startNodeForce));
                 double Active_horizontal_endNodeForce = ((((Active_Horizontal_Force_start + Active_Horizontal_Force_end) / 2) + Active_Horizontal_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Active_Horizontal_Force, Active_Horizontal_Force_end, Active_horizontal_endNodeForce));
 
-                Force Front_Passive_Horizontal_Force = new Force() { Type = LoadType.Front_Passive_Horizontal_Force };
                 double Passive_Horizontal_startNodeForce = ((((Passive_Horizontal_Force_start + Passive_Horizontal_Force_end) / 2) + Passive_Horizontal_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Passive_Horizontal_Force, Passive_Horizontal_Force_start, Passive_Horizontal_startNodeForce));
                 double Passive_Horizontal_endNodeForce = ((((Passive_Horizontal_Force_start + Passive_Horizontal_Force_end) / 2) + Passive_Horizontal_Force_end) / 2) * (frameLength / 2);
                 frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Passive_Horizontal_Force, Passive_Horizontal_Force_end, Passive_Horizontal_endNodeForce));
+
+                double Rest_horizontal_startNodeForce = ((((Rest_Horizontal_Force_start + Rest_Horizontal_Force_end) / 2) + Rest_Horizontal_Force_start) / 2) * (frameLength / 2);
+                frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Rest_Horizontal_Force, Rest_Horizontal_Force_start, Rest_horizontal_startNodeForce));
+                double Rest_horizontal_endNodeForce = ((((Rest_Horizontal_Force_start + Rest_Horizontal_Force_end) / 2) + Rest_Horizontal_Force_end) / 2) * (frameLength / 2);
+                frame.endNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Rest_Horizontal_Force, Rest_Horizontal_Force_end, Rest_horizontal_endNodeForce));
+
+            }
+        }
+        private static void Front_Rest_Start(double fi,double beta_back,double K0,double stress,ref double Rest_Horizontal_Force_start)
+        {
+            if(fi <= 0)
+            {
+                Rest_Horizontal_Force_start = K0 * stress;
+            }
+            else
+            {
+                if(beta_back > fi)
+                {
+                    beta_back = fi;
+                }
+                Rest_Horizontal_Force_start = K0 * stress * Math.Sin(fi) * Math.Cos(beta_back) / (Math.Sin(fi) - Math.Pow(Math.Sin(beta_back), 2.0));
+            }
+        }
+        private static void Front_Rest_End(double fi, double beta_back,double K0, double stress, ref double Rest_Horizontal_Force_end)
+        {
+            if (fi <= 0)
+            {
+                Rest_Horizontal_Force_end = K0 * stress;
+            }
+            else
+            {
+                if (beta_back > fi)
+                {
+                    beta_back = fi;
+                }
+                Rest_Horizontal_Force_end = K0 * stress * Math.Sin(fi) * Math.Cos(beta_back) / (Math.Sin(fi) - Math.Pow(Math.Sin(beta_back), 2.0));
             }
         }
         private static void Back_TBDY_Theory_Active_Start(double waterH1,double delta,double stress,double cPrime, double ksi, double gamaw, double beta_back, double startLength, ref double Ka_P_start, ref double Ka_N_start, ref double Ka_S_start,ref double Active_Vertical_Force_start,ref double Active_Horizontal_Force_start, SoilData soil)

@@ -48,15 +48,7 @@ namespace ExDesign.Pages.Inputs
             foreach (var listitem in FrameData.Frames[0].startNodeLoadAndForce)
             {
                 switch (listitem.Item1.Type)
-                {
-                    case LoadType.SurfaceLoad:
-                        break;
-                    case LoadType.StripLoad:
-                        break;
-                    case LoadType.LineLoad:
-                        break;
-                    case LoadType.PointLoad:
-                        break;
+                {                    
                     case LoadType.Back_WaterPressure:
                         listitem.Item1.Name = FindResource("BackWaterPressure").ToString();
                         break;
@@ -104,6 +96,12 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.Front_Passive_Vertical_Force:
                         listitem.Item1.Name = FindResource("FrontPassiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Front_Rest_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("FrontRestHorizontalForce").ToString();
+                        break;
+                    case LoadType.Back_Rest_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("BackRestHorizontalForce").ToString();
                         break;
                     default:
                         break;

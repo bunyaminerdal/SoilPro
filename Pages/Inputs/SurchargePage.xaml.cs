@@ -67,7 +67,7 @@ namespace ExDesign.Pages.Inputs
 
         private void surfaceSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            SurfaceSurchargeData surfaceSurchargeData = new SurfaceSurchargeData() { Name=FindResource("Surcharge").ToString(),Load=10, Type = LoadType.SurfaceLoad };
+            SurfaceSurchargeData surfaceSurchargeData = new SurfaceSurchargeData() { Name=FindResource("Surcharge").ToString(),Load=10, Type = LoadType.SurfaceLoad, ID = Guid.NewGuid() };
             StaticVariables.viewModel.surfaceSurchargeDatas.Add(surfaceSurchargeData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -76,7 +76,7 @@ namespace ExDesign.Pages.Inputs
 
         private void stripSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            StripLoadData stripLoadData = new StripLoadData() { Name=FindResource("StripLoad").ToString(),DistanceFromWall=1,StripLength=2,StartLoad=11,EndLoad=11, Type = LoadType.StripLoad };
+            StripLoadData stripLoadData = new StripLoadData() { Name=FindResource("StripLoad").ToString(),DistanceFromWall=1,StripLength=2,StartLoad=11,EndLoad=11, Type = LoadType.StripLoad, ID = Guid.NewGuid() };
             StaticVariables.viewModel.stripLoadDatas.Add(stripLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -85,7 +85,7 @@ namespace ExDesign.Pages.Inputs
 
         private void LineSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            LineLoadData lineLoadData = new LineLoadData() { Name= FindResource("LineLoad").ToString(), DistanceFromWall=3,Load=20,Type = LoadType.LineLoad};
+            LineLoadData lineLoadData = new LineLoadData() { Name= FindResource("LineLoad").ToString(), DistanceFromWall=3,Load=20,Type = LoadType.LineLoad, ID = Guid.NewGuid() };
             StaticVariables.viewModel.LineLoadDatas.Add(lineLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();
@@ -94,7 +94,7 @@ namespace ExDesign.Pages.Inputs
 
         private void pointSurcharge_bttn_Click(object sender, RoutedEventArgs e)
         {
-            PointLoadData pointLoadData = new PointLoadData() { Name= FindResource("PointLoad").ToString(), DistanceFromWall=2.5,Load=50, Type = LoadType.PointLoad };
+            PointLoadData pointLoadData = new PointLoadData() { Name= FindResource("PointLoad").ToString(), DistanceFromWall=2.5,Load=50, Type = LoadType.PointLoad, ID = Guid.NewGuid() };
             StaticVariables.viewModel.PointLoadDatas.Add(pointLoadData);
             LoadGridInitialize();
             StaticVariables.view3DPage.Refreshview();

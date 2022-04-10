@@ -211,34 +211,35 @@ namespace ExDesign.Pages.Inputs.Views
                         double endEndLoad = 0;
                         foreach (var frame in FrameData.Frames)
                         {
-                            var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
+
+                            var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.ID == showenLoad.ID);
+
                             if (endLoad.Item2 > totalLoad)
                             {
-                                totalLoad = endLoad.Item2;
+                                totalLoad = endLoad.Item3;
                                 endFramePoint = frame.EndPoint;
-                                endEndLoad = endLoad.Item2;
+                                endEndLoad = endLoad.Item3;
                             }
-                            
+
                         }
                         loadScale = loadLimit / totalLoad;
                         
                         foreach (var frame in FrameData.Frames)
                         {
-                            var startLoad = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
-                            var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == showenLoad.Type);
-                            GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
-                                new Point(frame.StartPoint.X + startLoad.Item2 * loadScale, frame.StartPoint.Y),
-                                new Point(frame.EndPoint.X + endLoad.Item2 * loadScale, frame.EndPoint.Y),
+                            var startLoad = frame.startNodeLoadAndForce.Find(x => x.Item1.ID == showenLoad.ID);
+                            var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.ID == showenLoad.ID);
+                            
+                                GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
+                                new Point(frame.StartPoint.X + startLoad.Item3 * loadScale, frame.StartPoint.Y),
+                                new Point(frame.EndPoint.X + endLoad.Item3 * loadScale, frame.EndPoint.Y),
                                 Colors.Red);
-                            mainDrawingGroup.Children.Add(loadLineDrawing);                           
-                            
-                            
+                                mainDrawingGroup.Children.Add(loadLineDrawing);
+
                         }
                           //deneme texti
                             GeometryDrawing freeText = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint.X + endEndLoad * loadScale, endFramePoint.Y), new Point(endFramePoint.X + endEndLoad * loadScale + 0.5, endFramePoint.Y), Colors.Red, WpfUtils.ChangeDecimalOptions(endEndLoad));
                             mainDrawingGroup.Children.Add(freeText);
-                        
-                        
+
                     }
                     if (isForce)
                     {
@@ -253,7 +254,7 @@ namespace ExDesign.Pages.Inputs.Views
                         double endEndLoad2 = 0;
                         foreach (var frame in FrameData.Frames)
                         {
-                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
                             if (endLoad.Item2 > totalLoad)
                             {
                                 totalLoad = endLoad.Item2;
@@ -277,19 +278,20 @@ namespace ExDesign.Pages.Inputs.Views
                         loadScale = loadLimit / Math.Max( totalLoad,Math.Max( totalLoad1,totalLoad2));
                         foreach (var frame in FrameData.Frames)
                         {
-                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
-                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
                             GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
                                 new Point(frame.StartPoint.X + startLoad.Item2 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item2 * loadScale, frame.EndPoint.Y),
                                 Colors.Red);
                             mainDrawingGroup.Children.Add(loadLineDrawing);
+                            
 
                         }
                         foreach (var frame in FrameData.Frames)
                         {
-                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
-                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
                             GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
                                 new Point(frame.StartPoint.X + startLoad.Item3 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item3 * loadScale, frame.EndPoint.Y),
@@ -299,8 +301,8 @@ namespace ExDesign.Pages.Inputs.Views
                         }
                         foreach (var frame in FrameData.Frames)
                         {
-                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
-                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.Type == showenLoad.Type);
+                            var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
+                            var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
                             GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
                                 new Point(frame.StartPoint.X + startLoad.Item4 * loadScale, frame.StartPoint.Y),
                                 new Point(frame.EndPoint.X + endLoad.Item4 * loadScale, frame.EndPoint.Y),
