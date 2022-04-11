@@ -1349,7 +1349,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
-                                Front_Rest_Start(fi,beta_front, K0, stress, ref Rest_Horizontal_Force_start);
+                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
@@ -1389,7 +1389,7 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
-                                Front_Rest_Start(fi, beta_front,K0, stress, ref Rest_Horizontal_Force_start);
+                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
@@ -1437,7 +1437,7 @@ namespace ExDesign.Scripts
                         {
                             if (WpfUtils.GetSoilState(soilLayer.Soil.SoilStressStateIndex) == SoilState.Drained)
                             {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
+                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
                                 Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
@@ -1477,7 +1477,7 @@ namespace ExDesign.Scripts
                             }
                             else
                             {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
+                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
                                 Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
@@ -1504,15 +1504,12 @@ namespace ExDesign.Scripts
                                 {
                                     case UnDrainedTheories.TBDY:
                                         Back_TBDY_Theory_Passive_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
-
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
                                         Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
-
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_front, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
-
                                         break;
                                     case UnDrainedTheories.RankineTheory:
                                         Back_Rankine_Theory_Passive_End(delta, stress, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
