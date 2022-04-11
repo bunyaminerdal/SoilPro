@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExDesign.Scripts;
 using ExDesign.Datas;
+using System.Diagnostics;
 
 namespace ExDesign.Pages.Inputs
 {
@@ -31,7 +32,7 @@ namespace ExDesign.Pages.Inputs
         {
             double exH_waterH2 =StaticVariables.viewModel.GetexcavationHeight() + (StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue);
             double exH_calc = WpfUtils.GetExHeightForCalculation();
-            Analysis.StageCalculation(exH_waterH2,exH_calc);           
+            Analysis.StageCalculation(exH_waterH2,exH_calc);
             
             LoadsAndForcesPre();
             //FrameData.FrameSave();
@@ -127,12 +128,64 @@ namespace ExDesign.Pages.Inputs
                         break;
                 }
             }
-            var loadandForceDic = FrameData.Frames[0].startNodeLoadAndForce;
+            foreach (var listitem in NodeData.Nodes[0].nodeForce)
+            {
+                Debug.WriteLine(listitem.Item1.Name);
+
+                switch (listitem.Item1.Type)
+                {
+                    case LoadType.HydroStaticWaterPressure:
+                        listitem.Item1.Name = FindResource("HydroStaticWaterPressure").ToString();
+                        break;
+                    case LoadType.SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
+                        break;
+                    case LoadType.Back_Active_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Back_Passive_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("BackPassiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Back_Active_Vertical_Force:
+                        listitem.Item1.Name = FindResource("BackActiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Back_Passive_Vertical_Force:
+                        listitem.Item1.Name = FindResource("BackPassiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Front_Active_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("FrontActiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Front_Passive_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("FrontPassiveHorizontalForce").ToString();
+                        break;
+                    case LoadType.Front_Active_Vertical_Force:
+                        listitem.Item1.Name = FindResource("FrontActiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Front_Passive_Vertical_Force:
+                        listitem.Item1.Name = FindResource("FrontPassiveVerticalForce").ToString();
+                        break;
+                    case LoadType.Front_Rest_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("FrontRestHorizontalForce").ToString();
+                        break;
+                    case LoadType.Back_Rest_Horizontal_Force:
+                        listitem.Item1.Name = FindResource("BackRestHorizontalForce").ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            var loadandForceDic = FrameData.Frames[0].startNodeLoadAndForce;            
             loads_combobox.ItemsSource = loadandForceDic;
             loads_combobox.DisplayMemberPath = "Item1.Name";
+
             var loadandForceDic1 = FrameData.Frames[0].startNodeActivePassiveCoef_S_P_N;
             forces_combobox.ItemsSource = loadandForceDic1;
             forces_combobox.DisplayMemberPath = "Item1.Name";
+
+            var loadandForceDic2 = NodeData.Nodes[0].nodeForce;
+            nodeforces_combobox.ItemsSource = loadandForceDic2;
+            nodeforces_combobox.DisplayMemberPath = "Item1.Name";
         }
 
         private void loads_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -154,11 +207,21 @@ namespace ExDesign.Pages.Inputs
                 StaticVariables.loadsAndFocesPage.ShowForce(dic.Item1);
             }
         }
-
+        private void nodeforces_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox.SelectedItem != null)
+            {
+                var dic = (Tuple<Load, double>)comboBox.SelectedItem;
+                StaticVariables.loadsAndFocesPage.ShowNodeForce(dic.Item1);
+            }
+        }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             view3d_main.Content = null;
             sideview_main.Content = null;
         }
+
+        
     }
 }

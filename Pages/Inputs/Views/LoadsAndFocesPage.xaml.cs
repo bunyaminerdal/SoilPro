@@ -47,7 +47,8 @@ namespace ExDesign.Pages.Inputs.Views
         double soilLayerBoxW = 5;
         Load showenLoad;
         bool isLoad = false;
-        bool isForce = false;
+        bool isCoef = false;
+        bool isNodeForce = false;
         public LoadsAndFocesPage()
         {
             InitializeComponent();
@@ -216,9 +217,9 @@ namespace ExDesign.Pages.Inputs.Views
 
                             if (endLoad.Item2 > totalLoad)
                             {
-                                totalLoad = endLoad.Item3;
+                                totalLoad = endLoad.Item2;
                                 endFramePoint = frame.EndPoint;
-                                endEndLoad = endLoad.Item3;
+                                endEndLoad = endLoad.Item2;
                             }
 
                         }
@@ -230,8 +231,8 @@ namespace ExDesign.Pages.Inputs.Views
                             var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.ID == showenLoad.ID);
                             
                                 GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
-                                new Point(frame.StartPoint.X + startLoad.Item3 * loadScale, frame.StartPoint.Y),
-                                new Point(frame.EndPoint.X + endLoad.Item3 * loadScale, frame.EndPoint.Y),
+                                new Point(frame.StartPoint.X + startLoad.Item2 * loadScale, frame.StartPoint.Y),
+                                new Point(frame.EndPoint.X + endLoad.Item2 * loadScale, frame.EndPoint.Y),
                                 Colors.Red);
                                 mainDrawingGroup.Children.Add(loadLineDrawing);
 
@@ -241,7 +242,7 @@ namespace ExDesign.Pages.Inputs.Views
                             mainDrawingGroup.Children.Add(freeText);
 
                     }
-                    if (isForce)
+                    if (isCoef)
                     {
                         double totalLoad = 0;
                         double totalLoad1 = 0;
@@ -320,6 +321,60 @@ namespace ExDesign.Pages.Inputs.Views
                         GeometryDrawing freeText2 = Wpf2Dutils.FreeTextDrawing(new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y), new Point(endFramePoint2.X + endEndLoad2 * loadScale + StaticVariables.freeTextFontHeight , endFramePoint2.Y - 2), Colors.Orange, "N = " + WpfUtils.ChangeDecimalOptions(endEndLoad2));
                         mainDrawingGroup.Children.Add(freeText2);
                     }
+                    if (isNodeForce)
+                    {
+                        double totalLoad = 0;
+                        Point nodePoint = new Point(0, 0);
+                        double nodeForce = 0;
+                        foreach (var node in NodeData.Nodes)
+                        {
+
+                            var endLoad = node.nodeForce.Find(x => x.Item1.ID == showenLoad.ID);
+
+                            if (endLoad.Item2 > totalLoad)
+                            {
+                                totalLoad = endLoad.Item2;
+                                nodePoint = node.Location;
+                                nodeForce = endLoad.Item2;
+                            }
+
+                        }
+                        loadScale = -loadLimit / totalLoad;
+                        if (totalLoad <=0)
+                        {
+                            foreach (var node in NodeData.Nodes)
+                            {
+
+                                var endLoad = node.nodeForce.Find(x => x.Item1.ID == showenLoad.ID);
+
+                                if (endLoad.Item2 < totalLoad)
+                                {
+                                    totalLoad = endLoad.Item2;
+                                    nodePoint = node.Location;
+                                    nodeForce = endLoad.Item2;
+                                }
+
+                            }
+                            loadScale = loadLimit / totalLoad;
+                        }
+                        
+
+                        foreach (var node in NodeData.Nodes)
+                        {
+                            var nodeLoad = node.nodeForce.Find(x => x.Item1.ID == showenLoad.ID);
+
+                            GeometryDrawing loadLineDrawing = Wpf2Dutils.LineGeometryDrawing(
+                            new Point(node.Location.X + nodeLoad.Item2 * loadScale, node.Location.Y),
+                            new Point(node.Location.X , node.Location.Y),
+                            Colors.Red);
+                            mainDrawingGroup.Children.Add(loadLineDrawing);
+
+                        }
+                        //deneme texti
+                        GeometryDrawing freeText = Wpf2Dutils.FreeTextDrawing(new Point(nodePoint.X + nodeForce * loadScale, nodePoint.Y), new Point(nodePoint.X + nodeForce * loadScale + 0.5, nodePoint.Y), Colors.Red, WpfUtils.ChangeDecimalOptions(nodeForce));
+                        mainDrawingGroup.Children.Add(freeText);
+
+                    }
                 }
             }
 
@@ -332,14 +387,24 @@ namespace ExDesign.Pages.Inputs.Views
         public void ShowLoad(Load load)
         {
             isLoad = true;
-            isForce = false;
+            isCoef = false;
+            isNodeForce = false;
             showenLoad = load;
             StartViewModel2D();
         }
         public void ShowForce(Load load)
         {
             isLoad = false;
-            isForce =true;
+            isCoef =true;
+            isNodeForce = false;
+            showenLoad = load;
+            StartViewModel2D();
+        }
+        public void ShowNodeForce(Load load)
+        {
+            isLoad = false;
+            isCoef = false;
+            isNodeForce = true;
             showenLoad = load;
             StartViewModel2D();
         }

@@ -26,6 +26,8 @@
             <Button x:Name="analysis_button" Content="{DynamicResource Analysis}" Click="analysis_button_Click"></Button>
             <ComboBox x:Name="loads_combobox" SelectionChanged="loads_combobox_SelectionChanged"></ComboBox>
             <ComboBox x:Name="forces_combobox" SelectionChanged="forces_combobox_SelectionChanged"></ComboBox>
+            <ComboBox x:Name="nodeforces_combobox" SelectionChanged="nodeforces_combobox_SelectionChanged" ></ComboBox>
         </StackPanel>
+        
     </Grid>
 </Page>

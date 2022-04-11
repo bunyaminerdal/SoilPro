@@ -23,6 +23,7 @@ namespace ExDesign.Scripts
             SubgradeModulusofSoilToFrameNodes();//same values for Front and Back
             BackActivePassiveCoefToFrameNodes();
             FrontActivePassiveCoefToFrameNodes(exH_waterH2, exH_calc);
+            FrameToNodeForce();
             StaticVariables.isAnalysisDone = true;
         }
         public static void WallPartization(double exH_waterH2, double exH_calc)
@@ -2250,6 +2251,59 @@ namespace ExDesign.Scripts
             Kp_S_end = (1 / Math.Pow(Math.Cos(fi), 2.0)) * (2 * Math.Pow(Math.Cos(beta_back), 2.0) + 2 * (cPrime / (gama * endLength)) * Math.Cos(fi) + Math.Sqrt((4 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4 * Math.Pow((cPrime / (gama * endLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8 * (cPrime / (gama * endLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi))));
             Passive_Horizontal_Force_end = stress * Kp_S_end * Math.Cos(delta);
             Passive_Vertical_Force_end = stress * Kp_S_end * Math.Sin(delta);
+        }
+    
+        private static void FrameToNodeForce()
+        {
+            NodeData.Nodes.Clear();
+
+            for (int i = 0; i < FrameData.Frames.Count; i++)
+            {
+                if(i == 0)
+                {
+                    NodeData nodeStart = new NodeData(FrameData.Frames[i].StartPoint);
+                    foreach (var load in FrameData.Frames[i].startNodeLoadAndForce)
+                    {
+                        nodeStart.AddForce(load);
+                        
+                    }
+                    NodeData nodeEnd = new NodeData(FrameData.Frames[i].EndPoint);
+                    for (int j = 0; j < FrameData.Frames[i].startNodeLoadAndForce.Count; j++)
+                    {
+                        Tuple<Load, double, double> tuple = new Tuple<Load, double, double>(
+                            FrameData.Frames[i].startNodeLoadAndForce[j].Item1,
+                            0,
+                            FrameData.Frames[i].endNodeLoadAndForce[j].Item3 + FrameData.Frames[i + 1].startNodeLoadAndForce[j].Item3
+                            );
+                        nodeEnd.AddForce(tuple);
+                    }
+
+                }
+                else if(i == FrameData.Frames.Count - 1)
+                {
+                    NodeData nodeEnd = new NodeData(FrameData.Frames[i].EndPoint);
+                    foreach (var load in FrameData.Frames[i].endNodeLoadAndForce)
+                    {
+                        nodeEnd.AddForce(load);
+                    }
+
+                }
+                else
+                {
+                    NodeData nodeMid = new NodeData(FrameData.Frames[i].EndPoint);
+
+                    for (int j = 0; j < FrameData.Frames[i].startNodeLoadAndForce.Count; j++)
+                    {
+                        Tuple<Load, double, double> tuple = new Tuple<Load, double, double>(
+                            FrameData.Frames[i].startNodeLoadAndForce[j].Item1,
+                            0,
+                            FrameData.Frames[i].endNodeLoadAndForce[j].Item3 + FrameData.Frames[i + 1].startNodeLoadAndForce[j].Item3
+                            );
+                        nodeMid.AddForce(tuple);
+                    }
+                }
+            }
+            NodeData.Nodes.Sort();
         }
     }
 }
