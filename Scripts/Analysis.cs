@@ -2291,6 +2291,10 @@ namespace ExDesign.Scripts
 
                     for (int j = 0; j < FrameData.Frames[i].startNodeLoadAndForce.Count; j++)
                     {
+                        if(FrameData.Frames[i].startNodeLoadAndForce[j].Item1.Type != FrameData.Frames[i + 1].startNodeLoadAndForce[j].Item1.Type)
+                        {
+                            MessageBox.Show("farklı");
+                        }
                         Tuple<Load, double, double> tuple = new Tuple<Load, double, double>(
                             FrameData.Frames[i].startNodeLoadAndForce[j].Item1,
                             0,
