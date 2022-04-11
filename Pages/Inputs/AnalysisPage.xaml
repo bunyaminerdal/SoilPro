@@ -27,6 +27,21 @@
             <ComboBox x:Name="loads_combobox" SelectionChanged="loads_combobox_SelectionChanged"></ComboBox>
             <ComboBox x:Name="forces_combobox" SelectionChanged="forces_combobox_SelectionChanged"></ComboBox>
             <ComboBox x:Name="nodeforces_combobox" SelectionChanged="nodeforces_combobox_SelectionChanged" ></ComboBox>
+            <CheckBox x:Name="showValues" Unchecked="showValues_Unchecked" Checked="showValues_Checked"> textbox doldurulsun mu?</CheckBox>
+            <DockPanel Height="202">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="textblock_start" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    <TextBox Grid.Column="1" x:Name="textblock_end" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </Grid>
+                
+            </DockPanel>
+            
         </StackPanel>
         
     </Grid>

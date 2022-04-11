@@ -42,6 +42,7 @@ namespace ExDesign.Pages.Inputs
         {
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.loadsAndFocesPage;
+            showValues.IsChecked = true;
         }
         private void LoadsAndForcesPre()
         {
@@ -195,6 +196,7 @@ namespace ExDesign.Pages.Inputs
             {
                 var dic =(Tuple<Load,double,double>) comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowLoad(dic.Item1);
+                textBlockFillerLoad(dic.Item1);
             }
         }
 
@@ -205,6 +207,8 @@ namespace ExDesign.Pages.Inputs
             {
                 var dic = (Tuple<Load, double, double,double>)comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowForce(dic.Item1);
+                textBlockFillerCoef(dic.Item1);
+
             }
         }
         private void nodeforces_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -214,6 +218,8 @@ namespace ExDesign.Pages.Inputs
             {
                 var dic = (Tuple<Load, double>)comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowNodeForce(dic.Item1);
+                textBlockFillerNodeForce(dic.Item1);
+
             }
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -222,6 +228,53 @@ namespace ExDesign.Pages.Inputs
             sideview_main.Content = null;
         }
 
-        
+        private void textBlockFillerLoad(Load load)
+        {
+            textblock_start.Text = "";
+            textblock_end.Text = "";
+            foreach (var frame in FrameData.Frames)
+            {
+                var startLoad = frame.startNodeLoadAndForce.Find(x => x.Item1.ID == load.ID);
+                textblock_start.Text += "\n" + startLoad.Item2.ToString();
+                var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.ID == load.ID);
+                textblock_end.Text += "\n" + endLoad.Item2.ToString();
+
+            }
+        }
+        private void textBlockFillerCoef(Load load)
+        {
+            textblock_start.Text = "";
+            textblock_end.Text = "";
+            foreach (var frame in FrameData.Frames)
+            {
+                var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == load.ID);
+                textblock_start.Text += "\n" + startLoad.Item2.ToString();
+                var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == load.ID);
+                textblock_end.Text += "\n" + endLoad.Item2.ToString();
+
+            }
+        }
+        private void textBlockFillerNodeForce(Load load)
+        {
+            textblock_start.Text = "";
+            textblock_end.Text = "";
+            foreach (var node in NodeData.Nodes)
+            {
+                var startLoad = node.nodeForce.Find(x => x.Item1.ID == load.ID);
+                textblock_start.Text += "\n" + startLoad.Item2.ToString();
+            }
+        }
+
+        private void showValues_Unchecked(object sender, RoutedEventArgs e)
+        {
+            textblock_start.Visibility = Visibility.Collapsed;
+            textblock_end.Visibility = Visibility.Collapsed;
+        }
+
+        private void showValues_Checked(object sender, RoutedEventArgs e)
+        {
+            textblock_start.Visibility = Visibility.Visible;
+            textblock_end.Visibility = Visibility.Visible;
+        }
     }
 }
