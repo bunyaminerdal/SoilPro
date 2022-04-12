@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExDesign"
         mc:Ignorable="d"
-        Title="Ex-Design" Height="768" Width="1024" MinHeight="768" MinWidth="1024" Unloaded="Window_Unloaded" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Ex-Design" Height="768" Width="1024" MinHeight="768" MinWidth="1024" Unloaded="Window_Unloaded" Loaded="Window_Loaded" Closing="Window_Closing"  >
 
         <Grid>
             <Grid.RowDefinitions>

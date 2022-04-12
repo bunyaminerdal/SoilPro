@@ -11,8 +11,10 @@ namespace ExDesign.Scripts
 {
     public static class Analysis
     {
+        public static SoilLayerData fixedSoilLayer;
         public static void StageCalculation(double exH_waterH2,double exH_calc)
-        {            
+        {
+            SoilLayerFixing();
             WallPartization(exH_waterH2,exH_calc);
             SurchargeToFrameNodes(exH_calc);
             BackWaterPressureToFrameNodes();
@@ -24,8 +26,33 @@ namespace ExDesign.Scripts
             BackActivePassiveCoefToFrameNodes();
             FrontActivePassiveCoefToFrameNodes(exH_waterH2, exH_calc);
             FrameToNodeForce();
+            if(fixedSoilLayer != null)
+            {
+                StaticVariables.viewModel.soilLayerDatas.Remove(fixedSoilLayer);   
+            }
             StaticVariables.isAnalysisDone = true;
         }
+        public static void SoilLayerFixing()
+        {
+            double wallH = StaticVariables.viewModel.GetWallHeight();
+            double soilLayerHeight = 0;
+            SoilData lastSoil = null;
+            //ka
+            foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+            {
+                soilLayerHeight += soilLayer.LayerHeight;
+                if(soilLayer.Soil != null)
+                {
+                    lastSoil = soilLayer.Soil;
+                }
+            }
+            if(soilLayerHeight < wallH)
+            {
+                fixedSoilLayer = new SoilLayerData() { Name="fixedLayer",LayerHeight=1000, Soil=lastSoil};
+                StaticVariables.viewModel.soilLayerDatas.Add(fixedSoilLayer);
+            }
+        }
+
         public static void WallPartization(double exH_waterH2, double exH_calc)
         {
             FrameData.Frames.Clear();
@@ -422,7 +449,7 @@ namespace ExDesign.Scripts
                 double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
                                 
                 double soilLayerHeight = 0;
-                SoilData lastSoil = null;
+                //SoilData lastSoil = null;
                 foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                 {
                     soilLayerHeight += soilLayer.LayerHeight;
@@ -455,45 +482,45 @@ namespace ExDesign.Scripts
                             }
                         }
                     }
-                    if (soilLayer.Soil != null)
-                    {
-                        lastSoil = soilLayer.Soil;
-                    }
+                    //if (soilLayer.Soil != null)
+                    //{
+                    //    lastSoil = soilLayer.Soil;
+                    //}
                 }
 
-                //duvardan küçükse
-                if(soilLayerHeight < wallH)
-                {
-                    if (startLength <= wallH && soilLayerHeight < startLength)
-                    {
-                        if (lastSoil != null)
-                        {
-                            if (startLength <= waterH1)
-                            {
-                                startLoad += (frameLength * lastSoil.NaturalUnitWeight);
-                            }
-                            else
-                            {
-                                startLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
-                            }
-                        }
-                    }
-                    if (endLength <= wallH && soilLayerHeight < endLength)
-                    {
-                        if (lastSoil != null)
-                        {
+                ////duvardan küçükse
+                //if(soilLayerHeight < wallH)
+                //{
+                //    if (startLength <= wallH && soilLayerHeight < startLength)
+                //    {
+                //        if (lastSoil != null)
+                //        {
+                //            if (startLength <= waterH1)
+                //            {
+                //                startLoad += (frameLength * lastSoil.NaturalUnitWeight);
+                //            }
+                //            else
+                //            {
+                //                startLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
+                //            }
+                //        }
+                //    }
+                //    if (endLength <= wallH && soilLayerHeight < endLength)
+                //    {
+                //        if (lastSoil != null)
+                //        {
 
-                            if (endLength <= waterH1)
-                            {
-                                endLoad += (frameLength * lastSoil.NaturalUnitWeight);
-                            }
-                            else
-                            {
-                                endLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
-                            }
-                        }
-                    }
-                }
+                //            if (endLength <= waterH1)
+                //            {
+                //                endLoad += (frameLength * lastSoil.NaturalUnitWeight);
+                //            }
+                //            else
+                //            {
+                //                endLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
+                //            }
+                //        }
+                //    }
+                //}
                 
                                
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
@@ -526,7 +553,7 @@ namespace ExDesign.Scripts
                 double endLength = Math.Sqrt((Math.Pow(0 - frame.EndPoint.X, 2) + Math.Pow(0 - frame.EndPoint.Y, 2)));
 
                 double soilLayerHeight = 0;
-                SoilData lastSoil = null;
+                //SoilData lastSoil = null;
                 foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                 {
                     soilLayerHeight += soilLayer.LayerHeight;
@@ -559,45 +586,45 @@ namespace ExDesign.Scripts
                             }
                         }
                     }
-                    if (soilLayer.Soil != null)
-                    {
-                        lastSoil = soilLayer.Soil;
-                    }
+                    //if (soilLayer.Soil != null)
+                    //{
+                    //    lastSoil = soilLayer.Soil;
+                    //}
                 }
 
-                //duvardan küçükse
-                if (soilLayerHeight < wallH)
-                {
-                    if (startLength <= wallH && soilLayerHeight < startLength && exH_calc < startLength)
-                    {
-                        if (lastSoil != null)
-                        {
-                            if (startLength <= exH_waterH2)
-                            {
-                                startLoad += (frameLength * lastSoil.NaturalUnitWeight);
-                            }
-                            else
-                            {
-                                startLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
-                            }
-                        }
-                    }
-                    if (endLength <= wallH && soilLayerHeight < endLength && exH_calc < endLength)
-                    {
-                        if (lastSoil != null)
-                        {
+                ////duvardan küçükse
+                //if (soilLayerHeight < wallH)
+                //{
+                //    if (startLength <= wallH && soilLayerHeight < startLength && exH_calc < startLength)
+                //    {
+                //        if (lastSoil != null)
+                //        {
+                //            if (startLength <= exH_waterH2)
+                //            {
+                //                startLoad += (frameLength * lastSoil.NaturalUnitWeight);
+                //            }
+                //            else
+                //            {
+                //                startLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
+                //            }
+                //        }
+                //    }
+                //    if (endLength <= wallH && soilLayerHeight < endLength && exH_calc < endLength)
+                //    {
+                //        if (lastSoil != null)
+                //        {
 
-                            if (endLength <= exH_waterH2)
-                            {
-                                endLoad += (frameLength * lastSoil.NaturalUnitWeight);
-                            }
-                            else
-                            {
-                                endLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
-                            }
-                        }
-                    }
-                }
+                //            if (endLength <= exH_waterH2)
+                //            {
+                //                endLoad += (frameLength * lastSoil.NaturalUnitWeight);
+                //            }
+                //            else
+                //            {
+                //                endLoad += (frameLength * (lastSoil.SaturatedUnitWeight - _waterDensity));
+                //            }
+                //        }
+                //    }
+                //}
                 
                 double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(effectiveStress, startLoad, startNodeForce));
@@ -636,7 +663,7 @@ namespace ExDesign.Scripts
                         double startLoad = 0;
                         double endLoad = 0;
                         double soilLayerHeight = 0;
-                        SoilData lastSoil = null;
+                        //SoilData lastSoil = null;
                         foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                         {
                             soilLayerHeight += soilLayer.LayerHeight;
@@ -650,26 +677,9 @@ namespace ExDesign.Scripts
                                 }
                             }
                             
-                            if (soilLayer.Soil != null)
-                            {
-                                lastSoil = soilLayer.Soil;
-                            }
+                           
                         }
-
-                        //duvardan küçükse
-                        if (soilLayerHeight < wallH)
-                        {
-                            if (startLength <= wallH && soilLayerHeight < startLength)
-                            {
-                                if (lastSoil != null)
-                                {
-                                    startLoad = 2.1 * (Math.Pow(lastSoil.OedometricModulus, EoedPow) / Math.Pow(wallEI, EIPow));
-                                    endLoad = 2.1 * (Math.Pow(lastSoil.OedometricModulus, EoedPow) / Math.Pow(wallEI, EIPow));
-
-                                }
-                            }
-                            
-                        }
+                                              
 
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, startLoad, startNodeForce));
@@ -690,7 +700,7 @@ namespace ExDesign.Scripts
                         double startLoad = 0;
                         double endLoad = 0;
                         double soilLayerHeight = 0;
-                        SoilData lastSoil = null;
+                        //SoilData lastSoil = null;
                         foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                         {
                             soilLayerHeight += soilLayer.LayerHeight;
@@ -717,39 +727,10 @@ namespace ExDesign.Scripts
                                 }
                             }
 
-                            if (soilLayer.Soil != null)
-                            {
-                                lastSoil = soilLayer.Soil;
-                            }
+                            
                         }
 
-                        //duvardan küçükse
-                        if (soilLayerHeight < wallH)
-                        {
-                            if (startLength <= wallH && soilLayerHeight < startLength)
-                            {
-                                if (lastSoil != null)
-                                {
-                                    double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
-                                    double Delta = lastSoil.WallSoilFrictionAngle * Math.PI / 180;
-                                    double CPrime = lastSoil.EffectiveCohesion;
-                                    double Ap = lastSoil.CohesionFactor;
-                                    double K0 = lastSoil.K0;
-                                    double Gama = lastSoil.NaturalUnitWeight;
-                                    double alfa = 0.0 * Math.PI / 180;
-                                    double beta = 0.0 * Math.PI / 180;
-                                    double Kp = Math.Pow(Math.Cos(fi + alfa), 2) / (
-                                        Math.Pow(Math.Cos(alfa), 2) * Math.Cos(Delta - alfa) *
-                                        Math.Pow(1 - Math.Sqrt(Math.Sin(fi + Delta) * Math.Sin(fi + beta) /
-                                        (Math.Cos(Delta - alfa) * Math.Cos(beta - alfa))), 2)
-                                        );
-                                    startLoad = Math.Pow(20 * wallEI * (Math.Pow(Kp * Gama * (1 - (K0 / Kp)) / 0.015, 4)), Pow3) + (Ap * CPrime * Math.Tanh(CPrime / 30) / 0.015);
-                                    endLoad = Math.Pow(20 * wallEI * (Math.Pow(Kp * Gama * (1 - (K0 / Kp)) / 0.015, 4)), Pow3) + (Ap * CPrime * Math.Tanh(CPrime / 30) / 0.015);
-
-                                }
-                            }
-
-                        }
+                        
 
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, startLoad, startNodeForce));
@@ -768,7 +749,6 @@ namespace ExDesign.Scripts
                         double startLoad = 0;
                         double endLoad = 0;
                         double soilLayerHeight = 0;
-                        SoilData lastSoil = null;
                         foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                         {
                             soilLayerHeight += soilLayer.LayerHeight;
@@ -783,27 +763,10 @@ namespace ExDesign.Scripts
                                 }
                             }
 
-                            if (soilLayer.Soil != null)
-                            {
-                                lastSoil = soilLayer.Soil;
-                            }
+                            
                         }
 
-                        //duvardan küçükse
-                        if (soilLayerHeight < wallH)
-                        {
-                            if (startLength <= wallH && soilLayerHeight < startLength)
-                            {
-                                if (lastSoil != null)
-                                {
-                                    double Es = lastSoil.YoungModulus;
-                                    double poisson = lastSoil.PoissonRatio;
-                                    startLoad = (0.65 / wallt) * Math.Pow(Es * Math.Pow(wallt, 4) / wallEI, Pow4) * Es / (1.0 - Math.Pow(poisson, 2));
-                                    endLoad = (0.65 / wallt) * Math.Pow(Es * Math.Pow(wallt, 4) / wallEI, Pow4) * Es / (1.0 - Math.Pow(poisson, 2));
-
-                                }
-                            }
-                        }
+                        
 
                         double startNodeForce = ((((startLoad + endLoad) / 2) + startLoad) / 2) * (frameLength / 2);
                         frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(subgrademodulus, startLoad, startNodeForce));
@@ -820,6 +783,7 @@ namespace ExDesign.Scripts
         {
             Ka_Kp Back_Kactive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Back_Kactive };
             Ka_Kp Back_Kpassive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Back_Kpassive };
+            Ka_Kp Back_Krest = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Back_Krest };
             Force Back_Active_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Active_Vertical_Force };
             Force Back_Passive_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Passive_Vertical_Force };
             Force Back_Active_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Active_Horizontal_Force };
@@ -850,6 +814,8 @@ namespace ExDesign.Scripts
                 double Kp_P_end = 0;
                 double Kp_N_end = 0;
                 double Kp_S_end = 0;
+                double K0_S_start = 0;
+                double K0_S_end = 0;
                 double Active_Vertical_Force_start = 0;
                 double Active_Vertical_Force_end = 0;
                 double Active_Horizontal_Force_start = 0;
@@ -863,7 +829,7 @@ namespace ExDesign.Scripts
                 double Rest_Horizontal_Force_end = 0;
                 double soilLayerHeight = 0;
 
-                SoilData lastSoil = null;
+                //SoilData lastSoil = null;
                 //ka
                 foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                 {                    
@@ -880,14 +846,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
-                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
+                                Front_Rest_Start(fi, beta_back, K0, stress,ref K0_S_start, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_Start(waterH1,delta,stress,cPrime, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start,ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_back, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_Start(0,delta, stress, frameLength, startLength, beta_back, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_back, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
@@ -904,7 +870,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_back, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_Start(0,delta, stress, frameLength, startLength, beta_back, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_back, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
@@ -920,14 +886,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
-                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
+                                Front_Rest_Start(fi, beta_back, K0, stress, ref K0_S_start, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start,ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_back, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_Start(0,delta, stress, frameLength, startLength, beta_back, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_back, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
@@ -947,7 +913,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start,ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_back, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_Start(0,delta, stress, frameLength, startLength, beta_back, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_back, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
@@ -970,14 +936,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
-                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
+                                Front_Rest_End(fi, beta_back, K0, stress, ref K0_S_end, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end,ref Active_Vertical_Force_end,ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_back,cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_End(0,delta, stress, endLength, beta_back,cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_back, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
@@ -994,7 +960,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end,ref Passive_Vertical_Force_end,ref Passive_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_back,cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_End(0,delta, stress, endLength, beta_back,cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_back, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
@@ -1010,14 +976,14 @@ namespace ExDesign.Scripts
                             {                                
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
-                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
+                                Front_Rest_End(fi, beta_back, K0, stress, ref K0_S_end, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end,ref Active_Vertical_Force_end,ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_back,cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_End(0,delta, stress, endLength, beta_back,cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_back, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
@@ -1038,7 +1004,7 @@ namespace ExDesign.Scripts
 
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_back,cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_End(0,delta, stress, endLength, beta_back,cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
 
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
@@ -1056,198 +1022,7 @@ namespace ExDesign.Scripts
                                 }
                             }
                         }                    
-                        lastSoil = soilLayer.Soil;
-                    }
-                }
-
-                //duvardan küçükse
-                if (soilLayerHeight < wallH)
-                {
-                    if (lastSoil != null)
-                    {
-                        double delta = lastSoil.WallSoilFrictionAngle* Math.PI / 180;
-                        double K0 = lastSoil.K0;
-                        double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
-                        if (startLength < wallH && soilLayerHeight <= startLength)
-                        {
-                            if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
-                            {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
-                                double cPrime = lastSoil.EffectiveCohesion;
-                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_back, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_back, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_Start(delta, stress, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start,ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_back, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_back, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_Start(delta, stress, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
-                                double cPrime = lastSoil.UndrainedShearStrength;
-                                Front_Rest_Start(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_start);
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start,ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_back, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_back, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_Start(delta, stress, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Active_Start(stress, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_Start(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start,ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_back, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_back, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_Start(delta, stress, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Passive_Start(stress, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        if (endLength <= wallH && soilLayerHeight < endLength)
-                        {
-
-                            if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
-                            {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_EffectiveStress).Item2;
-                                double cPrime = lastSoil.EffectiveCohesion;
-                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, ref Active_Vertical_Force_end,ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_back, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_back, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_End(delta, stress, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end,ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_back, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_back, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_End(delta, stress, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Back_TotalStress).Item2;
-                                double cPrime = lastSoil.UndrainedShearStrength;
-                                Front_Rest_End(fi, beta_back, K0, stress, ref Rest_Horizontal_Force_end);
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, ref Active_Vertical_Force_end,ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_back, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_back, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_End(delta, stress, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Active_End(stress, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_End(waterH1, delta, stress, cPrime, ksi, gamaw, beta_back, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end,ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_back, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_back, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_End(delta, stress, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Passive_End(stress, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-
-                        }
+                        //lastSoil = soilLayer.Soil;
                     }
                 }
 
@@ -1256,7 +1031,9 @@ namespace ExDesign.Scripts
 
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Kpassive, Kp_S_start, Kp_P_start, Kp_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Kpassive, Kp_S_end, Kp_P_end, Kp_N_end));
-                
+
+                frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Krest, K0_S_start, 0, 0));
+                frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Back_Krest, K0_S_end, 0, 0));
 
                 double Active_vertical_startNodeForce = ((((Active_Vertical_Force_start + Active_Vertical_Force_end) / 2) + Active_Vertical_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Back_Active_Vertical_Force, Active_Vertical_Force_start, Active_vertical_startNodeForce));
@@ -1290,6 +1067,8 @@ namespace ExDesign.Scripts
         {
             Ka_Kp Front_Kactive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Front_Kactive };
             Ka_Kp Front_Kpassive = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Front_Kpassive };
+            Ka_Kp Front_Krest = new Ka_Kp() { ID = Guid.NewGuid(), Type = LoadType.Front_Krest };
+
             Force Front_Active_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Active_Vertical_Force };
             Force Front_Passive_Vertical_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Passive_Vertical_Force };
             Force Front_Active_Horizontal_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Active_Horizontal_Force };
@@ -1319,6 +1098,8 @@ namespace ExDesign.Scripts
                 double Kp_P_end = 0;
                 double Kp_N_end = 0;
                 double Kp_S_end = 0;
+                double K0_S_start = 0;
+                double K0_S_end = 0;
                 double Active_Vertical_Force_start = 0;
                 double Active_Vertical_Force_end = 0;
                 double Active_Horizontal_Force_start = 0;
@@ -1332,7 +1113,7 @@ namespace ExDesign.Scripts
                 double Rest_Horizontal_Force_end = 0;
                 double soilLayerHeight = 0;
 
-                SoilData lastSoil = null;
+                //SoilData lastSoil = null;
                 //ka
                 foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
                 {
@@ -1349,14 +1130,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
-                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
+                                Front_Rest_Start(fi, beta_front, K0, stress, ref K0_S_start, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_front, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_Start(exH_calc, delta, stress, frameLength, startLength, beta_front, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_front, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
@@ -1373,7 +1154,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_front, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_Start(exH_calc, delta, stress, frameLength, startLength, beta_front, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_front, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
@@ -1389,14 +1170,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
-                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
+                                Front_Rest_Start(fi, beta_front, K0, stress, ref K0_S_start, ref Rest_Horizontal_Force_start);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_front, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_Start(exH_calc, delta, stress, frameLength, startLength, beta_front, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_front, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, soilLayer.Soil);
@@ -1416,7 +1197,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_front, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_Start(exH_calc, delta, stress, frameLength, startLength, beta_front, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_front, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, soilLayer.Soil);
@@ -1439,14 +1220,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
                                 double cPrime = soilLayer.Soil.EffectiveCohesion;
-                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
+                                Front_Rest_End(fi, beta_front, K0, stress, ref K0_S_end, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
                                 {
                                     case DrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_front, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_End(exH_calc, delta, stress, endLength, beta_front, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_front, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
@@ -1463,7 +1244,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_End(exH_calc, delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case DrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_front, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
@@ -1479,14 +1260,14 @@ namespace ExDesign.Scripts
                             {
                                 double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
                                 double cPrime = soilLayer.Soil.UndrainedShearStrength;
-                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
+                                Front_Rest_End(fi, beta_front, K0, stress, ref K0_S_end, ref Rest_Horizontal_Force_end);
                                 switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
                                 {
                                     case UnDrainedTheories.TBDY:
                                         Back_TBDY_Theory_Active_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_front, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Active_End(exH_calc, delta, stress, endLength, beta_front, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_front, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, soilLayer.Soil);
@@ -1506,7 +1287,7 @@ namespace ExDesign.Scripts
                                         Back_TBDY_Theory_Passive_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
+                                        Back_Mazindrani_Theory_Passive_End(exH_calc,delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
                                         break;
                                     case UnDrainedTheories.TheColoumbTheory:
                                         Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_front, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, soilLayer.Soil);
@@ -1522,200 +1303,10 @@ namespace ExDesign.Scripts
                                 }
                             }
                         }
-                        lastSoil = soilLayer.Soil;
+                        //lastSoil = soilLayer.Soil;
                     }
                 }
 
-                //duvardan küçükse
-                if (soilLayerHeight < wallH)
-                {
-                    if (lastSoil != null)
-                    {
-                        double delta = lastSoil.WallSoilFrictionAngle * Math.PI / 180;
-                        double K0 = lastSoil.K0;
-                        double fi = lastSoil.SoilFrictionAngle * Math.PI / 180;
-                        if (startLength < wallH && soilLayerHeight <= startLength && exH_calc <= startLength)
-                        {
-                            if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
-                            {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
-                                double cPrime = lastSoil.EffectiveCohesion;
-                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_front, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_front, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_Start(delta, stress, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_front, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_front, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_Start(delta, stress, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                double stress = frame.startNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
-                                double cPrime = lastSoil.UndrainedShearStrength;
-                                Front_Rest_Start(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_start);
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Ka_P_start, ref Ka_N_start, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_Start(delta, stress, startLength, beta_front, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_Start(delta, stress, cPrime, beta_front, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_Start(delta, stress, cPrime, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Active_Start(stress, ref Ka_S_start, ref Active_Vertical_Force_start, ref Active_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_Start(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, startLength, ref Kp_P_start, ref Kp_N_start, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_Start(delta, stress, startLength, beta_front, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_Start(delta, stress, cPrime, beta_front, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_Start(delta, stress, cPrime, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Passive_Start(stress, ref Kp_S_start, ref Passive_Vertical_Force_start, ref Passive_Horizontal_Force_start, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        if (endLength <= wallH && soilLayerHeight < endLength && exH_calc < endLength)
-                        {
-
-                            if (WpfUtils.GetSoilState(lastSoil.SoilStressStateIndex) == SoilState.Drained)
-                            {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_EffectiveStress).Item2;
-                                double cPrime = lastSoil.EffectiveCohesion;
-                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.activeDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_front, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_front, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_End(delta, stress, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetDrainedTheoryType(StaticVariables.viewModel.passiveDrainedCoefficientIndex))
-                                {
-                                    case DrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_front, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case DrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_End(delta, stress, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                double stress = frame.endNodeLoadAndForce.Find(x => x.Item1.Type == LoadType.Front_TotalStress).Item2;
-                                double cPrime = lastSoil.UndrainedShearStrength;
-                                Front_Rest_End(fi, beta_front, K0, stress, ref Rest_Horizontal_Force_end);
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.activeUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Active_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Ka_P_end, ref Ka_N_end, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Active_End(delta, stress, endLength, beta_front, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Active_End(delta, stress, cPrime, beta_front, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Active_End(delta, stress, cPrime, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Active_End(stress, ref Ka_S_end, ref Active_Vertical_Force_end, ref Active_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                switch (WpfUtils.GetUnDrainedTheoryType(StaticVariables.viewModel.passiveUnDrainedCoefficientIndex))
-                                {
-                                    case UnDrainedTheories.TBDY:
-                                        Back_TBDY_Theory_Passive_End(exH_waterH2, delta, stress, cPrime, ksi, gamaw, beta_front, endLength, ref Kp_P_end, ref Kp_N_end, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.MazindraniTheory:
-                                        Back_Mazindrani_Theory_Passive_End(delta, stress, endLength, beta_front, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TheColoumbTheory:
-                                        Back_Coloumb_Theory_Passive_End(delta, stress, cPrime, beta_front, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.RankineTheory:
-                                        Back_Rankine_Theory_Passive_End(delta, stress, cPrime, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    case UnDrainedTheories.TotalStress:
-                                        Back_TotalStress_Theory_Passive_End(stress, ref Kp_S_end, ref Passive_Vertical_Force_end, ref Passive_Horizontal_Force_end, lastSoil);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-
-                        }
-                    }
-                }
 
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kactive, Ka_S_start, Ka_P_start, Ka_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kactive, Ka_S_end, Ka_P_end, Ka_N_end));
@@ -1723,6 +1314,8 @@ namespace ExDesign.Scripts
                 frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kpassive, Kp_S_start, Kp_P_start, Kp_N_start));
                 frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Kpassive, Kp_S_end, Kp_P_end, Kp_N_end));
 
+                frame.startNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Krest, K0_S_start, 0, 0));
+                frame.endNodeActivePassiveCoef_S_P_N.Add(new Tuple<Load, double, double, double>(Front_Krest, K0_S_end, 0, 0));
 
                 double Active_vertical_startNodeForce = ((((Active_Vertical_Force_start + Active_Vertical_Force_end) / 2) + Active_Vertical_Force_start) / 2) * (frameLength / 2);
                 frame.startNodeLoadAndForce.Add(new Tuple<Load, double, double>(Front_Active_Vertical_Force, Active_Vertical_Force_start, Active_vertical_startNodeForce));
@@ -1751,8 +1344,9 @@ namespace ExDesign.Scripts
 
             }
         }
-        private static void Front_Rest_Start(double fi,double beta_back,double K0,double stress,ref double Rest_Horizontal_Force_start)
+        private static void Front_Rest_Start(double fi,double beta_back,double K0,double stress,ref double K0_S_start,ref double Rest_Horizontal_Force_start)
         {
+            K0_S_start = K0;
             if(fi <= 0)
             {
                 Rest_Horizontal_Force_start = K0 * stress;
@@ -1766,8 +1360,9 @@ namespace ExDesign.Scripts
                 Rest_Horizontal_Force_start = K0 * stress * Math.Sin(fi) * Math.Cos(beta_back) / (Math.Sin(fi) - Math.Pow(Math.Sin(beta_back), 2.0));
             }
         }
-        private static void Front_Rest_End(double fi, double beta_back,double K0, double stress, ref double Rest_Horizontal_Force_end)
+        private static void Front_Rest_End(double fi, double beta_back,double K0, double stress, ref double K0_S_end, ref double Rest_Horizontal_Force_end)
         {
+            K0_S_end = K0;
             if (fi <= 0)
             {
                 Rest_Horizontal_Force_end = K0 * stress;
@@ -2150,7 +1745,7 @@ namespace ExDesign.Scripts
                 double fi = soil.SoilFrictionAngle * Math.PI / 180;
                 double Delta = soil.WallSoilFrictionAngle * Math.PI / 180;
                 double alfa = 0 * Math.PI / 180;
-                Kp_S_start = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos( Delta-alfa) * (Math.Pow(1 + Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos( Delta-alfa) * Math.Cos( beta_back-alfa))), 2.0)));
+                Kp_S_start = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos( Delta-alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos( Delta-alfa) * Math.Cos( beta_back-alfa))), 2.0)));
                 Passive_Horizontal_Force_start = (stress * Kp_S_start + 2 * cPrime * Math.Sqrt(Kp_S_start)) * Math.Cos(delta);
                 Passive_Vertical_Force_start = (stress * Kp_S_start + 2 * cPrime * Math.Sqrt(Kp_S_start)) * Math.Sin(delta);
             }
@@ -2162,7 +1757,7 @@ namespace ExDesign.Scripts
                 double fi = soil.SoilFrictionAngle * Math.PI / 180;
                 double Delta = soil.WallSoilFrictionAngle * Math.PI / 180;
                 double alfa = 0 * Math.PI / 180;
-                Kp_S_end = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 + Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
+                Kp_S_end = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
                 Passive_Horizontal_Force_end = (stress * Kp_S_end + 2 * cPrime * Math.Sqrt(Kp_S_end)) * Math.Cos(delta);
                 Passive_Vertical_Force_end = (stress * Kp_S_end + 2 * cPrime * Math.Sqrt(Kp_S_end)) * Math.Sin(delta);
             }
@@ -2211,41 +1806,50 @@ namespace ExDesign.Scripts
                 Passive_Vertical_Force_end = 0;
             }
         }
-        private static void Back_Mazindrani_Theory_Active_Start(double delta, double stress, double startLength,double beta_back,double cPrime,ref double Ka_S_start, ref double Active_Vertical_Force_start, ref double Active_Horizontal_Force_start, SoilData soil)
+        private static void Back_Mazindrani_Theory_Active_Start(double exH,double delta, double stress,double frameLength, double startLength,double beta_back,double cPrime,ref double Ka_S_start, ref double Active_Vertical_Force_start, ref double Active_Horizontal_Force_start, SoilData soil)
         {
             double fi = soil.SoilFrictionAngle * Math.PI / 180;                    
             double gama = soil.NaturalUnitWeight;
+            startLength -= exH;
             //start node
-            Ka_S_start = (1 / Math.Pow(Math.Cos(fi), 2.0)) * (2 * Math.Pow(Math.Cos(beta_back), 2.0) + 2 * (cPrime / (gama * startLength)) * Math.Cos(fi) - Math.Sqrt((4 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4 * Math.Pow((cPrime / (gama * startLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8 * (cPrime / (gama * startLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi))));
+            if (startLength <= 0) startLength += frameLength;
+            Ka_S_start = (1 / Math.Pow(Math.Cos(fi), 2.0)) *
+                (2.0 * Math.Pow(Math.Cos(beta_back), 2.0) + 2.0 * (cPrime / (gama * startLength)) * Math.Cos(fi)*Math.Sin(fi) - Math.Sqrt((4.0 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4.0 * Math.Pow((cPrime / (gama * startLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8.0 * (cPrime / (gama * startLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi))))-1.0;
             Active_Horizontal_Force_start = stress * Ka_S_start * Math.Cos(delta);
             Active_Vertical_Force_start = stress * Ka_S_start * Math.Sin(delta);
            
         }
-        private static void Back_Mazindrani_Theory_Active_End(double delta, double stress, double endLength, double beta_back,double cPrime, ref double Ka_S_end, ref double Active_Vertical_Force_end, ref double Active_Horizontal_Force_end, SoilData soil)
+        private static void Back_Mazindrani_Theory_Active_End(double exH, double delta, double stress, double endLength, double beta_back,double cPrime, ref double Ka_S_end, ref double Active_Vertical_Force_end, ref double Active_Horizontal_Force_end, SoilData soil)
         {
             double fi = soil.SoilFrictionAngle * Math.PI / 180;
-            double gama = soil.NaturalUnitWeight;            
+            double gama = soil.NaturalUnitWeight;
+            endLength -= exH;
             //end node
-            Ka_S_end = (1 / Math.Pow(Math.Cos(fi), 2.0)) * (2 * Math.Pow(Math.Cos(beta_back), 2.0) + 2 * (cPrime / (gama * endLength)) * Math.Cos(fi) - Math.Sqrt((4 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4 * Math.Pow((cPrime / (gama * endLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8 * (cPrime / (gama * endLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi))));
+            Ka_S_end = (1 / Math.Pow(Math.Cos(fi), 2.0)) *
+                (2.0 * Math.Pow(Math.Cos(beta_back), 2.0) + 2.0 * (cPrime / (gama * endLength)) * Math.Cos(fi) * Math.Sin(fi) - Math.Sqrt((4.0 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4.0 * Math.Pow((cPrime / (gama * endLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8.0 * (cPrime / (gama * endLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi)))) - 1.0;
             Active_Horizontal_Force_end = stress * Ka_S_end * Math.Cos(delta);
             Active_Vertical_Force_end = stress * Ka_S_end * Math.Sin(delta);
         }
-        private static void Back_Mazindrani_Theory_Passive_Start(double delta, double stress, double startLength, double beta_back,double cPrime, ref double Kp_S_start, ref double Passive_Vertical_Force_start, ref double Passive_Horizontal_Force_start, SoilData soil)
+        private static void Back_Mazindrani_Theory_Passive_Start(double exH, double delta, double stress,double frameLength, double startLength, double beta_back,double cPrime, ref double Kp_S_start, ref double Passive_Vertical_Force_start, ref double Passive_Horizontal_Force_start, SoilData soil)
         {
             double fi = soil.SoilFrictionAngle * Math.PI / 180;
             double gama = soil.NaturalUnitWeight;
+            startLength -= exH;
             //start node
-            Kp_S_start = (1 / Math.Pow(Math.Cos(fi), 2.0)) * (2 * Math.Pow(Math.Cos(beta_back), 2.0) + 2 * (cPrime / (gama * startLength)) * Math.Cos(fi) + Math.Sqrt((4 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4 * Math.Pow((cPrime / (gama * startLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8 * (cPrime / (gama * startLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi))));
+            if (startLength <= 0) startLength += frameLength;
+            Kp_S_start = (1 / Math.Pow(Math.Cos(fi), 2.0)) *
+                (2.0 * Math.Pow(Math.Cos(beta_back), 2.0) + 2.0 * (cPrime / (gama * startLength)) * Math.Cos(fi) * Math.Sin(fi) + Math.Sqrt((4.0 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4.0 * Math.Pow((cPrime / (gama * startLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8.0 * (cPrime / (gama * startLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi)))) - 1.0;
             Passive_Horizontal_Force_start = stress * Kp_S_start * Math.Cos(delta);
             Passive_Vertical_Force_start = stress * Kp_S_start * Math.Sin(delta);
         }
-        private static void Back_Mazindrani_Theory_Passive_End(double delta, double stress, double endLength, double beta_back,double cPrime, ref double Kp_S_end, ref double Passive_Vertical_Force_end, ref double Passive_Horizontal_Force_end, SoilData soil)
+        private static void Back_Mazindrani_Theory_Passive_End(double exH, double delta, double stress, double endLength, double beta_back,double cPrime, ref double Kp_S_end, ref double Passive_Vertical_Force_end, ref double Passive_Horizontal_Force_end, SoilData soil)
         {
             double fi = soil.SoilFrictionAngle * Math.PI / 180;
             double gama = soil.NaturalUnitWeight;
-            
+            endLength -= exH;
             //end node
-            Kp_S_end = (1 / Math.Pow(Math.Cos(fi), 2.0)) * (2 * Math.Pow(Math.Cos(beta_back), 2.0) + 2 * (cPrime / (gama * endLength)) * Math.Cos(fi) + Math.Sqrt((4 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4 * Math.Pow((cPrime / (gama * endLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8 * (cPrime / (gama * endLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi))));
+            Kp_S_end = (1 / Math.Pow(Math.Cos(fi), 2.0)) *
+                (2.0 * Math.Pow(Math.Cos(beta_back), 2.0) + 2.0 * (cPrime / (gama * endLength)) * Math.Cos(fi) * Math.Sin(fi) + Math.Sqrt((4.0 * Math.Pow(Math.Cos(beta_back), 2.0) * (Math.Pow(Math.Cos(beta_back), 2.0) - Math.Pow(Math.Cos(fi), 2.0))) + (4.0 * Math.Pow((cPrime / (gama * endLength)), 2.0) * Math.Pow(Math.Cos(fi), 2.0)) + (8.0 * (cPrime / (gama * endLength)) * Math.Pow(Math.Cos(beta_back), 2.0) * Math.Sin(fi) * Math.Cos(fi)))) - 1.0;
             Passive_Horizontal_Force_end = stress * Kp_S_end * Math.Cos(delta);
             Passive_Vertical_Force_end = stress * Kp_S_end * Math.Sin(delta);
         }
@@ -2256,6 +1860,7 @@ namespace ExDesign.Scripts
 
             for (int i = 0; i < FrameData.Frames.Count; i++)
             {
+                
                 if(i == 0)
                 {
                     NodeData nodeStart = new NodeData(FrameData.Frames[i].StartPoint);
@@ -2305,6 +1910,7 @@ namespace ExDesign.Scripts
                 }
             }
             NodeData.Nodes.Sort();
+            NodeData.Nodes.Reverse();
         }
     }
 }

@@ -78,7 +78,8 @@ namespace ExDesign.Pages.Inputs
             StaticVariables.view3DPage.Refreshview();
             StaticVariables.SideviewPage.Refreshview();
             StaticVariables.loadsAndFocesPage.Refreshview();
-
+            NavigationCommands.BrowseBack.InputGestures.Clear();
+            NavigationCommands.BrowseForward.InputGestures.Clear();
         }
         private void SetStage(Stage stage)
         {

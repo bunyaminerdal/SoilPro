@@ -23,6 +23,7 @@ namespace ExDesign.Pages.Inputs
     /// </summary>
     public partial class AnalysisPage : Page
     {
+        bool isShowValues = true;
         public AnalysisPage()
         {
             InitializeComponent();
@@ -125,13 +126,18 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.Back_Kpassive:
                         listitem.Item1.Name = FindResource("BackKpassive").ToString();
                         break;
+                    case LoadType.Front_Krest:
+                        listitem.Item1.Name = FindResource("FrontKrest").ToString();
+                        break;
+                    case LoadType.Back_Krest:
+                        listitem.Item1.Name = FindResource("BackKrest").ToString();
+                        break;
                     default:
                         break;
                 }
             }
             foreach (var listitem in NodeData.Nodes[0].nodeForce)
             {
-                Debug.WriteLine(listitem.Item1.Name);
 
                 switch (listitem.Item1.Type)
                 {
@@ -196,7 +202,7 @@ namespace ExDesign.Pages.Inputs
             {
                 var dic =(Tuple<Load,double,double>) comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowLoad(dic.Item1);
-                textBlockFillerLoad(dic.Item1);
+                if (isShowValues) textBlockFillerLoad(dic.Item1);
             }
         }
 
@@ -207,7 +213,7 @@ namespace ExDesign.Pages.Inputs
             {
                 var dic = (Tuple<Load, double, double,double>)comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowForce(dic.Item1);
-                textBlockFillerCoef(dic.Item1);
+                if (isShowValues) textBlockFillerCoef(dic.Item1);
 
             }
         }
@@ -218,7 +224,7 @@ namespace ExDesign.Pages.Inputs
             {
                 var dic = (Tuple<Load, double>)comboBox.SelectedItem;
                 StaticVariables.loadsAndFocesPage.ShowNodeForce(dic.Item1);
-                textBlockFillerNodeForce(dic.Item1);
+                if(isShowValues) textBlockFillerNodeForce(dic.Item1);
 
             }
         }

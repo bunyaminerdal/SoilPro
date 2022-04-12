@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <Frame x:Name="view3d_main" Grid.Column="0" NavigationUIVisibility="Hidden"/>
-            <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="sideview_main" Grid.Column="1" NavigationUIVisibility="Hidden" />
 
         </Grid>
         <StackPanel Grid.Row="1" Background="White">

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExDesign.Pages.Inputs"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="800"
-      Title="InputsMainPage" Loaded="Page_Loaded">
+      Title="InputsMainPage" Loaded="Page_Loaded" >
     
     <Grid Margin="5,5,5,5">
         <Grid.RowDefinitions>
@@ -41,13 +41,13 @@
                 <RadioButton x:Name="ExDesignBttn" MinWidth="80" Content="{DynamicResource ExDesign}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="ExDesignBttn_Checked" />
                 <RadioButton x:Name="SoilMethodBttn" MinWidth="80" Content="{DynamicResource SoilMethod}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SolidMethodBttn_Checked" />
                 <RadioButton x:Name="AnchorBttn" MinWidth="80" Content="{DynamicResource Anchors}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="AnchorBttn_Checked"  />
-                <RadioButton x:Name="StrutBttn" MinWidth="80" Content="{DynamicResource Struts}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="StrutBttn_Checked"   />
+                <RadioButton x:Name="StrutBttn" MinWidth="80" Content="{DynamicResource Struts}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="StrutBttn_Checked"  />
                 <RadioButton x:Name="SurchargeBttn" MinWidth="80" Content="{DynamicResource Surcharge}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SurchargeBttn_Checked"    />
                 <RadioButton x:Name="SystemLoadBttn" MinWidth="80" Content="{DynamicResource SystemLoad}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="SystemLoadBttn_Checked"     />
                 <RadioButton x:Name="AnalysisBttn" MinWidth="80" Content="{DynamicResource Analysis}" Style="{StaticResource {x:Type ToggleButton}}" Background="#FFA9ADAD" BorderBrush="#FFA9ADAD" Padding="2,2,2,2" BorderThickness="0,0,0,0" Checked="AnalysisBttn_Checked"      />
             </DockPanel>
         </DockPanel >
 
-        <Frame x:Name="Main_pro" Grid.Row="1" NavigationUIVisibility="Hidden"  IsManipulationEnabled="False"/>
+        <Frame x:Name="Main_pro" Grid.Row="1" NavigationUIVisibility="Hidden"  IsManipulationEnabled="False" KeyboardNavigation.AcceptsReturn="False" KeyboardNavigation.IsTabStop="False" KeyboardNavigation.ControlTabNavigation="None" KeyboardNavigation.TabNavigation="None" KeyboardNavigation.DirectionalNavigation="None"   />
     </Grid>
 </Page>

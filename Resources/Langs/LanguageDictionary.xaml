@@ -228,8 +228,10 @@
     <system:String x:Key="FrontEffectiveStress" >Front Effective Stress</system:String> 
     <system:String x:Key="FrontKactive" >Front Ka</system:String> 
     <system:String x:Key="FrontKpassive" >Front Kp</system:String>
+    <system:String x:Key="FrontKrest" >Front K0</system:String>
     <system:String x:Key="BackKactive" >Back Ka</system:String>
     <system:String x:Key="BackKpassive" >Back Kp</system:String>
+    <system:String x:Key="BackKrest" >Back K0</system:String>
     <system:String x:Key="RankineTheory" >Rankine Theory</system:String>
     <system:String x:Key="FrontTotalStress" >Front Total Stress</system:String>
     <system:String x:Key="BackTotalStress" >Back Total Stress</system:String>
