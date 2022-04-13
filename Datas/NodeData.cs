@@ -41,7 +41,10 @@ namespace ExDesign.Datas
                 case LoadType.HydroStaticWaterPressure:
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1, -1.0 * tuple.Item3));
                     break;
-                case LoadType.SubgradeModulusofSoil:
+                case LoadType.Back_SubgradeModulusofSoil:
+                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
+                    break;
+                case LoadType.Front_SubgradeModulusofSoil:
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
                     break;
                 case LoadType.Back_Active_Horizontal_Force:
@@ -73,6 +76,12 @@ namespace ExDesign.Datas
                     break;
                 case LoadType.Back_Rest_Horizontal_Force:
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1, -1.0 * tuple.Item3));
+                    break;
+                case LoadType.First_Displacement:
+                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, -1.0 * tuple.Item3));
+                    break;
+                case LoadType.First_Rotation:
+                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
                     break;
                 default:
                     break;

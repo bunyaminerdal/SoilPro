@@ -266,7 +266,8 @@ namespace ExDesign.Scripts
         Front_EffectiveStress,
         Back_TotalStress,
         Front_TotalStress,
-        SubgradeModulusofSoil,
+        Back_SubgradeModulusofSoil,
+        Front_SubgradeModulusofSoil,
         Front_Kactive,
         Front_Kpassive,
         Front_Krest,
@@ -286,5 +287,7 @@ namespace ExDesign.Scripts
         Back_First_Total_Force,
         Front_First_Total_Force,
         First_Total_Force,
+        First_Displacement,
+        First_Rotation,
     }
 }

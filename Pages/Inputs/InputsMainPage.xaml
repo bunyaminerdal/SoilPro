@@ -48,6 +48,6 @@
             </DockPanel>
         </DockPanel >
 
-        <Frame x:Name="Main_pro" Grid.Row="1" NavigationUIVisibility="Hidden"  IsManipulationEnabled="False" KeyboardNavigation.AcceptsReturn="False" KeyboardNavigation.IsTabStop="False" KeyboardNavigation.ControlTabNavigation="None" KeyboardNavigation.TabNavigation="None" KeyboardNavigation.DirectionalNavigation="None"   />
+        <Frame x:Name="Main_pro" Grid.Row="1" NavigationUIVisibility="Hidden"  IsManipulationEnabled="False" KeyboardNavigation.AcceptsReturn="False"  KeyboardNavigation.ControlTabNavigation="None" KeyboardNavigation.DirectionalNavigation="None" />
     </Grid>
 </Page>

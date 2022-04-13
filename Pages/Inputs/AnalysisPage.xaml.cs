@@ -73,8 +73,11 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.Front_EffectiveStress:
                         listitem.Item1.Name = FindResource("FrontEffectiveStress").ToString();
                         break;
-                    case LoadType.SubgradeModulusofSoil:
-                        listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
+                    case LoadType.Back_SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("BackSubgradeModulusofSoil").ToString();
+                        break;
+                    case LoadType.Front_SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("FrontSubgradeModulusofSoil").ToString();
                         break;
                     case LoadType.Back_Active_Horizontal_Force:
                         listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
@@ -143,8 +146,11 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.HydroStaticWaterPressure:
                         listitem.Item1.Name = FindResource("HydroStaticWaterPressure").ToString();
                         break;
-                    case LoadType.SubgradeModulusofSoil:
-                        listitem.Item1.Name = FindResource("SubgradeModulusofSoil").ToString();
+                    case LoadType.Back_SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("BackSubgradeModulusofSoil").ToString();
+                        break;
+                    case LoadType.Front_SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("FrontSubgradeModulusofSoil").ToString();
                         break;
                     case LoadType.Back_Active_Horizontal_Force:
                         listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
@@ -184,6 +190,12 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.Front_First_Total_Force:
                         listitem.Item1.Name = FindResource("FrontFirstTotalForce").ToString();
+                        break;
+                    case LoadType.First_Displacement:
+                        listitem.Item1.Name = FindResource("FirstDisplacement").ToString();
+                        break;
+                    case LoadType.First_Rotation:
+                        listitem.Item1.Name = FindResource("FirstRotation").ToString();
                         break;
                     default:
                         break;

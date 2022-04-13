@@ -223,6 +223,8 @@
     <system:String x:Key="Analysis" >Analysis</system:String>
     <system:String x:Key="HydroStaticWaterPressure" >Hydro-Static Water Pressure</system:String>
     <system:String x:Key="SubgradeModulusofSoil" >Subgrade Modulus of Soil</system:String>
+    <system:String x:Key="BackSubgradeModulusofSoil" >Back Subgrade Modulus of Soil</system:String>
+    <system:String x:Key="FrontSubgradeModulusofSoil" >Front Subgrade Modulus of Soil</system:String>
     <system:String x:Key="EffectiveStress" >Effective Stress</system:String> 
     <system:String x:Key="BackEffectiveStress" >Back Effective Stress</system:String> 
     <system:String x:Key="FrontEffectiveStress" >Front Effective Stress</system:String> 
@@ -250,5 +252,7 @@
     <system:String x:Key="BackFirstTotalForce" >Back First Total Force</system:String>
     <system:String x:Key="FrontFirstTotalForce" >Front First Total Force</system:String>
     <system:String x:Key="FirstTotalForce" >First Total Force</system:String>
+    <system:String x:Key="FirstDisplacement" >First Displacement</system:String>
+    <system:String x:Key="FirstRotation" >First Rotation</system:String>
 
 </ResourceDictionary>
