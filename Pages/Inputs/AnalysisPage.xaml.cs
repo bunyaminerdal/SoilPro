@@ -138,7 +138,6 @@ namespace ExDesign.Pages.Inputs
             }
             foreach (var listitem in NodeData.Nodes[0].nodeForce)
             {
-
                 switch (listitem.Item1.Type)
                 {
                     case LoadType.HydroStaticWaterPressure:
@@ -176,6 +175,15 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.Back_Rest_Horizontal_Force:
                         listitem.Item1.Name = FindResource("BackRestHorizontalForce").ToString();
+                        break;
+                    case LoadType.First_Total_Force:
+                        listitem.Item1.Name = FindResource("FirstTotalForce").ToString();
+                        break;
+                    case LoadType.Back_First_Total_Force:
+                        listitem.Item1.Name = FindResource("BackFirstTotalForce").ToString();
+                        break;
+                    case LoadType.Front_First_Total_Force:
+                        listitem.Item1.Name = FindResource("FrontFirstTotalForce").ToString();
                         break;
                     default:
                         break;

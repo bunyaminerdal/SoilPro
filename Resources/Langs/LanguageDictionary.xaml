@@ -247,5 +247,8 @@
     <system:String x:Key="FrontPassiveVerticalForce" >Front Passive Vertical Force</system:String>
     <system:String x:Key="FrontRestHorizontalForce" >Front Rest Horizontal Force</system:String>
     <system:String x:Key="BackRestHorizontalForce" >Back Rest Horizontal Force</system:String>
+    <system:String x:Key="BackFirstTotalForce" >Back First Total Force</system:String>
+    <system:String x:Key="FrontFirstTotalForce" >Front First Total Force</system:String>
+    <system:String x:Key="FirstTotalForce" >First Total Force</system:String>
 
 </ResourceDictionary>

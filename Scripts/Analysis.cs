@@ -26,7 +26,8 @@ namespace ExDesign.Scripts
             BackActivePassiveCoefToFrameNodes();
             FrontActivePassiveCoefToFrameNodes(exH_waterH2, exH_calc);
             FrameToNodeForce();
-            if(fixedSoilLayer != null)
+            FirstTotalFrameToNodeForce();
+            if (fixedSoilLayer != null)
             {
                 StaticVariables.viewModel.soilLayerDatas.Remove(fixedSoilLayer);   
             }
@@ -52,7 +53,6 @@ namespace ExDesign.Scripts
                 StaticVariables.viewModel.soilLayerDatas.Add(fixedSoilLayer);
             }
         }
-
         public static void WallPartization(double exH_waterH2, double exH_calc)
         {
             FrameData.Frames.Clear();
@@ -1853,7 +1853,6 @@ namespace ExDesign.Scripts
             Passive_Horizontal_Force_end = stress * Kp_S_end * Math.Cos(delta);
             Passive_Vertical_Force_end = stress * Kp_S_end * Math.Sin(delta);
         }
-    
         private static void FrameToNodeForce()
         {
             NodeData.Nodes.Clear();
@@ -1911,6 +1910,51 @@ namespace ExDesign.Scripts
             }
             NodeData.Nodes.Sort();
             NodeData.Nodes.Reverse();
+        }
+        private static void FirstTotalFrameToNodeForce()
+        {
+                        
+            Force Back_First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_First_Total_Force };
+            Force Front_First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_First_Total_Force };
+            Force First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.First_Total_Force };
+
+            foreach (var node in NodeData.Nodes)
+            {
+                double Back_First_Total_Force = 0;
+                double Front_First_Total_Force = 0;
+                double First_Total_Force = 0;
+                foreach (var nodeForce in node.nodeForce)
+                {
+                    switch (nodeForce.Item1.Type)
+                    {
+                        case LoadType.StripLoad:
+                            Back_First_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.LineLoad:
+                            Back_First_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.PointLoad:
+                            Back_First_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.HydroStaticWaterPressure:
+                            Back_First_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.Back_Rest_Horizontal_Force:
+                            Back_First_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.Front_Rest_Horizontal_Force:
+                            Front_First_Total_Force += nodeForce.Item2;
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+                node.nodeForce.Add(new Tuple<Load, double>(Back_First_Total_Node_Force, Back_First_Total_Force));
+                node.nodeForce.Add(new Tuple<Load, double>(Front_First_Total_Node_Force, Front_First_Total_Force));
+                First_Total_Force = Back_First_Total_Force + Front_First_Total_Force;
+                node.nodeForce.Add(new Tuple<Load, double>(First_Total_Node_Force, First_Total_Force));
+            }            
         }
     }
 }
