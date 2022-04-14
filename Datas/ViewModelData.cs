@@ -315,7 +315,7 @@ namespace ExDesign.Datas
                     wall_d = 11.5,
                     pile_s = 0.80,
                     frontCubeLength = 8,
-                    backCubeLength = 12,
+                    backCubeLength = 8,
                     CubeLength = 15,
                     TopOfWallLevel = 0,
                     excavationHeight = 8,
