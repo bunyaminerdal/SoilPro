@@ -152,6 +152,9 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.Front_SubgradeModulusofSoil:
                         listitem.Item1.Name = FindResource("FrontSubgradeModulusofSoil").ToString();
                         break;
+                    case LoadType.Analys_SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("AnalysSubgradeModulusofSoil").ToString();
+                        break;
                     case LoadType.Back_Active_Horizontal_Force:
                         listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
                         break;
@@ -185,17 +188,32 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.First_Total_Force:
                         listitem.Item1.Name = FindResource("FirstTotalForce").ToString();
                         break;
+                    case LoadType.First_Iteration_Total_Force:
+                        listitem.Item1.Name = FindResource("FirstIterationTotalForce").ToString();
+                        break;
                     case LoadType.Back_First_Total_Force:
                         listitem.Item1.Name = FindResource("BackFirstTotalForce").ToString();
                         break;
                     case LoadType.Front_First_Total_Force:
                         listitem.Item1.Name = FindResource("FrontFirstTotalForce").ToString();
                         break;
+                    case LoadType.Back_First_Iteration_Total_Force:
+                        listitem.Item1.Name = FindResource("BackFirstIterationTotalForce").ToString();
+                        break;
+                    case LoadType.Front_First_Iteration_Total_Force:
+                        listitem.Item1.Name = FindResource("FrontFirstIterationTotalForce").ToString();
+                        break;
                     case LoadType.First_Displacement:
                         listitem.Item1.Name = FindResource("FirstDisplacement").ToString();
                         break;
                     case LoadType.First_Rotation:
                         listitem.Item1.Name = FindResource("FirstRotation").ToString();
+                        break;
+                    case LoadType.First_Iteration_Displacement:
+                        listitem.Item1.Name = FindResource("FirstIterationDisplacement").ToString();
+                        break;
+                    case LoadType.First_Iteration_Rotation:
+                        listitem.Item1.Name = FindResource("FirstIterationRotation").ToString();
                         break;
                     default:
                         break;
@@ -261,9 +279,9 @@ namespace ExDesign.Pages.Inputs
             foreach (var frame in FrameData.Frames)
             {
                 var startLoad = frame.startNodeLoadAndForce.Find(x => x.Item1.ID == load.ID);
-                textblock_start.Text += "\n" + startLoad.Item2.ToString();
+                textblock_start.Text +=  startLoad.Item2.ToString() + "\n" ;
                 var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.ID == load.ID);
-                textblock_end.Text += "\n" + endLoad.Item2.ToString();
+                textblock_end.Text +=  endLoad.Item2.ToString()+ "\n" ;
 
             }
         }
@@ -274,9 +292,9 @@ namespace ExDesign.Pages.Inputs
             foreach (var frame in FrameData.Frames)
             {
                 var startLoad = frame.startNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == load.ID);
-                textblock_start.Text += "\n" + startLoad.Item2.ToString();
+                textblock_start.Text +=  startLoad.Item2.ToString() + "\n";
                 var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == load.ID);
-                textblock_end.Text += "\n" + endLoad.Item2.ToString();
+                textblock_end.Text +=  endLoad.Item2.ToString() + "\n";
 
             }
         }
@@ -287,7 +305,7 @@ namespace ExDesign.Pages.Inputs
             foreach (var node in NodeData.Nodes)
             {
                 var startLoad = node.nodeForce.Find(x => x.Item1.ID == load.ID);
-                textblock_start.Text += "\n" + startLoad.Item2.ToString();
+                textblock_start.Text +=  startLoad.Item2.ToString() + "\n";
             }
         }
 

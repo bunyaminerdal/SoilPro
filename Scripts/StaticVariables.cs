@@ -268,12 +268,15 @@ namespace ExDesign.Scripts
         Front_TotalStress,
         Back_SubgradeModulusofSoil,
         Front_SubgradeModulusofSoil,
+        Analys_SubgradeModulusofSoil,
         Front_Kactive,
         Front_Kpassive,
         Front_Krest,
         Back_Kactive,
         Back_Kpassive,
         Back_Krest,
+        First_Iteration_Displacement,
+        First_Iteration_Rotation,
         Back_Active_Horizontal_Force,
         Back_Passive_Horizontal_Force,
         Back_Active_Vertical_Force,
@@ -286,8 +289,12 @@ namespace ExDesign.Scripts
         Back_Rest_Horizontal_Force, 
         Back_First_Total_Force,
         Front_First_Total_Force,
+        Back_First_Iteration_Total_Force,
+        Front_First_Iteration_Total_Force,
         First_Total_Force,
+        First_Iteration_Total_Force,
         First_Displacement,
         First_Rotation,
+        
     }
 }

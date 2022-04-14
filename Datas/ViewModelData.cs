@@ -324,7 +324,7 @@ namespace ExDesign.Datas
                     frontT_X2 = 2,
                     backT_Beta = 10,
                     backT_B = 1,
-                    bottomT_h = 3,
+                    bottomT_h = 5,
                     groundW_h1 = 5,
                     groundW_h2 = 2,
                     capBeam_h = 0.8,

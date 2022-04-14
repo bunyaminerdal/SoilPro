@@ -679,7 +679,7 @@ namespace ExDesign.Pages.Inputs.Views
                     
                     
                 }
-                if (soiltotalHeight1 > wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight < wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight > wall_h)
+                if (soiltotalHeight1 > wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight < wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight >= wall_h)
                 {
                     Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + (-soiltotalHeight1 + wall_h + bottomT_h) + soilLayer.LayerHeight, center3d.Z - wall_d / 2);
                     WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), soilLayer.LayerHeight-(soiltotalHeight1 - wall_h -bottomT_h), wall_d);
