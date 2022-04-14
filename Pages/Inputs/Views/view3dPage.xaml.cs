@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using ExDesign.Scripts;
 using System.Windows.Media.Animation;
 using ExDesign.Datas;
+using System.Diagnostics;
 
 namespace ExDesign.Pages.Inputs.Views
 {
@@ -41,7 +42,7 @@ namespace ExDesign.Pages.Inputs.Views
         double wall_d=7;
         double pile_s = 0.80;
         double frontCubeLength = 8;
-        double backCubeLength = 12;
+        double backCubeLength = 8;
         double excavationHeight = 8;
         double frontT_Z = 2;
         double frontT_X1 = 2;
@@ -514,13 +515,34 @@ namespace ExDesign.Pages.Inputs.Views
                             GeometryModel3D soilbackCubeModel = WpfCube.CreateCubeModel(soilbackCube, Color.FromArgb(100, 200, 200, 200), false, soilUri);
                             groupScene.Children.Add(soilbackCubeModel);
                         }
-                        
-
                     }
+                    else
+                    {
+                        if(soiltotalHeight - soilLayer.LayerHeight < wall_h)
+                        {
+                            double soilLayerDiff = wall_h - (soiltotalHeight - soilLayer.LayerHeight);
+                            double soilbackCube_w = backCubeLength;
+                            double soilbackCube_h = soilLayerDiff;
+                            double soilbackCube_d = wall_d;
+                            Point3D soilbackCubeCenter = new Point3D(center3d.X, center3d.Y + centerY - wall_h + soilLayerDiff, center3d.Z - soilbackCube_d / 2);
+                            WpfCube soilbackCube = new WpfCube(soilbackCubeCenter, soilbackCube_w, soilbackCube_h, soilbackCube_d);
+                            if (soilLayer.Soil != null)
+                            {
+                                GeometryModel3D soilbackCubeModel = WpfCube.CreateCubeModel(soilbackCube, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                                groupScene.Children.Add(soilbackCubeModel);
+                            }
+                            else
+                            {
+                                GeometryModel3D soilbackCubeModel = WpfCube.CreateCubeModel(soilbackCube, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                                groupScene.Children.Add(soilbackCubeModel);
+                            }
+                        }
+                    }
+                    
                 }
                 
             }
-            if (soiltotalHeight< wall_h)
+            if (soiltotalHeight < wall_h)
             {
                 double backCube_w = backCubeLength;
                 double backCube_h = wall_h-soiltotalHeight;
@@ -592,18 +614,103 @@ namespace ExDesign.Pages.Inputs.Views
             }
             
 
-            Point3D bottomTCenter = new Point3D(center3d.X-frontCube_w-wall_t, center3d.Y - centerY +bottomT_h , center3d.Z - wall_d / 2);
-            WpfCube bottomT = new WpfCube(bottomTCenter, wall_t+(frontCubeLength+backCubeLength), bottomT_h, wall_d);
-            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
-
             
+
             groupScene.Children.Add(frontTmodel);
             groupScene.Children.Add(frontCubeModel);
-            
 
-            //groupScene.Children.Add(backCubeModel);
-            groupScene.Children.Add(bottomTmodel);
+            //bottomT 
+            double soiltotalHeight1 = 0;
+            foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
+            {
+                soiltotalHeight1 += soilLayer.LayerHeight;
+                if(soiltotalHeight1 > wall_h && soiltotalHeight1 - soilLayer.LayerHeight < wall_h )
+                {
+                   if(soiltotalHeight1 < wall_h + bottomT_h)
+                    {
+                        Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + (-soiltotalHeight1 + wall_h + bottomT_h) + (soiltotalHeight1 - wall_h), center3d.Z - wall_d / 2);
+                        WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), (soiltotalHeight1 - wall_h), wall_d);
+                        if (soilLayer.Soil != null)
+                        {
                             
+                            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                            groupScene.Children.Add(bottomTmodel);
+                        }
+                        else
+                        {
+                            
+                            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                            groupScene.Children.Add(bottomTmodel);
+                        }
+                        
+                    }
+                    else
+                    {
+                        Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + bottomT_h, center3d.Z - wall_d / 2);
+                        WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), bottomT_h, wall_d);
+                        if (soilLayer.Soil != null)
+                        {
+                            
+                            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                            groupScene.Children.Add(bottomTmodel);
+                        }
+                        else
+                        {                            
+                            GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                            groupScene.Children.Add(bottomTmodel);
+                        }
+                        
+                    }
+                }
+                if(soiltotalHeight1 > wall_h && soiltotalHeight1 <= wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight < wall_h+bottomT_h  && soiltotalHeight1 - soilLayer.LayerHeight >= wall_h)
+                {
+                    Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + (-soiltotalHeight1 + wall_h + bottomT_h) + soilLayer.LayerHeight, center3d.Z - wall_d / 2);
+                    WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), soilLayer.LayerHeight, wall_d);
+                    if (soilLayer.Soil != null)
+                    {
+                        GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                        groupScene.Children.Add(bottomTmodel);
+                    }
+                    else
+                    {
+                        GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                        groupScene.Children.Add(bottomTmodel);
+                    }
+                    
+                    
+                }
+                if (soiltotalHeight1 > wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight < wall_h + bottomT_h && soiltotalHeight1 - soilLayer.LayerHeight > wall_h)
+                {
+                    Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + (-soiltotalHeight1 + wall_h + bottomT_h) + soilLayer.LayerHeight, center3d.Z - wall_d / 2);
+                    WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), soilLayer.LayerHeight-(soiltotalHeight1 - wall_h -bottomT_h), wall_d);
+                    if(soilLayer.Soil != null)
+                    {
+                        GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, soilLayer.Soil.SoilColor, soilLayer.Soil.isSoilTexture, soilLayer.Soil.SoilTexture.TextureUri);
+                        groupScene.Children.Add(bottomTmodel);
+                    }
+                    else
+                    {
+                        GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                        groupScene.Children.Add(bottomTmodel);
+                    }
+                    
+                }
+            }
+            if(soiltotalHeight1 <= wall_h)
+            {
+                Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + bottomT_h, center3d.Z - wall_d / 2);
+                WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), bottomT_h, wall_d);
+                GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                groupScene.Children.Add(bottomTmodel);
+
+            }
+            if(soiltotalHeight1 <= wall_h + bottomT_h && soiltotalHeight1 > wall_h)
+            {
+                Point3D bottomTCenter = new Point3D(center3d.X - frontCube_w - wall_t, center3d.Y - centerY + bottomT_h-(soiltotalHeight1-wall_h), center3d.Z - wall_d / 2);
+                WpfCube bottomT = new WpfCube(bottomTCenter, wall_t + (frontCubeLength + backCubeLength), bottomT_h-(soiltotalHeight1 - wall_h), wall_d);
+                GeometryModel3D bottomTmodel = WpfCube.CreateCubeModel(bottomT, Color.FromArgb(100, 200, 200, 200), false, soilUri);
+                groupScene.Children.Add(bottomTmodel);
+            }
 
             groupScene.Children.Add(leftLight());
             groupScene.Children.Add(new AmbientLight(Colors.Gray));

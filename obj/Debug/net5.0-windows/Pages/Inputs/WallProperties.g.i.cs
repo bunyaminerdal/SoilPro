@@ -359,7 +359,7 @@ namespace ExDesign.Pages.Inputs {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExDesign;V1.0.0.0;component/pages/inputs/wallproperties.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExDesign;component/pages/inputs/wallproperties.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Pages\Inputs\WallProperties.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

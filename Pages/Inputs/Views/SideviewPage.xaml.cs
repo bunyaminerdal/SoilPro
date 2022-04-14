@@ -379,23 +379,31 @@ namespace ExDesign.Pages.Inputs.Views
 
 
             double totalHeight = 0;
+            double DISTANCETOBACKCUBE = 7 * StaticVariables.levelIconHeight;
             //soil boxes
             foreach (var soilLayer in StaticVariables.viewModel.soilLayerDatas)
             {
                 if (totalHeight < wall_h + bottomT_h)
                 {
-                    Point soilLayerCenter = new Point(center.X + backCubeLength + wall_t + 7*StaticVariables.levelIconHeight, center.Y + totalHeight);
+                    Point soilLayerCenter = new Point(center.X + backCubeLength + wall_t + DISTANCETOBACKCUBE, center.Y + totalHeight);
                     if (soilLayer.Soil != null)
                     {
                         double soilLayerheight = 0;
                         if (soilLayer == StaticVariables.viewModel.soilLayerDatas[0]&&StaticVariables.viewModel.GroundSurfaceTypeIndex!=0)
                         {
                             soilLayerheight = backT_h + soilLayer.LayerHeight;
-                            soilLayerCenter = new Point(center.X + backCubeLength + wall_t + 7 * StaticVariables.levelIconHeight, center.Y + totalHeight-backT_h);
+                            soilLayerCenter = new Point(center.X + backCubeLength + wall_t + DISTANCETOBACKCUBE, center.Y + totalHeight-backT_h);
                         }
                         else
                         {
                             soilLayerheight = soilLayer.LayerHeight;
+                        }
+                        totalHeight += soilLayer.LayerHeight;
+
+                        if (totalHeight > wall_h + bottomT_h)
+                        {
+                            soilLayerCenter = new Point(center.X + backCubeLength + wall_t + DISTANCETOBACKCUBE, center.Y + wall_h + bottomT_h -(wall_h + bottomT_h - (totalHeight - soilLayerheight)) );
+                            soilLayerheight = wall_h + bottomT_h - (totalHeight - soilLayerheight);                            
                         }
                         GeometryDrawing soilLayerGeometryDrawing = Wpf2Dutils.SoilGeometryDrawing(soilLayerCenter,
                         soilLayerheight,
@@ -403,10 +411,10 @@ namespace ExDesign.Pages.Inputs.Views
                         soilLayer.Soil.SoilColor,
                         soilLayer.Soil.SoilTexture.TextureUri,
                         soilLayer.Soil.isSoilTexture);
-                        totalHeight += soilLayer.LayerHeight;
                         mainDrawingGroup.Children.Add(soilLayerGeometryDrawing);
                     }
                 }
+                
             }
 
             mainDrawingGroup.Children.Add(wallGeometryDrawing);
@@ -581,21 +589,28 @@ namespace ExDesign.Pages.Inputs.Views
                     {
                         if (totalHeight < wall_h + bottomT_h)
                         {
-                            Point soilLayerDimensionCenter = new Point(center.X + backCubeLength + wall_t+soilLayerBoxW + 7 * StaticVariables.levelIconHeight, center.Y + totalHeight);
+                            Point soilLayerDimensionCenter = new Point(center.X + backCubeLength + wall_t+soilLayerBoxW + DISTANCETOBACKCUBE, center.Y + totalHeight);
                             if (soilLayer.Soil != null)
                             {
                                 double soilLayerheight = 0;
                                 if (soilLayer == StaticVariables.viewModel.soilLayerDatas[0] && StaticVariables.viewModel.GroundSurfaceTypeIndex != 0 && StaticVariables.viewModel.GroundSurfaceTypeIndex != 1)
                                 {
                                     soilLayerheight = backT_h + soilLayer.LayerHeight;
-                                    soilLayerDimensionCenter = new Point(center.X + backCubeLength + wall_t + soilLayerBoxW + 7 * StaticVariables.levelIconHeight, center.Y + totalHeight - backT_h);
+                                    soilLayerDimensionCenter = new Point(center.X + backCubeLength + wall_t + soilLayerBoxW + DISTANCETOBACKCUBE, center.Y + totalHeight - backT_h);
                                 }
                                 else
                                 {
                                     soilLayerheight = soilLayer.LayerHeight;
                                 }
-                                GeometryDrawing soilLayerDimension = Wpf2Dutils.Dimension(soilLayerDimensionCenter,new Point(soilLayerDimensionCenter.X,soilLayerDimensionCenter.Y+soilLayerheight),Colors.DarkBlue, WpfUtils.GetDimension(soilLayerheight).ToString() );
                                 totalHeight += soilLayer.LayerHeight;
+
+                                if (totalHeight > wall_h + bottomT_h)
+                                {
+                                    soilLayerDimensionCenter = new Point(center.X + backCubeLength + wall_t + soilLayerBoxW + DISTANCETOBACKCUBE, center.Y + wall_h + bottomT_h - (wall_h + bottomT_h - (totalHeight - soilLayerheight)));
+                                    soilLayerheight = wall_h + bottomT_h - (totalHeight - soilLayerheight);
+                                }
+                                GeometryDrawing soilLayerDimension = Wpf2Dutils.Dimension(soilLayerDimensionCenter,new Point(soilLayerDimensionCenter.X,soilLayerDimensionCenter.Y+soilLayerheight),Colors.DarkBlue, WpfUtils.GetDimension(soilLayerheight).ToString() );
+                                
                                 mainDrawingGroup.Children.Add(soilLayerDimension);
                             }
                         }

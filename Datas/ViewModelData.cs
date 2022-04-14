@@ -332,7 +332,7 @@ namespace ExDesign.Datas
                     UnitIndex = 11,
                     WallTypeIndex = 1,
                     PileIndex = 1,
-                    ConcreteIndex = 0,
+                    ConcreteIndex = 2,
                     RebarIndex = 0,
                     SteelIndex = 0,
                     SheetIndex = 0,
