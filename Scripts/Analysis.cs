@@ -2180,20 +2180,21 @@ namespace ExDesign.Scripts
 
                 Tuple<Load, double> BackK0_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Rest_Horizontal_Force);
 
-                double BackK0_Force_amp = BackK0_Force.Item2 - Back_Force_amp;
+                double BackK0_Force_amp = BackK0_Force.Item2 + Back_Force_amp;
                 Tuple<Load, double> BackKp_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Passive_Horizontal_Force);
                 Tuple<Load, double> BackKa_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Active_Horizontal_Force);
+                
                 node.isBackSpringOn = false;
                 
-                    if (BackK0_Force_amp >= BackKp_Force.Item2)
+                    if (BackK0_Force_amp <= BackKa_Force.Item2)
                     {
-                        BackK0_Force_amp = BackKp_Force.Item2;
+                        BackK0_Force_amp = BackKa_Force.Item2;
                     }
                     else
                     {
-                        if (BackK0_Force_amp <= BackKa_Force.Item2)
+                        if (BackK0_Force_amp >= BackKp_Force.Item2)
                         {
-                            BackK0_Force_amp = BackKa_Force.Item2;
+                            BackK0_Force_amp = BackKp_Force.Item2;
                         }
                     }
                 
@@ -2233,22 +2234,22 @@ namespace ExDesign.Scripts
                 Tuple<Load, double> FrontKp_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Passive_Horizontal_Force);
                 Tuple<Load, double> FrontKa_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Active_Horizontal_Force);
                 node.isFrontSpringOn = true;
-                
-                
+
+                if (FrontK0_Force_amp <= FrontKp_Force.Item2)
+                {
+                    FrontK0_Force_amp = FrontKp_Force.Item2;
+                    node.isFrontSpringOn = false;
+                }
+                else
+                {
                     if (FrontK0_Force_amp >= FrontKa_Force.Item2)
                     {
+
                         FrontK0_Force_amp = FrontKa_Force.Item2;
                     }
-                    else
-                    {
-                        if (FrontK0_Force_amp <= FrontKp_Force.Item2)
-                        {
-                            node.isFrontSpringOn = false;
-                            FrontK0_Force_amp = FrontKp_Force.Item2;
-                        }
-                    }
-                
-                if (FrontK0_Force_amp > FrontK0_Force.Item2)
+                }
+
+                if (FrontK0_Force_amp >= FrontK0_Force.Item2)
                 {
                     node.isFrontSpringOn = false;
                 }

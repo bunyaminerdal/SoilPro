@@ -47,7 +47,7 @@ namespace ExDesign.Datas
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
                     break;
                 case LoadType.Front_SubgradeModulusofSoil:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
+                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, -1.0 * tuple.Item3));
                     break;
                 case LoadType.Back_Active_Horizontal_Force:
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1,  tuple.Item3));
