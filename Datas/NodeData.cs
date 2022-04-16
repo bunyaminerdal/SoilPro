@@ -85,22 +85,12 @@ namespace ExDesign.Datas
                 case LoadType.First_Rotation:
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
                     break;
-                case LoadType.First_Iteration_Displacement:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1,  tuple.Item3));
-                    break;
-                case LoadType.First_Iteration_Rotation:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
-                    break;
-                case LoadType.Second_Iteration_Displacement:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
-                    break;
-                case LoadType.Second_Iteration_Rotation:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
-                    break;
+                
                 default:
                     break;
             }
         }
+
         public int CompareTo(NodeData? other)
         {
             if (this.Location.Y < other.Location.Y)
