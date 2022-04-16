@@ -214,13 +214,15 @@ namespace ExDesign.Pages.Inputs.Views
                         {
 
                             var endLoad = frame.endNodeLoadAndForce.Find(x => x.Item1.ID == showenLoad.ID);
-
-                            if (endLoad.Item2 > totalLoad)
+                            if(endLoad != null)
                             {
-                                totalLoad = endLoad.Item2;
-                                endFramePoint = frame.EndPoint;
-                                endEndLoad = endLoad.Item2;
-                            }
+                                if (endLoad.Item2 > totalLoad)
+                                {
+                                    totalLoad = endLoad.Item2;
+                                    endFramePoint = frame.EndPoint;
+                                    endEndLoad = endLoad.Item2;
+                                }
+                            }                           
 
                         }
                         loadScale = loadLimit / totalLoad;
@@ -333,13 +335,15 @@ namespace ExDesign.Pages.Inputs.Views
                         {
 
                             var endLoad = node.nodeForce.Find(x => x.Item1.ID == showenLoad.ID);
-
-                            if (endLoad.Item2 > totalLoad)
+                            if(endLoad != null)
                             {
-                                totalLoad = endLoad.Item2;
-                                nodePoint = node.Location;
-                                nodeForce = endLoad.Item2;
-                            }
+                                if (endLoad.Item2 > totalLoad)
+                                {
+                                    totalLoad = endLoad.Item2;
+                                    nodePoint = node.Location;
+                                    nodeForce = endLoad.Item2;
+                                }
+                            }                            
 
                         }
                         loadScale = -loadLimit / totalLoad;
