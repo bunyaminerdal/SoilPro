@@ -155,6 +155,9 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.Analys_SubgradeModulusofSoil:
                         listitem.Item1.Name = FindResource("AnalysSubgradeModulusofSoil").ToString();
                         break;
+                    case LoadType.First_IT_Analys_SubgradeModulusofSoil:
+                        listitem.Item1.Name = FindResource("FirstITAnalysSubgradeModulusofSoil").ToString();
+                        break;
                     case LoadType.Back_Active_Horizontal_Force:
                         listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
                         break;
@@ -191,6 +194,9 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.First_Iteration_Total_Force:
                         listitem.Item1.Name = FindResource("FirstIterationTotalForce").ToString();
                         break;
+                    case LoadType.Second_Iteration_Total_Force:
+                        listitem.Item1.Name = FindResource("SecondIterationTotalForce").ToString();
+                        break;
                     case LoadType.Back_First_Total_Force:
                         listitem.Item1.Name = FindResource("BackFirstTotalForce").ToString();
                         break;
@@ -203,6 +209,12 @@ namespace ExDesign.Pages.Inputs
                     case LoadType.Front_First_Iteration_Total_Force:
                         listitem.Item1.Name = FindResource("FrontFirstIterationTotalForce").ToString();
                         break;
+                    case LoadType.Back_Second_Iteration_Total_Force:
+                        listitem.Item1.Name = FindResource("BackSecondIterationTotalForce").ToString();
+                        break;
+                    case LoadType.Front_Second_Iteration_Total_Force:
+                        listitem.Item1.Name = FindResource("FrontSecondIterationTotalForce").ToString();
+                        break;
                     case LoadType.First_Displacement:
                         listitem.Item1.Name = FindResource("FirstDisplacement").ToString();
                         break;
@@ -214,6 +226,12 @@ namespace ExDesign.Pages.Inputs
                         break;
                     case LoadType.First_Iteration_Rotation:
                         listitem.Item1.Name = FindResource("FirstIterationRotation").ToString();
+                        break;
+                    case LoadType.Second_Iteration_Displacement:
+                        listitem.Item1.Name = FindResource("SecondIterationDisplacement").ToString();
+                        break;
+                    case LoadType.Second_Iteration_Rotation:
+                        listitem.Item1.Name = FindResource("SecondIterationRotation").ToString();
                         break;
                     default:
                         break;

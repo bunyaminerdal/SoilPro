@@ -32,6 +32,8 @@ namespace ExDesign.Scripts
             FirstMatrixAnalys();
             FirstIterationForceFrameToNodeForce();
             FirstMatrixAnalys1();
+            SecondIterationForceFrameToNodeForce();
+            SecondMatrixAnalys1();
 
             if (fixedSoilLayer != null)
             {
@@ -1863,7 +1865,8 @@ namespace ExDesign.Scripts
                 double fi = soil.SoilFrictionAngle * Math.PI / 180;
                 double Delta = soil.WallSoilFrictionAngle * Math.PI / 180;
                 double alfa = 0 * Math.PI / 180;
-                Kp_S_start = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
+                Kp_S_start =0.9* Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
+                //Kp_S_start = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
                 Passive_Horizontal_Force_start = (stress * Kp_S_start + 2 * cPrime * Math.Sqrt(Kp_S_start)) * Math.Cos(delta);
                 Passive_Vertical_Force_start = (stress * Kp_S_start + 2 * cPrime * Math.Sqrt(Kp_S_start)) * Math.Sin(delta);
             }
@@ -1875,7 +1878,8 @@ namespace ExDesign.Scripts
                 double fi = soil.SoilFrictionAngle * Math.PI / 180;
                 double Delta = soil.WallSoilFrictionAngle * Math.PI / 180;
                 double alfa = 0 * Math.PI / 180;
-                Kp_S_end = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
+                Kp_S_end =0.9* Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
+                //Kp_S_end = Math.Pow(Math.Cos(fi + alfa), 2.0) / (Math.Pow(Math.Cos(alfa), 2.0) * Math.Cos(Delta - alfa) * (Math.Pow(1 - Math.Sqrt((Math.Sin(fi + Delta) * Math.Sin(fi + beta_back)) / (Math.Cos(Delta - alfa) * Math.Cos(beta_back - alfa))), 2.0)));
                 Passive_Horizontal_Force_end = (stress * Kp_S_end + 2 * cPrime * Math.Sqrt(Kp_S_end)) * Math.Cos(delta);
                 Passive_Vertical_Force_end = (stress * Kp_S_end + 2 * cPrime * Math.Sqrt(Kp_S_end)) * Math.Sin(delta);
             }
@@ -2035,7 +2039,7 @@ namespace ExDesign.Scripts
             Force Back_First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_First_Total_Force };
             Force Front_First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_First_Total_Force };
             Force First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.First_Total_Force };
-            Force AnalysSprings = new Force() { ID = Guid.NewGuid(), Type = LoadType.Analys_SubgradeModulusofSoil };
+            //Force AnalysSprings = new Force() { ID = Guid.NewGuid(), Type = LoadType.Analys_SubgradeModulusofSoil };
 
             foreach (var node in NodeData.Nodes)
             {
@@ -2074,11 +2078,11 @@ namespace ExDesign.Scripts
                 First_Total_Force = Back_First_Total_Force + Front_First_Total_Force;
                 node.nodeForce.Add(new Tuple<Load, double>(First_Total_Node_Force, First_Total_Force));
 
-                //tüm açık olan springlerle analysspring load hazırlıyoruz
-                Tuple<Load, double> backSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_SubgradeModulusofSoil);
-                Tuple<Load, double> frontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
-                //node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2 + frontSpring.Item2));
-                node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, frontSpring.Item2 ));
+                ////tüm açık olan springlerle analysspring load hazırlıyoruz
+                //Tuple<Load, double> backSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_SubgradeModulusofSoil);
+                //Tuple<Load, double> frontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
+                ////node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2 + frontSpring.Item2));
+                //node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, frontSpring.Item2 ));
 
             }
         }
@@ -2133,7 +2137,7 @@ namespace ExDesign.Scripts
 
             for (int j = m - 2; j < n; j++)
             {
-                Tuple<Load, double> tuple = NodeData.Nodes[j - m + 2].nodeForce.Find(x => x.Item1.Type == LoadType.Analys_SubgradeModulusofSoil);
+                Tuple<Load, double> tuple = NodeData.Nodes[j - m + 2].nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
                 matrixS[j, j] = tuple.Item2;
             }
 
@@ -2308,9 +2312,7 @@ namespace ExDesign.Scripts
                 {
                     node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, 0.0));
                 }
-
             }
-
         }
         private static void FirstMatrixAnalys1()
         {
@@ -2399,6 +2401,235 @@ namespace ExDesign.Scripts
             }
 
         }
+        private static void SecondIterationForceFrameToNodeForce()
+        {
+            Force Back_Second_IT_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_Second_Iteration_Total_Force };
+            Force Front_Second_IT_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_Second_Iteration_Total_Force };
+            Force Second_Iteration_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Second_Iteration_Total_Force };
 
+            foreach (var node in NodeData.Nodes)
+            {
+                double Back_First_Iteration_Total_Force = 0;
+                double Front_First_Iteration_Total_Force = 0;
+                double First_Iteration_Total_Force = 0;
+
+                Tuple<Load, double> BackSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Analys_SubgradeModulusofSoil);
+                Tuple<Load, double> Displacement = node.nodeForce.Find(x => x.Item1.Type == LoadType.First_Iteration_Displacement);
+
+                double Back_Force_amp = BackSpring.Item2 * Displacement.Item2;
+
+                Tuple<Load, double> BackK0_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Rest_Horizontal_Force);
+
+                double BackK0_Force_amp = BackK0_Force.Item2 - Back_Force_amp;
+                Tuple<Load, double> BackKp_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Passive_Horizontal_Force);
+                Tuple<Load, double> BackKa_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Active_Horizontal_Force);
+
+                if (BackK0_Force_amp >= BackKp_Force.Item2)
+                {
+                    BackK0_Force_amp = BackKp_Force.Item2;
+                }
+                else
+                {
+                    if (BackK0_Force_amp <= BackKa_Force.Item2)
+                    {
+                        BackK0_Force_amp = BackKa_Force.Item2;
+                    }
+                }
+                if (BackK0_Force_amp >= BackKp_Force.Item2)
+                {
+                    node.isBackSpringOn = false;
+
+                }
+                if (BackK0_Force_amp <= BackK0_Force.Item2)
+                {
+                    node.isBackSpringOn = false;
+                }
+                if (BackK0_Force_amp > BackK0_Force.Item2 && BackK0_Force_amp < BackKp_Force.Item2)
+                {
+                    node.isBackSpringOn = true;
+                }
+
+                Back_First_Iteration_Total_Force = BackK0_Force_amp;
+                foreach (var nodeForce in node.nodeForce)
+                {
+                    switch (nodeForce.Item1.Type)
+                    {
+                        case LoadType.StripLoad:
+                            Back_First_Iteration_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.LineLoad:
+                            Back_First_Iteration_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.PointLoad:
+                            Back_First_Iteration_Total_Force += nodeForce.Item2;
+                            break;
+                        case LoadType.HydroStaticWaterPressure:
+                            Back_First_Iteration_Total_Force += nodeForce.Item2;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                Tuple<Load, double> FrontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Analys_SubgradeModulusofSoil);
+                double Front_Force_amp = FrontSpring.Item2 * Displacement.Item2;
+
+                Tuple<Load, double> FrontK0_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Rest_Horizontal_Force);
+
+                double FrontK0_Force_amp = FrontK0_Force.Item2 - Front_Force_amp;
+                Tuple<Load, double> FrontKp_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Passive_Horizontal_Force);
+                Tuple<Load, double> FrontKa_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Active_Horizontal_Force);
+                //amp = -4 ka = -0.1 k0 = -0.5 kp = -3
+                if (FrontK0_Force_amp >= FrontKa_Force.Item2)
+                {
+                    FrontK0_Force_amp = FrontKa_Force.Item2;
+                }
+                else
+                {
+                    if (FrontK0_Force_amp <= FrontKp_Force.Item2)
+                    {
+                        FrontK0_Force_amp = FrontKp_Force.Item2;
+                    }
+                }
+
+                if (FrontK0_Force_amp >= FrontKa_Force.Item2)
+                {
+                    node.isFrontSpringOn = false;
+                }
+                if (FrontK0_Force_amp <= FrontKp_Force.Item2)
+                {
+                    node.isFrontSpringOn = false;
+                }
+                if (FrontK0_Force_amp > FrontKp_Force.Item2 && FrontK0_Force_amp < FrontKa_Force.Item2)
+                {
+                    node.isFrontSpringOn = true;
+                }
+                Front_First_Iteration_Total_Force = FrontK0_Force_amp;
+                node.nodeForce.Add(new Tuple<Load, double>(Back_Second_IT_Total_Node_Force, Back_First_Iteration_Total_Force));
+                node.nodeForce.Add(new Tuple<Load, double>(Front_Second_IT_Total_Node_Force, Front_First_Iteration_Total_Force));
+
+                First_Iteration_Total_Force = Back_First_Iteration_Total_Force + Front_First_Iteration_Total_Force;
+                node.nodeForce.Add(new Tuple<Load, double>(Second_Iteration_Total_Node_Force, First_Iteration_Total_Force));
+            }
+
+            Force AnalysSprings = new Force() { ID = Guid.NewGuid(), Type = LoadType.First_IT_Analys_SubgradeModulusofSoil };
+
+            foreach (var node in NodeData.Nodes)
+            {
+                if (node.isFrontSpringOn && node.isBackSpringOn)
+                {
+                    Tuple<Load, double> backSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_SubgradeModulusofSoil);
+                    Tuple<Load, double> frontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
+
+                    node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2));
+                    //node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2 + frontSpring.Item2));
+                }
+                else if (node.isFrontSpringOn && !node.isBackSpringOn)
+                {
+                    Tuple<Load, double> frontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
+
+                    node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, frontSpring.Item2));
+                }
+                else if (!node.isFrontSpringOn && node.isBackSpringOn)
+                {
+                    Tuple<Load, double> backSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_SubgradeModulusofSoil);
+
+                    node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2));
+                }
+                else
+                {
+                    node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, 0.0));
+                }
+
+            }
+
+        }
+        private static void SecondMatrixAnalys1()
+        {
+            int m = NodeData.Nodes.Count * 2;
+            int n = NodeData.Nodes.Count * 3 - 2;
+
+            var matrixA = new DenseMatrix(m, n);
+            for (int i = 0; i < NodeData.Nodes.Count; i++)
+            {
+                if (i < NodeData.Nodes.Count - 1)
+                {
+                    matrixA[i, 2 * i] = 1;
+                }
+
+                if (i > 0)
+                {
+                    matrixA[i, 2 * i - 1] = 1;
+                }
+            }
+            for (int j = NodeData.Nodes.Count; j < m; j++)
+            {
+                matrixA[j, j + NodeData.Nodes.Count - 2] = -1;
+            }
+
+            for (int j = 0; j < NodeData.Nodes.Count - 1; j++)
+            {
+                double frameLength = Math.Sqrt((Math.Pow(FrameData.Frames[j].StartPoint.X - FrameData.Frames[j].EndPoint.X, 2) + Math.Pow(FrameData.Frames[j].StartPoint.Y - FrameData.Frames[j].EndPoint.Y, 2)));
+                matrixA[j + NodeData.Nodes.Count, 2 * j] = 1 / frameLength;
+                matrixA[j + NodeData.Nodes.Count, 2 * j + 1] = 1 / frameLength;
+                matrixA[j + NodeData.Nodes.Count + 1, 2 * j] = -1 / frameLength;
+                matrixA[j + NodeData.Nodes.Count + 1, 2 * j + 1] = -1 / frameLength;
+            }
+
+            var matrixS = new DenseMatrix(n, n);
+            for (int j = 0; j < m - 2; j++)
+            {
+                int k = (int)Math.Round((decimal)(j / 2), 0, MidpointRounding.AwayFromZero);
+
+                double frameLength = Math.Sqrt((Math.Pow(FrameData.Frames[k].StartPoint.X - FrameData.Frames[k].EndPoint.X, 2) + Math.Pow(FrameData.Frames[k].StartPoint.Y - FrameData.Frames[k].EndPoint.Y, 2)));
+
+                var A = 4 * StaticVariables.viewModel.GetWallEI() / frameLength;
+                var B = 2 * StaticVariables.viewModel.GetWallEI() / frameLength;
+                matrixS[j, j] = A;
+                if (j % 2 == 0)
+                {
+                    matrixS[j, j + 1] = B;
+                    matrixS[j + 1, j] = B;
+                }
+            }
+
+            for (int j = m - 2; j < n; j++)
+            {
+                Tuple<Load, double> tuple = NodeData.Nodes[j - m + 2].nodeForce.Find(x => x.Item1.Type == LoadType.First_IT_Analys_SubgradeModulusofSoil);
+                matrixS[j, j] = tuple.Item2;
+            }
+
+            var matrixP = new DenseMatrix(m, 1);
+
+            for (int i = NodeData.Nodes.Count; i < m; i++)
+            {
+                Tuple<Load, double> tuple = NodeData.Nodes[i - NodeData.Nodes.Count].nodeForce.Find(x => x.Item1.Type == LoadType.Second_Iteration_Total_Force);
+                matrixP[i, 0] = tuple.Item2;
+            }
+            var matrixL = matrixA.Multiply(matrixS);
+
+            var matrixM = matrixL.TransposeAndMultiply(matrixA);
+
+            var matrixM_Inverse = matrixM.Inverse();
+
+            var matrixU = matrixM_Inverse.Multiply(matrixP);
+
+            Force rotation = new Force() { ID = Guid.NewGuid(), Type = LoadType.Second_Iteration_Rotation };
+            Force displacement = new Force() { ID = Guid.NewGuid(), Type = LoadType.Second_Iteration_Displacement };
+            for (int i = 0; i < matrixU.RowCount; i++)
+            {
+                if (i < NodeData.Nodes.Count)
+                {
+                    Tuple<Load, double, double> tuple = new Tuple<Load, double, double>(rotation, 0, matrixU[i, 0]);
+                    NodeData.Nodes[i].AddForce(tuple);
+                }
+                else
+                {
+                    Tuple<Load, double, double> tuple1 = new Tuple<Load, double, double>(displacement, 0, matrixU[i, 0]);
+                    NodeData.Nodes[i - NodeData.Nodes.Count].AddForce(tuple1);
+                }
+            }
+
+        }
     }
 }

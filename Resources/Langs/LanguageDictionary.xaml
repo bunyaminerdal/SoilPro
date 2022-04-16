@@ -226,6 +226,7 @@
     <system:String x:Key="BackSubgradeModulusofSoil" >Back Subgrade Modulus of Soil</system:String>
     <system:String x:Key="FrontSubgradeModulusofSoil" >Front Subgrade Modulus of Soil</system:String>
     <system:String x:Key="AnalysSubgradeModulusofSoil" >Analys Subgrade Modulus of Soil</system:String>
+    <system:String x:Key="FirstITAnalysSubgradeModulusofSoil" >First IT Analys Subgrade Modulus of Soil</system:String>
     <system:String x:Key="EffectiveStress" >Effective Stress</system:String> 
     <system:String x:Key="BackEffectiveStress" >Back Effective Stress</system:String> 
     <system:String x:Key="FrontEffectiveStress" >Front Effective Stress</system:String> 
@@ -252,13 +253,18 @@
     <system:String x:Key="BackRestHorizontalForce" >Back Rest Horizontal Force</system:String>
     <system:String x:Key="BackFirstTotalForce" >Back First Total Force</system:String>
     <system:String x:Key="FrontFirstIterationTotalForce" >Front First Iteration Total Force</system:String>
+    <system:String x:Key="FrontSecondIterationTotalForce" >Front Second Iteration Total Force</system:String>
     <system:String x:Key="BackFirstIterationTotalForce" >Back First Iteration Total Force</system:String>
+    <system:String x:Key="BackSecondIterationTotalForce" >Back Second Iteration Total Force</system:String>
     <system:String x:Key="FrontFirstTotalForce" >Front First Total Force</system:String>
     <system:String x:Key="FirstTotalForce" >First Total Force</system:String>
     <system:String x:Key="FirstIterationTotalForce" >First Iteration Total Force</system:String>
+    <system:String x:Key="SecondIterationTotalForce" >Second Iteration Total Force</system:String>
     <system:String x:Key="FirstDisplacement" >First Displacement</system:String>
     <system:String x:Key="FirstRotation" >First Rotation</system:String>
     <system:String x:Key="FirstIterationDisplacement" >First Iteration Displacement</system:String>
+    <system:String x:Key="SecondIterationDisplacement" >Second Iteration Displacement</system:String>
     <system:String x:Key="FirstIterationRotation" >First Iteration Rotation</system:String>
+    <system:String x:Key="SecondIterationRotation" >Second Iteration Rotation</system:String>
 
 </ResourceDictionary>
