@@ -28,8 +28,8 @@ namespace ExDesign.Pages.Inputs
         public char separator = ',';
 
         bool isShowValues = true;
-        bool isUsedFirstForces = false;
-        bool isPlusedSprings = false;
+        bool isBackForceStartWithK0 = false;
+        bool isSpringOpenWithK0 = false;
         int iterationCount = 0;
         public AnalysisPage()
         {
@@ -40,7 +40,7 @@ namespace ExDesign.Pages.Inputs
         {
             double exH_waterH2 =StaticVariables.viewModel.GetexcavationHeight() + (StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue);
             double exH_calc = WpfUtils.GetExHeightForCalculation();
-            Analysis.StageCalculation(exH_waterH2,exH_calc,isPlusedSprings,isUsedFirstForces,iterationCount);
+            Analysis.StageCalculation(exH_waterH2,exH_calc,isBackForceStartWithK0, isSpringOpenWithK0, iterationCount);
             
             LoadsAndForcesPre();
             //FrameData.FrameSave();
@@ -328,22 +328,22 @@ namespace ExDesign.Pages.Inputs
 
         private void isPlussedSprings_cb_Checked(object sender, RoutedEventArgs e)
         {
-            isPlusedSprings = true;
+            isSpringOpenWithK0 = true;
         }
 
         private void isPlussedSprings_cb_Unchecked(object sender, RoutedEventArgs e)
         {
-            isPlusedSprings = false;
+            isSpringOpenWithK0 = false;
         }
 
         private void isUsedFirstForces_cb_Checked(object sender, RoutedEventArgs e)
         {
-            isUsedFirstForces = true;
+            isBackForceStartWithK0 = true;
         }
 
         private void isUsedFirstForces_cb_Unchecked(object sender, RoutedEventArgs e)
         {
-            isUsedFirstForces = false;
+            isBackForceStartWithK0 = false;
         }
 
         private void iterationCount_tb_TextChanged(object sender, TextChangedEventArgs e)

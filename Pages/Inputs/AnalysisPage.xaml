@@ -26,8 +26,8 @@
             <DockPanel>
                 <Button x:Name="analysis_button" Width="150" Content="{DynamicResource Analysis}" Click="analysis_button_Click"></Button>
                 <TextBox x:Name="iterationCount_tb" Width="50" TextChanged="iterationCount_tb_TextChanged" TextInput="iterationCount_tb_TextInput" PreviewKeyDown="iterationCount_tb_PreviewKeyDown"></TextBox>
-                <CheckBox x:Name="isPlussedSprings_cb" Width="200" Checked="isPlussedSprings_cb_Checked" Unchecked="isPlussedSprings_cb_Unchecked"> springler toplansın mı ?</CheckBox>
-                <CheckBox x:Name="isUsedFirstForces_cb" Width="200" Checked="isUsedFirstForces_cb_Checked" Unchecked="isUsedFirstForces_cb_Unchecked"> sadece ilk yükler kullanılsın mı ?</CheckBox>
+                <CheckBox x:Name="isSpringOpenWithK0_cb" Width="200" Checked="isPlussedSprings_cb_Checked" Unchecked="isPlussedSprings_cb_Unchecked"> springler K0 la mı açılsın ?</CheckBox>
+                <CheckBox x:Name="isBackForceStartWithK0_cb" Width="200" Checked="isUsedFirstForces_cb_Checked" Unchecked="isUsedFirstForces_cb_Unchecked"> backK0 la mı başlasın ?</CheckBox>
             </DockPanel>
             <ComboBox x:Name="loads_combobox" SelectionChanged="loads_combobox_SelectionChanged"></ComboBox>
             <ComboBox x:Name="forces_combobox" SelectionChanged="forces_combobox_SelectionChanged"></ComboBox>
