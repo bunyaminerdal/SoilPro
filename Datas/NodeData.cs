@@ -19,7 +19,7 @@ namespace ExDesign.Datas
         public Point Location { get; set; }
         public Point DeformedLoc { get; set; }
         public bool isFrontSpringOn = true;
-        public bool isBackSpringOn = false;
+        public bool isBackSpringOn = true;
         public NodeData(Point _location)
         {
             ID = new Guid();

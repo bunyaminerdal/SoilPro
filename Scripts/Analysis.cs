@@ -2035,6 +2035,7 @@ namespace ExDesign.Scripts
             Force Back_First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Back_First_Total_Force };
             Force Front_First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.Front_First_Total_Force };
             Force First_Total_Node_Force = new Force() { ID = Guid.NewGuid(), Type = LoadType.First_Total_Force };
+            Force AnalysSprings = new Force() { ID = Guid.NewGuid(), Type = LoadType.Analys_SubgradeModulusofSoil };
 
             foreach (var node in NodeData.Nodes)
             {
@@ -2072,6 +2073,13 @@ namespace ExDesign.Scripts
 
                 First_Total_Force = Back_First_Total_Force + Front_First_Total_Force;
                 node.nodeForce.Add(new Tuple<Load, double>(First_Total_Node_Force, First_Total_Force));
+
+                //tüm açık olan springlerle analysspring load hazırlıyoruz
+                Tuple<Load, double> backSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_SubgradeModulusofSoil);
+                Tuple<Load, double> frontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
+                //node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2 + frontSpring.Item2));
+                node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, frontSpring.Item2 ));
+
             }
         }
         private static void FirstMatrixAnalys()
@@ -2125,7 +2133,7 @@ namespace ExDesign.Scripts
 
             for (int j = m - 2; j < n; j++)
             {
-                Tuple<Load, double> tuple = NodeData.Nodes[j - m + 2].nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
+                Tuple<Load, double> tuple = NodeData.Nodes[j - m + 2].nodeForce.Find(x => x.Item1.Type == LoadType.Analys_SubgradeModulusofSoil);
                 matrixS[j, j] = tuple.Item2;
             }
 
@@ -2183,7 +2191,6 @@ namespace ExDesign.Scripts
                 double BackK0_Force_amp = BackK0_Force.Item2 - Back_Force_amp;
                 Tuple<Load, double> BackKp_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Passive_Horizontal_Force);
                 Tuple<Load, double> BackKa_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_Active_Horizontal_Force);
-                node.isBackSpringOn = false;
                 
                     if (BackK0_Force_amp >= BackKp_Force.Item2)
                     {
@@ -2196,8 +2203,16 @@ namespace ExDesign.Scripts
                             BackK0_Force_amp = BackKa_Force.Item2;
                         }
                     }
-                
-                if (BackK0_Force_amp > BackK0_Force.Item2)
+                if(BackK0_Force_amp >= BackKp_Force.Item2)
+                {
+                    node.isBackSpringOn = false;
+
+                }
+                if (BackK0_Force_amp <= BackK0_Force.Item2)
+                {
+                    node.isBackSpringOn = false;
+                }
+                if (BackK0_Force_amp > BackK0_Force.Item2 && BackK0_Force_amp < BackKp_Force.Item2)
                 {
                     node.isBackSpringOn = true;
                 }
@@ -2232,25 +2247,30 @@ namespace ExDesign.Scripts
                 double FrontK0_Force_amp = FrontK0_Force.Item2 - Front_Force_amp;
                 Tuple<Load, double> FrontKp_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Passive_Horizontal_Force);
                 Tuple<Load, double> FrontKa_Force = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_Active_Horizontal_Force);
-                node.isFrontSpringOn = true;
-                
-                
-                    if (FrontK0_Force_amp >= FrontKa_Force.Item2)
+               //amp = -4 ka = -0.1 k0 = -0.5 kp = -3
+                if (FrontK0_Force_amp >= FrontKa_Force.Item2)
+                {
+                    FrontK0_Force_amp = FrontKa_Force.Item2;
+                }
+                else
+                {
+                    if (FrontK0_Force_amp <= FrontKp_Force.Item2)
                     {
-                        FrontK0_Force_amp = FrontKa_Force.Item2;
+                        FrontK0_Force_amp = FrontKp_Force.Item2;
                     }
-                    else
-                    {
-                        if (FrontK0_Force_amp <= FrontKp_Force.Item2)
-                        {
-                            node.isFrontSpringOn = false;
-                            FrontK0_Force_amp = FrontKp_Force.Item2;
-                        }
-                    }
-                
-                if (FrontK0_Force_amp > FrontK0_Force.Item2)
+                }
+
+                if (FrontK0_Force_amp >= FrontKa_Force.Item2)
                 {
                     node.isFrontSpringOn = false;
+                }
+                if (FrontK0_Force_amp <= FrontKp_Force.Item2)
+                {
+                    node.isFrontSpringOn = false;
+                }
+                if(FrontK0_Force_amp > FrontKp_Force.Item2 && FrontK0_Force_amp < FrontKa_Force.Item2)
+                {
+                    node.isFrontSpringOn = true;
                 }
                 Front_First_Iteration_Total_Force = FrontK0_Force_amp;
                 node.nodeForce.Add(new Tuple<Load, double>(Back_First_IT_Total_Node_Force, Back_First_Iteration_Total_Force));
@@ -2264,12 +2284,13 @@ namespace ExDesign.Scripts
 
             foreach (var node in NodeData.Nodes)
             {
-
                 if (node.isFrontSpringOn && node.isBackSpringOn)
                 {
                     Tuple<Load, double> backSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Back_SubgradeModulusofSoil);
-
-                    node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2));
+                    Tuple<Load, double> frontSpring = node.nodeForce.Find(x => x.Item1.Type == LoadType.Front_SubgradeModulusofSoil);
+                    
+                    node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2 ));
+                    //node.nodeForce.Add(new Tuple<Load, double>(AnalysSprings, backSpring.Item2 + frontSpring.Item2));
                 }
                 else if (node.isFrontSpringOn && !node.isBackSpringOn)
                 {
@@ -2289,6 +2310,7 @@ namespace ExDesign.Scripts
                 }
 
             }
+
         }
         private static void FirstMatrixAnalys1()
         {

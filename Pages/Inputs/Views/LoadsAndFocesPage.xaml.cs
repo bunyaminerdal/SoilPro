@@ -256,23 +256,26 @@ namespace ExDesign.Pages.Inputs.Views
                         foreach (var frame in FrameData.Frames)
                         {
                             var endLoad = frame.endNodeActivePassiveCoef_S_P_N.Find(x => x.Item1.ID == showenLoad.ID);
-                            if (endLoad.Item2 > totalLoad)
+                            if(endLoad != null)
                             {
-                                totalLoad = endLoad.Item2;
-                                endFramePoint = frame.EndPoint;
-                                endEndLoad = endLoad.Item2;
-                            }
-                            if (endLoad.Item3 > totalLoad1)
-                            {
-                                totalLoad1 = endLoad.Item3;
-                                endFramePoint1 = frame.EndPoint;
-                                endEndLoad1 = endLoad.Item3;
-                            }
-                            if (endLoad.Item4 > totalLoad2)
-                            {
-                                totalLoad2 = endLoad.Item4;
-                                endFramePoint2 = frame.EndPoint;
-                                endEndLoad2 = endLoad.Item4;
+                                if (endLoad.Item2 > totalLoad)
+                                {
+                                    totalLoad = endLoad.Item2;
+                                    endFramePoint = frame.EndPoint;
+                                    endEndLoad = endLoad.Item2;
+                                }
+                                if (endLoad.Item3 > totalLoad1)
+                                {
+                                    totalLoad1 = endLoad.Item3;
+                                    endFramePoint1 = frame.EndPoint;
+                                    endEndLoad1 = endLoad.Item3;
+                                }
+                                if (endLoad.Item4 > totalLoad2)
+                                {
+                                    totalLoad2 = endLoad.Item4;
+                                    endFramePoint2 = frame.EndPoint;
+                                    endEndLoad2 = endLoad.Item4;
+                                }
                             }
 
                         }
