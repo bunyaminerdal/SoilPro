@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using ExDesign.Scripts;
 using ExDesign.Datas;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace ExDesign.Pages.Inputs
 {
@@ -23,7 +25,12 @@ namespace ExDesign.Pages.Inputs
     /// </summary>
     public partial class AnalysisPage : Page
     {
+        public char separator = ',';
+
         bool isShowValues = true;
+        bool isBackForceStartWithK0 = false;
+        bool isSpringOpenWithK0 = false;
+        int iterationCount = 0;
         public AnalysisPage()
         {
             InitializeComponent();
@@ -33,7 +40,7 @@ namespace ExDesign.Pages.Inputs
         {
             double exH_waterH2 =StaticVariables.viewModel.GetexcavationHeight() + (StaticVariables.viewModel.WaterTypeIndex > 0 ? StaticVariables.viewModel.GetGroundWaterH2() : double.MaxValue);
             double exH_calc = WpfUtils.GetExHeightForCalculation();
-            Analysis.StageCalculation(exH_waterH2,exH_calc);
+            Analysis.StageCalculation(exH_waterH2,exH_calc,isBackForceStartWithK0, isSpringOpenWithK0, iterationCount);
             
             LoadsAndForcesPre();
             //FrameData.FrameSave();
@@ -44,6 +51,7 @@ namespace ExDesign.Pages.Inputs
             view3d_main.Content = StaticVariables.view3DPage;
             sideview_main.Content = StaticVariables.loadsAndFocesPage;
             showValues.IsChecked = true;
+            iterationCount_tb.Text = iterationCount.ToString();
         }
         private void LoadsAndForcesPre()
         {
@@ -139,8 +147,14 @@ namespace ExDesign.Pages.Inputs
                         break;
                 }
             }
+            int rotationCount = 0;
+            int displacementCount = 0;
+            int backforceCount = 0;
+            int frontforceCount = 0;
+            int totalforceCount = 0;
+            int springCount = 0;
             foreach (var listitem in NodeData.Nodes[0].nodeForce)
-            {
+            {                
                 switch (listitem.Item1.Type)
                 {
                     case LoadType.HydroStaticWaterPressure:
@@ -153,8 +167,9 @@ namespace ExDesign.Pages.Inputs
                         listitem.Item1.Name = FindResource("FrontSubgradeModulusofSoil").ToString();
                         break;
                     case LoadType.Analys_SubgradeModulusofSoil:
-                        listitem.Item1.Name = FindResource("AnalysSubgradeModulusofSoil").ToString();
-                        break;
+                        springCount =springCount + 1;
+                        listitem.Item1.Name = FindResource("AnalysSubgradeModulusofSoil").ToString()+"_"+springCount.ToString();
+                        break;                    
                     case LoadType.Back_Active_Horizontal_Force:
                         listitem.Item1.Name = FindResource("BackActiveHorizontalForce").ToString();
                         break;
@@ -186,35 +201,25 @@ namespace ExDesign.Pages.Inputs
                         listitem.Item1.Name = FindResource("BackRestHorizontalForce").ToString();
                         break;
                     case LoadType.First_Total_Force:
-                        listitem.Item1.Name = FindResource("FirstTotalForce").ToString();
-                        break;
-                    case LoadType.First_Iteration_Total_Force:
-                        listitem.Item1.Name = FindResource("FirstIterationTotalForce").ToString();
-                        break;
+                        totalforceCount++;
+                        listitem.Item1.Name = FindResource("FirstTotalForce").ToString()+"_" + totalforceCount.ToString();
+                        break;                    
                     case LoadType.Back_First_Total_Force:
-                        listitem.Item1.Name = FindResource("BackFirstTotalForce").ToString();
+                        backforceCount++;
+                        listitem.Item1.Name = FindResource("BackFirstTotalForce").ToString() + "_" + backforceCount.ToString();
                         break;
                     case LoadType.Front_First_Total_Force:
-                        listitem.Item1.Name = FindResource("FrontFirstTotalForce").ToString();
-                        break;
-                    case LoadType.Back_First_Iteration_Total_Force:
-                        listitem.Item1.Name = FindResource("BackFirstIterationTotalForce").ToString();
-                        break;
-                    case LoadType.Front_First_Iteration_Total_Force:
-                        listitem.Item1.Name = FindResource("FrontFirstIterationTotalForce").ToString();
-                        break;
+                        frontforceCount++;
+                        listitem.Item1.Name = FindResource("FrontFirstTotalForce").ToString() + "_" + frontforceCount.ToString();
+                        break;                    
                     case LoadType.First_Displacement:
-                        listitem.Item1.Name = FindResource("FirstDisplacement").ToString();
+                        displacementCount++;
+                        listitem.Item1.Name = FindResource("FirstDisplacement").ToString() + "_" + displacementCount.ToString();
                         break;
                     case LoadType.First_Rotation:
-                        listitem.Item1.Name = FindResource("FirstRotation").ToString();
-                        break;
-                    case LoadType.First_Iteration_Displacement:
-                        listitem.Item1.Name = FindResource("FirstIterationDisplacement").ToString();
-                        break;
-                    case LoadType.First_Iteration_Rotation:
-                        listitem.Item1.Name = FindResource("FirstIterationRotation").ToString();
-                        break;
+                        rotationCount++;
+                        listitem.Item1.Name = FindResource("FirstRotation").ToString() + "_" + rotationCount.ToString();
+                        break;                    
                     default:
                         break;
                 }
@@ -319,6 +324,64 @@ namespace ExDesign.Pages.Inputs
         {
             textblock_start.Visibility = Visibility.Visible;
             textblock_end.Visibility = Visibility.Visible;
+        }
+
+        private void isPlussedSprings_cb_Checked(object sender, RoutedEventArgs e)
+        {
+            isSpringOpenWithK0 = true;
+        }
+
+        private void isPlussedSprings_cb_Unchecked(object sender, RoutedEventArgs e)
+        {
+            isSpringOpenWithK0 = false;
+        }
+
+        private void isUsedFirstForces_cb_Checked(object sender, RoutedEventArgs e)
+        {
+            isBackForceStartWithK0 = true;
+        }
+
+        private void isUsedFirstForces_cb_Unchecked(object sender, RoutedEventArgs e)
+        {
+            isBackForceStartWithK0 = false;
+        }
+
+        private void iterationCount_tb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (int.TryParse(textBox.Text, out int result))
+            {
+                iterationCount = result;
+            }
+
+        }
+
+        private void iterationCount_tb_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            separator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            if (separator == ',')
+            {
+                Regex regex = new Regex("^[,][0-9]+$|^[0-9]*[,]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+            else
+            {
+                Regex regex = new Regex("^[.][0-9]+$|^[0-9]*[.]{0,1}[0-9]*$");
+                e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
+            }
+        }
+
+        private void iterationCount_tb_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                sideview_main.Focus();
+                e.Handled = true;
+            }
+            if (e.Key == Key.Enter)
+            {
+                sideview_main.Focus();
+            }
         }
     }
 }

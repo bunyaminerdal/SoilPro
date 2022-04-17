@@ -19,7 +19,7 @@ namespace ExDesign.Datas
         public Point Location { get; set; }
         public Point DeformedLoc { get; set; }
         public bool isFrontSpringOn = true;
-        public bool isBackSpringOn = false;
+        public bool isBackSpringOn = true;
         public NodeData(Point _location)
         {
             ID = new Guid();
@@ -85,16 +85,12 @@ namespace ExDesign.Datas
                 case LoadType.First_Rotation:
                     nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
                     break;
-                case LoadType.First_Iteration_Displacement:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1,  tuple.Item3));
-                    break;
-                case LoadType.First_Iteration_Rotation:
-                    nodeForce.Add(new Tuple<Load, double>(tuple.Item1, tuple.Item3));
-                    break;
+                
                 default:
                     break;
             }
         }
+
         public int CompareTo(NodeData? other)
         {
             if (this.Location.Y < other.Location.Y)
